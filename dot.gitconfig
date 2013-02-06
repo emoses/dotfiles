@@ -1,0 +1,35 @@
+[alias]
+        co = checkout
+	logf = log -1 --stat
+        b = checkout -b
+        merges = merge --squash
+[core]
+        excludesfile = ~/gitignore
+[user]
+	name = Evan Moses
+	email = emoses@salesforce.com
+[merge]
+        tool = p4merge
+[mergetool "p4merge"]
+        cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+        trustExitCode = false
+[diff]
+        tool = meld
+[git-p4]
+        user = emoses
+        ***REMOVED***
+	port = p4proxy.soma.salesforce.com:1999
+	client = emoses-wsl
+	detectRename = true
+	useclientspec = true
+	localRoot = /home/emoses/dev/app/main/core
+        changelistOnly = true
+    skipPlusW = true
+[color]
+        status = auto
+        diff = auto
+        branch = auto
+        interactive = auto
+        ui = true
+[difftool]
+	prompt = false
