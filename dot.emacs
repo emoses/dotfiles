@@ -12,7 +12,8 @@
     (message "Loaded config file:%s" file)
     ))
 
-(my:load-config-file '("org-mode-init.el"
+(my:load-config-file '("package.el"
+		       "org-mode-init.el"
 		       "keys.el"
 		       "faces.el"
 		       ;;"select-cvs.el"

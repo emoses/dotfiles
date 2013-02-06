@@ -3,7 +3,7 @@
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
-(defvar packages-list '(clojure-mode nrepl paredit))
+(defvar packages-list '(clojure-mode nrepl paredit js2-mode))
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)

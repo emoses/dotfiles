@@ -1,11 +1,14 @@
-(add-to-list 'load-path "~/emacs/slime")
-(require 'slime)
-(eval-after-load 'slime '(setq slime-protocol-version 'ignore))
-(slime-setup '(slime-repl))
-
-(add-to-list 'load-path "~/emacs/clojure-mode")
 (require 'clojure-mode)
-(require 'clojure-test-mode)
-
 (add-hook 'clojure-mode-hook
-	  (lambda () (show-paren-mode t)))
+	  (lambda ()
+	    (paredit-mode t)
+	    (show-paren-mode)))
+
+(eval-after-load 'paredit
+  '(progn
+     (define-key paredit-mode-map (kbd "C-<right>") 'forward-word)
+     (define-key paredit-mode-map (kbd "C-<left>") 'backward-word)
+     (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward-slurp-sexp)
+     (define-key paredit-mode-map (kbd "M-<left>") 'paredit-forward-barf-sexp)))
+
+
