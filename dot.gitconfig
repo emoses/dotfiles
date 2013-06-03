@@ -33,3 +33,5 @@
         ui = true
 [difftool]
 	prompt = false
+[push]
+	default = simple

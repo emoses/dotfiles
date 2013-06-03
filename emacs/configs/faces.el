@@ -1,6 +1,6 @@
 ;;;Basic colors
-(set-face-background 'modeline "white")
-(set-face-foreground 'modeline "black")
+(set-face-background 'mode-line "white")
+(set-face-foreground 'mode-line "black")
 (setq default-frame-alist
       '((background-color . "black")
       (foreground-color . "white")

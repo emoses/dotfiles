@@ -24,9 +24,19 @@ if there is no schedule (so these are sorted to the bottom)"
 	  (t nil))))
 (setq org-agenda-cmp-user-defined 'org-scheduled-cmp)
 
-(org-remember-insinuate)
+(defvar org-directory "")
+(if (fboundp 'org-remember-insinuate)
+    (org-remember-insinuate))
+(let ((rememberFn (cond 
+		   ((fboundp 'org-remember) 'org-remember)
+		   ((fboundp 'org-capture) 'org-capture)
+		   (t nil))))
+  (if rememberFn
+      (define-key global-map "\C-cr" rememberFn)))
+
 (setq org-default-notes-file (concat org-directory "notes.org"))
-(define-key global-map "\C-cr" 'org-remember)
+
+
 
 (setq org-remember-templates
       `(("Todo-W" ?t "*** TODO %?\n    %t" ,(concat org-directory "work.org") "Tasks")
