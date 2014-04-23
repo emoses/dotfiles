@@ -56,7 +56,8 @@ if &t_Co > 2 || has("gui_running")
   let g:spectro_lightness = 135
   colorscheme spectro
   hi LineNr guibg=Grey15
-  hi Folded guifg=darkblue
+  hi Folded guifg=darkblue guibg=Grey65
+  hi FoldColumn guifg=darkblue guibg=Grey65
 endif
 
 " Only do this part when compiled with support for autocommands.
@@ -128,12 +129,19 @@ set completeopt=longest,menuone,preview
 inoremap <expr> <CR> pumvisible() ? '<C-y>' : "<C-g>u\<CR>"
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
-"Lumen file mappings
-function! Lumen_Change_File(newExt)
+"Aura file mappings
+function! Aura_Change_File(newExt)
     let fpath = expand("%:h")
     let dirBase = strpart(fpath, strridx(fpath, '/'))
     exe "e " . fpath . "/" . dirBase . a:newExt
 endfun
+
+nnoremap <leader>ac :call Aura_Change_File(".cmp")<CR>
+nnoremap <leader>aa :call Aura_Change_File(".app")<CR>
+nnoremap <leader>aj :call Aura_Change_File("Controller.js")<CR>
+nnoremap <leader>as :call Aura_Change_File(".css")<CR>
+nnoremap <leader>ah :call Aura_Change_File("Helper.js")<CR>
+nnoremap <leader>ar :call Aura_Change_File("Renderer.js")<CR>
 
 au Filetype html,xml,xsl source ~/.vim/plugin/closetag.vim
 au BufNewFile,BufRead *.apexp,*.apexc,*.app,*.cmp,*.evt,*.intf set filetype=xml
@@ -159,11 +167,9 @@ nnoremap <leader><CR> :JavaSearchContext<CR>
 command! Ccollab :!ccollab addgitdiffs new HEAD^ HEAD
 command! CcollabAsk :!ccollab addgitdiffs ask HEAD^ HEAD
 
-function! LC_Replace()
-    0,$s/\<L\(ocalization\)\=C\(ontext\)\=\./I18nUtils.getLocalizer()./g 
-    JavaImportMissing
-    JavaImportClean
-endfunction
+"Switch lcd or cd to the directory of the current file
+command! Clcd :lcd %:p:h
+command! Ccd :cd %:p:h
 
-command! Lcr :exec LC_Replace()
-
+"Execute a command an open in a new window
+:command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>

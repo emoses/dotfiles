@@ -3,6 +3,7 @@
 	logf = log -1 --stat
         b = checkout -b
         merges = merge --squash
+    rhead = reset --hard HEAD
 [core]
         excludesfile = ~/gitignore
 [user]
@@ -18,8 +19,8 @@
 [git-p4]
         user = emoses
         ***REMOVED***
-	port = p4proxy.soma.salesforce.com:1999
-	client = emoses-wsl
+	port = ssl:p4proxy.soma.salesforce.com:1999
+	client = emoses-wsl1
 	detectRename = true
 	useclientspec = true
 	localRoot = /home/emoses/dev/app/main/core
@@ -33,5 +34,3 @@
         ui = true
 [difftool]
 	prompt = false
-[push]
-	default = simple
