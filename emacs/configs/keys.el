@@ -6,6 +6,7 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key '[C-x v space] 'select-cvs)
 (global-set-key '[delete] 'delete-char)
+(global-set-key '[C-x f] 'find-file-in-repository)
 
 ;;; If I'm using a terminal, set delete to backwards delete
 ;;; I find this fixes a lot of the trouble I have with the delete button

@@ -1,3 +1,4 @@
+;;; -*- mode: emacs-lisp -*-
 ;;; Evan Moses .emacs
 ;;; Feel free to copy
 

@@ -6,6 +6,8 @@
       (foreground-color . "white")
       (cursor-color . "lightgray")))
 
+(setq evil-default-cursor t)
+
 ;;;Set up my favorite syntax-hilighting colors
 (cond ((fboundp 'global-font-lock-mode)
        ;; Customize face attributes

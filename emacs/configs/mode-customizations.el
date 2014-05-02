@@ -66,10 +66,10 @@
 ;; (add-hook 'python-mode-hook (function (lambda () (font-lock-mode))))
 
 (require 'generic-x)
-(when (locate-library "js2")
-  (autoload 'js2-mode "js2" nil t)
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+(autoload 'js2-mode "js2-mode" "Fancy mode for editing JS" t)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
+(electric-indent-mode t)
 
 (autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
 (setq auto-mode-alist
@@ -77,3 +77,10 @@
               auto-mode-alist))
 
 (setq tramp-default-method "ssh")
+
+
+(autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
+(setq auto-mode-alist
+      (append '(("\\.md$" . markdown-mode)
+		("\\.markdown$" . markdown-mode))
+	      auto-mode-alist))
