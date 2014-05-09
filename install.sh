@@ -5,3 +5,4 @@ for file in $(ls dot.*)
 do
     ln -s $DIR/$file $HOME/${file#dot}
 done
+ln -s $DIR/gitignore $HOME/gitignore

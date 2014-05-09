@@ -20,10 +20,9 @@
 		       ;;"select-cvs.el"
 		       "mode-customizations.el"
 		       ;;"work.el"
+		       "aura.el"
 		       "misc-fns.el"
 		       "clojure.el"))
-
-(setq load-path (cons "~/emacs/" load-path))
 (setq inhibit-splash-screen t)
 
 (put 'scroll-left 'disabled nil)

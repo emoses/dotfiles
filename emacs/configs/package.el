@@ -10,7 +10,8 @@
 		    js2-mode
 		    evil
 		    find-file-in-repository
-		    markdown-mode))
+		    markdown-mode
+		    p4))
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)
