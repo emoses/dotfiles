@@ -9,11 +9,10 @@
 
 
 
+
 ;;Change default Perl mode to CPerl-mode
 (setq auto-mode-alist
-      (append '(
-		("\\.p[lm]\\'" . cperl-mode)
-	        ("\\.\\(cmp\\|app\\|evt\\)\\'" . nxml-mode)) ;;Lumen
+      (append '(("\\.p[lm]\\'" . cperl-mode))
 	      auto-mode-alist
 	      ))
 

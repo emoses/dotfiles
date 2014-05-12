@@ -13,13 +13,15 @@
     (message "Loaded config file:%s" file)
     ))
 
+(defconst my:xml-mode 'nxml-mode)
+
 (my:load-config-file '("package.el"
 		       "org-mode-init.el"
 		       "keys.el"
 		       "faces.el"
 		       ;;"select-cvs.el"
 		       "mode-customizations.el"
-		       ;;"work.el"
+		       "work.el"
 		       "aura.el"
 		       "misc-fns.el"
 		       "clojure.el"))
@@ -34,6 +36,8 @@
 
 (require 'evil)
 (evil-mode 1)
+(global-linum-mode t)
+(show-paren-mode t)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.

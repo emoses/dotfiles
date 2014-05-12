@@ -2,8 +2,14 @@
   (file-name-nondirectory
    (directory-file-name (file-name-directory path))))
 
-(defun aura-switch-file (ext)
-  (find-file (concat (containing-dir (buffer-file-name)) ext)))
+(defun aura:switch-file (ext &optional cmd)
+  (let ((file-cmd (if cmd cmd 'find-file)))
+    (funcall file-cmd (concat (containing-dir (buffer-file-name)) ext))))
+
+(setq auto-mode-alist
+      (append (list (cons "\\.\\(cmp\\|app\\|evt\\)\\'" my:xml-mode)) ;;Lumen
+	      auto-mode-alist
+	      ))
 
 (defvar file-ext-alist '(
 		   ("helper" . "Helper.js")
@@ -27,7 +33,20 @@
 		    t
 		    nil
 		    nil)))
-     (aura-switch-file (cdr (assoc ext-name file-ext-alist))))
+  (aura:switch-file (cdr (assoc ext-name file-ext-alist)) 'find-file))
+
+(defun aura-switch-to-ext-other-window (ext-name)
+  "See aura-switch-to-ext, same but open in other window"
+  (interactive
+   (list (completing-read "[Aura] Switch to: "
+		    file-ext-alist
+		    nil
+		    t
+		    nil
+		    t
+		    nil
+		    nil)))
+  (aura:switch-file (cdr (assoc ext-name file-ext-alist)) 'find-file-other-window))
      
 
      

@@ -1,5 +1,6 @@
 (require 'package)
 (add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/")
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
@@ -11,7 +12,8 @@
 		    evil
 		    find-file-in-repository
 		    markdown-mode
-		    p4))
+		    p4
+		    magit))
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)
