@@ -12,12 +12,14 @@
 	      ))
 
 (defvar file-ext-alist '(
-		   ("helper" . "Helper.js")
-		   ("app" . ".app")
 		   ("cmp" . ".cmp")
 		   ("controller" . "Controller.js")
+		   ("helper" . "Helper.js")
+		   ("app" . ".app")
 		   ("css" . ".css")
 		   ("renderer" . "Renderer.js")))
+(defvar aura:switch-history '())
+(put 'aura:switch-history 'history-length 5)
 		   
 		   
 
@@ -30,7 +32,7 @@
 		    nil
 		    t
 		    nil
-		    t
+		    'aura:switch-history
 		    nil
 		    nil)))
   (aura:switch-file (cdr (assoc ext-name file-ext-alist)) 'find-file))
@@ -43,7 +45,7 @@
 		    nil
 		    t
 		    nil
-		    t
+		    'aura:switch-history
 		    nil
 		    nil)))
   (aura:switch-file (cdr (assoc ext-name file-ext-alist)) 'find-file-other-window))
