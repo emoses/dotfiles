@@ -7,7 +7,7 @@
     (funcall file-cmd (concat (containing-dir (buffer-file-name)) ext))))
 
 (setq auto-mode-alist
-      (append (list (cons "\\.\\(cmp\\|app\\|evt\\)\\'" my:xml-mode)) ;;Lumen
+      (append (list (cons "\\.\\(cmp\\|app\\|evt\\|theme\\)\\'" my:xml-mode)) ;;Lumen
 	      auto-mode-alist
 	      ))
 
@@ -17,7 +17,9 @@
 		   ("helper" . "Helper.js")
 		   ("app" . ".app")
 		   ("css" . ".css")
-		   ("renderer" . "Renderer.js")))
+		   ("renderer" . "Renderer.js")
+		   ("theme" . ".theme")
+		   ("test" . "Test.js")))
 (defvar aura:switch-history '())
 (put 'aura:switch-history 'history-length 5)
 		   

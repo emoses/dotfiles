@@ -67,16 +67,15 @@
 (require 'generic-x)
 (autoload 'js2-mode "js2-mode" "Fancy mode for editing JS" t)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
-(electric-indent-mode t)
+(add-hook 'js2-mode-hook
+	  (function (lambda ()
+		      (local-unset-key (kbd "C-c C-a"))
+		      (set-variable 'indent-tabs-mode nil))))
 
 (autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
 (setq auto-mode-alist
       (append '(("\\.css$" . css-mode))
               auto-mode-alist))
-
-(setq tramp-default-method "ssh")
-
 
 (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
 (setq auto-mode-alist

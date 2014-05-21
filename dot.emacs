@@ -18,12 +18,13 @@
 (my:load-config-file '("package.el"
 		       "org-mode-init.el"
 		       "keys.el"
+		       "evil.el"
 		       "faces.el"
-		       ;;"select-cvs.el"
 		       "mode-customizations.el"
 		       "work.el"
 		       "aura.el"
 		       "misc-fns.el"
+		       ;;"select-cvs.el"
 		       "clojure.el"))
 (setq inhibit-splash-screen t)
 
@@ -34,10 +35,13 @@
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 (setq org-directory "~/Dropbox/org")
 
-(require 'evil)
-(evil-mode 1)
+;;Global mode enablement
 (global-linum-mode t)
 (show-paren-mode t)
+(savehist-mode t)
+(electric-indent-mode t)
+
+(setq tramp-default-method "ssh")
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
