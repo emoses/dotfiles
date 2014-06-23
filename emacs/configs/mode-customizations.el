@@ -82,3 +82,8 @@
       (append '(("\\.md$" . markdown-mode)
 		("\\.markdown$" . markdown-mode))
 	      auto-mode-alist))
+
+	 
+(setq nxml-child-indent 4)
+
+(require 'dired-details+)
