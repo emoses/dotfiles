@@ -1,3 +1,3 @@
 (setq mac-command-modifier 'control)
-(setq mac-control-modifier 'alt)
-(setq mac-option-modifier 'meta)
+(setq mac-option-modifier 'alt)
+(setq mac-control-modifier 'meta)
