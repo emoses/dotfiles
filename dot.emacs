@@ -42,6 +42,7 @@
 (electric-indent-mode t)
 
 (setq tramp-default-method "ssh")
+(setq indent-tabs-mode nil)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
