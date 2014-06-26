@@ -14,7 +14,9 @@
 		    markdown-mode
 		    p4
 		    magit
-		    dired-details+))
+		    dired-details+
+		    jade-mode
+		    less-css-mode))
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)
