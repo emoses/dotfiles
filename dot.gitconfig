@@ -18,7 +18,6 @@
         tool = meld
 [git-p4]
         user = emoses
-        ***REMOVED***
 	port = ssl:p4proxy.soma.salesforce.com:1999
 	client = emoses-wsl1
 	detectRename = true
@@ -34,3 +33,5 @@
         ui = true
 [difftool]
 	prompt = false
+[credential]
+	helper = cache --timeout=86400
