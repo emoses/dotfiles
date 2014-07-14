@@ -21,11 +21,14 @@
 		       "evil.el"
 		       "faces.el"
 		       "mode-customizations.el"
-		       "work.el"
+		       ;;"work.el"
 		       "aura.el"
 		       "misc-fns.el"
 		       ;;"select-cvs.el"
 		       "clojure.el"))
+;;Mac-specific changes
+(when (eq system-type 'darwin)
+  (my:load-config-file '("osx.el")))
 (setq inhibit-splash-screen t)
 
 (put 'scroll-left 'disabled nil)

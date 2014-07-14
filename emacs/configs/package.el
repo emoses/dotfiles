@@ -13,7 +13,10 @@
 		    find-file-in-repository
 		    markdown-mode
 		    p4
-		    magit))
+		    magit
+		    dired-details+
+		    jade-mode
+		    less-css-mode))
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)
