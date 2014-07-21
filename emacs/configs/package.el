@@ -16,7 +16,9 @@
 		    magit
 		    dired-details+
 		    jade-mode
-		    less-css-mode))
+		    less-css-mode
+		    projectile
+		    flx-ido))
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)

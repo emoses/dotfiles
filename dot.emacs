@@ -43,6 +43,15 @@
 (show-paren-mode t)
 (savehist-mode t)
 (electric-indent-mode t)
+(projectile-global-mode)
+
+;;ido
+(require 'flx-ido)
+(ido-mode t)
+(ido-everywhere t)
+(flx-ido-mode t)
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
 
 (setq tramp-default-method "ssh")
 (setq indent-tabs-mode nil)
