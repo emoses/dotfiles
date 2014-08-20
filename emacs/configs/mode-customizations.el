@@ -83,6 +83,10 @@
 		("\\.markdown$" . markdown-mode))
 	      auto-mode-alist))
 
+(require 'jade-mode)
+(add-hook 'jade-mode-hook
+	  (lambda ()
+	    (set-variable 'tab-width 4)))
 	 
 (setq nxml-child-indent 4)
 
