@@ -18,7 +18,8 @@
 		    jade-mode
 		    less-css-mode
 		    projectile
-		    flx-ido))
+		    flx-ido
+		    haskell-mode))
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)

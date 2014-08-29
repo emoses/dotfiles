@@ -73,15 +73,11 @@
 		      (set-variable 'indent-tabs-mode nil))))
 
 (autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
-(setq auto-mode-alist
-      (append '(("\\.css$" . css-mode))
-              auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 
 (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
-(setq auto-mode-alist
-      (append '(("\\.md$" . markdown-mode)
-		("\\.markdown$" . markdown-mode))
-	      auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 (require 'jade-mode)
 (add-hook 'jade-mode-hook
@@ -91,3 +87,10 @@
 (setq nxml-child-indent 4)
 
 (require 'dired-details+)
+
+;;Haskell
+(autoload 'ghc-init "ghc" nil t)
+(autoload 'ghc-debug "ghc" nil t)
+(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'ghc-init)
+(add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
