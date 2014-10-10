@@ -92,5 +92,8 @@
 (autoload 'ghc-init "ghc" nil t)
 (autoload 'ghc-debug "ghc" nil t)
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'ghc-init)
+(add-hook 'haskell-mode-hook (lambda ()
+			       (local-unset-key (kbd "C-c C-c"))))
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))

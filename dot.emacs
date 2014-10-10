@@ -44,6 +44,8 @@
 (savehist-mode t)
 (electric-indent-mode t)
 (projectile-global-mode)
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
 
 ;;ido
 (require 'flx-ido)
