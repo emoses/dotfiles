@@ -29,9 +29,10 @@
 
 
 ;;; Some useful C-mode stuff
-(require 'cc-mode)
-(define-key c-mode-base-map (kbd "C-c RET") 'compile)
-(define-key c-mode-base-map (kbd "C-c s") 'c-set-style)
+(add-hook 'c-mode-common-hook 
+      (lambda ()
+            (define-key c-mode-base-map (kbd "C-c RET") 'compile)
+            (define-key c-mode-base-map (kbd "C-c s") 'c-set-style)))
 
 ;;Matt Mode
 (c-add-style "matt"
@@ -75,11 +76,14 @@
 (autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
 (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 
+(add-hook 'less-css-mode-hook
+	  (function (lambda ()
+		      (local-unset-key (kbd "C-c C-c")))))
+
 (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
-(require 'jade-mode)
 (add-hook 'jade-mode-hook
 	  (lambda ()
 	    (set-variable 'tab-width 4)))
