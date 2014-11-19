@@ -27,23 +27,25 @@
 	      auto-mode-alist
 		))
 
+(defun modecust:matt-mode ()
+  "Set up matt-mode"
+  (c-add-style "matt"
+	       '("stroustrup"
+		 (c-offsets-alist
+		  (innamespace . -)
+		  (inline-open . 0)
+		  (inher-cont . c-lineup-multi-inher)
+		  (arglist-cont-nonempty . +)
+		  (template-args-cont . +))
+		 (c-basic-offset . 2))))
 
 ;;; Some useful C-mode stuff
 (add-hook 'c-mode-common-hook 
       (lambda ()
             (define-key c-mode-base-map (kbd "C-c RET") 'compile)
-            (define-key c-mode-base-map (kbd "C-c s") 'c-set-style)))
+            (define-key c-mode-base-map (kbd "C-c s") 'c-set-style)
+	    (modecust:matt-mode))) 
 
-;;Matt Mode
-(c-add-style "matt"
-	     '("stroustrup"
-                (c-offsets-alist
-                 (innamespace . -)
-                 (inline-open . 0)
-                 (inher-cont . c-lineup-multi-inher)
-                 (arglist-cont-nonempty . +)
-                 (template-args-cont . +))
-		(c-basic-offset . 2)))
 
 ;;;Turn on Syntax Hilighting
 (add-hook 'c-mode-common-hook 'turn-on-font-lock)
