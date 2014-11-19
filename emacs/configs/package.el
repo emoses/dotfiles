@@ -22,9 +22,9 @@
 		    haskell-mode
 		    ack-and-a-half))
 
-(defun install-if-needed (package)
-  (unless (package-installed-p package)
+(let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
+       (delq nil 
+	     (mapcar (lambda (x) (and (not (package-installed-p x)) x)) packages-list))))
+  (unless (null uninstalled-packages)
     (package-refresh-contents)
-    (package-install package)))
-
-(mapc 'install-if-needed packages-list)
+    (mapc 'package-install uninstalled-packages)))
