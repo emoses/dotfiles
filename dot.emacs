@@ -31,7 +31,6 @@
   (my:load-config-file '("osx.el")))
 (setq inhibit-splash-screen t)
 
-(put 'scroll-left 'disabled nil)
 
 
 ;;Org-mode local customizations:
@@ -56,7 +55,7 @@
 (setq ido-use-faces nil)
 
 (setq tramp-default-method "ssh")
-(setq indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
@@ -79,3 +78,4 @@
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold)))))
 
 
+(put 'scroll-left 'disabled nil)
