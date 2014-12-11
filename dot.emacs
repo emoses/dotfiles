@@ -55,6 +55,10 @@
   (my:load-config-file '("osx.el")))
 
 (setq inhibit-splash-screen t)
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 
 ;;Org-mode local customizations:
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
