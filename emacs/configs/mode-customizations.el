@@ -103,3 +103,8 @@
 (add-hook 'haskell-mode-hook (lambda ()
 			       (local-unset-key (kbd "C-c C-c"))))
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+
+
+;;Magit
+(require 'magit-gh-pulls)
+(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)

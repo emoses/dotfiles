@@ -14,13 +14,15 @@
 		    markdown-mode
 		    p4
 		    magit
+                    magit-gh-pulls
 		    dired-details+
 		    jade-mode
 		    less-css-mode
 		    projectile
 		    flx-ido
 		    haskell-mode
-		    ack-and-a-half))
+		    ack-and-a-half
+                    smart-mode-line))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil 
