@@ -92,3 +92,8 @@
 (require 'smart-mode-line)
 (sml/setup)
 (sml/apply-theme 'light)
+
+;;Eclim - java dev only, put in work?
+(require 'eclim)
+(require 'eclimd)
+(global-eclim-mode)

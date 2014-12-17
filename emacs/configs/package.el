@@ -22,7 +22,9 @@
 		    flx-ido
 		    haskell-mode
 		    ack-and-a-half
-                    smart-mode-line))
+                    smart-mode-line
+                    emacs-eclim
+                    auto-complete))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil 
