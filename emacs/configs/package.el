@@ -6,7 +6,8 @@
 
 (defvar packages-list '(org
 		    clojure-mode
-		    nrepl
+		    cider
+		    rainbow-delimiters
 		    paredit
 		    js2-mode
 		    evil
