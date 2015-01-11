@@ -5,10 +5,9 @@
 (global-set-key (kbd "C-<DEL>") 'backward-kill-word)
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key '[delete] 'delete-char)
-(global-set-key (kbd "C-x f") 'find-file-in-repository)
 (global-set-key (kbd "C-c C-a") 'aura-switch-to-ext)
 (global-set-key (kbd "C-c 4 a") 'aura-switch-to-ext-other-window)
-(global-set-key (kbd "C-c C-c") 'magit-status)
+(global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-c C-r") 'revert-buffer)
 
 ;;; If I'm using a terminal, set delete to backwards delete

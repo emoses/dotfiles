@@ -3,3 +3,7 @@
 
 ;;Mode which start in emacs state
 (add-to-list 'evil-emacs-state-modes 'dired-mode)
+
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (setq evil-symbol-word-search t)))
