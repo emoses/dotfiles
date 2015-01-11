@@ -5,7 +5,7 @@
         merges = merge --squash
     rhead = reset --hard HEAD
 [core]
-        excludesfile = ~/gitignore
+    excludesfile = ~/gitignore
 [user]
 	name = Evan Moses
 	email = emoses@salesforce.com
@@ -35,3 +35,5 @@
 	prompt = false
 [credential]
 	helper = cache --timeout=86400
+[push]
+	default = simple

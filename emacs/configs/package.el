@@ -1,6 +1,6 @@
 (require 'package)
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/")
+	     '("melpa" . "http://melpa.org/packages/")
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
@@ -19,7 +19,8 @@
 		    less-css-mode
 		    projectile
 		    flx-ido
-		    haskell-mode))
+		    haskell-mode
+		    haml-mode))
 
 (defun install-if-needed (package)
   (unless (package-installed-p package)

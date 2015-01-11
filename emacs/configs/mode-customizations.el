@@ -101,3 +101,7 @@
 (add-hook 'haskell-mode-hook (lambda ()
 			       (local-unset-key (kbd "C-c C-c"))))
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+
+;;Haml
+(add-hook 'haml-mode-hook (lambda ()
+			    (local-unset-key (kbd "DEL"))))
