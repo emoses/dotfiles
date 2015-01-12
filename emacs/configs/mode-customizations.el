@@ -33,28 +33,9 @@
       (lambda ()
             (define-key c-mode-base-map (kbd "C-c RET") 'compile)
             (define-key c-mode-base-map (kbd "C-c s") 'c-set-style)
-            (google-set-c-style))) 
-
-
-;;;Turn on Syntax Hilighting
-(add-hook 'c-mode-common-hook 'turn-on-font-lock)
-
-
-;; For Python
-;; (autoload 'python-mode "python-mode" "python major mode" t nil)
-;; (setq auto-mode-alist
-;;       (append '(
-;; 		("\\.py$" . python-mode))
-;; 		auto-mode-alist
-;; 		))
-;; (add-hook 'python-mode-hook
-;; 	    ;; indent is 3 if it's a new file
-;; 	    ;; (seems that the value is overridden when 
-;; 	    ;; a source file is  loaded)
-;; 	    (function (lambda () 
-;; 	    		(set-variable 'py-indent-offset 3)))
-;; 	    )
-;; (add-hook 'python-mode-hook (function (lambda () (font-lock-mode))))
+            (google-set-c-style)
+            (setq c-basic-offset 4)
+            (turn-on-font-lock))) 
 
 (require 'generic-x)
 (autoload 'js2-mode "js2-mode" "Fancy mode for editing JS" t)
@@ -66,10 +47,6 @@
 
 (autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
 (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
-
-(add-hook 'less-css-mode-hook
-	  (function (lambda ()
-		      (local-unset-key (kbd "C-c C-c")))))
 
 (autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
@@ -89,8 +66,6 @@
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'ghc-init)
-(add-hook 'haskell-mode-hook (lambda ()
-			       (local-unset-key (kbd "C-c C-c"))))
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 
 
