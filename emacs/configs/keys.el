@@ -9,6 +9,7 @@
 (global-set-key (kbd "C-c 4 a") 'aura-switch-to-ext-other-window)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-c C-r") 'revert-buffer)
+(global-set-key (kbd "C-c m") 'switch-to-minibuffer)
 
 ;;; If I'm using a terminal, set delete to backwards delete
 ;;; I find this fixes a lot of the trouble I have with the delete button

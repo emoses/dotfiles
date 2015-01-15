@@ -13,6 +13,13 @@ by using nxml's indentation rules."
       (indent-region begin end))
     (message "Ah, much better!"))
 
+(defun switch-to-minibuffer ()
+  "Switch to the minibuffer window"
+  (interactive)
+  (if (active-minibuffer-window)
+      (select-window (active-minibuffer-window))
+    (error "Minibuffer is not active")))
+
 ;; (defun transpose-windows ()
 ;;    "Transpose the buffers shown in two windows."
 ;;    (let (nWin (count-windows))

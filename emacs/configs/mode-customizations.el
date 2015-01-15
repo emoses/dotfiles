@@ -78,3 +78,14 @@
 (ac-config-default)
 (require 'ac-emacs-eclim-source)
 (ac-emacs-eclim-config)
+
+;;At least three spaces in linum mode
+;;Mostly copy/paste from linum.el
+
+(setq linum-format (lambda (line)
+                     (let* ((w (max 3
+                                   (length (number-to-string
+                                            (count-lines (point-min) (point-max))))))
+                            (fmt (concat "%" (number-to-string w) "d")))
+                       (propertize (format fmt line) 'face 'linum))))
+                       
