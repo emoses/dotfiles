@@ -58,7 +58,8 @@
 	 
 (setq nxml-child-indent 4)
 
-(require 'dired-details+)
+(when (not my:osx)
+  (require 'dired-details+))
 
 ;;Haskell
 (autoload 'ghc-init "ghc" nil t)

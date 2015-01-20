@@ -39,6 +39,11 @@
 
 (defconst my:xml-mode 'nxml-mode)
 
+;;Mac-specific changes
+(defvar my:osx (eq system-type 'darwin)) 
+(when my:osx
+  (my:load-config-file '("osx.el")))
+
 (my:load-config-file '("package.el"
 		       "org-mode-init.el"
 		       "keys.el"
@@ -50,9 +55,6 @@
 		       "misc-fns.el"
 		       ;;"select-cvs.el"
 		       "clojure.el"))
-;;Mac-specific changes
-(when (eq system-type 'darwin)
-  (my:load-config-file '("osx.el")))
 
 (setq inhibit-splash-screen t)
 (when (fboundp 'tool-bar-mode)
