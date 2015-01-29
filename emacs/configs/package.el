@@ -2,31 +2,36 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+(add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
+
 (package-initialize)
 
+
 (defvar packages-list '(org
-		    clojure-mode
-		    cider
-		    rainbow-delimiters
-		    paredit
-		    js2-mode
-		    evil
-		    find-file-in-repository
-		    markdown-mode
-		    p4
-		    magit
-            magit-gh-pulls
-		    dired-details+
-		    jade-mode
-		    less-css-mode
-		    projectile
-		    flx-ido
-		    haskell-mode
-		    haml-mode
-		    ack-and-a-half
-            smart-mode-line
-            emacs-eclim
-            auto-complete))
+                        clojure-mode
+                        cider
+                        rainbow-delimiters
+                        paredit
+                        evil-paredit
+                        js2-mode
+                        evil
+                        find-file-in-repository
+                        markdown-mode
+                        p4
+                        magit
+                        magit-gh-pulls
+                        dired-details+
+                        jade-mode
+                        less-css-mode
+                        projectile
+                        flx-ido
+                        haskell-mode
+                        haml-mode
+                        ack-and-a-half
+                        smart-mode-line
+                        emacs-eclim
+                        auto-complete))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil 

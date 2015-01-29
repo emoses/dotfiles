@@ -9,6 +9,21 @@
  '(custom-safe-themes
    (quote
     ("cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default)))
+ '(evil-overriding-maps
+   (quote
+    ((Buffer-menu-mode-map)
+     (color-theme-mode-map)
+     (comint-mode-map)
+     (compilation-mode-map)
+     (grep-mode-map)
+     (dictionary-mode-map)
+     (ert-results-mode-map . motion)
+     (Info-mode-map . motion)
+     (speedbar-key-map)
+     (speedbar-file-key-map)
+     (speedbar-buffers-key-map)
+     (cider-popup-buffer-mode-map)
+     (cider-stacktrace-mode-map))))
  '(js2-bounce-indent-flag nil)
  '(js2-strict-inconsistent-return-warning nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
