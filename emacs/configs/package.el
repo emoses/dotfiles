@@ -27,7 +27,8 @@
                     smart-mode-line
                     emacs-eclim
                     auto-complete
-                    google-c-style))
+                    google-c-style
+                    base16-theme))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil 

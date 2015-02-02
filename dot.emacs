@@ -8,7 +8,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default)))
+    ("8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default)))
  '(js2-bounce-indent-flag nil)
  '(js2-strict-inconsistent-return-warning nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
@@ -24,7 +24,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold)))))
+ '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
+ '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
+ '(linum ((t (:background "#282a2e" :foreground "#e0e0e0")))))
 
 ;; default xemacs configuration directory
 (defconst my:emacs-config-dir "~/dotfiles/emacs/configs/" "")
