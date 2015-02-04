@@ -52,6 +52,8 @@
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
+(
+
 (add-hook 'jade-mode-hook
 	  (lambda ()
 	    (set-variable 'tab-width 4)))
