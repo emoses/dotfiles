@@ -2,8 +2,9 @@
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-
 (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
+
+(add-to-list 'package-load-list '(magit-gh-pulls "0.4.2"))
 
 (package-initialize)
 
@@ -31,7 +32,8 @@
                         ack-and-a-half
                         smart-mode-line
                         emacs-eclim
-                        auto-complete))
+                        auto-complete
+                        google-c-style))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil 

@@ -7,6 +7,7 @@
 
 ;;Start in insert state for repl
 (add-to-list 'evil-insert-state-modes 'cider-repl-mode)
+(add-to-list 'evil-emacs-state-modes 'git-rebase-mode)
 
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
