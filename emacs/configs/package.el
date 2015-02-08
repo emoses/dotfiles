@@ -10,30 +10,31 @@
 
 
 (defvar packages-list '(org
-                        clojure-mode
-                        cider
-                        rainbow-delimiters
-                        paredit
+		    clojure-mode
+		    cider
+		    rainbow-delimiters
+		    paredit
                         evil-paredit
-                        js2-mode
-                        evil
-                        find-file-in-repository
-                        markdown-mode
-                        p4
-                        magit
-                        magit-gh-pulls
-                        dired-details+
-                        jade-mode
-                        less-css-mode
-                        projectile
-                        flx-ido
-                        haskell-mode
+		    js2-mode
+		    evil
+		    find-file-in-repository
+		    markdown-mode
+		    p4
+		    magit
+                    magit-gh-pulls
+		    dired-details+
+		    jade-mode
+		    less-css-mode
+		    projectile
+		    flx-ido
+		    haskell-mode
                         haml-mode
-                        ack-and-a-half
-                        smart-mode-line
-                        emacs-eclim
-                        auto-complete
-                        google-c-style))
+		    ack-and-a-half
+                    smart-mode-line
+                    emacs-eclim
+                    auto-complete
+                    google-c-style
+                    base16-theme))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil 

@@ -2,3 +2,7 @@
 jade:ext:jade
 --type-set
 less:ext:less
+--type-set
+jsxx:ext:js,jsx
+--type-set
+jsx:ext:jsx

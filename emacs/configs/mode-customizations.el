@@ -39,7 +39,7 @@
 
 (require 'generic-x)
 (autoload 'js2-mode "js2-mode" "Fancy mode for editing JS" t)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx?$\\'" . js2-mode))
 (add-hook 'js2-mode-hook
 	  (function (lambda ()
 		      (local-unset-key (kbd "C-c C-a"))
