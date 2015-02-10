@@ -34,7 +34,8 @@
                     emacs-eclim
                     auto-complete
                     google-c-style
-                    base16-theme))
+                    base16-theme
+                    exec-path-from-shell))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil 

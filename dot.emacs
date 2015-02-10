@@ -48,20 +48,25 @@
 
 ;; utility finction to auto-load my package configurations
 (defun my:load-config-file (filelist)
-  (dolist (file filelist)
-    (load (expand-file-name 
-	   (concat my:emacs-config-dir file)))
-    (message "Loaded config file:%s" file)
+  (dolist (fileOrFn filelist)
+    (let ((file 
+           (if (functionp fileOrFn)
+               (funcall fileOrFn)
+             fileOrFn)))
+      (when file
+        (load (expand-file-name
+                (concat my:emacs-config-dir file)))
+        (message "Loaded config file:%s" file)))
     ))
 
 (defconst my:xml-mode 'nxml-mode)
 
 ;;Mac-specific changes
 (defvar my:osx (eq system-type 'darwin)) 
-(when my:osx
-  (my:load-config-file '("osx.el")))
 
-(my:load-config-file '("package.el"
+(my:load-config-file '((lambda () (if my:osx "osx.el" nil))
+                       "package.el"
+                       (lambda () (if my:osx "osx-post-init.el" nil))
 		       "org-mode-init.el"
 		       "keys.el"
 		       "evil.el"
