@@ -93,3 +93,5 @@
                             (fmt (concat "%" (number-to-string w) "d")))
                        (propertize (format fmt line) 'face 'linum))))
                        
+(autoload 'web-mode "web-mode" "web editing mode" t)
+(add-to-list 'auto-mode-alist '("\\.html?$" . web-mode))

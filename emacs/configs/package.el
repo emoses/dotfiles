@@ -35,7 +35,8 @@
                     auto-complete
                     google-c-style
                     base16-theme
-                    exec-path-from-shell))
+                    exec-path-from-shell
+                    web-mode))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil 
