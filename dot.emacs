@@ -96,6 +96,7 @@
 (projectile-global-mode)
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 ;;ido
 (require 'flx-ido)
