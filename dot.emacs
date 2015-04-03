@@ -24,6 +24,8 @@
      (speedbar-buffers-key-map)
      (cider-popup-buffer-mode-map)
      (cider-stacktrace-mode-map))))
+ '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc)))
+ '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
  '(js2-strict-inconsistent-return-warning nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
@@ -49,7 +51,7 @@
 ;; utility finction to auto-load my package configurations
 (defun my:load-config-file (filelist)
   (dolist (fileOrFn filelist)
-    (let ((file 
+    (let ((file
            (if (functionp fileOrFn)
                (funcall fileOrFn)
              fileOrFn)))
@@ -62,7 +64,7 @@
 (defconst my:xml-mode 'nxml-mode)
 
 ;;Mac-specific changes
-(defvar my:osx (eq system-type 'darwin)) 
+(defvar my:osx (eq system-type 'darwin))
 
 (my:load-config-file '((lambda () (if my:osx "osx.el" nil))
                        "package.el"
@@ -97,6 +99,7 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;;ido
 (require 'flx-ido)

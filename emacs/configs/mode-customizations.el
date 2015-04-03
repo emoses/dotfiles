@@ -29,21 +29,34 @@
 		))
 
 ;;; Some useful C-mode stuff
-(add-hook 'c-mode-common-hook 
+(add-hook 'c-mode-common-hook
       (lambda ()
             (define-key c-mode-base-map (kbd "C-c RET") 'compile)
             (define-key c-mode-base-map (kbd "C-c s") 'c-set-style)
             (google-set-c-style)
             (setq c-basic-offset 4)
-            (turn-on-font-lock))) 
+            (turn-on-font-lock)))
 
 (require 'generic-x)
 (autoload 'js2-mode "js2-mode" "Fancy mode for editing JS" t)
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . js2-mode))
+;;TODO: refine path and make project-specific settings
+(defun my:js2-externs (filename)
+  (let ((path-list (split-string (file-name-directory filename) "/"))
+        (base-includes '("global")))
+    (when (member "keymaker" path-list)
+      (cond
+       ((member "test" path-list) (append '("describe" "before" "beforeEach" "after" "afterEach" "it" "assert" "sinon" "include") base-includes))
+       ((member "src" path-list) (append '("global") base-includes))
+       ((member "lib" path-list) (append '("global" "include" "process")))))))
+
 (add-hook 'js2-mode-hook
 	  (function (lambda ()
 		      (local-unset-key (kbd "C-c C-a"))
-		      (set-variable 'indent-tabs-mode nil))))
+		      (set-variable 'indent-tabs-mode nil)
+                      (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name))))))
+(set-variable 'js2-global-externs '("require" "module"))
+(set-variable 'flycheck-eslintrc "eslint.json")
 
 (autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
 (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
@@ -55,7 +68,7 @@
 (add-hook 'jade-mode-hook
 	  (lambda ()
 	    (set-variable 'tab-width 4)))
-	 
+
 (setq nxml-child-indent 4)
 
 (when (not my:osx)
@@ -92,6 +105,9 @@
                                             (count-lines (point-min) (point-max))))))
                             (fmt (concat "%" (number-to-string w) "d")))
                        (propertize (format fmt line) 'face 'linum))))
-                       
+
 (autoload 'web-mode "web-mode" "web editing mode" t)
 (add-to-list 'auto-mode-alist '("\\.html?$" . web-mode))
+
+(autoload 'lua-mode "lua-mode" "lua mode" t)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))

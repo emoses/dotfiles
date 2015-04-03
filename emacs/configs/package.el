@@ -36,10 +36,13 @@
                     google-c-style
                     base16-theme
                     exec-path-from-shell
-                    web-mode))
+                    web-mode
+                    lua-mode
+                    ag
+                    flycheck))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
-       (delq nil 
+       (delq nil
 	     (mapcar (lambda (x) (and (not (package-installed-p x)) x)) packages-list))))
   (unless (null uninstalled-packages)
     (package-refresh-contents)
