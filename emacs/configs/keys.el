@@ -10,9 +10,12 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-c C-r") 'revert-buffer)
 (global-set-key (kbd "C-c m") 'switch-to-minibuffer)
+(global-set-key (kbd "TAB") 'indent-for-tab-command)
 
 ;;; If I'm using a terminal, set delete to backwards delete
 ;;; I find this fixes a lot of the trouble I have with the delete button
 (cond ((not window-system)
 	    (global-set-key (kbd "<deletechar>") 'backward-delete-char)
 	    ))
+
+(win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o"))

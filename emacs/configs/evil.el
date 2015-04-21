@@ -1,4 +1,5 @@
 (require 'evil)
+(define-key evil-motion-state-map (kbd "TAB") nil)
 (evil-mode 1)
 
 ;;Mode which start in emacs state
@@ -12,4 +13,3 @@
 (add-hook 'emacs-lisp-mode-hook
           (lambda ()
             (setq evil-symbol-word-search t)))
-

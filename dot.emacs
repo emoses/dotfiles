@@ -70,10 +70,10 @@
                        "package.el"
                        (lambda () (if my:osx "osx-post-init.el" nil))
 		       "org-mode-init.el"
-		       "keys.el"
 		       "evil.el"
 		       "faces.el"
 		       "mode-customizations.el"
+		       "keys.el"
 		       ;;"work.el"
 		       "aura.el"
 		       "misc-fns.el"

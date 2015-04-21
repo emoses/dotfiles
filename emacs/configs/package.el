@@ -39,7 +39,8 @@
                     web-mode
                     lua-mode
                     ag
-                    flycheck))
+                    flycheck
+                    win-switch))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil
