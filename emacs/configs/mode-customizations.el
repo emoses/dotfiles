@@ -55,6 +55,8 @@
 		      (local-unset-key (kbd "C-c C-a"))
 		      (set-variable 'indent-tabs-mode nil)
                       (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name))))))
+(set-variable 'js2-mode-show-parse-errors nil)
+(set-variable 'js2-mode-show-strict-warnings nil)
 (set-variable 'js2-global-externs '("require" "module"))
 (set-variable 'flycheck-eslintrc "eslint.json")
 
@@ -85,6 +87,11 @@
 ;;Haml
 (add-hook 'haml-mode-hook (lambda ()
 			    (local-unset-key (kbd "DEL"))))
+
+;;Groovy
+(autoload 'groovy-mode "groovy-mode" "Mode for editing Groovy" t nil)
+(add-to-list 'auto-mode-alist '("\\.groovy$" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.gradle$" . groovy-mode))
 
 ;;Magit
 (require 'magit-gh-pulls)

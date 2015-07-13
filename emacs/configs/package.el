@@ -40,7 +40,8 @@
                     lua-mode
                     ag
                     flycheck
-                    win-switch))
+                    win-switch
+                    editorconfig))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil
