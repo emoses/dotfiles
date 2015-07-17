@@ -4,7 +4,7 @@
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
-(add-to-list 'package-load-list '(magit-gh-pulls "0.4.2"))
+(add-to-list 'package-load-list '(magit-gh-pulls "0.5.1"))
 
 (package-initialize)
 

@@ -90,11 +90,12 @@
 (require 'magit-gh-pulls)
 (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 
-;;Eclim
 (require 'auto-complete-config)
 (ac-config-default)
-(require 'ac-emacs-eclim-source)
-(ac-emacs-eclim-config)
+
+;;Eclim
+;(require 'ac-emacs-eclim-source)
+;(ac-emacs-eclim-config)
 
 ;;At least three spaces in linum mode
 ;;Mostly copy/paste from linum.el

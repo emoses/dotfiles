@@ -20,6 +20,21 @@ by using nxml's indentation rules."
       (select-window (active-minibuffer-window))
     (error "Minibuffer is not active")))
 
+(defun gh-change-profile (profile)
+  "Change the profile used by gh.el"
+  (interactive
+   (list (completing-read "[gh] Switch profile to: "
+                          gh-profile-alist
+                          nil
+                          t
+                          nil
+                          'gh:profile-history
+                          nil
+                          nil)))
+  (setq gh-profile-current-profile profile))
+
+
+
 ;; (defun transpose-windows ()
 ;;    "Transpose the buffers shown in two windows."
 ;;    (let (nWin (count-windows))
@@ -28,4 +43,3 @@ by using nxml's indentation rules."
 ;; 		     (set-window-buffer win2 (window-buffer win1))
 ;; 		     (set-window-buffer win1 (win2buff)))))
 ;;      (if (= nWin 2 ) (do-transpose (selected-window) (next-window)) nil))
-

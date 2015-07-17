@@ -37,3 +37,7 @@
 	helper = cache --timeout=86400
 [push]
 	default = simple
+[github "github-emosesSfdc"]
+	user = emosesSfdc
+[github "github-emoses"]
+	user = emoses
