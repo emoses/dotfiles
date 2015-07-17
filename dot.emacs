@@ -26,11 +26,6 @@
      (cider-stacktrace-mode-map))))
  '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc)))
  '(flycheck-temp-prefix "__flycheck")
- '(gh-profile-alist
-   (quote
-    (("github-emoses" :username "emoses" :token "d8c26431d3ead5a76e6a364f657a4a4e90b4e2a6" :remote-regexp "^\\(?:git@github\\.com-emoses:\\|\\(?:git\\|https?\\|ssh\\)://.*@?github\\.com/\\)\\(.*\\)/\\(.*\\)\\(?:\\.git\\)?" :url "https://api.github.com")
-     ("github-emosesSfdc" :username "emosesSfdc" :token "0a5c5da8180e82156e3a3c19c46e5cb2412ce2fb" :url "https://api.github.com" :remote-regexp "^\\(?:git@github\\.com-emosesSfdc:\\|\\(?:git\\|https?\\|ssh\\)://.*@?github\\.com/\\)\\(.*\\)/\\(.*\\)\\(?:\\.git\\)?"))))
- '(gh-profile-default-profile "github-emosesSfdc")
  '(js2-bounce-indent-flag nil)
  '(js2-strict-inconsistent-return-warning nil)
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
@@ -72,6 +67,8 @@
 (defvar my:osx (eq system-type 'darwin))
 
 (my:load-config-file '((lambda () (if my:osx "osx.el" nil))
+                       "secrets.el"
+                       "gh.el"
                        "package.el"
                        (lambda () (if my:osx "osx-post-init.el" nil))
 		       "org-mode-init.el"
