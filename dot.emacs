@@ -46,7 +46,9 @@
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0")))))
 
 ;; default xemacs configuration directory
-(defconst my:emacs-config-dir "~/dotfiles/emacs/configs/" "")
+(defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
+(defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
+(add-to-list 'load-path my:emacs-base)
 
 ;; utility finction to auto-load my package configurations
 (defun my:load-config-file (filelist)
@@ -117,6 +119,7 @@
 
 ;;Misc
 (put 'scroll-left 'disabled nil)
+(setq visible-bell t)
 
 ;;Smart mode line
 (require 'smart-mode-line)
