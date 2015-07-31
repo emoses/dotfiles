@@ -53,10 +53,11 @@
 (add-hook 'js2-mode-hook
 	  (function (lambda ()
 		      (local-unset-key (kbd "C-c C-a"))
+                      (js2-mode-hide-warnings-and-errors)
 		      (set-variable 'indent-tabs-mode nil)
                       (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name))))))
 (set-variable 'js2-global-externs '("require" "module"))
-(set-variable 'flycheck-eslintrc "eslint.json")
+
 
 (autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
 (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
