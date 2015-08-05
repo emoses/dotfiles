@@ -13,6 +13,9 @@
 (global-set-key (kbd "TAB") 'indent-for-tab-command)
 (global-set-key (kbd "A-v") 'yank) ;;for non-evil yanking
 (global-set-key (kbd "C-`") 'other-frame) ;;mac-like frame switching
+(global-set-key (kbd "C-c c s") 'snake-case-region-or-word)
+(global-set-key (kbd "C-c c u") 'underscore-case-region-or-word)
+(global-set-key (kbd "C-c c c") 'camel-case-region-or-word)
 
 ;;; If I'm using a terminal, set delete to backwards delete
 ;;; I find this fixes a lot of the trouble I have with the delete button

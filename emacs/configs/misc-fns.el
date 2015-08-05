@@ -43,3 +43,35 @@ by using nxml's indentation rules."
 ;; 		     (set-window-buffer win2 (window-buffer win1))
 ;; 		     (set-window-buffer win1 (win2buff)))))
 ;;      (if (= nWin 2 ) (do-transpose (selected-window) (next-window)) nil))
+
+;; From http://emacswiki.org/emacs/CamelCase, with modifications
+(defun split-name (s)
+  (let ((case-fold-search nil))
+    (split-string
+     (downcase
+      (replace-regexp-in-string "\\([a-z]\\)\\([A-Z]\\)" "\\1 \\2" s)) "[^A-Za-z0-9]+")))
+
+(defun camel-case  (s) (mapconcat 'capitalize (split-name s) ""))
+(defun underscore-case (s) (mapconcat 'downcase   (split-name s) "_"))
+(defun snake-case  (s) (mapconcat 'downcase   (split-name s) "-"))
+
+(defun caseify-word-at-point (caseifyer)
+  (let* ((case-fold-search nil)
+         (beg (if (use-region-p) (region-beginning) (and (skip-chars-backward "[:alnum:]:_-") (point))))
+         (end (if (use-region-p) (region-end) (and (skip-chars-forward  "[:alnum:]:_-") (point))))
+         (txt (buffer-substring-no-properties beg end))
+         (cml (funcall caseifyer txt)))
+    (if cml (progn (delete-region beg end) (insert cml)))))
+
+
+(defun snake-case-region-or-word ()
+  (interactive)
+  (caseify-word-at-point #'snake-case))
+
+(defun camel-case-region-or-word ()
+  (interactive)
+  (caseify-word-at-point #'camel-case))
+
+(defun underscore-case-region-or-word ()
+  (interactive)
+  (caseify-word-at-point #'underscore-case))
