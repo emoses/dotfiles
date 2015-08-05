@@ -51,9 +51,20 @@ by using nxml's indentation rules."
      (downcase
       (replace-regexp-in-string "\\([a-z]\\)\\([A-Z]\\)" "\\1 \\2" s)) "[^A-Za-z0-9]+")))
 
-(defun camel-case  (s) (mapconcat 'capitalize (split-name s) ""))
-(defun underscore-case (s) (mapconcat 'downcase   (split-name s) "_"))
-(defun snake-case  (s) (mapconcat 'downcase   (split-name s) "-"))
+(defun lower-camel-case  (s)
+  "lowerCamelCase"
+  (let ((split (split-name s)))
+    (concat (downcase (car split))
+            (mapconcat 'capitalize (cdr split) ""))))
+(defun camel-case (s)
+  "CamelCase"
+  (mapconcat 'capitalize (split-name s) ""))
+(defun underscore-case (s)
+  "underscore_case"
+  (mapconcat 'downcase   (split-name s) "_"))
+(defun snake-case (s)
+  "snake-case"
+  (mapconcat 'downcase   (split-name s) "-"))
 
 (defun caseify-word-at-point (caseifyer)
   (let* ((case-fold-search nil)
@@ -71,6 +82,10 @@ by using nxml's indentation rules."
 (defun camel-case-region-or-word ()
   (interactive)
   (caseify-word-at-point #'camel-case))
+
+(defun lower-camel-case-region-or-word ()
+  (interactive)
+  (caseify-word-at-point #'lower-camel-case))
 
 (defun underscore-case-region-or-word ()
   (interactive)
