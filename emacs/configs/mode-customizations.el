@@ -42,13 +42,15 @@
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . js2-mode))
 ;;TODO: refine path and make project-specific settings
 (defun my:js2-externs (filename)
-  (let ((path-list (split-string (file-name-directory filename) "/"))
-        (base-includes '("global")))
-    (when (member "keymaker" path-list)
-      (cond
-       ((member "test" path-list) (append '("describe" "before" "beforeEach" "after" "afterEach" "it" "assert" "sinon" "include") base-includes))
-       ((member "src" path-list) (append '("global") base-includes))
-       ((member "lib" path-list) (append '("global" "include" "process")))))))
+  (if (not filename)
+      nil
+    (let ((path-list (split-string (file-name-directory filename) "/"))
+          (base-includes '("global")))
+      (when (member "keymaker" path-list)
+        (cond
+         ((member "test" path-list) (append '("describe" "before" "beforeEach" "after" "afterEach" "it" "assert" "sinon" "include") base-includes))
+         ((member "src" path-list) (append '("global") base-includes))
+         ((member "lib" path-list) (append '("global" "include" "process"))))))))
 
 (add-hook 'js2-mode-hook
 	  (function (lambda ()
@@ -90,6 +92,9 @@
 ;;Magit
 (require 'magit-gh-pulls)
 (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
+(setq magit-branch-read-upstream-first nil)
+(advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
+(setq matig-completing-read-function #'magit-ido-completing-read)
 
 (require 'auto-complete-config)
 (ac-config-default)
@@ -113,6 +118,10 @@
 
 (autoload 'lua-mode "lua-mode" "lua mode" t)
 (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+
+(autoload 'arduino-mode "arduino-mode" "arduino mode" t)
+(add-to-list 'auto-mode-alist '("\\.ino$" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.pde$" . c-mode))
 
 (require 'win-switch)
 (defun win-switch-setup-keys-hjkl (&rest dispatch-keys)

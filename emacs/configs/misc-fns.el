@@ -33,6 +33,13 @@ by using nxml's indentation rules."
                           nil)))
   (setq gh-profile-current-profile profile))
 
+;;From http://emacs.stackexchange.com/questions/13772/how-to-prevent-magit-to-ask-where-to-push-a-branch/13784#13784
+(defun magit-push-arguments-maybe-upstream (magit-push-popup-fun &rest args)
+  "Enable --set-upstream switch if there isn't a current upstream."
+  (let ((magit-push-arguments
+         (if (magit-get-remote) magit-push-arguments
+           (cons "--set-upstream" magit-push-arguments))))
+    (apply magit-push-popup-fun args)))
 
 
 ;; (defun transpose-windows ()

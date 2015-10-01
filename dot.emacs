@@ -28,6 +28,7 @@
  '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
  '(js2-strict-inconsistent-return-warning nil)
+ '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(org-agenda-files (quote ("~/Dropbox/org/work.org" "~/Dropbox/org/home.org")))
  '(org-log-done (quote time))
