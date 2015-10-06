@@ -26,3 +26,13 @@ then
     curl -L 'https://github.com/vim-scripts/spectro.vim/raw/master/colors/spectro.vim' > $HOME/.vim/colors/spectro.vim
 fi
 
+if [[ `uname` == "Darwin" ]]
+then
+    echo "Detected MacOS, Setting up hammerspoon"
+    mkdir $HOME/.hammerspoon
+    if [ ! -e $HOME/.hammerspoon/init.lua ]
+    then 
+        ln -s $DIR/hammerspoon.lua $HOME/.hammerspoon/init.lua
+    fi
+fi
+
