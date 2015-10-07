@@ -29,6 +29,7 @@ function highlightWin(win)
 
 end
 
+--Name -> {screenIndex, {grid spec}}
 local work_display_table = {
    Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
    IntelliJ = {2, {x = 0, y = 0, w = 7, h = 5}},
@@ -73,7 +74,7 @@ end
 
 for key,dir in pairs(vimDirs) do
    hs.hotkey.bind(mod1, key, function()
-                     hs.window['focusWindow'..dir](nil, filterUnknownWindows(hs.window['windowsTo'..dir]()), true)
+                     hs.window['focusWindow'..dir](nil, filterUnknownWindows(hs.window['windowsTo'..dir]()), true, true)
                      highlightWin(hs.window.focusedWindow())
    end)
 
@@ -95,6 +96,7 @@ hs.hotkey.bind(mod1, "d", function()
 end)
 
 hs.hotkey.bind(mod1, "g", work_display)
+hs.hotkey.bind(mod1, "space", hs.caffeinate.startScreensaver) --
 
 
 
