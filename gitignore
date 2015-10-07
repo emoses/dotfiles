@@ -4,4 +4,5 @@
 .\#*
 *.swp
 .agignore
+.DS_Store
 __flycheck*
