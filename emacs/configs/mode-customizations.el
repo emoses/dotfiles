@@ -94,7 +94,7 @@
 (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 (setq magit-branch-read-upstream-first nil)
 (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
-(setq matig-completing-read-function #'magit-ido-completing-read)
+(setq magit-completing-read-function #'magit-ido-completing-read)
 
 (require 'auto-complete-config)
 (ac-config-default)

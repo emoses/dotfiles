@@ -1,6 +1,9 @@
 local mod1 = {"cmd", "ctrl"}
 local mod1shift = {"cmd", "ctrl", "shift"}
 
+package.path = "/Users/emoses/dev/hammerspoon/extensions/?/init.lua;"..package.path
+local hints = require "hints"
+
 local vimDirs = {
    h='West',
    j='South',
@@ -29,14 +32,27 @@ function highlightWin(win)
 
 end
 
+------------------------------
+-- Grid and layout stuff
+------------------------------
+
 --Name -> {screenIndex, {grid spec}}
 local work_display_table = {
    Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
-   IntelliJ = {2, {x = 0, y = 0, w = 7, h = 5}},
+   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 5}},
    ["Google Chrome"] = {1, {x = 0, y = 0, w = 4, h = 5}},
    Slack = {1, {x = 4, y = 0, w = 3, h = 3}},
    Terminal = {1, {x = 4, y = 3, w = 3, h = 2}}
 }
+
+local home_display_table = {
+   Emacs = {1, {x = 0, y = 0, w = 7, h = 5}},
+   ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
+   ["Google Chrome"] = {2, {x = 0, y = 0, w = 7, h = 5}},
+   Slack = {2, {x = 1, y = 0, w = 6, h = 5}},
+   Terminal = {1, {x = 4, y = 3, w = 3, h = 2}}
+}
+
 
 hs.grid.GRIDWIDTH = 7
 hs.grid.GRIDHEIGHT = 5
@@ -44,8 +60,8 @@ hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
 
-local work_display = function()
-   for appName, place in pairs(work_display_table) do
+local apply_layout = function(layout)
+   for appName, place in pairs(layout) do
       local app = hs.appfinder.appFromName(appName)
       if (app) then
          for i, win in ipairs(app:allWindows()) do
@@ -56,6 +72,22 @@ local work_display = function()
       end
    end
 end
+local work_display = function() apply_layout(work_display_table) end
+local home_display = function() apply_layout(home_display_table) end
+
+
+
+local screenHandler = function()
+   local screens = hs.screen.allScreens()
+   if (#screens == 2) then
+      if screens[1]:frame().w > 2000 and screens[2]:frame().w > 2000 then
+         work_display()
+      else
+         home_display()
+      end
+   end
+end
+hs.screen.watcher.new(screenHandler):start()
 
 --We sometimes get windows with a role of AXUnknown that get in the way of this working at the edge of the screen
 --Keep focusing in th proper direction until we focus the same window twice or we end up on a window with a role
@@ -85,7 +117,7 @@ end
 
 hs.hotkey.bind(mod1shift, "R", hs.reload)
 
-hs.hotkey.bind(mod1, ";", hs.hints.windowHints)
+hs.hotkey.bind(mod1, ";", function() hints.windowHints(nil, nil, true) end)
 
 hs.hotkey.bind(mod1, "a", function()
                   hs.window.focusedWindow():moveOneScreenWest()
@@ -95,20 +127,5 @@ hs.hotkey.bind(mod1, "d", function()
                   hs.window.focusedWindow():moveOneScreenEast()
 end)
 
-hs.hotkey.bind(mod1, "g", work_display)
+hs.hotkey.bind(mod1, "g", screenHandler)
 hs.hotkey.bind(mod1, "space", hs.caffeinate.startScreensaver) --
-
-
-
-
-local screenHandler = function()
-   local screens = hs.screen.allScreens()
-   if (#screens == 2) then
-      if screens[1].frame().w > 2000 and screens[2].frame().w > 2000 then
-         work_display()
-         --hs.layout.apply(work_display)
-      end
-   end
-end
-
---TODO: add layout. start screenwatcher
