@@ -1,9 +1,6 @@
 local mod1 = {"cmd", "ctrl"}
 local mod1shift = {"cmd", "ctrl", "shift"}
 
-package.path = "/Users/emoses/dev/hammerspoon/extensions/?/init.lua;"..package.path
-local hints = require "hints"
-
 local vimDirs = {
    h='West',
    j='South',
@@ -117,7 +114,7 @@ end
 
 hs.hotkey.bind(mod1shift, "R", hs.reload)
 
-hs.hotkey.bind(mod1, ";", function() hints.windowHints(nil, nil, true) end)
+hs.hotkey.bind(mod1, ";", function() hs.hints.windowHints(nil, nil, true) end)
 
 hs.hotkey.bind(mod1, "a", function()
                   hs.window.focusedWindow():moveOneScreenWest()

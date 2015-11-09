@@ -41,7 +41,8 @@
                     ag
                     flycheck
                     win-switch
-                    ido-completing-read+))
+                    ido-completing-read+
+                    editorconfig))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil

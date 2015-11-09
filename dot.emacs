@@ -101,6 +101,11 @@
 (savehist-mode t)
 (electric-indent-mode t)
 (projectile-global-mode)
+(require 'editorconfig)
+(editorconfig-mode 1)
+
+(add-to-list 'projectile-globally-ignored-directories "node_modules")
+
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
