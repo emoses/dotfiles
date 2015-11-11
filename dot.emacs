@@ -80,7 +80,7 @@
 		       "mode-customizations.el"
 		       "keys.el"
 		       ;;"work.el"
-		       "aura.el"
+		       ;;"aura.el"
 		       "misc-fns.el"
 		       ;;"select-cvs.el"
 		       "clojure.el"))

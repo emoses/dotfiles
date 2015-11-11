@@ -41,6 +41,10 @@ by using nxml's indentation rules."
            (cons "--set-upstream" magit-push-arguments))))
     (apply magit-push-popup-fun args)))
 
+(defun sudo-edit-etc-hosts ()
+  "shortcut to open /etc/hosts as root"
+  (interactive)
+  (find-file "/sudo::/etc/hosts"))
 
 ;; (defun transpose-windows ()
 ;;    "Transpose the buffers shown in two windows."

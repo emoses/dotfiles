@@ -22,8 +22,8 @@
 		   ("test" . "Test.js")))
 (defvar aura:switch-history '())
 (put 'aura:switch-history 'history-length 5)
-		   
-		   
+
+
 
 (defun aura-switch-to-ext (ext-name)
   "Using the file-ext-alist map above, switch to one of the file extentions
@@ -51,7 +51,6 @@
 		    nil
 		    nil)))
   (aura:switch-file (cdr (assoc ext-name file-ext-alist)) 'find-file-other-window))
-     
 
-     
-		  
+(global-set-key (kbd "C-c C-a") 'aura-switch-to-ext)
+(global-set-key (kbd "C-c 4 a") 'aura-switch-to-ext-other-window)
