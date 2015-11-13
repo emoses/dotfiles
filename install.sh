@@ -17,7 +17,7 @@ fi
 
 echo "Setting up vim..."
 mkdir -p $HOME/.vim/autoload $HOME/.vim/bundle $HOME/.vim/colors
-if [ ! -e $HOME/.vim/autoload/pathogen.vim ] 
+if [ ! -e $HOME/.vim/autoload/pathogen.vim ]
 then
     curl -L 'https://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim' > $HOME/.vim/autoload/pathogen.vim
 fi
@@ -31,8 +31,12 @@ then
     echo "Detected MacOS, Setting up hammerspoon"
     mkdir $HOME/.hammerspoon
     if [ ! -e $HOME/.hammerspoon/init.lua ]
-    then 
+    then
         ln -s $DIR/hammerspoon.lua $HOME/.hammerspoon/init.lua
     fi
 fi
 
+echo "Installing python certifi package for emacs support..."
+python -m pip install --user certifi
+
+echo "You'll need to install gnutls if it's not already installed."

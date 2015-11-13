@@ -36,7 +36,8 @@
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse)))
- '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3)))))
+ '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+ '(tls-checktrust t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -68,6 +69,18 @@
 
 ;;Mac-specific changes
 (defvar my:osx (eq system-type 'darwin))
+
+;;Deal with TLS certs.  See https://glyph.twistedmatrix.com/2015/11/editor-malware.html
+(let ((trustfile
+       (replace-regexp-in-string
+        "\\\\" "/"
+        (replace-regexp-in-string
+         "\n" ""
+         (shell-command-to-string "python -m certifi")))))
+  (setq tls-program
+        (list
+         (format "gnutls-cli%s --x509cafile %s -p %%p %%h"
+                 (if (eq window-system 'w32) ".exe" "") trustfile))))
 
 (my:load-config-file '((lambda () (if my:osx "osx.el" nil))
                        "secrets.el"
