@@ -6,3 +6,5 @@ less:ext:less
 jsxx:ext:js,jsx
 --type-set
 jsx:ext:jsx
+--type-set
+cljs:ext:cljs
