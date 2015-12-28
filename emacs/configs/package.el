@@ -1,10 +1,12 @@
 (require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(setq package-archives `(("gnu" . "https://elpa.gnu.org/packages")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")))
+
 (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
-(add-to-list 'package-load-list '(magit-gh-pulls "0.4.2"))
+;(add-to-list 'package-load-list '(magit-gh-pulls "0.5.1"))
 
 (package-initialize)
 
@@ -35,10 +37,17 @@
                     auto-complete
                     google-c-style
                     base16-theme
-                    exec-path-from-shell))
+                    exec-path-from-shell
+                    web-mode
+                    lua-mode
+                    ag
+                    flycheck
+                    win-switch
+                    ido-completing-read+
+                    editorconfig))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
-       (delq nil 
+       (delq nil
 	     (mapcar (lambda (x) (and (not (package-installed-p x)) x)) packages-list))))
   (unless (null uninstalled-packages)
     (package-refresh-contents)

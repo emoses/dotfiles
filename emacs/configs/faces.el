@@ -7,7 +7,7 @@
 ;      (cursor-color . "lightgray")))
 
 (setq evil-default-cursor t)
-(load-theme 'base16-tomorrow)
+(load-theme 'base16-tomorrow-dark)
 
 ;;;Set up my favorite syntax-hilighting colors
 ;;(cond ((fboundp 'global-font-lock-mode)
