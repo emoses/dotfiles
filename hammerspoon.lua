@@ -56,6 +56,7 @@ hs.grid.GRIDHEIGHT = 5
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 
+hs.hints.showTitleThresh = 100
 
 local apply_layout = function(layout)
    for appName, place in pairs(layout) do
@@ -114,7 +115,16 @@ end
 
 hs.hotkey.bind(mod1shift, "R", hs.reload)
 
-hs.hotkey.bind(mod1, ";", function() hs.hints.windowHints(nil, nil, true) end)
+hs.hotkey.bind(mod1, ";", function() 
+    --Disable showing titles temporarily, then re-enable
+    local oldThresh = hs.hints.showTitleThresh 
+    hs.hints.showTitleThresh = 0
+    hs.hints.windowHints(nil, nil, true) 
+    hs.hints.showTitleThresh = oldThresh
+end)
+hs.hotkey.bind(mod1shift, ";", function()
+                  hs.hints.windowHints(hs.window.focusedWindow():application():allWindows(), nil, true)
+end)
 
 hs.hotkey.bind(mod1, "a", function()
                   hs.window.focusedWindow():moveOneScreenWest()

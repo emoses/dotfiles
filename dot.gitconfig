@@ -4,6 +4,7 @@
         b = checkout -b
         merges = merge --squash
     rhead = reset --hard HEAD
+    whereis = branch -a --contains
 [core]
     excludesfile = ~/gitignore
 [user]
