@@ -29,6 +29,7 @@
  '(js2-bounce-indent-flag nil)
  '(js2-strict-inconsistent-return-warning nil)
  '(magit-blame-heading-format "%-20a %C %.10H %s")
+ '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
  '(org-agenda-files (quote ("~/Dropbox/org/work.org" "~/Dropbox/org/home.org")))
  '(org-log-done (quote time))
@@ -96,7 +97,8 @@
 		       ;;"aura.el"
 		       "misc-fns.el"
 		       ;;"select-cvs.el"
-		       "clojure.el"))
+		       "clojure.el"
+                       "present-minor-mode.el"))
 
 (setq inhibit-splash-screen t)
 (when (fboundp 'tool-bar-mode)

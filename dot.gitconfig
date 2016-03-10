@@ -7,6 +7,8 @@
     whereis = branch -a --contains
 [core]
     excludesfile = ~/gitignore
+	autocrlf = input
+	pager = diff-highlight | diff-so-fancy | less --tabs=1,5 -R
 [user]
 	name = Evan Moses
 	email = emoses@salesforce.com
@@ -46,3 +48,10 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+[color "diff-highlight"]
+	oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+[url "git@github.com-emosesSfdc:sfdc-matrix"]
+	insteadOf = git://github.com/sfdc-matrix

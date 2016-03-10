@@ -44,7 +44,8 @@
                     flycheck
                     win-switch
                     ido-completing-read+
-                    editorconfig))
+                    editorconfig
+                    typescript-mode))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil

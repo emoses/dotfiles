@@ -144,3 +144,6 @@
     (global-set-key key 'win-switch-dispatch)))
 (setq win-switch-idle-time 2)
 (setq win-switch-window-threshold 0)
+
+(autoload 'typescript-mode "typescript-mode" "typescript mode" t)
+(add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))

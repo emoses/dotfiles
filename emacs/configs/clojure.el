@@ -1,8 +1,12 @@
-(add-hook 'clojure-mode-hook
-	  (lambda ()
-	    (paredit-mode t)
-	    (show-paren-mode)
-            (rainbow-delimiters-mode t)))
+(defun lisp-modes ()
+  (paredit-mode t)
+  (show-paren-mode)
+  (rainbow-delimiters-mode t))
+
+
+(add-hook 'clojure-mode-hook #'lisp-modes)
+(add-hook 'emacs-lisp-mode-hook #'lisp-modes)
+
 
 (add-hook 'cider-repl-mode-hook
 	  (lambda ()
@@ -17,5 +21,3 @@
      (define-key paredit-mode-map (kbd "C-<left>") 'backward-word)
      (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward-slurp-sexp)
      (define-key paredit-mode-map (kbd "M-<left>") 'paredit-forward-barf-sexp)))
-
-
