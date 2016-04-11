@@ -115,11 +115,11 @@ end
 
 hs.hotkey.bind(mod1shift, "R", hs.reload)
 
-hs.hotkey.bind(mod1, ";", function() 
+hs.hotkey.bind(mod1, ";", function()
     --Disable showing titles temporarily, then re-enable
-    local oldThresh = hs.hints.showTitleThresh 
+    local oldThresh = hs.hints.showTitleThresh
     hs.hints.showTitleThresh = 0
-    hs.hints.windowHints(nil, nil, true) 
+    hs.hints.windowHints(nil, nil, true)
     hs.hints.showTitleThresh = oldThresh
 end)
 hs.hotkey.bind(mod1shift, ";", function()
@@ -136,3 +136,23 @@ end)
 
 hs.hotkey.bind(mod1, "g", screenHandler)
 hs.hotkey.bind(mod1, "space", hs.caffeinate.startScreensaver) --
+
+local chooserWindow = function(info)
+   if info then
+      hs.window.get(info.winId):focus()
+   end
+end
+
+hs.hotkey.bind(mod1, "/", function()
+                  local c = hs.chooser.new(chooserWindow)
+                  local windowInfo = {}
+                  for k, v in pairs(hs.window.allWindows()) do
+                     table.insert(windowInfo, {
+                                     ["text"] = v:application():title(),
+                                     ["subText"] = v:title(),
+                                     ["winId"] = v:id()
+                     })
+                  end
+                  c:choices(windowInfo)
+                  c:show()
+end)
