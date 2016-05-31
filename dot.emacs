@@ -140,7 +140,12 @@
 
 ;;Misc
 (put 'scroll-left 'disabled nil)
-(setq visible-bell t)
+;;Visible-bell causes problems in OSX, so blink the mode-line instead
+(setq visible-bell nil)
+(setq ring-bell-function
+      (lambda ()
+        (invert-face 'mode-line)
+        (run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
 ;;Smart mode line
 (require 'smart-mode-line)

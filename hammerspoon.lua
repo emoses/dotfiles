@@ -62,9 +62,9 @@ local apply_layout = function(layout)
    for appName, place in pairs(layout) do
       local app = hs.appfinder.appFromName(appName)
       if (app) then
+         local scrs = hs.screen.allScreens()
+         local src = scrs[place[1]]
          for i, win in ipairs(app:allWindows()) do
-            local scrs = hs.screen:allScreens()
-            local src = scrs[place[1]]
             hs.grid.set(win, place[2], src)
          end
       end
