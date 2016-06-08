@@ -21,3 +21,5 @@
      (define-key paredit-mode-map (kbd "C-<left>") 'backward-word)
      (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward-slurp-sexp)
      (define-key paredit-mode-map (kbd "M-<left>") 'paredit-forward-barf-sexp)))
+
+(setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")

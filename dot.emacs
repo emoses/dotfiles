@@ -38,6 +38,7 @@
    (quote
     (org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse)))
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+ '(safe-local-variable-values (quote ((create-lockfiles))))
  '(tls-checktrust t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
