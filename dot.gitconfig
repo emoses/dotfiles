@@ -19,7 +19,9 @@
     trustExitCode = false
     keepTemporaries = false
 [diff]
-        tool = meld
+    tool = intellij
+[difftool "intellij"]
+    cmd =/usr/local/bin/idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
 [git-p4]
         user = emoses
 	port = ssl:p4proxy.soma.salesforce.com:1999
@@ -36,7 +38,7 @@
         interactive = auto
         ui = true
 [difftool]
-	prompt = false
+	prompt = true
 [credential]
 	helper = cache --timeout=86400
 [push]

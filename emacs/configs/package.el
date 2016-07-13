@@ -45,7 +45,8 @@
                     win-switch
                     ido-completing-read+
                     editorconfig
-                    typescript-mode))
+                    typescript-mode
+                    elm-mode))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil
