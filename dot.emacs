@@ -1,6 +1,13 @@
 ;;; -*- mode: emacs-lisp -*-
 ;;; Evan Moses .emacs
 ;;; Feel free to copy
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,7 +31,7 @@
      (speedbar-buffers-key-map)
      (cider-popup-buffer-mode-map)
      (cider-stacktrace-mode-map))))
- '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc)))
+ '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc python-pylint)))
  '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
  '(js2-strict-inconsistent-return-warning nil)
@@ -38,6 +45,9 @@
    (quote
     (org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse)))
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+ '(package-selected-packages
+   (quote
+    (groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(tls-checktrust t))
 (custom-set-faces

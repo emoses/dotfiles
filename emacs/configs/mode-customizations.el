@@ -147,3 +147,10 @@
 
 (autoload 'typescript-mode "typescript-mode" "typescript mode" t)
 (add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
+
+(autoload 'json-mode "json-mode" "JSON mode" t)
+(add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
+(add-hook 'json-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))

@@ -1,15 +1,11 @@
 (require 'package)
 (setq package-archives `(("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
-                         ("gnu" . "https://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")))
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
 
 (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
 ;(add-to-list 'package-load-list '(magit-gh-pulls "0.5.1"))
-
-(package-initialize)
-
 
 (defvar packages-list '(org
 		    clojure-mode
@@ -18,6 +14,7 @@
 		    paredit
                         evil-paredit
 		    js2-mode
+                    json-mode
 		    evil
 		    find-file-in-repository
 		    markdown-mode
