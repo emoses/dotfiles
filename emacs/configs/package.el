@@ -7,7 +7,8 @@
 
 ;(add-to-list 'package-load-list '(magit-gh-pulls "0.5.1"))
 
-(defvar packages-list '(org
+(defvar packages-list '(use-package
+                           org
 		    clojure-mode
 		    cider
 		    rainbow-delimiters
@@ -51,3 +52,10 @@
   (unless (null uninstalled-packages)
     (package-refresh-contents)
     (mapc 'package-install uninstalled-packages)))
+
+(eval-when-compile
+  (require 'use-package))
+
+(use-package groovy-mode
+  :mode "\\.groovy\\'"
+  :ensure t)

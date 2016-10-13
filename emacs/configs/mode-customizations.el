@@ -7,26 +7,19 @@
 
 ;; (load-library "p4")
 
-(require 'google-c-style)
+(use-package google-c-style
+  :ensure t)
 
-
-
-;;Change default Perl mode to CPerl-mode
-(setq auto-mode-alist
-      (append '(("\\.p[lm]\\'" . cperl-mode))
-	      auto-mode-alist
-	      ))
-
+(use-package cperl-mode
+  :ensure t
+  :mode "\\.p[lm]\\'")
 
 ;;For PHP
-(autoload 'php-mode "php-mode" "PHP major mode" t nil)
-(add-hook 'php-mode-hook 'turn-on-font-lock)
-(setq auto-mode-alist
-      (append '(
-		("\\.php$" . php-mode)
-		("\\.phtml$" . php-mode))
-	      auto-mode-alist
-		))
+(use-package php-mode
+  :mode (("\\.php$" . php-mode)
+         ("\\.phtml$" . php-mode))
+  :config
+  (add-hook 'php-mode-hook 'turn-on-font-lock))
 
 ;;; Some useful C-mode stuff
 (add-hook 'c-mode-common-hook
@@ -38,66 +31,92 @@
             (turn-on-font-lock)))
 
 (require 'generic-x)
-(autoload 'js2-mode "js2-mode" "Fancy mode for editing JS" t)
-(add-to-list 'auto-mode-alist '("\\.jsx?$" . js2-mode))
-;;TODO: refine path and make project-specific settings
-(defun my:js2-externs (filename)
-  (if (not filename)
-      nil
-    (let ((path-list (split-string (file-name-directory filename) "/"))
-          (base-includes '("global")))
-      (when (member "keymaker" path-list)
-        (cond
-         ((member "test" path-list) (append '("describe" "before" "beforeEach" "after" "afterEach" "it" "assert" "sinon" "include") base-includes))
-         ((member "src" path-list) (append '("global") base-includes))
-         ((member "lib" path-list) (append '("global" "include" "process"))))))))
 
-(add-hook 'js2-mode-hook
-	  (function (lambda ()
-		      (local-unset-key (kbd "C-c C-a"))
-                      (js2-mode-hide-warnings-and-errors)
-		      (set-variable 'indent-tabs-mode nil)
-                      (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name))))))
-(set-variable 'js2-global-externs '("require" "module"))
+(use-package js2-mode
+  :mode "\\.jsx?$"
+  :config
+  (defun my:js2-externs (filename)
+    (if (not filename)
+        nil
+      (let ((path-list (split-string (file-name-directory filename) "/"))
+            (base-includes '("global")))
+        (when (member "keymaker" path-list)
+          (cond
+           ((member "test" path-list) (append '("describe" "before" "beforeEach" "after" "afterEach" "it" "assert" "sinon" "include") base-includes))
+           ((member "src" path-list) (append '("global") base-includes))
+           ((member "lib" path-list) (append '("global" "include" "process"))))))))
 
+  (add-hook 'js2-mode-hook
+            (function (lambda ()
+                        (local-unset-key (kbd "C-c C-a"))
+                        (js2-mode-hide-warnings-and-errors)
+                        (set-variable 'indent-tabs-mode nil)
+                        (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name))))))
+  (set-variable 'js2-global-externs '("require" "module"))
+  )
 
-(autoload 'css-mode "css-mode" "Mode for editing CSS files" t)
-(add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
+(use-package css-mode
+  :ensure t
+  :mode "\\.css$")
 
-(autoload 'markdown-mode "markdown-mode" "Major mode for Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+(use-package less-css-mode
+  :ensure t
+  :mode "\\.less$")
 
-(add-hook 'jade-mode-hook
-	  (lambda ()
-	    (set-variable 'tab-width 4)))
+(use-package markdown-mode
+  :ensure t
+  :mode (("\\.md$" . markdown-mode)
+         ("\\.markdown$" . markdown-mode)))
+
+(use-package jade-mode
+  :ensure t
+  :config
+  (add-hook 'jade-mode-hook
+            (lambda ()
+              (set-variable 'tab-width 4))))
 
 (setq nxml-child-indent 4)
 
 (when (not my:osx)
-  (require 'dired-details+))
+  (use-package dired-details+
+    :ensure t))
 
 ;;Haskell
-(autoload 'ghc-init "ghc" nil t)
-(autoload 'ghc-debug "ghc" nil t)
-(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook 'ghc-init)
-(add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
+(use-package haskell-mode
+  :ensure t
+  :mode "\\.hs$"
+  :config
+  (autoload 'ghc-init "ghc" nil t)
+  (autoload 'ghc-debug "ghc" nil t)
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook 'ghc-init))
 
 ;;Haml
-(add-hook 'haml-mode-hook (lambda ()
-			    (local-unset-key (kbd "DEL"))))
+(use-package haml-mode
+  :ensure t
+  :config
+  (add-hook 'haml-mode-hook (lambda ()
+                              (local-unset-key (kbd "DEL")))))
 
 ;;Magit
-(require 'magit-gh-pulls)
-(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
-(setq magit-branch-read-upstream-first nil)
-(advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
-(setq magit-completing-read-function #'magit-ido-completing-read)
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-branch-read-upstream-first nil)
+  (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
+  (setq magit-completing-read-function #'magit-ido-completing-read))
 
-(require 'auto-complete-config)
-(ac-config-default)
+(use-package magit-gh-pulls
+  :ensure t
+  :config
+  (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
+
+(use-package auto-complete
+  :ensure t
+  :config
+  (require 'auto-complete-config)
+  (ac-config-default))
 
 ;;Eclim
 ;(require 'ac-emacs-eclim-source)
@@ -113,44 +132,57 @@
                             (fmt (concat "%" (number-to-string w) "d")))
                        (propertize (format fmt line) 'face 'linum))))
 
-(autoload 'web-mode "web-mode" "web editing mode" t)
-(add-to-list 'auto-mode-alist '("\\.html?$" . web-mode))
+(use-package web-mode
+  :ensure t
+  :mode "\\.html?$")
 
-(autoload 'lua-mode "lua-mode" "lua mode" t)
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(use-package lua-mode
+  :ensure t
+  :mode "\\.lua$" )
 
-(autoload 'arduino-mode "arduino-mode" "arduino mode" t)
-(add-to-list 'auto-mode-alist '("\\.ino$" . c-mode))
-(add-to-list 'auto-mode-alist '("\\.pde$" . c-mode))
+(use-package arduino-mode
+  :ensure t
+  :mode (("\\.ino$" . cc-mode)
+         ("\\.pde$" . cc-mode)))
 
-(require 'win-switch)
-(defun win-switch-setup-keys-hjkl (&rest dispatch-keys)
-  (interactive)
-  (win-switch-set-keys '("j") 'down)
-  (win-switch-set-keys '("k") 'up)
-  (win-switch-set-keys '("h") 'left)
-  (win-switch-set-keys '("l") 'right)
-  (win-switch-set-keys '("J") 'shrink-vertically)
-  (win-switch-set-keys '("K") 'enlarge-vertically)
-  (win-switch-set-keys '("H") 'shrink-horizontally)
-  (win-switch-set-keys '("L") 'enlarge-horizontally)
-  (win-switch-set-keys '(" ") 'other-frame)
-  (win-switch-set-keys '("r" [return] [escape]) 'exit)
-  (win-switch-set-keys '("3") 'split-horizontally)
-  (win-switch-set-keys '("2") 'split-vertically)
-  (win-switch-set-keys '("0") 'delete-window)
-  (win-switch-set-keys '("\M-\C-g") 'emergency-exit)
-  (dolist (key dispatch-keys)
-    (global-set-key key 'win-switch-dispatch)))
-(setq win-switch-idle-time 2)
-(setq win-switch-window-threshold 0)
+(use-package win-switch
+  :ensure t
+  :config
+  (defun win-switch-setup-keys-hjkl (&rest dispatch-keys)
+    (interactive)
+    (win-switch-set-keys '("j") 'down)
+    (win-switch-set-keys '("k") 'up)
+    (win-switch-set-keys '("h") 'left)
+    (win-switch-set-keys '("l") 'right)
+    (win-switch-set-keys '("J") 'shrink-vertically)
+    (win-switch-set-keys '("K") 'enlarge-vertically)
+    (win-switch-set-keys '("H") 'shrink-horizontally)
+    (win-switch-set-keys '("L") 'enlarge-horizontally)
+    (win-switch-set-keys '(" ") 'other-frame)
+    (win-switch-set-keys '("r" [return] [escape]) 'exit)
+    (win-switch-set-keys '("3") 'split-horizontally)
+    (win-switch-set-keys '("2") 'split-vertically)
+    (win-switch-set-keys '("0") 'delete-window)
+    (win-switch-set-keys '("\M-\C-g") 'emergency-exit)
+    (dolist (key dispatch-keys)
+      (global-set-key key 'win-switch-dispatch)))
 
-(autoload 'typescript-mode "typescript-mode" "typescript mode" t)
-(add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
+  (win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o"))
+  (setq win-switch-idle-time 2)
+  (setq win-switch-window-threshold 0))
 
-(autoload 'json-mode "json-mode" "JSON mode" t)
-(add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
-(add-hook 'json-mode-hook
-          (lambda ()
-            (make-local-variable 'js-indent-level)
-            (setq js-indent-level 2)))
+(use-package typescript-mode
+  :ensure t
+  :mode "\\.ts$")
+
+(use-package json-mode
+  :mode "\\.json$"
+  :config
+  (add-hook 'json-mode-hook
+            (lambda ()
+              (make-local-variable 'js-indent-level)
+              (setq js-indent-level 2))))
+
+(use-package elm-mode
+  :ensure t
+  :mode "\\.elm$")

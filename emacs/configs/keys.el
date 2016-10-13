@@ -22,5 +22,3 @@
 (cond ((not window-system)
 	    (global-set-key (kbd "<deletechar>") 'backward-delete-char)
 	    ))
-
-(win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o"))

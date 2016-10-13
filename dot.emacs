@@ -6,7 +6,7 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;;(package-initialize)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -47,7 +47,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(package-selected-packages
    (quote
-    (groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+    (esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(tls-checktrust t))
 (custom-set-faces
@@ -94,11 +94,10 @@
          (format "gnutls-cli%s --x509cafile %s -p %%p %%h"
                  (if (eq window-system 'w32) ".exe" "") trustfile))))
 
-(my:load-config-file '((lambda () (if my:osx "osx.el" nil))
+(my:load-config-file '("package-bootstrap.el"
+		       (lambda () (if my:osx "osx.el" nil))
                        "secrets.el"
                        "gh.el"
-                       "package.el"
-                       (lambda () (if my:osx "osx-post-init.el" nil))
 		       "org-mode-init.el"
 		       "evil.el"
 		       "faces.el"
@@ -117,33 +116,60 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
-;;Org-mode local customizations:
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
-(setq org-directory "~/Dropbox/org")
-
 ;;Global mode enablement
 (global-linum-mode t)
 (show-paren-mode t)
 (savehist-mode t)
 (electric-indent-mode t)
-(projectile-global-mode)
-(require 'editorconfig)
-(editorconfig-mode 1)
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 
-(add-to-list 'projectile-globally-ignored-directories "node_modules")
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode)
+  (add-to-list 'projectile-globally-ignored-directories "node_modules"))
+
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
-(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode t))
 
 ;;ido
-(require 'flx-ido)
-(ido-mode t)
-(ido-everywhere t)
-(flx-ido-mode t)
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
+(use-package flx-ido
+             :ensure t
+             :config
+             (progn
+               (ido-mode t)
+               (ido-everywhere t)
+               (flx-ido-mode t)
+               (setq ido-enable-flex-matching t)
+               (setq ido-use-faces nil)))
+
+(use-package ido-completing-read+
+  :ensure t)
+
+(use-package ag
+  :ensure t)
+
+(use-package ack-and-a-half
+  :ensure t)
+
+(use-package find-file-in-repository
+  :ensure t)
+
+(use-package exec-path-from-shell
+  :ensure t
+  :init
+  (when my:osx (exec-path-from-shell-initialize)))
+
 
 ;;Tramp defaults
 (setq tramp-default-method "ssh")
@@ -159,9 +185,12 @@
         (run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
 ;;Smart mode line
-(require 'smart-mode-line)
-(sml/setup)
-(sml/apply-theme 'light)
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (sml/setup)
+  (sml/apply-theme 'light))
+
 
 ;;Eclim - java dev only, put in work?
 ;(require 'eclim)
