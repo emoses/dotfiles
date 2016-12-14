@@ -34,6 +34,13 @@ then
     then
         ln -s $DIR/hammerspoon.lua $HOME/.hammerspoon/init.lua
     fi
+else
+    echo "No MacOS, Setting up i3"
+    mkdir $HOME/.i3
+    if [ ! -e $HOME/.i3/config ]
+    then
+        ln -s $DIR/i3config $HOME/.i3/i3config
+    fi
 fi
 
 echo "Installing python certifi package for emacs support..."
