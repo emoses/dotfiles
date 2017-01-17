@@ -55,6 +55,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
+ '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0")))))
@@ -167,8 +169,10 @@
 
 (use-package exec-path-from-shell
   :ensure t
-  :init
-  (when my:osx (exec-path-from-shell-initialize)))
+  :config
+  (when my:osx
+    (add-to-list 'exec-path-from-shell-arguments "--norc")
+        (exec-path-from-shell-initialize)))
 
 
 ;;Tramp defaults

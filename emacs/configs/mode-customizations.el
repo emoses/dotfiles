@@ -132,6 +132,22 @@
                             (fmt (concat "%" (number-to-string w) "d")))
                        (propertize (format fmt line) 'face 'linum))))
 
+(use-package ediff
+  :defer t
+  :config
+  (defun my:quit-ediff-kill-buffers ()
+    (interactive)
+    (ediff-barf-if-not-control-buffer)
+    (let ((ed-frame (window-frame ediff-window-A)))
+      (ediff-quit t)
+      (kill-buffer ediff-buffer-A)
+      (kill-buffer ediff-buffer-B)
+      (kill-buffer ediff-buffer-C)
+      (when ed-frame
+        (delete-frame ed-frame))))
+  (add-hook 'ediff-keymap-setup-hook (lambda ()
+                               (define-key ediff-mode-map "Q" #'my:quit-ediff-kill-buffers))))
+
 (use-package web-mode
   :ensure t
   :mode "\\.html?$")
