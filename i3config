@@ -6,8 +6,7 @@
 # # i3 config file (v4) # # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 #Compositing with compton
-exec compton -bC
-#--config /home/emoses/.compton.conf
+exec --no-startup-id compton -bC --config /home/emoses/.compton.conf
 
 #Set up screens
 set $w1 1
@@ -21,8 +20,11 @@ set $w8 8
 set $w9 9
 set $w10 10
 
-workspace $w1 output DP-1
-workspace $w2 output DVI-I-1
+set $display1 DP-1.1
+set $display2 DP-1.8
+
+workspace $w1 output $display1
+workspace $w2 output $display2
 
 set $mod Mod4
 
@@ -37,13 +39,13 @@ floating_modifier $mod
 
 #start basic utils
 exec --no-startup-id xbindkeys -f ~/.xbindkeysrc
-exec google-chrome
+exec --no-startup-id i3-msg 'workspace2: chrome; exec google-chrome'
 exec gnome-sound-applet
-exec slack
-exec emacs --daemon
+exec --no-startup-id emacs --daemon
 
 assign [class="^P4v"] $w5
 assign [class="Eclipse"] $w3
+assign [class="jetbrains*"] $w3
 assign [class="Slack"] $w6
 
 # Pulse Audio controls
