@@ -1,6 +1,13 @@
 ;;; -*- mode: emacs-lisp -*-
 ;;; Evan Moses .emacs
 ;;; Feel free to copy
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+;;(package-initialize)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,7 +31,7 @@
      (speedbar-buffers-key-map)
      (cider-popup-buffer-mode-map)
      (cider-stacktrace-mode-map))))
- '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc)))
+ '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc python-pylint)))
  '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
  '(js2-strict-inconsistent-return-warning nil)
@@ -38,12 +45,18 @@
    (quote
     (org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse)))
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+ '(package-selected-packages
+   (quote
+    (esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+ '(safe-local-variable-values (quote ((create-lockfiles))))
  '(tls-checktrust t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
+ '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0")))))
@@ -83,11 +96,10 @@
          (format "gnutls-cli%s --x509cafile %s -p %%p %%h"
                  (if (eq window-system 'w32) ".exe" "") trustfile))))
 
-(my:load-config-file '((lambda () (if my:osx "osx.el" nil))
+(my:load-config-file '("package-bootstrap.el"
+		       (lambda () (if my:osx "osx.el" nil))
                        "secrets.el"
                        "gh.el"
-                       "package.el"
-                       (lambda () (if my:osx "osx-post-init.el" nil))
 		       "org-mode-init.el"
 		       "evil.el"
 		       "faces.el"
@@ -106,33 +118,62 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
-;;Org-mode local customizations:
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
-(setq org-directory "~/Dropbox/org")
-
 ;;Global mode enablement
 (global-linum-mode t)
 (show-paren-mode t)
 (savehist-mode t)
 (electric-indent-mode t)
-(projectile-global-mode)
-(require 'editorconfig)
-(editorconfig-mode 1)
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 
-(add-to-list 'projectile-globally-ignored-directories "node_modules")
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode)
+  (add-to-list 'projectile-globally-ignored-directories "node_modules"))
+
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
-(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode t))
 
 ;;ido
-(require 'flx-ido)
-(ido-mode t)
-(ido-everywhere t)
-(flx-ido-mode t)
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
+(use-package flx-ido
+             :ensure t
+             :config
+             (progn
+               (ido-mode t)
+               (ido-everywhere t)
+               (flx-ido-mode t)
+               (setq ido-enable-flex-matching t)
+               (setq ido-use-faces nil)))
+
+(use-package ido-completing-read+
+  :ensure t)
+
+(use-package ag
+  :ensure t)
+
+(use-package ack-and-a-half
+  :ensure t)
+
+(use-package find-file-in-repository
+  :ensure t)
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when my:osx
+    (add-to-list 'exec-path-from-shell-arguments "--norc")
+        (exec-path-from-shell-initialize)))
+
 
 ;;Tramp defaults
 (setq tramp-default-method "ssh")
@@ -140,12 +181,20 @@
 
 ;;Misc
 (put 'scroll-left 'disabled nil)
-(setq visible-bell t)
+;;Visible-bell causes problems in OSX, so blink the mode-line instead
+(setq visible-bell nil)
+(setq ring-bell-function
+      (lambda ()
+        (invert-face 'mode-line)
+        (run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
 ;;Smart mode line
-(require 'smart-mode-line)
-(sml/setup)
-(sml/apply-theme 'light)
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (sml/setup)
+  (sml/apply-theme 'light))
+
 
 ;;Eclim - java dev only, put in work?
 ;(require 'eclim)

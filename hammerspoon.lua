@@ -38,16 +38,20 @@ local work_display_table = {
    Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
    ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 5}},
    ["Google Chrome"] = {1, {x = 0, y = 0, w = 4, h = 5}},
+   Firefox = {1, {x = 0, y = 0, w = 4, h = 5}},
    Slack = {1, {x = 4, y = 0, w = 3, h = 3}},
-   Terminal = {1, {x = 4, y = 3, w = 3, h = 2}}
+   Terminal = {1, {x = 4, y = 3, w = 3, h = 2}},
+   iTerm2 = {1, {x = 4, y = 3, w = 3, h = 2}}
 }
 
 local home_display_table = {
    Emacs = {1, {x = 0, y = 0, w = 7, h = 5}},
    ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
    ["Google Chrome"] = {2, {x = 0, y = 0, w = 7, h = 5}},
+   Firefox = {2, {x = 0, y = 0, w = 7, h = 5}},
    Slack = {2, {x = 1, y = 0, w = 6, h = 5}},
-   Terminal = {1, {x = 4, y = 3, w = 3, h = 2}}
+   Terminal = {1, {x = 4, y = 3, w = 3, h = 2}},
+   iTerm2 = {1, {x = 4, y = 3, w = 3, h = 2}}
 }
 
 
@@ -62,9 +66,9 @@ local apply_layout = function(layout)
    for appName, place in pairs(layout) do
       local app = hs.appfinder.appFromName(appName)
       if (app) then
+         local scrs = hs.screen.allScreens()
+         local src = scrs[place[1]]
          for i, win in ipairs(app:allWindows()) do
-            local scrs = hs.screen:allScreens()
-            local src = scrs[place[1]]
             hs.grid.set(win, place[2], src)
          end
       end

@@ -1,23 +1,21 @@
 (require 'package)
-(setq package-archives `(("gnu" . "https://elpa.gnu.org/packages")
-                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+(setq package-archives `(("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")))
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
 
 (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
 ;(add-to-list 'package-load-list '(magit-gh-pulls "0.5.1"))
 
-(package-initialize)
-
-
-(defvar packages-list '(org
+(defvar packages-list '(use-package
+                           org
 		    clojure-mode
 		    cider
 		    rainbow-delimiters
 		    paredit
                         evil-paredit
 		    js2-mode
+                    json-mode
 		    evil
 		    find-file-in-repository
 		    markdown-mode
@@ -45,7 +43,8 @@
                     win-switch
                     ido-completing-read+
                     editorconfig
-                    typescript-mode))
+                    typescript-mode
+                    elm-mode))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil
@@ -53,3 +52,10 @@
   (unless (null uninstalled-packages)
     (package-refresh-contents)
     (mapc 'package-install uninstalled-packages)))
+
+(eval-when-compile
+  (require 'use-package))
+
+(use-package groovy-mode
+  :mode "\\.groovy\\'"
+  :ensure t)

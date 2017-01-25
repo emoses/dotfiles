@@ -3,8 +3,32 @@
   (show-paren-mode)
   (rainbow-delimiters-mode t))
 
+(use-package cider
+  :ensure t
+  :pin melpa-stable)
 
-(add-hook 'clojure-mode-hook #'lisp-modes)
+(use-package evil-paredit
+  :ensure t)
+
+(use-package rainbow-delimiters
+  :ensure t)
+
+(use-package paredit
+  :ensure t
+  :bind (:map paredit-mode-map
+              ([C-right] . forward-word)
+              ([C-left] . backward-word)
+              ([M-right] . paredit-forward-slurp-sexp)
+              ([M-left] . paredit-forward-barf-sexp))
+  :config
+  (evil-paredit-mode t)
+  )
+
+(use-package clojure-mode
+  :ensure t
+  :config
+  (add-hook 'clojure-mode-hook #'lisp-modes))
+
 (add-hook 'emacs-lisp-mode-hook #'lisp-modes)
 
 
@@ -14,10 +38,4 @@
 	    (show-paren-mode t)
 	    (rainbow-delimiters-mode t)))
 
-(eval-after-load 'paredit
-  '(progn
-     (evil-paredit-mode t)
-     (define-key paredit-mode-map (kbd "C-<right>") 'forward-word)
-     (define-key paredit-mode-map (kbd "C-<left>") 'backward-word)
-     (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward-slurp-sexp)
-     (define-key paredit-mode-map (kbd "M-<left>") 'paredit-forward-barf-sexp)))
+(setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
