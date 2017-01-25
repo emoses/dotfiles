@@ -38,14 +38,12 @@ floating_modifier $mod
 
 #start basic utils
 exec --no-startup-id xbindkeys -f ~/.xbindkeysrc
-exec pidgin
 exec google-chrome
 exec gnome-sound-applet
 
 assign [class="^P4v"] $w5
 assign [class="Eclipse"] $w3
-assign [class="Xchat"] $w6
-assign [class="HipChat"] $w6
+assign [class="Slack"] $w6
 
 
 # start a terminal

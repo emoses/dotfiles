@@ -39,7 +39,7 @@ else
     mkdir $HOME/.i3
     if [ ! -e $HOME/.i3/config ]
     then
-        ln -s $DIR/i3config $HOME/.i3/i3config
+        ln -s $DIR/i3config $HOME/.i3/config
     fi
 fi
 

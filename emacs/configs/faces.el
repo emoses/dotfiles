@@ -9,7 +9,7 @@
 (use-package base16-theme
   :ensure t
   :init
-  (load-theme 'base16-tomorrow-dark))
+  (load-theme 'base16-tomorrow-night))
 
 ;;;Set up my favorite syntax-hilighting colors
 ;;(cond ((fboundp 'global-font-lock-mode)
