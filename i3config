@@ -3,17 +3,13 @@
 #
 # Should you change your keyboard layout somewhen, delete
 # this file and re-run i3-config-wizard(1).
-#
-
-# i3 config file (v4)
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+# # i3 config file (v4) # # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 #Compositing with compton
-exec compton -bC --config /home/emoses/.compton.conf
+exec compton -bC
+#--config /home/emoses/.compton.conf
 
 #Set up screens
-
 set $w1 1
 set $w2 "2: chrome"
 set $w3 "3: eclipse"
@@ -30,6 +26,9 @@ workspace $w2 output DVI-I-1
 
 set $mod Mod4
 
+#pulseaudio sink number
+set $audioSink 2
+
 # font for window titles. ISO 10646 = Unicode
 font pango: Anonymous Pro 12
 
@@ -40,11 +39,16 @@ floating_modifier $mod
 exec --no-startup-id xbindkeys -f ~/.xbindkeysrc
 exec google-chrome
 exec gnome-sound-applet
+exec slack
+exec emacs --daemon
 
 assign [class="^P4v"] $w5
 assign [class="Eclipse"] $w3
 assign [class="Slack"] $w6
 
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $audioSink +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $audioSink -- -5% #decrease sound
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
@@ -52,7 +56,7 @@ bindsym $mod+t exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+Q kill
-bindsym Mod1+F4 kill
+bindsym $mod+F4 kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
@@ -69,7 +73,7 @@ exec xautolock -locker 'i3lock --color=000000' -time 10
 bindsym $mod+ctrl+l exec i3lock --color=000000
 
 #winmenu from i3-py
-bindsym $mod+Tab exec winmenu.py
+bindsym $mod+Tab exec quickswitch.py
 
 #move to other screen
 bindsym $mod+ctrl+Shift+Right move workspace to output right
@@ -115,7 +119,7 @@ bindsym $mod+f fullscreen
 # change container layout (stacked, tabbed, default)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout default
+bindsym $mod+Shift+W layout default
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -164,41 +168,41 @@ bindsym $mod+Shift+E exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+    # These bindings trigger as soon as you enter the resize mode
 
-        # They resize the border in the direction you pressed, e.g.
-        # when pressing left, the window is resized so that it has
-        # more space on its left
+    # They resize the border in the direction you pressed, e.g.
+    # when pressing left, the window is resized so that it has
+    # more space on its left
 
-bindsym h resize shrink left 10 px or 10 ppt
-bindsym Shift+H resize grow   left 10 px or 10 ppt
+    bindsym h resize shrink left 10 px or 10 ppt
+    bindsym Shift+H resize grow   left 10 px or 10 ppt
 
-bindsym j resize shrink down 10 px or 10 ppt
-bindsym Shift+J resize grow   down 10 px or 10 ppt
+    bindsym j resize shrink down 10 px or 10 ppt
+    bindsym Shift+J resize grow   down 10 px or 10 ppt
 
-bindsym k resize shrink up 10 px or 10 ppt
-bindsym Shift+K resize grow   up 10 px or 10 ppt
+    bindsym k resize shrink up 10 px or 10 ppt
+    bindsym Shift+K resize grow   up 10 px or 10 ppt
 
-bindsym l resize shrink right 10 px or 10 ppt
-bindsym Shift+L resize grow   right 10 px or 10 ppt
+    bindsym l resize shrink right 10 px or 10 ppt
+    bindsym Shift+L resize grow   right 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-bindsym Left resize shrink left 10 px or 10 ppt
-bindsym Shift+Left resize grow   left 10 px or 10 ppt
+            # same bindings, but for the arrow keys
+    bindsym Left resize shrink left 10 px or 10 ppt
+    bindsym Shift+Left resize grow   left 10 px or 10 ppt
 
-bindsym Down resize shrink down 10 px or 10 ppt
-bindsym Shift+Down resize grow   down 10 px or 10 ppt
+    bindsym Down resize shrink down 10 px or 10 ppt
+    bindsym Shift+Down resize grow   down 10 px or 10 ppt
 
-bindsym Up resize shrink up 10 px or 10 ppt
-bindsym Shift+Up resize grow   up 10 px or 10 ppt
+    bindsym Up resize shrink up 10 px or 10 ppt
+    bindsym Shift+Up resize grow   up 10 px or 10 ppt
 
-bindsym Right resize shrink right 10 px or 10 ppt
-bindsym Shift+Right resize grow   right 10 px or 10 ppt
+    bindsym Right resize shrink right 10 px or 10 ppt
+    bindsym Shift+Right resize grow   right 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
-bindsym Return mode "default"
-bindsym Escape mode "default"
-bindsym Ctrl+[ mode "default"
+            # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym Ctrl+[ mode "default"
 }
 
 bindsym $mod+r mode "resize"
