@@ -1,8 +1,15 @@
+(use-package evil-leader
+  :ensure t)
+
+(use-package evil-org
+  :load-path "~/.emacs.d/plugins/evil-org-mode")
+
 (use-package evil
   :ensure t
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))
   :config
+  (global-evil-leader-mode 1)
   (evil-mode 1)
   (setq evil-default-cursor t)
 
