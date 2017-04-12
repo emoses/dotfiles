@@ -34,6 +34,7 @@
  '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc python-pylint)))
  '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
+ '(js2-global-externs (quote ("require" "module")))
  '(js2-strict-inconsistent-return-warning nil)
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
@@ -47,7 +48,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(package-selected-packages
    (quote
-    (esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+    (evil-leader esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(tls-checktrust t))
 (custom-set-faces
@@ -97,6 +98,7 @@
                  (if (eq window-system 'w32) ".exe" "") trustfile))))
 
 (my:load-config-file '("package-bootstrap.el"
+                       "commandline.el"
 		       (lambda () (if my:osx "osx.el" nil))
                        "secrets.el"
                        "gh.el"
@@ -117,6 +119,10 @@
   (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
+(when (and my:osx ))
+(setq default-frame-alist
+      '((width . 250)
+        (height . 70)))
 
 ;;Global mode enablement
 (global-linum-mode t)
