@@ -32,6 +32,12 @@
   :config
   (add-hook 'clojure-mode-hook #'lisp-modes))
 
+(use-package inf-clojure
+  :ensure t
+  :config
+  (add-hook 'clojure-mode-hook #'inf-clojure-minor-mode)
+  (setq inf-clojure-program '("localhost" . 5555)))
+
 (add-hook 'emacs-lisp-mode-hook #'lisp-modes)
 
 
