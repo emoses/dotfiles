@@ -5,7 +5,10 @@
 
 (use-package cider
   :ensure t
-  :pin melpa-stable)
+  :pin melpa-stable
+  :config
+  (when (eq system-type 'windows-nt)
+    (setq cider-lein-command "lein.bat")))
 
 (use-package evil-paredit
   :ensure t)

@@ -77,7 +77,7 @@
 
 (setq nxml-child-indent 4)
 
-(when (not my:osx)
+(when (not (boundp 'my:osx))
   (use-package dired-details+
     :ensure t))
 
