@@ -99,7 +99,7 @@
                  (if (eq window-system 'w32) ".exe" "") trustfile))))
 
 (my:load-config-file '("package-bootstrap.el"
-                       "commandline.el"
+                       ;"commandline.el"
 		       (lambda () (if my:osx "osx.el" nil))
                        "secrets.el"
                        "gh.el"

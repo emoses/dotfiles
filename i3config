@@ -39,9 +39,10 @@ floating_modifier $mod
 
 #start basic utils
 exec --no-startup-id xbindkeys -f ~/.xbindkeysrc
-exec --no-startup-id i3-msg 'workspace2: chrome; exec google-chrome'
+exec --no-startup-id i3-msg 'workspace 2: chrome; exec google-chrome'
 exec gnome-sound-applet
 exec --no-startup-id emacs --daemon
+exec --no-startup-id i3-msg 'workspace 1; exec ec ~/ownCloud/org/work.org'
 
 assign [class="^P4v"] $w5
 assign [class="Eclipse"] $w3
