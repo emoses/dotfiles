@@ -18,8 +18,10 @@ if there is no schedule (so these are sorted to the bottom)"
          ("C-c i" . org-toggle-item)
          ("C-c h" . org-toggle-heading))
   :config
-  (setq org-mobile-directory "~/Dropbox/MobileOrg")
-  (setq org-directory "~/Dropbox/org")
+  (setq org-mobile-directory "~/ownCloud/MobileOrg")
+  (setq org-directory "~/ownCloud/org")
+  (setq org-agenda-files (mapcar (lambda (f) (expand-file-name f org-directory))
+                                 '("work.org" "home.org")))
   (require 'org-install)
   (add-hook 'org-mode-hook
             (lambda ()

@@ -38,7 +38,7 @@
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
- '(org-agenda-files (quote ("~/Dropbox/org/work.org" "~/Dropbox/org/home.org")))
+ '(org-agenda-files (quote ("work.org" "home.org")))
  '(org-log-done (quote time))
  '(org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org"))
  '(org-modules
@@ -47,7 +47,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(package-selected-packages
    (quote
-    (evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+    (nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(tls-checktrust t))
 (custom-set-faces
@@ -59,7 +59,8 @@
  '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
- '(linum ((t (:background "#282a2e" :foreground "#e0e0e0")))))
+ '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
+ '(org-todo ((t (:foreground "#cc6666" :weight bold)))))
 
 ;; default xemacs configuration directory
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
@@ -123,10 +124,22 @@
         (height . 70)))
 
 ;;Global mode enablement
-(global-linum-mode t)
 (show-paren-mode t)
 (savehist-mode t)
 (electric-indent-mode t)
+
+(use-package nlinum
+  :ensure t
+  :config
+  (defun my:nlinum-hook-min-lines ()
+    (when nlinum-mode
+      (let* ((approx-lines (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
+            (lineno-width (max 3 approx-lines)))
+        (setq-local nlinum-format
+                    (concat "%" (number-to-string lineno-width) "d")))))
+  (add-hook 'nlinum-mode-hook #'my:nlinum-hook-min-lines)
+  (global-nlinum-mode t))
+
 (use-package editorconfig
   :ensure t
   :config
