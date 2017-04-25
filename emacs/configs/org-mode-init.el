@@ -27,6 +27,7 @@ if there is no schedule (so these are sorted to the bottom)"
             (lambda ()
               (org-defkey org-mode-map (kbd "RET") 'org-return-indent)
               (org-defkey org-mode-map "\C-j" 'org-return)))
+  (global-set-key (kbd  "C-c C-`") #'org-cycle-agenda-files)
   (setq org-hide-leading-stars t)
   (setq org-odd-levels-only t)
 
