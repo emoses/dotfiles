@@ -16,6 +16,9 @@
 (global-set-key (kbd "C-c c c") 'lower-camel-case-region-or-word)
 (global-set-key (kbd "C-c c C") 'camel-case-region-or-word)
 (global-set-key (kbd "C-x C-h") 'sudo-edit-etc-hosts)
+(defvar mouse-wheel-horizonal-scroll-amount 5)
+(global-set-key (kbd "<mouse-7>") (lambda () (interactive) (scroll-left mouse-wheel-horizonal-scroll-amount)))
+(global-set-key (kbd "<mouse-6>") (lambda () (interactive) (scroll-right mouse-wheel-horizonal-scroll-amount)))
 
 ;;; If I'm using a terminal, set delete to backwards delete
 ;;; I find this fixes a lot of the trouble I have with the delete button

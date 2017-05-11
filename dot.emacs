@@ -39,7 +39,6 @@
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
- '(org-agenda-files (quote ("work.org" "home.org")))
  '(org-log-done (quote time))
  '(org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org"))
  '(org-modules

@@ -11,7 +11,7 @@ exec --no-startup-id compton -bC --config /home/emoses/.compton.conf
 #Set up screens
 set $w1 1
 set $w2 "2: chrome"
-set $w3 "3: eclipse"
+set $w3 "3: ide"
 set $w4 4
 set $w5 "5: perforce"
 set $w6 "6: irc"
@@ -29,7 +29,7 @@ workspace $w2 output $display2
 set $mod Mod4
 
 #pulseaudio sink number
-set $audioSink 2
+set $audioSink "alsa_output.usb-Logitech_Logitech_USB_Headset-00-Headset.analog-stereo"
 
 # font for window titles. ISO 10646 = Unicode
 font pango: Anonymous Pro 12
@@ -39,10 +39,12 @@ floating_modifier $mod
 
 #start basic utils
 exec --no-startup-id xbindkeys -f ~/.xbindkeysrc
-exec --no-startup-id i3-msg 'workspace 2: chrome; exec google-chrome'
+exec --no-startup-id i3-msg 'workspace $w2; exec google-chrome'
 exec gnome-sound-applet
 exec --no-startup-id emacs --daemon
-exec --no-startup-id i3-msg 'workspace 1; exec ec ~/ownCloud/org/work.org'
+exec --no-startup-id owncloud
+#needs a sleep to give time for the daemon to start
+exec --no-startup-id i3-msg 'sleep 5; workspace $w1; exec ec ~/ownCloud/org/work.org'
 
 assign [class="^P4v"] $w5
 assign [class="Eclipse"] $w3
@@ -72,7 +74,7 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -P 'Jump to mar
 bindsym $mod+i exec i3-input -F '%s' -P 'Cmd: '
 
 # lock screen
-exec xautolock -locker 'i3lock --color=000000' -time 10
+exec --no-startup-id xautolock -locker 'i3lock --color=000000' -time 10
 bindsym $mod+ctrl+l exec i3lock --color=000000
 
 #winmenu from i3-py
