@@ -56,8 +56,4 @@ if there is no schedule (so these are sorted to the bottom)"
   ;;   (if rememberFn
   ;;       (define-key global-map "\C-cr" rememberFn)))
 
-  (setq org-default-notes-file (expand-file-name "notes.org" org-directory))
-
-
-
-
+  (setq org-default-notes-file (expand-file-name "notes.org" org-directory)))
