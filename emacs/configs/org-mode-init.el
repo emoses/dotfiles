@@ -19,6 +19,8 @@ if there is no schedule (so these are sorted to the bottom)"
          ("C-c i" . org-toggle-item)
          ("C-c h" . org-toggle-heading)
          ("C-c r" . org-reveal))
+  :init
+  (add-hook 'org-mode-hook 'flyspell-mode)
   :config
   (require 'org-install)
   ;;normally bound to org-reveal, but that's moved to C-c r above
@@ -56,4 +58,9 @@ if there is no schedule (so these are sorted to the bottom)"
   ;;   (if rememberFn
   ;;       (define-key global-map "\C-cr" rememberFn)))
 
-  (setq org-default-notes-file (expand-file-name "notes.org" org-directory)))
+  (setq org-default-notes-file (expand-file-name "notes.org" org-directory))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((plantuml . t)))
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+  (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
