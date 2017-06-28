@@ -12,7 +12,7 @@ if there is no schedule (so these are sorted to the bottom)"
 
 (use-package org
   :ensure t
-  :load-path "~/.emacs.d/elpa/org-9.0.6/lisp"
+  :load-path ("~/dev/org-mode/lisp" "~/dev/org-mode/contrib/lisp")
   :mode ("\\.org$" . org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)

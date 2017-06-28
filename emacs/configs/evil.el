@@ -2,7 +2,12 @@
   :ensure t)
 
 (use-package evil-org
-  :load-path "~/.emacs.d/plugins/evil-org-mode")
+  :load-path "~/.emacs.d/plugins/evil-org-mode"
+  :config
+  ;;Unbind J and K from evil org.
+  (evil-define-key 'normal evil-org-mode-map
+    "J" nil
+    "K" nil))
 
 (use-package evil
   :ensure t

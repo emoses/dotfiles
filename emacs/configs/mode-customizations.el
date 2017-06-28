@@ -192,3 +192,7 @@
 (use-package elm-mode
   :ensure t
   :mode "\\.elm$")
+
+(use-package graphql-mode
+  :ensure t
+  :mode "\\.graphqls$")

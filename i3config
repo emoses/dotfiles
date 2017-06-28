@@ -6,7 +6,8 @@
 # # i3 config file (v4) # # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 #Compositing with compton
-exec --no-startup-id compton -bC --config /home/emoses/.compton.conf
+exec --no-startup-id /home/emoses/bin/runIfNotNx compton -bC --config /home/emoses/.compton.conf
+
 
 #Set up screens
 set $w1 1
@@ -43,6 +44,7 @@ exec --no-startup-id i3-msg 'workspace $w2; exec google-chrome'
 exec gnome-sound-applet
 exec --no-startup-id emacs --daemon
 exec --no-startup-id owncloud
+exec --no-startup-id slack
 #needs a sleep to give time for the daemon to start
 exec --no-startup-id i3-msg 'sleep 5; workspace $w1; exec ec ~/ownCloud/org/work.org'
 
@@ -74,7 +76,7 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -P 'Jump to mar
 bindsym $mod+i exec i3-input -F '%s' -P 'Cmd: '
 
 # lock screen
-exec --no-startup-id xautolock -locker 'i3lock --color=000000' -time 10
+exec --no-startup-id /home/emoses/bin/runIfNotNx xautolock -locker 'i3lock --color=000000' -time 10
 bindsym $mod+ctrl+l exec i3lock --color=000000
 
 #winmenu from i3-py
@@ -83,6 +85,8 @@ bindsym $mod+Tab exec quickswitch.py
 #move to other screen
 bindsym $mod+ctrl+Shift+Right move workspace to output right
 bindsym $mod+ctrl+Shift+Left move workspace to output left
+bindsym $mod+ctrl+Shift+L move workspace to output right
+bindsym $mod+ctrl+Shift+H move workspace to output left
 
 # change focus
 bindsym $mod+h focus left
