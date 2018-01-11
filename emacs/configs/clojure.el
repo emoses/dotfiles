@@ -28,7 +28,12 @@
 
 (use-package cider
   :ensure t
-  :pin melpa-stable)
+  :pin melpa-stable
+  :config
+  (setq cider-cljs-lein-repl
+        "(do (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))"))
 
 ;; Must use either cider or inf-clojure
 ;; (use-package inf-clojure

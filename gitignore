@@ -7,3 +7,7 @@
 .dir-locals.el
 .DS_Store
 __flycheck*
+.tramp_history
+.lein-repl-history
+.lein-failures
+.nrepl-port

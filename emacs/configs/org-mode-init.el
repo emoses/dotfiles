@@ -18,7 +18,8 @@ if there is no schedule (so these are sorted to the bottom)"
          ("C-c a" . org-agenda)
          ("C-c i" . org-toggle-item)
          ("C-c h" . org-toggle-heading)
-         ("C-c r" . org-reveal))
+         ("C-c r" . org-reveal)
+         ("M-q" . org-fill-paragraph))
   :init
   (add-hook 'org-mode-hook 'flyspell-mode)
   :config

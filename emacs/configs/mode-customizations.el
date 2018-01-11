@@ -196,3 +196,14 @@
 (use-package graphql-mode
   :ensure t
   :mode "\\.graphqls$")
+
+(use-package groovy-mode
+  :ensure t
+  :mode "\\.groovy$")
+
+(use-package plantuml-mode
+  :ensure t
+  :defer t
+  :mode "\\.plantuml$"
+  :config
+  (setq plantuml-jar-path "~/lib/plantuml.jar"))
