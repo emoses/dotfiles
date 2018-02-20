@@ -1,45 +1,83 @@
 #!/bin/bash
+set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+INSTDIR=$HOME
+
+if [[ `uname` == "Darwin" ]]
+then
+    OS=mac
+elif [[ `uname -a` =~ Microsoft ]]
+then
+    OS=win
+else
+    OS=unix
+fi
+
+function make_link () {
+    if [[ OS == "win" ]]
+    then
+        mklink $2 $1
+    else
+        ln -s $1 $2
+    fi
+}
+
+
+while getopts ":d:" opt; do
+    case $opt in
+        d)
+            INSTDIR=$OPTARG
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG"
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument."
+            exit 1
+            ;;
+    esac
+done
+echo "Installing to $INSTDIR"
 
 echo "Linking dotfiles..."
 for file in $(ls dot.*)
 do
-    ln -s $DIR/$file $HOME/${file#dot}
+    make_link $DIR/$file $INSTDIR/${file#dot}
 done
 
-ln -s $DIR/gitignore $HOME/gitignore
+make_link $DIR/gitignore $INSTDIR/gitignore
 
-mkdir $HOME/.lein
-if [ ! -e $HOME/.lein/profiles.clj ]
+mkdir $INSTDIR/.lein
+if [ ! -e $INSTDIR/.lein/profiles.clj ]
 then
-   ln -s $DIR/profiles.clj $HOME/.lein/profiles.clj
+   make_link $DIR/profiles.clj $INSTDIR/.lein/profiles.clj
 fi
 
 echo "Setting up vim..."
-mkdir -p $HOME/.vim/autoload $HOME/.vim/bundle $HOME/.vim/colors
-if [ ! -e $HOME/.vim/autoload/pathogen.vim ]
+mkdir -p $INSTDIR/.vim/autoload $INSTDIR/.vim/bundle $INSTDIR/.vim/colors
+if [ ! -e $INSTDIR/.vim/autoload/pathogen.vim ]
 then
-    curl -L 'https://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim' > $HOME/.vim/autoload/pathogen.vim
+    curl -L 'https://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim' > $INSTDIR/.vim/autoload/pathogen.vim
 fi
-if [ ! -e $HOME/.vim/colors/spectro.vim ]
+if [ ! -e $INSTDIR/.vim/colors/spectro.vim ]
 then
-    curl -L 'https://github.com/vim-scripts/spectro.vim/raw/master/colors/spectro.vim' > $HOME/.vim/colors/spectro.vim
+    curl -L 'https://github.com/vim-scripts/spectro.vim/raw/master/colors/spectro.vim' > $INSTDIR/.vim/colors/spectro.vim
 fi
 
-if [[ `uname` == "Darwin" ]]
-then
     echo "Detected MacOS, Setting up hammerspoon"
-    mkdir $HOME/.hammerspoon
-    if [ ! -e $HOME/.hammerspoon/init.lua ]
+    mkdir $INSTDIR/.hammerspoon
+    if [ ! -e $INSTDIR/.hammerspoon/init.lua ]
     then
-        ln -s $DIR/hammerspoon.lua $HOME/.hammerspoon/init.lua
+        make_link $DIR/hammerspoon.lua $INSTDIR/.hammerspoon/init.lua
     fi
+    echo "Detected WSL"
 else
     echo "No MacOS, Setting up i3"
-    mkdir $HOME/.i3
-    if [ ! -e $HOME/.i3/config ]
+    mkdir $INSTDIR/.i3
+    if [ ! -e $INSTDIR/.i3/config ]
     then
-        ln -s $DIR/i3config $HOME/.i3/config
+        make_link $DIR/i3config $INSTDIR/.i3/config
     fi
 fi
 
