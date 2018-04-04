@@ -18,6 +18,9 @@
   (evil-mode 1)
   (setq evil-default-cursor t)
 
+  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
+  (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
+
   ;;Mode which start in emacs state
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
   (add-to-list 'evil-emacs-state-modes 'cider-docview-mode)
