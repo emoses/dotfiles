@@ -29,6 +29,8 @@
 (use-package cider
   :ensure t
   :pin melpa-stable
+  :bind (("M-/" . cider-find-var)
+         ("C-c C-t j" . cider-test-jump))
   :config
   (setq cider-cljs-lein-repl
         "(do (require 'figwheel-sidecar.repl-api)

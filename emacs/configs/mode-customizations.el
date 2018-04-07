@@ -78,8 +78,10 @@
 (setq nxml-child-indent 4)
 
 (when (not my:osx)
-  (use-package dired-details+
-    :ensure t))
+  (use-package dired+
+    :load-path "~/.emacs.d/elisp"
+    :config
+    (setq diredp-hide-details-propagate-flag t)))
 
 ;;Haskell
 (use-package haskell-mode
