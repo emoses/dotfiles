@@ -215,6 +215,8 @@
   (sml/setup)
   (sml/apply-theme 'light))
 
+(use-package ace-jump-mode
+  :ensure t)
 
 ;;Eclim - java dev only, put in work?
 ;(require 'eclim)
