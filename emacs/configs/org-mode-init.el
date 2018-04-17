@@ -12,27 +12,39 @@ if there is no schedule (so these are sorted to the bottom)"
 
 (use-package org
   :ensure t
+  :load-path ("~/dev/org-mode/lisp" "~/dev/org-mode/contrib/lisp")
   :mode ("\\.org$" . org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("C-c i" . org-toggle-item)
-         ("C-c h" . org-toggle-heading))
+         ("C-c h" . org-toggle-heading)
+         ("C-c r" . org-reveal)
+         ("M-q" . org-fill-paragraph))
+  :init
+  (add-hook 'org-mode-hook 'flyspell-mode)
   :config
   (setq org-mobile-directory "~/ownCloud/MobileOrg")
   (setq org-directory "~/ownCloud/org")
   (when (eq system-type 'windows-nt)
     (setq org-mobile-checksum-binary "d:/program files/gnu/sha1sum.exe"))
   (require 'org-install)
+  ;;normally bound to org-reveal, but that's moved to C-c r above
+  (define-key org-mode-map (kbd "C-c C-r") nil)
+
+  (setq org-mobile-directory "~/ownCloud/MobileOrg")
+  (setq org-directory "~/ownCloud/org")
+  (setq org-agenda-files (mapcar (lambda (f) (expand-file-name f org-directory))
+                                 '("work.org" "home.org")))
   (add-hook 'org-mode-hook
             (lambda ()
               (org-defkey org-mode-map (kbd "RET") 'org-return-indent)
               (org-defkey org-mode-map "\C-j" 'org-return)))
+  (global-set-key (kbd  "C-c C-`") #'org-cycle-agenda-files)
   (setq org-hide-leading-stars t)
   (setq org-odd-levels-only t)
 
   (setq org-agenda-cmp-user-defined 'org-scheduled-cmp)
 
-  (defvar org-directory "")
   (if (fboundp 'org-remember-insinuate)
       (org-remember-insinuate))
   (let ((rememberFn (cond
@@ -42,14 +54,18 @@ if there is no schedule (so these are sorted to the bottom)"
     (if rememberFn
         (define-key global-map "\C-cr" rememberFn)))
 
-  (setq org-default-notes-file (concat org-directory "notes.org"))
+  ;; (if (fboundp 'org-remember-insinuate)
+  ;;     (org-remember-insinuate))
+  ;; (let ((rememberFn (cond
+  ;;                    ((fboundp 'org-remember) 'org-remember)
+  ;;                    ((fboundp 'org-capture) 'org-capture)
+  ;;                    (t nil))))
+  ;;   (if rememberFn
+  ;;       (define-key global-map "\C-cr" rememberFn)))
 
-
-
-  (setq org-remember-templates
-        `(("Todo-W" ?t "*** TODO %?\n    %t" ,(concat org-directory "work.org") "Tasks")
-          ("Todo-H" ?T "*** TODO %?\n    %t" ,(concat org-directory "home.org") "Tasks")))
-
-  (setq org-agenda-custom-commands
-        ' (("h" "Home TODOs" tags-todo "Home" ((org-agenda-sorting-strategy '(user-defined-up))))
-           ("w" "Work TODOs" tags-todo "Work"  ((org-agenda-sorting-strategy '(user-defined-up)))))))
+  (setq org-default-notes-file (expand-file-name "notes.org" org-directory))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((plantuml . t)))
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+  (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))

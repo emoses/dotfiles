@@ -1,10 +1,26 @@
+(use-package evil-leader
+  :ensure t)
+
+(use-package evil-org
+  ;:load-path "~/.emacs.d/plugins/evil-org-mode"
+  :ensure t
+  :config
+  ;;Unbind J and K from evil org.
+  (evil-define-key 'normal evil-org-mode-map
+    "J" nil
+    "K" nil))
+
 (use-package evil
   :ensure t
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))
   :config
+  (global-evil-leader-mode 1)
   (evil-mode 1)
   (setq evil-default-cursor t)
+
+  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
+  (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
 
   ;;Mode which start in emacs state
   (add-to-list 'evil-emacs-state-modes 'dired-mode)

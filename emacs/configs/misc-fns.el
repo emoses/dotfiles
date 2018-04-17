@@ -70,20 +70,21 @@ by using nxml's indentation rules."
 (defun camel-case (s)
   "CamelCase"
   (mapconcat 'capitalize (split-name s) ""))
-(defun underscore-case (s)
+(defun snake-case (s)
   "underscore_case"
   (mapconcat 'downcase   (split-name s) "_"))
-(defun snake-case (s)
-  "snake-case"
+(defun kebab-case (s)
+  "kebab-case"
   (mapconcat 'downcase   (split-name s) "-"))
 
 (defun caseify-word-at-point (caseifyer)
-  (let* ((case-fold-search nil)
-         (beg (if (use-region-p) (region-beginning) (and (skip-chars-backward "[:alnum:]:_-") (point))))
-         (end (if (use-region-p) (region-end) (and (skip-chars-forward  "[:alnum:]:_-") (point))))
-         (txt (buffer-substring-no-properties beg end))
-         (cml (funcall caseifyer txt)))
-    (if cml (progn (delete-region beg end) (insert cml)))))
+  (save-excursion
+    (let* ((case-fold-search nil)
+           (beg (if (use-region-p) (region-beginning) (and (skip-chars-backward "[:alnum:]:_-") (point))))
+           (end (if (use-region-p) (region-end) (and (skip-chars-forward  "[:alnum:]:_-") (point))))
+           (txt (buffer-substring-no-properties beg end))
+           (cml (funcall caseifyer txt)))
+      (if cml (progn (delete-region beg end) (insert cml))))))
 
 
 (defun snake-case-region-or-word ()
@@ -98,6 +99,6 @@ by using nxml's indentation rules."
   (interactive)
   (caseify-word-at-point #'lower-camel-case))
 
-(defun underscore-case-region-or-word ()
+(defun kebab-case-region-or-word ()
   (interactive)
-  (caseify-word-at-point #'underscore-case))
+  (caseify-word-at-point #'kebab-case))

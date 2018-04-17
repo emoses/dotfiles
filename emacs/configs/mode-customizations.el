@@ -80,9 +80,11 @@
 
 (setq nxml-child-indent 4)
 
-(when (not (boundp 'my:osx))
-  (use-package dired-details+
-    :ensure t))
+(when (not my:osx)
+  (use-package dired+
+    :load-path "~/.emacs.d/elisp"
+    :config
+    (setq diredp-hide-details-propagate-flag t)))
 
 ;;Haskell
 (use-package haskell-mode
@@ -124,16 +126,6 @@
 ;;Eclim
 ;(require 'ac-emacs-eclim-source)
 ;(ac-emacs-eclim-config)
-
-;;At least three spaces in linum mode
-;;Mostly copy/paste from linum.el
-
-(setq linum-format (lambda (line)
-                     (let* ((w (max 3
-                                   (length (number-to-string
-                                            (count-lines (point-min) (point-max))))))
-                            (fmt (concat "%" (number-to-string w) "d")))
-                       (propertize (format fmt line) 'face 'linum))))
 
 (use-package ediff
   :defer t
@@ -205,3 +197,18 @@
 (use-package elm-mode
   :ensure t
   :mode "\\.elm$")
+
+(use-package graphql-mode
+  :ensure t
+  :mode "\\.graphqls$")
+
+(use-package groovy-mode
+  :ensure t
+  :mode "\\.groovy$")
+
+(use-package plantuml-mode
+  :ensure t
+  :defer t
+  :mode "\\.plantuml$"
+  :config
+  (setq plantuml-jar-path "~/lib/plantuml.jar"))

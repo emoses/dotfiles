@@ -15,7 +15,7 @@
 [merge]
         tool = p4merge
 [mergetool "p4merge"]
-    cmd = /Applications/p4merge.app/Contents/MacOS/p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+    cmd = /home/emoses/bin/p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
     trustExitCode = false
     keepTemporaries = false
 [diff]
@@ -58,3 +58,5 @@
     newHighlight = green bold 22
 [url "git@github.com-emosesSfdc:sfdc-matrix"]
 	insteadOf = git://github.com/sfdc-matrix
+[github]
+	oauth-token = 61c8d18b291dd5ee8c69d382d28f536fc459caae

@@ -1,14 +1,7 @@
 (defun lisp-modes ()
   (paredit-mode t)
-  (show-paren-mode)
+  (show-paren-mode t)
   (rainbow-delimiters-mode t))
-
-(use-package cider
-  :ensure t
-  :pin melpa-stable
-  :config
-  (when (eq system-type 'windows-nt)
-    (setq cider-lein-command "lein.bat")))
 
 (use-package evil-paredit
   :ensure t)
@@ -32,11 +25,25 @@
   :config
   (add-hook 'clojure-mode-hook #'lisp-modes))
 
-(use-package inf-clojure
+(use-package cider
   :ensure t
+  :pin melpa-stable
+  :bind (("M-/" . cider-find-var)
+         ("C-c C-t j" . cider-test-jump))
   :config
-  (add-hook 'clojure-mode-hook #'inf-clojure-minor-mode)
-  (setq inf-clojure-program '("localhost" . 5555)))
+  (when (eq system-type 'windows-nt)
+    (setq cider-lein-command "lein.bat"))
+  (setq cider-cljs-lein-repl
+        "(do (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))"))
+
+;; Must use either cider or inf-clojure
+;; (use-package inf-clojure
+;;   :ensure t
+;;   :config
+;;   (add-hook 'clojure-mode-hook #'inf-clojure-minor-mode)
+;;   (setq inf-clojure-program '("localhost" . 5555)))
 
 (add-hook 'emacs-lisp-mode-hook #'lisp-modes)
 
