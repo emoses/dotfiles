@@ -18,8 +18,10 @@ if there is no schedule (so these are sorted to the bottom)"
          ("C-c i" . org-toggle-item)
          ("C-c h" . org-toggle-heading))
   :config
-  (setq org-mobile-directory "~/Dropbox/MobileOrg")
-  (setq org-directory "~/Dropbox/org")
+  (setq org-mobile-directory "~/ownCloud/MobileOrg")
+  (setq org-directory "~/ownCloud/org")
+  (when (eq system-type 'windows-nt)
+    (setq org-mobile-checksum-binary "d:/program files/gnu/sha1sum.exe"))
   (require 'org-install)
   (add-hook 'org-mode-hook
             (lambda ()

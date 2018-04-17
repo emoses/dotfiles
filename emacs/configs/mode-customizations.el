@@ -1,7 +1,10 @@
 
 ;; ;;Load auctex
-;; (require 'tex-site)
-;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(use-package auctex
+  :ensure t
+  :defer t
+  :config
+  (set-variable LaTeX-electric-left-right-brace t))
 ;; (add-hook 'text-mode-hook
 ;; 	  '(lambda () (auto-fill-mode 1)))
 
@@ -107,10 +110,10 @@
   (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
   (setq magit-completing-read-function #'magit-ido-completing-read))
 
-(use-package magit-gh-pulls
-  :ensure t
-  :config
-  (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
+  ;; (use-package magit-gh-pulls
+  ;; :ensure t
+  ;; :config
+  ;; (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
 (use-package auto-complete
   :ensure t
