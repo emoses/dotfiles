@@ -36,7 +36,6 @@ end
 --Name -> {screenIndex, {grid spec}}
 local work_display_table = {
    Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
-   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 5}},
    ["Google Chrome"] = {1, {x = 0, y = 0, w = 4, h = 5}},
    Firefox = {1, {x = 0, y = 0, w = 4, h = 5}},
    Slack = {1, {x = 4, y = 0, w = 3, h = 3}},

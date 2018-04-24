@@ -3,6 +3,11 @@
          :username "emoses"
          :token ,(cdr (assoc "github-emoses-token" secrets-alist))
          :remote-regexp "^\\(?:git@github\\.com-emoses:\\|\\(?:git\\|https?\\|ssh\\)://.*@?github\\.com/\\)\\(.*\\)/\\(.*\\)\\(?:\\.git\\)?"
-         :url "https://api.github.com")))
+         :url "https://api.github.com")
+         ("github-emosesPatreon"
+           :username "emosesPatreon"
+           :token ,(cdr (assoc "emoses-patreon" secrets-alist))
+           :remote-regexp "^\\(?:git@github\\.com\\(?:-patreon\\)?:\\|\\(?:git\\|https?\\|ssh\\)://.*@?github\\.com/\\)\\(.*\\)/\\(.*\\)\\(?:\\.git\\)?"
+           :url "https://api.github.com")))
 
-(setq gh-profile-default-profile "github-emoses")
+(setq gh-profile-default-profile "github-emosesPatreon")

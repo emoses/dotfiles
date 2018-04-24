@@ -45,7 +45,8 @@
                     ido-completing-read+
                     editorconfig
                     typescript-mode
-                    elm-mode))
+                    elm-mode
+                    json-mode))
 
 (let ((uninstalled-packages ;(filter '(lambda (p) (not package-installed-p p)) packages-list)
        (delq nil
