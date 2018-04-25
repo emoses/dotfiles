@@ -1,3 +1,4 @@
+;;Functions for editing Salesforce Lightning.  Hopefully never need these again
 (defun containing-dir (path)
   (file-name-nondirectory
    (directory-file-name (file-name-directory path))))

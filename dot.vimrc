@@ -104,7 +104,7 @@ if has("autocmd")
           endif
   endfunction
   autocmd BufReadPost * call UpdateModifiable()
-  
+
   autocmd TabEnter * stopinsert
 
 
@@ -122,7 +122,6 @@ nnoremap <C-Up> <C-w><Up>
 nnoremap <C-Down> <C-w><Down>
 nnoremap <C-Left> <C-w><Left>
 nnoremap <C-Right> <C-w><Right>
-nnoremap <leader>e :! P4PORT=p4proxy.soma.salesforce.com:1999 P4CLIENT=emoses-wsl p4 edit %<CR>
 
 "Completion options
 set completeopt=longest,menuone,preview
@@ -161,7 +160,7 @@ let g:EclimLocateFileDefaultAction='tabnew'
 let g:EclimLocateFileScope='workspace'
 
 "Eclim bindings
-nnoremap <C-x><C-f> :LocateFile 
+nnoremap <C-x><C-f> :LocateFile
 nnoremap <leader><CR> :JavaSearchContext<CR>
 
 command! Ccollab :!ccollab addgitdiffs new HEAD^ HEAD

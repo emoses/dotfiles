@@ -11,7 +11,7 @@
 	pager = diff-highlight | diff-so-fancy | less --tabs=1,5 -R
 [user]
 	name = Evan Moses
-	email = emoses@salesforce.com
+	email = emoses@patreon.com
 [merge]
         tool = p4merge
 [mergetool "p4merge"]
@@ -22,15 +22,6 @@
     tool = intellij
 [difftool "intellij"]
     cmd =/usr/local/bin/idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
-[git-p4]
-        user = emoses
-	port = ssl:p4proxy.soma.salesforce.com:1999
-	client = emoses-wsl1
-	detectRename = true
-	useclientspec = true
-	localRoot = /home/emoses/dev/app/main/core
-        changelistOnly = true
-    skipPlusW = true
 [color]
         status = auto
         diff = auto
@@ -43,8 +34,8 @@
 	helper = cache --timeout=86400
 [push]
 	default = simple
-[github "github-emosesSfdc"]
-	user = emosesSfdc
+[github "github-patreon"]
+        user = emosesPatreon
 [github "github-emoses"]
 	user = emoses
 [filter "lfs"]
@@ -56,7 +47,7 @@
     oldHighlight = red bold 52
     newNormal = green bold
     newHighlight = green bold 22
-[url "git@github.com-emosesSfdc:sfdc-matrix"]
-	insteadOf = git://github.com/sfdc-matrix
+#[url "git@github.com-emosesSfdc:sfdc-matrix"]
+#	insteadOf = git://github.com/sfdc-matrix
 [github]
 	oauth-token = 61c8d18b291dd5ee8c69d382d28f536fc459caae

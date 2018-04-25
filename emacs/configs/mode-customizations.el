@@ -5,8 +5,6 @@
 ;; (add-hook 'text-mode-hook
 ;; 	  '(lambda () (auto-fill-mode 1)))
 
-;; (load-library "p4")
-
 (use-package google-c-style
   :ensure t)
 
@@ -33,6 +31,7 @@
 (require 'generic-x)
 
 (use-package js2-mode
+  :ensure t
   :mode "\\.jsx?$"
   :config
   (defun my:js2-externs (filename)
@@ -67,13 +66,6 @@
   :ensure t
   :mode (("\\.md$" . markdown-mode)
          ("\\.markdown$" . markdown-mode)))
-
-(use-package jade-mode
-  :ensure t
-  :config
-  (add-hook 'jade-mode-hook
-            (lambda ()
-              (set-variable 'tab-width 4))))
 
 (setq nxml-child-indent 4)
 
@@ -119,10 +111,6 @@
   :config
   (require 'auto-complete-config)
   (ac-config-default))
-
-;;Eclim
-;(require 'ac-emacs-eclim-source)
-;(ac-emacs-eclim-config)
 
 (use-package ediff
   :defer t
@@ -184,6 +172,7 @@
   :mode "\\.ts$")
 
 (use-package json-mode
+  :ensure t
   :mode "\\.json$"
   :config
   (add-hook 'json-mode-hook
