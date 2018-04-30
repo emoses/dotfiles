@@ -51,7 +51,8 @@
                         (js2-mode-hide-warnings-and-errors)
                         (set-variable 'indent-tabs-mode nil)
                         (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name))))))
-  (set-variable 'js2-global-externs '("require" "module"))
+  (setq js2-global-externs '("require" "module"))
+  (setq js-indent-level 2)
   )
 
 (use-package css-mode

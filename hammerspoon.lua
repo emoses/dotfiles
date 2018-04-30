@@ -35,10 +35,10 @@ end
 
 --Name -> {screenIndex, {grid spec}}
 local work_display_table = {
-   Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
-   ["Google Chrome"] = {1, {x = 0, y = 0, w = 4, h = 5}},
-   Firefox = {1, {x = 0, y = 0, w = 4, h = 5}},
-   Slack = {1, {x = 4, y = 0, w = 3, h = 3}},
+   Emacs = {3, {x = 0, y = 0, w = 7, h = 5}},
+   ["Google Chrome"] = {2, {x = 0, y = 0, w = 4, h = 5}},
+   Firefox = {2, {x = 0, y = 0, w = 4, h = 5}},
+   Slack = {2, {x = 4, y = 0, w = 3, h = 5}},
    Terminal = {1, {x = 4, y = 3, w = 3, h = 2}},
    iTerm2 = {1, {x = 4, y = 3, w = 3, h = 2}}
 }
@@ -80,12 +80,12 @@ local home_display = function() apply_layout(home_display_table) end
 
 local screenHandler = function()
    local screens = hs.screen.allScreens()
-   if (#screens == 2) then
-      if screens[1]:frame().w > 2000 and screens[2]:frame().w > 2000 then
+   if (#screens == 3) then
+      if screens[2]:frame().w > 1900 and screens[2]:frame().w > 1900 then
          work_display()
-      else
-         home_display()
       end
+   elseif (#screens == 2) then
+      home_display()
    end
 end
 hs.screen.watcher.new(screenHandler):start()

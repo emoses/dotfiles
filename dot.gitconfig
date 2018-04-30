@@ -7,8 +7,8 @@
     whereis = branch -a --contains
 [core]
     excludesfile = ~/gitignore
-	autocrlf = input
-	pager = diff-highlight | diff-so-fancy | less --tabs=1,5 -R
+    autocrlf = input
+    pager = diff-so-fancy | less --tabs=1,5 -R
 [user]
 	name = Evan Moses
 	email = emoses@patreon.com
