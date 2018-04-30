@@ -3,6 +3,8 @@
 
 (use-package elpy
   :ensure t
+  :bind (:map elpy-mode-map
+              ("M-/" . elpy-goto-definition))
   :config
   (pyenv-mode)
   (elpy-enable)
