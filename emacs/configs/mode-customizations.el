@@ -199,3 +199,26 @@
   :mode "\\.plantuml$"
   :config
   (setq plantuml-jar-path "~/lib/plantuml.jar"))
+
+(use-package eshell
+  :config
+  (add-hook 'eshell-mode-hook (lambda () (nlinum-mode nil))))
+
+(use-package xterm-color
+  :ensure t
+  :after (magit eshell)
+  :config
+  (require 'eshell)
+  (add-hook 'eshell-before-prompt-hook
+            (lambda () (setq xterm-color-preserve-properties t)))
+  (add-to-list 'eshell-preoutput-filter-functions 'xterm-color-filter)
+  (setq eshell-output-filter-functions (remove 'eshell-handle-ansi-color eshell-output-filter-functions))
+  (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
+
+  (defun my:xterm-color-magit (args)
+    (list (car args) (xterm-color-filter (second args))))
+  (advice-add 'magit-process-filter :filter-args #'my:xterm-color-magit))
+
+(use-package dockerfile-mode
+  :ensure t
+  :mode "Dockerfile")

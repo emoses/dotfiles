@@ -1,6 +1,7 @@
 ;;;Useful for all sorts of programming
 (global-set-key "\M-g" 'goto-line)
 ;;the delete key translates as "kp-delete" on macs
+(global-set-key (kbd "<deletechar>") 'delete-char)
 (global-set-key (kbd "C-<delete>") 'kill-word)
 (global-set-key (kbd "C-<DEL>") 'backward-kill-word)
 (global-set-key (kbd "RET") 'newline-and-indent)
