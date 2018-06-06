@@ -1,4 +1,5 @@
 
+
 ;; ;;Load auctex
 ;; (require 'tex-site)
 ;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
@@ -14,6 +15,7 @@
 
 ;;For PHP
 (use-package php-mode
+  :ensure t
   :mode (("\\.php$" . php-mode)
          ("\\.phtml$" . php-mode))
   :config
@@ -66,7 +68,8 @@
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md$" . markdown-mode)
-         ("\\.markdown$" . markdown-mode)))
+         ("\\.markdown$" . markdown-mode))
+  :init (setq markdown-command "pandoc"))
 
 (setq nxml-child-indent 4)
 
@@ -100,7 +103,8 @@
   :config
   (setq magit-branch-read-upstream-first nil)
   (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
-  (setq magit-completing-read-function #'magit-ido-completing-read))
+  (setq magit-completing-read-function #'magit-ido-completing-read)
+  (global-magit-file-mode t))
 
 (use-package magit-gh-pulls
   :ensure t
@@ -202,7 +206,9 @@
 
 (use-package eshell
   :config
-  (add-hook 'eshell-mode-hook (lambda () (nlinum-mode nil))))
+  (add-hook 'eshell-mode-hook (lambda () (if (< 26 emacs-major-version)
+                                             (nlinum-mode -1)
+                                           (display-line-numbers-mode -1)))))
 
 (use-package xterm-color
   :ensure t
@@ -222,3 +228,7 @@
 (use-package dockerfile-mode
   :ensure t
   :mode "Dockerfile")
+
+(use-package yaml-mode
+  :ensure t
+  :mode "\\.ya?ml$")

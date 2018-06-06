@@ -34,7 +34,8 @@ if there is no schedule (so these are sorted to the bottom)"
   (add-hook 'org-mode-hook
             (lambda ()
               (org-defkey org-mode-map (kbd "RET") 'org-return-indent)
-              (org-defkey org-mode-map "\C-j" 'org-return)))
+              (org-defkey org-mode-map "\C-j" 'org-return)
+              (display-line-numbers-mode -1)))
   (global-set-key (kbd  "C-c C-`") #'org-cycle-agenda-files)
   (setq org-hide-leading-stars t)
   (setq org-odd-levels-only t)

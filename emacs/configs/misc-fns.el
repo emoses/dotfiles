@@ -20,6 +20,29 @@ by using nxml's indentation rules."
       (select-window (active-minibuffer-window))
     (error "Minibuffer is not active")))
 
+(defun find-file-other-from-eshell (filename &optional wildcards)
+  "If we're in our own frame, open a file in another frame.  If
+this is the only frame, open it in another window.  See
+find-file-other-frame and display-buffer"
+  (interactive
+   (find-file-read-args "Find file in other frame or window: "
+                        (confirm-nonexistent-file-or-buffer)))
+  (let* ((this-frame (window-frame (get-buffer-window)))
+         (use-other-frame (and (> (length (frame-list)) 1)
+                               (= 1 (length (window-list this-frame))))))
+    (if (not use-other-frame)
+        (find-file-other-window filename wildcards)
+      (let ((value (find-file-noselect filename nil nil wildcards)))
+        (if (listp value)
+	    (progn
+	      (setq value (nreverse value))
+	      (switch-to-buffer-other-frame (car value))
+	      (mapc 'switch-to-buffer (cdr value))
+	      value)
+          (pop-to-buffer value '((display-buffer-use-some-frame)
+                                 (reusable-frames . 0)
+                                 (inhibit-same-window . t))))))))
+
 (defun gh-change-profile (profile)
   "Change the profile used by gh.el"
   (interactive

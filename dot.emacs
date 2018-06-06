@@ -47,7 +47,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(package-selected-packages
    (quote
-    (dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+    (ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(tls-checktrust t))
 (custom-set-faces
@@ -55,10 +55,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))
  '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
  '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
+ '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(org-todo ((t (:foreground "#cc6666" :weight bold)))))
 
@@ -122,23 +124,34 @@
       '((width . 250)
         (height . 70)))
 (setq fill-column 120)
+(setq help-window-select t)
 
 ;;Global mode enablement
 (show-paren-mode t)
 (savehist-mode t)
 (electric-indent-mode t)
 
-(use-package nlinum
-  :ensure t
-  :config
-  (defun my:nlinum-hook-min-lines ()
-    (when nlinum-mode
-      (let* ((approx-lines (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
-            (lineno-width (max 3 approx-lines)))
-        (setq-local nlinum-format
-                    (concat "%" (number-to-string lineno-width) "d")))))
-  (add-hook 'nlinum-mode-hook #'my:nlinum-hook-min-lines)
-  (global-nlinum-mode t))
+;;New stuff for emacs 26
+(when (>= 26 emacs-major-version)
+  (pixel-scroll-mode)
+  (setq mouse-wheel-tilt-scroll t)
+  (setq mouse-wheel-flip-direction t)
+  (setq display-line-numbers-width-start 3)
+  (setq display-line-numbers-grow-only t)
+  (global-display-line-numbers-mode t))
+
+(when (< 26 emacs-major-version)
+  (use-package nlinum
+    :ensure t
+    :config
+    (defun my:nlinum-hook-min-lines ()
+      (when nlinum-mode
+        (let* ((approx-lines (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
+               (lineno-width (max 3 approx-lines)))
+          (setq-local nlinum-format
+                      (concat "%" (number-to-string lineno-width) "d")))))
+    (add-hook 'nlinum-mode-hook #'my:nlinum-hook-min-lines)
+    (global-nlinum-mode t)))
 
 (use-package editorconfig
   :ensure t
@@ -176,7 +189,10 @@
   :ensure t)
 
 (use-package ag
-  :ensure t)
+  :ensure t
+  :config
+  (defun eshell/ag (string)
+    (ag/search string (eshell/pwd))))
 
 (use-package find-file-in-repository
   :ensure t)
@@ -211,3 +227,7 @@
 
 (use-package ace-jump-mode
   :ensure t)
+
+(use-package ace-window
+  :ensure t
+  :bind ("M-SPC" . ace-window))
