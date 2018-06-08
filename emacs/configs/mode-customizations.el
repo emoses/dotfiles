@@ -32,8 +32,12 @@
 
 (require 'generic-x)
 
+(use-package add-node-modules-path
+  :ensure t)
+
 (use-package js2-mode
   :ensure t
+  :after (add-node-modules-path)
   :mode "\\.jsx?$"
   :config
   (defun my:js2-externs (filename)
@@ -52,7 +56,8 @@
                         (local-unset-key (kbd "C-c C-a"))
                         (js2-mode-hide-warnings-and-errors)
                         (set-variable 'indent-tabs-mode nil)
-                        (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name))))))
+                        (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name)))
+                        (add-node-modules-path))))
   (setq js2-global-externs '("require" "module"))
   (setq js-indent-level 2)
   )

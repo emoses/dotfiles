@@ -47,7 +47,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(package-selected-packages
    (quote
-    (ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flycheck flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+    (add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(tls-checktrust t))
 (custom-set-faces

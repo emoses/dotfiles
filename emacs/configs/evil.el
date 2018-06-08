@@ -61,7 +61,7 @@
           js2-mode
           lua-mode
           magit
-          occur
+          (occur replace)
           (package-menu package)
           paren
           python
@@ -69,4 +69,11 @@
           (term term ansi-term multi-term)
           which-key
           ))
-  (evil-collection-init))
+  (evil-collection-init)
+
+  (defun my:customize-evil-collection-occur (mode keymaps &rest _rest)
+    (when (equal mode 'occur)
+      (evil-define-key 'normal occur-mode-map
+        "q" #'quit-window)))
+
+  (add-hook 'evil-collection-setup-hook #'my:customize-evil-collection-occur))
