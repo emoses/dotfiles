@@ -54,6 +54,14 @@ local home_display_table = {
    iTerm2 = {1, {x = 4, y = 3, w = 3, h = 2}}
 }
 
+-- a function to filter out any windows you don't want moved by apply_layout
+local filterWindows = function(window)
+   if (window:application():title() == "Emacs" and window:title() == '*eshell*') then
+      return false
+   else
+      return true
+   end
+end
 
 hs.grid.GRIDWIDTH = 7
 hs.grid.GRIDHEIGHT = 5
@@ -69,7 +77,9 @@ local apply_layout = function(layout)
          local scrs = hs.screen.allScreens()
          local src = scrs[place[1]]
          for i, win in ipairs(app:allWindows()) do
-            hs.grid.set(win, place[2], src)
+            if (filterWindows(win)) then
+               hs.grid.set(win, place[2], src)
+            end
          end
       end
    end

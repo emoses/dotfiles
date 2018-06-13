@@ -39,8 +39,12 @@
 ;;       (global-font-lock-mode t)))
 
 ;; Make Fira Code ligatures work
-(when (window-system)
-  (set-frame-font "Fira Code"))
+(defun my:frame-font-setup (frame)
+  (when (display-graphic-p frame)
+    (set-frame-font "Fira Code")))
+(mapc #'my:frame-font-setup (frame-list))
+(add-hook 'after-make-frame-functions #'my:frame-font-setup)
+
 
 ;; (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
 ;;                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")

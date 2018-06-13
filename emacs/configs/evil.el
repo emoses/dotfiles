@@ -12,6 +12,7 @@
 
   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
   (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
+  (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
 
   ;;Mode which start in emacs state
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
@@ -51,6 +52,7 @@
           ag
                                         ;calc
           cider
+          company
           diff-mode
           eldoc
           elisp-mode

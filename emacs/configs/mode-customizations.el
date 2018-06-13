@@ -135,8 +135,20 @@
       (kill-buffer ediff-buffer-C)
       (when ed-frame
         (delete-frame ed-frame))))
+
+  (defun my:ediff-copy-both-to-C ()
+    "Copy both regions to C during diff3
+
+   Via https://stackoverflow.com/a/29757750"
+    (interactive)
+    (ediff-copy-diff ediff-current-difference nil 'C nil
+                     (concat
+                      (ediff-get-region-contents ediff-currrent-difference 'A ediff-control-buffer)
+                      (ediff-get-region-contents ediff-currrent-difference 'B ediff-control-buffer))))
+
   (add-hook 'ediff-keymap-setup-hook (lambda ()
-                               (define-key ediff-mode-map "Q" #'my:quit-ediff-kill-buffers))))
+                                       (define-key ediff-mode-map "Q" #'my:quit-ediff-kill-buffers)
+                                       (define-key ediff-mode-map "d" #'my:ediff-copy-both-to-C))))
 
 (use-package web-mode
   :ensure t
