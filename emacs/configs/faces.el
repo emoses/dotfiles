@@ -40,7 +40,7 @@
 
 ;; Make Fira Code ligatures work
 (defun my:frame-font-setup (frame)
-  (when (display-graphic-p frame)
+  (when (and (display-graphic-p frame) (find-font (font-spec :name "Fira Code")))
     (set-frame-font "Fira Code")))
 (mapc #'my:frame-font-setup (frame-list))
 (add-hook 'after-make-frame-functions #'my:frame-font-setup)

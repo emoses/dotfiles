@@ -1,6 +1,9 @@
+(use-package evil-leader
+  :ensure t)
 
 (use-package evil
   :ensure t
+  :after evil-leader
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))
   :init
@@ -38,10 +41,6 @@
   (evil-define-key 'normal evil-org-mode-map
     "J" nil
     "K" nil))
-
-(use-package evil-leader
-  :after evil
-  :ensure t)
 
 (use-package evil-collection
   :after evil
