@@ -116,11 +116,10 @@
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
-(use-package auto-complete
+(use-package company
   :ensure t
-  :config
-  (require 'auto-complete-config)
-  (ac-config-default))
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package ediff
   :defer t

@@ -149,7 +149,7 @@ hs.hotkey.bind(mod1, "d", function()
 end)
 
 hs.hotkey.bind(mod1, "g", screenHandler)
-hs.hotkey.bind(mod1, "space", hs.caffeinate.startScreensaver) --
+hs.hotkey.bind(mod1shift, "space", hs.caffeinate.startScreensaver) --
 
 local chooserWindow = function(info)
    if info then

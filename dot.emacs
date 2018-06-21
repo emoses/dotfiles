@@ -36,6 +36,7 @@
  '(js2-bounce-indent-flag nil)
  '(js2-global-externs (quote ("require" "module")))
  '(js2-strict-inconsistent-return-warning nil)
+ '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
@@ -49,6 +50,22 @@
    (quote
     (add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
+ '(sml/name-width 44)
+ '(sml/replacer-regexp-list
+   (quote
+    (("^~/ownCloud/org" ":Org:")
+     ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
+     ("^~/\\.emacs\\.d/" ":ED:")
+     ("^/sudo:.*:" ":SU:")
+     ("^~/Documents/" ":Doc:")
+     ("^~/Dropbox/" ":DB:")
+     ("^:\\([^:]*\\):Documento?s/" ":\\1/Doc:")
+     ("^~/[Gg]it/" ":Git:")
+     ("^~/[Gg]it[Hh]ub/" ":Git:")
+     ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:")
+     ("^.*/patreon_py/" ":P_PY:")
+     ("~/dev/patreon/" ":WORK:"))))
+ '(sml/shorten-directory nil)
  '(tls-checktrust t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -231,3 +248,6 @@
 (use-package ace-window
   :ensure t
   :bind ("M-SPC" . ace-window))
+
+;; TODO: find a place to check this in
+(require 'help-fns+)

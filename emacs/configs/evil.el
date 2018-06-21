@@ -1,9 +1,6 @@
-(use-package evil-leader
-  :ensure t)
 
 (use-package evil
   :ensure t
-  :after evil-leader
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))
   :init
@@ -31,6 +28,10 @@
               (setq evil-symbol-word-search t)))
   ;;Make snake_case part of words for python
   (add-hook 'python-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
+
+(use-package evil-leader
+  :after evil
+  :ensure t)
 
 (use-package evil-org
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
@@ -70,11 +71,11 @@
           (term term ansi-term multi-term)
           which-key
           ))
-  (evil-collection-init)
 
   (defun my:customize-evil-collection-occur (mode keymaps &rest _rest)
     (when (equal mode 'occur)
       (evil-define-key 'normal occur-mode-map
         "q" #'quit-window)))
 
-  (add-hook 'evil-collection-setup-hook #'my:customize-evil-collection-occur))
+  (add-hook 'evil-collection-setup-hook #'my:customize-evil-collection-occur)
+  (evil-collection-init))
