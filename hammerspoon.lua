@@ -39,9 +39,9 @@ local work_display_table = {
    ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
    ["Google Chrome"] = {3, {x = 0, y = 0, w = 4, h = 5}},
    Firefox = {3, {x = 0, y = 0, w = 4, h = 5}},
-   Slack = {3, {x = 4, y = 0, w = 3, h = 5}},
-   Terminal = {2, {x = 4, y = 3, w = 3, h = 2}},
-   iTerm2 = {2, {x = 4, y = 3, w = 3, h = 2}}
+   Slack = {2, {x = 0, y = 0, w = 7, h = 5}},
+   Terminal = {3, {x = 4, y = 0, w = 3, h = 5}},
+   iTerm2 = {3, {x = 4, y = 0, w = 3, h = 5}},
 }
 
 local home_display_table = {

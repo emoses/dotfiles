@@ -11,8 +11,7 @@ if there is no schedule (so these are sorted to the bottom)"
           (t nil))))
 
 (use-package org
-  :ensure t
-  :load-path ("~/dev/org-mode/lisp" "~/dev/org-mode/contrib/lisp")
+  :quelpa t
   :mode ("\\.org$" . org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
@@ -27,8 +26,8 @@ if there is no schedule (so these are sorted to the bottom)"
   ;;normally bound to org-reveal, but that's moved to C-c r above
   (define-key org-mode-map (kbd "C-c C-r") nil)
 
-  (setq org-mobile-directory "~/ownCloud/MobileOrg")
-  (setq org-directory "~/ownCloud/org")
+  (setq org-mobile-directory "~/Nextcloud/MobileOrg")
+  (setq org-directory "~/Nextcloud/org")
   (setq org-agenda-files (mapcar (lambda (f) (expand-file-name f org-directory))
                                  '("work.org" "home.org")))
   (add-hook 'org-mode-hook

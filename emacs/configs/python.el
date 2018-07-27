@@ -3,6 +3,7 @@
 
 (use-package elpy
   :ensure t
+  :after flycheck
   :mode ("\\.py$" . python-mode)
   :bind (:map elpy-mode-map
               ("M-/" . elpy-goto-definition)
@@ -14,6 +15,8 @@
   :config
   (setq elpy-rpc-python-command "python3")
   (setq python-shell-interpreter "python3")
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode)
 
   (defun my:projectile-ag-elpy-symbol (search-term &optional arg)
     "Run an ag search for symbol at point, or region if active.

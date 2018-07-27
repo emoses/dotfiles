@@ -106,9 +106,12 @@
 (use-package magit
   :ensure t
   :config
+  (when (and my:osx (not with-editor-emacsclient-executable))
+    (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))
   (setq magit-branch-read-upstream-first nil)
   (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
   (setq magit-completing-read-function #'magit-ido-completing-read)
+  (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (global-magit-file-mode t))
 
 (use-package magit-gh-pulls
@@ -120,6 +123,15 @@
   :ensure t
   :init
   (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package company-flx
+  :ensure t
+  :after company
+  :config
+  (company-flx-mode +1))
+
+(use-package eldoc-overlay
+  :ensure t)
 
 (use-package ediff
   :defer t
@@ -175,7 +187,7 @@
     (win-switch-set-keys '("K") 'enlarge-vertically)
     (win-switch-set-keys '("H") 'shrink-horizontally)
     (win-switch-set-keys '("L") 'enlarge-horizontally)
-    (win-switch-set-keys '(" ") 'other-frame)
+    (win-switch-set-keys '("`") 'other-frame)
     (win-switch-set-keys '("r" [return] [escape]) 'exit)
     (win-switch-set-keys '("3") 'split-horizontally)
     (win-switch-set-keys '("2") 'split-vertically)
@@ -221,7 +233,12 @@
   (setq plantuml-jar-path "~/lib/plantuml.jar"))
 
 (use-package eshell
+  :bind (("C-c M-B" . eshell-insert-buffer-filename))
   :config
+  (defun eshell-insert-buffer-filename (buffer-name)
+    (interactive "bName of buffer:")
+    (insert-and-inherit "\"" (buffer-file-name (get-buffer buffer-name)) "\""))
+
   (add-hook 'eshell-mode-hook (lambda () (if (< 26 emacs-major-version)
                                              (nlinum-mode -1)
                                            (display-line-numbers-mode -1)))))

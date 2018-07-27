@@ -12,6 +12,7 @@
 (global-set-key (kbd "TAB") 'indent-for-tab-command)
 (global-set-key (kbd "A-v") 'yank) ;;for non-evil yanking
 (global-set-key (kbd "C-`") 'other-frame) ;;mac-like frame switching
+(global-set-key (kbd "C-h C-f") 'find-function)
 (global-set-key (kbd "C-c c _") 'snake-case-region-or-word)
 (global-set-key (kbd "C-c c -") 'kebab-case-region-or-word)
 (global-set-key (kbd "C-c c c") 'lower-camel-case-region-or-word)

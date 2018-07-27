@@ -48,7 +48,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(package-selected-packages
    (quote
-    (add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+    (eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(sml/name-width 44)
  '(sml/replacer-regexp-list
@@ -81,10 +81,10 @@
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(org-todo ((t (:foreground "#cc6666" :weight bold)))))
 
-;; default xemacs configuration directory
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
 (add-to-list 'load-path my:emacs-base)
+(add-to-list 'load-path (concat user-emacs-directory "elisp"))
 
 ;; utility finction to auto-load my package configurations
 (defun my:load-config-file (filelist)
@@ -130,6 +130,7 @@
                        "python.el"
                        "present-minor-mode.el"))
 
+(put 'narrow-to-region 'disabled nil)
 (setq create-lockfiles nil)
 (setq inhibit-splash-screen t)
 (when (fboundp 'tool-bar-mode)
@@ -142,6 +143,7 @@
         (height . 70)))
 (setq fill-column 120)
 (setq help-window-select t)
+(setq ispell-program-name "/usr/local/bin/aspell")
 
 ;;Global mode enablement
 (show-paren-mode t)
@@ -177,9 +179,42 @@
 
 (use-package projectile
   :ensure t
+  :bind ("C-c p s t" . my:projectile-ag-test)
   :config
-  (projectile-global-mode)
-  (add-to-list 'projectile-globally-ignored-directories "node_modules"))
+  (projectile-mode)
+  (add-to-list 'projectile-globally-ignored-directories "node_modules")
+
+  (defun my:projectile-test-root ()
+      (let* ((project-root (projectile-project-root))
+             (test-dir-name (projectile-test-directory (projectile-project-type))))
+        (expand-file-name test-dir-name project-root)))
+
+  (defun my:projectile-ag-test (search-term &optional arg)
+    "Run an ag search starting at the test root
+
+Largely a copy-paste of projectile-ag, need to refactor"
+    (interactive
+     (list (projectile--read-search-string-with-default
+            (format "Ag %ssearch tests for" (if current-prefix-arg "regexp " "")))
+           current-prefix-arg))
+    (if (require 'ag nil 'noerror)
+        (let ((ag-command (if arg 'ag-regexp 'ag))
+              (ag-ignore-list (delq nil
+                                    (delete-dups
+                                     (append
+                                      ag-ignore-list
+                                      (projectile--globally-ignored-file-suffixes-glob)
+                                      ;; ag supports git ignore files directly
+                                      (unless (eq (projectile-project-vcs) 'git)
+                                        (append (projectile-ignored-files-rel)
+                                                (projectile-ignored-directories-rel)
+                                                grep-find-ignored-files
+                                                grep-find-ignored-directories
+                                                '()))))))
+              ;; reset the prefix arg, otherwise it will affect the ag-command
+              (current-prefix-arg nil))
+          (funcall ag-command search-term (my:projectile-test-root)))
+      (error "Package 'ag' is not available"))))
 
 
 (require 'uniquify)
@@ -200,7 +235,8 @@
                (ido-everywhere t)
                (flx-ido-mode t)
                (setq ido-enable-flex-matching t)
-               (setq ido-use-faces nil)))
+               (setq ido-use-faces nil)
+               (setq ido-create-new-buffer 'always)))
 
 (use-package ido-completing-read+
   :ensure t)
@@ -218,8 +254,8 @@
   :ensure t
   :config
   (when my:osx
-    (add-to-list 'exec-path-from-shell-arguments "--norc")
-        (exec-path-from-shell-initialize)))
+    ;(add-to-list 'exec-path-from-shell-arguments "--norc")
+    (exec-path-from-shell-initialize)))
 
 
 ;;Tramp defaults
@@ -249,5 +285,4 @@
   :ensure t
   :bind ("M-SPC" . ace-window))
 
-;; TODO: find a place to check this in
-(require 'help-fns+)
+(use-url help-fns+ "https://raw.githubusercontent.com/emacsmirror/help-fns-plus/master/help-fns%2B.el")
