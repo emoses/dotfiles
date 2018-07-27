@@ -22,6 +22,7 @@
   ;;Start in insert state for repl
   (add-to-list 'evil-insert-state-modes 'cider-repl-mode)
   (add-to-list 'evil-insert-state-modes 'inf-clojure-mode)
+  (add-to-list 'evil-insert-state-modes 'git-commit-mode)
 
   (add-hook 'emacs-lisp-mode-hook
             (lambda ()
@@ -37,7 +38,7 @@
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
   :after evil
   :ensure t
-  :config
+  :confis
   ;;Unbind J and K from evil org.
   (evil-define-key 'normal evil-org-mode-map
     "J" nil
