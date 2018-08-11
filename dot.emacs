@@ -86,6 +86,7 @@
 
 ;;Mac-specific changes
 (defvar my:osx (eq system-type 'darwin))
+(defvar my:windows (eq system-type 'windows-nt))
 
 ;;Deal with TLS certs.  See https://glyph.twistedmatrix.com/2015/11/editor-malware.html
 (let ((trustfile
