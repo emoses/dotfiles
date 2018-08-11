@@ -5,6 +5,17 @@
                          ("melpa" . "https://melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")))
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(defmacro use-url (name url)
+  `(unless (require ',name nil t)
+     (with-temp-buffer
+       (url-insert-file-contents ,url)
+       (eval-buffer)
+       (write-file (concat user-emacs-directory
+                           (file-name-as-directory "elisp")
+                           (concat (symbol-name ',name) ".el"))))))
+(use-url quelpa  "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
+(require 'quelpa-use-package)

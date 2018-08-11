@@ -39,9 +39,9 @@ local work_display_table = {
    ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
    ["Google Chrome"] = {3, {x = 0, y = 0, w = 4, h = 5}},
    Firefox = {3, {x = 0, y = 0, w = 4, h = 5}},
-   Slack = {3, {x = 4, y = 0, w = 3, h = 5}},
-   Terminal = {2, {x = 4, y = 3, w = 3, h = 2}},
-   iTerm2 = {2, {x = 4, y = 3, w = 3, h = 2}}
+   Slack = {2, {x = 0, y = 0, w = 7, h = 5}},
+   Terminal = {3, {x = 4, y = 0, w = 3, h = 5}},
+   iTerm2 = {3, {x = 4, y = 0, w = 3, h = 5}},
 }
 
 local home_display_table = {
@@ -149,7 +149,7 @@ hs.hotkey.bind(mod1, "d", function()
 end)
 
 hs.hotkey.bind(mod1, "g", screenHandler)
-hs.hotkey.bind(mod1, "space", hs.caffeinate.startScreensaver) --
+hs.hotkey.bind(mod1shift, "space", hs.caffeinate.startScreensaver) --
 
 local chooserWindow = function(info)
    if info then
