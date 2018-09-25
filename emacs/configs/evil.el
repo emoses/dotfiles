@@ -14,15 +14,22 @@
   (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
   (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
 
-  ;;Mode which start in emacs state
-  (add-to-list 'evil-emacs-state-modes 'dired-mode)
-  (add-to-list 'evil-emacs-state-modes 'cider-docview-mode)
-  (add-to-list 'evil-emacs-state-modes 'git-rebase-mode)
+  (cl-loop for (mode . state) in '( ;; Start in emacs mode
+                                (dired-mode . emacs)
+                                (cider-docview-mode . emacs)
+                                (git-rebase-mode . emacs)
+                                 ;; Start in insert mode
+                                (cider-repl-mode . insert)
+                                (inf-clojure-mode . insert)
+                                (git-commit-mode . insert))
+        do (evil-set-initial-state mode state))
 
-  ;;Start in insert state for repl
-  (add-to-list 'evil-insert-state-modes 'cider-repl-mode)
-  (add-to-list 'evil-insert-state-modes 'inf-clojure-mode)
-  (add-to-list 'evil-insert-state-modes 'git-commit-mode)
+  (defun my:evil-write (&rest args)
+    "I constantly hit :w2<ret> and save a file named 2.  Verify that I want to do that"
+    (if (equal "2" (nth 3 args))
+        (y-or-n-p "Did you really mean to save a file named 2?")
+      t))
+  (advice-add #'evil-write :before-while #'my:evil-write)
 
   (add-hook 'emacs-lisp-mode-hook
             (lambda ()
@@ -38,7 +45,7 @@
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
   :after evil
   :ensure t
-  :confis
+  :config
   ;;Unbind J and K from evil org.
   (evil-define-key 'normal evil-org-mode-map
     "J" nil
@@ -64,6 +71,7 @@
           js2-mode
           lua-mode
           magit
+          neotree
           (occur replace)
           (package-menu package)
           paren

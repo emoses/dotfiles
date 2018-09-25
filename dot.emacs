@@ -48,7 +48,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(package-selected-packages
    (quote
-    (eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+    (scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(sml/name-width 44)
  '(sml/replacer-regexp-list
@@ -181,7 +181,6 @@
   :ensure t
   :bind ("C-c p s t" . my:projectile-ag-test)
   :config
-  (projectile-mode)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
 
   (defun my:projectile-test-root ()
@@ -245,7 +244,15 @@ Largely a copy-paste of projectile-ag, need to refactor"
   :ensure t
   :config
   (defun eshell/ag (string)
-    (ag/search string (eshell/pwd))))
+    (ag/search string (eshell/pwd)))
+
+  (defun ag-kill-all-buffers ()
+    (interactive)
+    (mapc (lambda (buff)
+            (let ((name (buffer-name buff)))
+              (when (string-prefix-p "*ag search " name)
+                (kill-buffer buff))))
+          (buffer-list))))
 
 (use-package find-file-in-repository
   :ensure t)
@@ -286,3 +293,12 @@ Largely a copy-paste of projectile-ag, need to refactor"
   :bind ("M-SPC" . ace-window))
 
 (use-url help-fns+ "https://raw.githubusercontent.com/emacsmirror/help-fns-plus/master/help-fns%2B.el")
+
+(use-package neotree
+  :ensure t
+  :bind ("M-\\" . neotree-toggle)
+  :after (projectile)
+  :config
+  (setq neo-smart-open t))
+
+(projectile-mode)

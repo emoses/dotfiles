@@ -34,14 +34,15 @@ end
 ------------------------------
 
 --Name -> {screenIndex, {grid spec}}
+local work_browser = {x = 0, y = 1, w = 7, h = 4}
 local work_display_table = {
    Emacs = {1, {x = 0, y = 0, w = 7, h = 5}},
    ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
-   ["Google Chrome"] = {3, {x = 0, y = 0, w = 4, h = 5}},
-   Firefox = {3, {x = 0, y = 0, w = 4, h = 5}},
+   ["Google Chrome"] = {3, work_browser},
+   Firefox = {3, work_browser},
    Slack = {2, {x = 0, y = 0, w = 7, h = 5}},
-   Terminal = {3, {x = 4, y = 0, w = 3, h = 5}},
-   iTerm2 = {3, {x = 4, y = 0, w = 3, h = 5}},
+   Terminal = {3, {x = 0, y = 0, w = 7, h = 1}},
+   iTerm2 = {3, {x = 0, y = 0, w = 7, h = 1}},
 }
 
 local home_display_table = {
@@ -92,7 +93,7 @@ local home_display = function() apply_layout(home_display_table) end
 local screenHandler = function()
    local screens = hs.screen.allScreens()
    if (#screens == 3) then
-      if screens[1]:frame().w > 1900 and screens[3]:frame().w > 1900 then
+      if screens[1]:frame().w > 1900 and screens[3]:frame().h > 1800 then
          work_display()
       end
    elseif (#screens == 2) then
