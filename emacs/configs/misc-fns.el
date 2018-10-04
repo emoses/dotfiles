@@ -125,3 +125,16 @@ find-file-other-frame and display-buffer"
 (defun kebab-case-region-or-word ()
   (interactive)
   (caseify-word-at-point #'kebab-case))
+
+(defun get-github-file-and-line-link (filename lineno)
+  (interactive (list (buffer-file-name) (line-number-at-pos)))
+  (if-let ((repo (magit-gh-pulls-guess-repo)))
+      (let* ((path (file-relative-name filename (vc-root-dir)))
+             (gh-url (format "https://github.com/%s/%s/tree/master/%s#L%d"
+                             (car repo)
+                             (cdr repo)
+                             path
+                             lineno)))
+        (message "%s (copied to clipboard)" gh-url)
+        (kill-new gh-url))
+    (message "No github root detected")))
