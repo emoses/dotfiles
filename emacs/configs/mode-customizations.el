@@ -157,9 +157,15 @@
                       (ediff-get-region-contents ediff-currrent-difference 'A ediff-control-buffer)
                       (ediff-get-region-contents ediff-currrent-difference 'B ediff-control-buffer))))
 
+  (defun my:ediff-jump-to-control-frame-or-window ()
+    (interactive)
+    (unless (or (boundp 'ediff-control-buffer) ediff-control-buffer (ediff-in-control-buffer-p))
+      (select-window (get-buffer-window ediff-control-buffer t))))
+
   (add-hook 'ediff-keymap-setup-hook (lambda ()
                                        (define-key ediff-mode-map "Q" #'my:quit-ediff-kill-buffers)
-                                       (define-key ediff-mode-map "d" #'my:ediff-copy-both-to-C))))
+                                       (define-key ediff-mode-map "d" #'my:ediff-copy-both-to-C)
+                                       (define-key ediff-mode-map "~" #'my:ediff-jump-to-control-frame-or-window))))
 
 (use-package web-mode
   :ensure t
@@ -247,11 +253,13 @@
   :ensure t
   :after (magit eshell)
   :config
-  (require 'eshell)
   (add-hook 'eshell-before-prompt-hook
             (lambda () (setq xterm-color-preserve-properties t)))
-  (add-to-list 'eshell-preoutput-filter-functions 'xterm-color-filter)
-  (setq eshell-output-filter-functions (remove 'eshell-handle-ansi-color eshell-output-filter-functions))
+  (when (fboundp 'eshell-preoutput-filter-functions)
+    (add-to-list 'eshell-preoutput-filter-functions 'xterm-color-filter))
+
+  (when (fboundp 'eshell-output-filter-functions)
+    (setq eshell-output-filter-functions (remove 'eshell-handle-ansi-color eshell-output-filter-functions)))
   (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
 
   (defun my:xterm-color-magit (args)
@@ -265,3 +273,7 @@
 (use-package yaml-mode
   :ensure t
   :mode "\\.ya?ml$")
+
+(use-package scad-mode
+  :ensure t
+  :mode "\\.scad$")
