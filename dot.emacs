@@ -303,7 +303,4 @@ Largely a copy-paste of projectile-ag, need to refactor"
   :config
   (setq neo-smart-open t))
 
-(use-package el-patch
-  :ensure t)
-
 (projectile-mode)

@@ -19,3 +19,13 @@
    :fetcher git
    :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
 (require 'quelpa-use-package)
+
+(eval-when-compile
+  (require 'use-package))
+
+(use-package el-patch
+  :ensure t
+  :config
+  (setq el-patch-enable-use-package-integration t))
+
+(require 'el-patch)

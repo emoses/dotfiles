@@ -284,3 +284,7 @@
 (use-package scad-mode
   :ensure t
   :mode "\\.scad$")
+
+(use-package groovy-mode
+  :mode "\\.groovy\\'"
+  :ensure t)

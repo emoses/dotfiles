@@ -69,6 +69,7 @@
           info
                                         ;ivy
           js2-mode
+          lsp-ui-imenu
           lua-mode
           magit
           neotree

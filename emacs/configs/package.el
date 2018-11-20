@@ -25,7 +25,3 @@
 
 (eval-when-compile
   (require 'use-package))
-
-(use-package groovy-mode
-  :mode "\\.groovy\\'"
-  :ensure t)

@@ -52,6 +52,7 @@
     :config
     (setq lsp-ui-sideline-ignore-duplicate t)
     (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+    (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1)))
     :config/el-patch
     ;; cpbotha: with numpy functions, e.g. np.array for example,
     ;; kind=markdown and docs are in markdown, but in default
