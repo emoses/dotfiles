@@ -40,6 +40,7 @@
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
+ '(org-export-backends (quote (ascii html icalendar latex md odt)))
  '(org-log-done (quote time))
  '(org-mobile-inbox-for-pull (concat org-directory "/from-mobile.org"))
  '(org-modules
@@ -48,7 +49,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
  '(package-selected-packages
    (quote
-    (scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+    (el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(sml/name-width 44)
  '(sml/replacer-regexp-list
@@ -79,7 +80,8 @@
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
- '(org-todo ((t (:foreground "#cc6666" :weight bold)))))
+ '(lsp-ui-sideline-global ((t (:background "medium blue"))))
+ '(org-todo ((t (:background "light coralq" :foreground "light pink" :box (:line-width 1 :color "dim gray") :weight bold)))))
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
@@ -300,5 +302,8 @@ Largely a copy-paste of projectile-ag, need to refactor"
   :after (projectile)
   :config
   (setq neo-smart-open t))
+
+(use-package el-patch
+  :ensure t)
 
 (projectile-mode)

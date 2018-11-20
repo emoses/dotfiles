@@ -1,7 +1,8 @@
 (defun lisp-modes ()
   (paredit-mode t)
   (show-paren-mode t)
-  (rainbow-delimiters-mode t))
+  (rainbow-delimiters-mode t)
+  (evil-cleverparens-mode))
 
 
 (use-package evil-paredit
@@ -46,6 +47,13 @@
 ;;   (setq inf-clojure-program '("localhost" . 5555)))
 
 (add-hook 'emacs-lisp-mode-hook #'lisp-modes)
+
+(use-package racket-mode
+  :ensure t
+  :mode "\\.rkt$"
+  :after '(evil evil-cleverparens)
+  :config
+  (add-hook 'racket-mode-hook #'lisp-modes))
 
 
 (add-hook 'cider-repl-mode-hook

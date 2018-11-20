@@ -119,6 +119,11 @@
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
+;;Forge
+;; (use-package closql)
+;; (use-package dash)
+;; (use-package emacsql)
+
 (use-package company
   :ensure t
   :init
@@ -169,7 +174,9 @@
 
 (use-package web-mode
   :ensure t
-  :mode "\\.html?$")
+  :mode "\\.html?$"
+  :config
+  (setq web-mode-enable-auto-quoting nil))
 
 (use-package lua-mode
   :ensure t

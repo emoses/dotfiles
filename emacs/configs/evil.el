@@ -88,3 +88,7 @@
 
   (add-hook 'evil-collection-setup-hook #'my:customize-evil-collection-occur)
   (evil-collection-init))
+
+(use-package evil-cleverparens
+  :ensure t
+  :after evil)

@@ -65,3 +65,6 @@ if there is no schedule (so these are sorted to the bottom)"
    '((plantuml . t)))
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
+
+(use-package htmlize
+  :ensure t)
