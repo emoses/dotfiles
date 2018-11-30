@@ -89,7 +89,6 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
     ;; kind=markdown and docs are in markdown, but in default
     ;; lsp-ui-20181031 this is rendered as plaintext see
     ;; https://microsoft.github.io/language-server-protocol/specification#markupcontent
-s
     ;; not only that, MS PyLS turns all spaces into &nbsp; instances,
     ;; which we remove here this single additional cond clause fixes all
     ;; of this for hover
