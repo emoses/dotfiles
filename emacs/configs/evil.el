@@ -4,7 +4,8 @@
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))
   :init
-  (setq evil-want-integration nil)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
   :config
   (global-evil-leader-mode 1)
   (evil-mode 1)
@@ -56,16 +57,16 @@
   :ensure t
   :config
   (setq evil-collection-mode-list
-        '(ace-jump-mode
-          ag
+        '(ag
                                         ;calc
           cider
           company
           diff-mode
-          eldoc
+          ;; dired
           elisp-mode
           eshell
           flycheck
+          imenu-list
           info
                                         ;ivy
           js2-mode
@@ -75,11 +76,11 @@
           neotree
           (occur replace)
           (package-menu package)
-          paren
           python
           ruby-mode
           (term term ansi-term multi-term)
           which-key
+          xref
           ))
 
   (defun my:customize-evil-collection-occur (mode keymaps &rest _rest)

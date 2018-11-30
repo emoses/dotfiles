@@ -36,6 +36,7 @@
  '(js2-bounce-indent-flag nil)
  '(js2-global-externs (quote ("require" "module")))
  '(js2-strict-inconsistent-return-warning nil)
+ '(lsp-imenu-sort-methods (quote (position kind)))
  '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
@@ -67,7 +68,10 @@
      ("^.*/patreon_py/" ":P_PY:")
      ("~/dev/patreon/" ":WORK:"))))
  '(sml/shorten-directory nil)
- '(tls-checktrust t))
+ '(tls-checktrust t)
+ '(xref-prompt-for-identifier
+   (quote
+    (not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
