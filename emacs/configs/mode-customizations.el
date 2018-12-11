@@ -112,6 +112,7 @@
   (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
   (setq magit-completing-read-function #'magit-ido-completing-read)
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
+  (setq magit-process-finish-apply-ansi-colors t)
   (global-magit-file-mode t))
 
 (use-package magit-gh-pulls
@@ -159,8 +160,8 @@
     (interactive)
     (ediff-copy-diff ediff-current-difference nil 'C nil
                      (concat
-                      (ediff-get-region-contents ediff-currrent-difference 'A ediff-control-buffer)
-                      (ediff-get-region-contents ediff-currrent-difference 'B ediff-control-buffer))))
+                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 
   (defun my:ediff-jump-to-control-frame-or-window ()
     (interactive)

@@ -51,3 +51,9 @@
 #	insteadOf = git://github.com/sfdc-matrix
 [github]
 	oauth-token = 61c8d18b291dd5ee8c69d382d28f536fc459caae
+[sendemail]
+        smptEncryption = tls
+        smptServer = smtp.gmail.com
+        smtpUser = evan@emoses.org
+        smtpServerPort = 587
+	annotate = yes
