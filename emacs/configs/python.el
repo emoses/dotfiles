@@ -4,6 +4,8 @@
 (eval-after-load 'python-mode
   (progn
                                         ; extracted from elpy
+    (pyenv-mode)
+    (setq python-shell-interpreter "python3")
     (defun my:python-occur-definitions ()
       "Display an occur buffer of all definitions in the current buffer.
 Also, switch to that buffer."
@@ -32,6 +34,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
              (format "Search in project for %s: " (if current-prefix-arg "regexp" "string")))))
         current-prefix-arg))
       (projectile-ag search-term arg))
+    (define-key pyenv-mode-map (kbd "C-c C-s") nil)
     (define-key python-mode-map (kbd "C-c C-o") #'my:python-occur-definitions)
     (define-key python-mode-map (kbd "C-c C-s") #'my:projectile-ag-symbol)
     (set-variable 'python-indent-def-block-scale 1)
@@ -58,7 +61,6 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 (use-package lsp-mode
   :ensure t
-  :after el-patch
   :config
 
   ;; change nil to 't to enable logging of packets between emacs and the LS
@@ -87,8 +89,8 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
     (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1))))
 
   ;; make sure we have lsp-imenu everywhere we have LSP
-  (require 'lsp-imenu)
-  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+;;  (require 'lsp-imenu)
+ ;; (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
 
   ;; install LSP company backend for LSP-driven completion
   (use-package company-lsp
@@ -106,6 +108,4 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 
   ;; lsp-python-enable is created by macro above
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (lsp-python-enable))))
+  (add-hook 'python-mode-hook 'lsp))
