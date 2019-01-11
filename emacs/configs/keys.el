@@ -7,6 +7,7 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key '[delete] 'delete-char)
 (global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "<f9>") 'magit-status)
 (global-set-key (kbd "C-c C-r") 'revert-buffer)
 (global-set-key (kbd "C-c m") 'switch-to-minibuffer)
 (global-set-key (kbd "TAB") 'indent-for-tab-command)

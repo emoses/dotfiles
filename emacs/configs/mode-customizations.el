@@ -115,26 +115,27 @@
   (setq magit-process-finish-apply-ansi-colors t)
   (global-magit-file-mode t))
 
+(use-package forge
+  :ensure t
+  :config
+  (magit-define-popup-action 'forge-dispatch ?o "Open in browser" #'forge-browse-dwim))
+
 (use-package magit-gh-pulls
   :ensure t
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
-;;Forge
-;; (use-package closql)
-;; (use-package dash)
-;; (use-package emacsql)
 
 (use-package company
   :ensure t
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
-(use-package company-flx
-  :ensure t
-  :after company
-  :config
-  (company-flx-mode +1))
+;; (use-package company-flx
+;;   :ensure t
+;;   :after company
+;;   :config
+;;   (company-flx-mode +1))
 
 (use-package eldoc-overlay
   :ensure t)
