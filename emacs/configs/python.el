@@ -1,5 +1,4 @@
-(use-package pyenv-mode
-  :ensure t)
+(use-package pyenv-mode)
 
 (eval-after-load 'python-mode
   (progn
@@ -43,7 +42,6 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
     ))
 
 ;; (use-package elpy
-;;   :ensure t
 ;;   :after flycheck
 ;;   :mode ("\\.py$" . python-mode)
 ;;   :bind (:map elpy-mode-map
@@ -60,7 +58,6 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 ;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 (use-package lsp-mode
-  :ensure t
   :config
 
   ;; change nil to 't to enable logging of packets between emacs and the LS
@@ -81,7 +78,6 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
   (use-package lsp-ui
-    :ensure t
     :config
     (setq lsp-ui-sideline-ignore-duplicate t)
     (setq lsp-ui-sideline-enable nil)
@@ -95,13 +91,13 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   ;; install LSP company backend for LSP-driven completion
   (use-package company-lsp
     :after company-mode
-    :ensure t
     :config
     (push 'company-lsp company-backends))
 
   (use-package lsp-python-ms
-    ; :ensure t
-    :load-path "~/dev/lsp-python-ms/"
+    ;; :load-path "~/dev/lsp-python-ms/"
+    :after (projectile)
+    :straight (:host github :repo "emoses/lsp-python-ms")
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll
     (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/")))

@@ -10,9 +10,43 @@ if there is no schedule (so these are sorted to the bottom)"
           ((> schedB schedA) -1)
           (t nil))))
 
+
+;; Git installation from straight.el
+;; from https://github.com/raxod502/straight.el#installing-org-with-straightel
+(require 'subr-x)
+(straight-use-package 'git)
+
+(defun org-git-version ()
+  "The Git version of org-mode.
+Inserted by installing org-mode or when a release is made."
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (git-run "describe"
+              "--match=release\*"
+              "--abbrev=6"
+              "HEAD"))))
+
+(defun org-release ()
+  "The release version of org-mode.
+Inserted by installing org-mode or when a release is made."
+  (require 'git)
+  (let ((git-repo (expand-file-name
+                   "straight/repos/org/" user-emacs-directory)))
+    (string-trim
+     (string-remove-prefix
+      "release_"
+      (git-run "describe"
+               "--match=release\*"
+               "--abbrev=0"
+               "HEAD")))))
+
+(provide 'org-version)
+
 (use-package org
-  :quelpa t
   :mode ("\\.org$" . org-mode)
+  :requires (plantuml-mode)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("C-c i" . org-toggle-item)
@@ -66,5 +100,4 @@ if there is no schedule (so these are sorted to the bottom)"
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
 
-(use-package htmlize
-  :ensure t)
+(use-package htmlize)

@@ -1,6 +1,20 @@
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
 (require 'package)
-(package-initialize)
-(setq package-enable-at-startup nil)
 (setq package-archives `(("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")))
@@ -14,18 +28,17 @@
                            (file-name-as-directory "elisp")
                            (concat (symbol-name ',name) ".el"))))))
 (use-url quelpa  "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
-(quelpa
- '(quelpa-use-package
-   :fetcher git
-   :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
-(require 'quelpa-use-package)
 
 (eval-when-compile
   (require 'use-package))
 
 (use-package el-patch
-  :ensure t
   :config
   (setq el-patch-enable-use-package-integration t))
 
 (require 'el-patch)
+
+(use-package dired-details+)
+(use-package flx-ido)
+(use-package ido-completing-read+)
+(use-package editorconfig)

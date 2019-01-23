@@ -170,7 +170,6 @@
 
 (when (< 26 emacs-major-version)
   (use-package nlinum
-    :ensure t
     :config
     (defun my:nlinum-hook-min-lines ()
       (when nlinum-mode
@@ -182,12 +181,10 @@
     (global-nlinum-mode t)))
 
 (use-package editorconfig
-  :ensure t
   :config
   (editorconfig-mode 1))
 
 (use-package projectile
-  :ensure t
   :bind ("C-c p s t" . my:projectile-ag-test)
   :config
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
@@ -232,13 +229,11 @@ Largely a copy-paste of projectile-ag, need to refactor"
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 (use-package flycheck
-  :ensure t
   :config
   (global-flycheck-mode t))
 
 ;;ido
 (use-package flx-ido
-             :ensure t
              :config
              (progn
                (ido-mode t)
@@ -248,11 +243,9 @@ Largely a copy-paste of projectile-ag, need to refactor"
                (setq ido-use-faces nil)
                (setq ido-create-new-buffer 'always)))
 
-(use-package ido-completing-read+
-  :ensure t)
+(use-package ido-completing-read+)
 
 (use-package ag
-  :ensure t
   :config
   (defun eshell/ag (string)
     (ag/search string (eshell/pwd)))
@@ -265,11 +258,9 @@ Largely a copy-paste of projectile-ag, need to refactor"
                 (kill-buffer buff))))
           (buffer-list))))
 
-(use-package find-file-in-repository
-  :ensure t)
+(use-package find-file-in-repository)
 
 (use-package exec-path-from-shell
-  :ensure t
   :config
   (when my:osx
     ;(add-to-list 'exec-path-from-shell-arguments "--norc")
@@ -291,22 +282,18 @@ Largely a copy-paste of projectile-ag, need to refactor"
 
 ;;Smart mode line
 (use-package smart-mode-line
-  :ensure t
   :config
   (sml/setup)
   (sml/apply-theme 'light))
 
-(use-package ace-jump-mode
-  :ensure t)
+(use-package ace-jump-mode)
 
 (use-package ace-window
-  :ensure t
   :bind ("M-SPC" . ace-window))
 
 (use-url help-fns+ "https://raw.githubusercontent.com/emacsmirror/help-fns-plus/master/help-fns%2B.el")
 
 (use-package neotree
-  :ensure t
   :bind ("M-\\" . neotree-toggle)
   :after (projectile)
   :config

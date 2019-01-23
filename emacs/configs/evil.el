@@ -1,13 +1,13 @@
-
 (use-package evil
-  :ensure t
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   :config
-  (global-evil-leader-mode 1)
+  (use-package evil-leader
+    :config
+    (global-evil-leader-mode 1))
   (evil-mode 1)
   (setq evil-default-cursor t)
 
@@ -38,14 +38,9 @@
   ;;Make snake_case part of words for python
   (add-hook 'python-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
 
-(use-package evil-leader
-  :after evil
-  :ensure t)
-
 (use-package evil-org
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
   :after evil
-  :ensure t
   :config
   ;;Unbind J and K from evil org.
   (evil-define-key 'normal evil-org-mode-map
@@ -54,7 +49,7 @@
 
 (use-package evil-collection
   :after evil
-  :ensure t
+  :init
   :config
   (setq evil-collection-mode-list
         '(ag
@@ -92,5 +87,4 @@
   (evil-collection-init))
 
 (use-package evil-cleverparens
-  :ensure t
   :after evil)

@@ -7,7 +7,6 @@
 ;      (cursor-color . "lightgray")))
 
 (use-package base16-theme
-  :ensure t
   :init
   (load-theme 'base16-tomorrow-night))
 
