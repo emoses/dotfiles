@@ -42,9 +42,7 @@ Inserted by installing org-mode or when a release is made."
                "--abbrev=0"
                "HEAD")))))
 
-(provide 'org-version)
-
-(use-package org
+(use-package org-plus-contrib
   :mode ("\\.org$" . org-mode)
   :requires (plantuml-mode)
   :bind (("C-c l" . org-store-link)
@@ -56,12 +54,12 @@ Inserted by installing org-mode or when a release is made."
   :init
   (add-hook 'org-mode-hook 'flyspell-mode)
   :config
-  (require 'org-install)
   ;;normally bound to org-reveal, but that's moved to C-c r above
   (define-key org-mode-map (kbd "C-c C-r") nil)
 
   (setq org-mobile-directory "~/Nextcloud/MobileOrg")
   (setq org-directory "~/Nextcloud/org")
+  (setq org-mobile-inbox-for-pull (expand-file-name "from-mobile.org" org-directory))
   (setq org-agenda-files (mapcar (lambda (f) (expand-file-name f org-directory))
                                  '("work.org" "home.org")))
   (add-hook 'org-mode-hook
@@ -85,7 +83,7 @@ Inserted by installing org-mode or when a release is made."
         (define-key global-map "\C-cr" rememberFn)))
 
   ;; (if (fboundp 'org-remember-insinuate)
-  ;;     (org-remember-insinuate))
+  ;;     (ssorg-remember-insinuate))
   ;; (let ((rememberFn (cond
   ;;                    ((fboundp 'org-remember) 'org-remember)
   ;;                    ((fboundp 'org-capture) 'org-capture)

@@ -42,3 +42,7 @@
 (use-package flx-ido)
 (use-package ido-completing-read+)
 (use-package editorconfig)
+
+;; Needed until straight's elpa bumps spinner version
+(use-package spinner
+  :straight (:host github :repo "malabarba/spinner.el"))

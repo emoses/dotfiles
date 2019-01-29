@@ -36,6 +36,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
     (define-key pyenv-mode-map (kbd "C-c C-s") nil)
     (define-key python-mode-map (kbd "C-c C-o") #'my:python-occur-definitions)
     (define-key python-mode-map (kbd "C-c C-s") #'my:projectile-ag-symbol)
+    (unbind-key (kbd "C-c C-p") python-mode-map) ;Unbind run-python, which is easy to mis-hit with projectile
     (set-variable 'python-indent-def-block-scale 1)
 
     ;; (add-hook 'python-mode-hook 'flycheck-mode)
@@ -58,6 +59,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 ;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 (use-package lsp-mode
+  :bind (("C-c M-r" . lsp-rename))
   :config
 
   ;; change nil to 't to enable logging of packets between emacs and the LS
