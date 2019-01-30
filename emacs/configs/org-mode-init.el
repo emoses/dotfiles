@@ -54,6 +54,7 @@ Inserted by installing org-mode or when a release is made."
   :init
   (add-hook 'org-mode-hook 'flyspell-mode)
   :config
+  (message "org mode config")
   ;;normally bound to org-reveal, but that's moved to C-c r above
   (define-key org-mode-map (kbd "C-c C-r") nil)
 

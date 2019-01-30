@@ -24,7 +24,6 @@
   (add-hook 'clojure-mode-hook #'lisp-modes))
 
 (use-package cider
-  :pin melpa-stable
   :bind (:map cider-mode-map
               ("M-/" . cider-find-var)
               ("C-c C-t j" . cider-test-jump))

@@ -14,10 +14,10 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
-(require 'package)
-(setq package-archives `(("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ("gnu" . "https://elpa.gnu.org/packages/")))
+;; (require 'package)
+;; (setq package-archives `(("melpa-stable" . "https://stable.melpa.org/packages/")
+;;                          ("melpa" . "https://melpa.org/packages/")
+;;                          ("gnu" . "https://elpa.gnu.org/packages/")))
 
 (defmacro use-url (name url)
   `(unless (require ',name nil t)
@@ -27,16 +27,12 @@
        (write-file (concat user-emacs-directory
                            (file-name-as-directory "elisp")
                            (concat (symbol-name ',name) ".el"))))))
-(use-url quelpa  "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
 
-(eval-when-compile
-  (require 'use-package))
+;; (use-package el-patch
+;;   :config
+;;   (setq el-patch-enable-use-package-integration t))
 
-(use-package el-patch
-  :config
-  (setq el-patch-enable-use-package-integration t))
-
-(require 'el-patch)
+;; (require 'el-patch)
 
 (use-package dired-details+)
 (use-package flx-ido)

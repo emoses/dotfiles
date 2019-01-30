@@ -1,5 +1,7 @@
 (use-package pyenv-mode)
 
+
+
 (eval-after-load 'python-mode
   (progn
                                         ; extracted from elpy
@@ -33,12 +35,35 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
              (format "Search in project for %s: " (if current-prefix-arg "regexp" "string")))))
         current-prefix-arg))
       (projectile-ag search-term arg))
+
+    (defun python-lineify-arguments ()
+      "TODO: make idempotent, handle more errors"
+      (interactive)
+      (when (python-syntax-comment-or-string-p)
+        (error "Cannot use this function inside a string or comment"))
+      (save-excursion
+        (python-nav-up-list -1)
+        (while (not (equal (char-after) ?\)))
+          (forward-char)
+          (if (not (eolp))
+            (newline-and-indent)
+            (forward-line))
+          (condition-case nil
+            (while (not (equal (char-after) ?,))
+              (python-nav-forward-sexp))
+            (error
+             (search-forward ")" nil nil)
+             (backward-char))))
+        (when (not (equal (char-before) ?,))
+          (insert ?,)
+          (newline-and-indent))))
+
     (define-key pyenv-mode-map (kbd "C-c C-s") nil)
     (define-key python-mode-map (kbd "C-c C-o") #'my:python-occur-definitions)
     (define-key python-mode-map (kbd "C-c C-s") #'my:projectile-ag-symbol)
+    (define-key python-mode-map (kbd "C-c C-a") #'python-lineify-arguments)
     (unbind-key (kbd "C-c C-p") python-mode-map) ;Unbind run-python, which is easy to mis-hit with projectile
     (set-variable 'python-indent-def-block-scale 1)
-
     ;; (add-hook 'python-mode-hook 'flycheck-mode)
     ))
 
@@ -60,6 +85,10 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename))
+  :after (python-mode)
+  :init
+  (add-hook 'python-mode-hook 'lsp)
+  ;; lsp-python-enable is created by macro above
   :config
 
   ;; change nil to 't to enable logging of packets between emacs and the LS
@@ -87,8 +116,8 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
     (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1))))
 
   ;; make sure we have lsp-imenu everywhere we have LSP
-;;  (require 'lsp-imenu)
- ;; (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+  ;;  (require 'lsp-imenu)
+  ;; (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
 
   ;; install LSP company backend for LSP-driven completion
   (use-package company-lsp
@@ -102,8 +131,4 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
     :straight (:host github :repo "emoses/lsp-python-ms")
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll
-    (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/")))
-
-
-  ;; lsp-python-enable is created by macro above
-  (add-hook 'python-mode-hook 'lsp))
+    (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/"))))
