@@ -230,8 +230,13 @@
 
 (use-package plantuml-mode
   :mode "\\.plantuml$"
+  :after (org)
   :config
-  (setq plantuml-jar-path "~/lib/plantuml.jar"))
+  (setq plantuml-jar-path "~/lib/plantuml.jar")
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((plantuml . t)))
+  (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
 
 (use-package eshell
   :bind (("C-c M-B" . eshell-insert-buffer-filename))
