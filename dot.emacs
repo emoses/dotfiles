@@ -187,6 +187,8 @@
 (use-package projectile
   :bind ("C-c p s t" . my:projectile-ag-test)
   :config
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-switch-project-action #'projectile-dired)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "A-p") 'projectile-command-map)
@@ -233,17 +235,35 @@ Largely a copy-paste of projectile-ag, need to refactor"
   (global-flycheck-mode t))
 
 ;;ido
-(use-package flx-ido
-             :config
-             (progn
-               (ido-mode t)
-               (ido-everywhere t)
-               (flx-ido-mode t)
-               (setq ido-enable-flex-matching t)
-               (setq ido-use-faces nil)
-               (setq ido-create-new-buffer 'always)))
+;; (use-package flx-ido
+;;              :config
+;;              (progn
+;;                (ido-mode t)
+;;                (ido-everywhere t)
+;;                (flx-ido-mode t)
+;;                (setq ido-enable-flex-matching t)
+;;                (setq ido-use-faces nil)
+;;                (setq ido-create-new-buffer 'always)))
 
-(use-package ido-completing-read+)
+;; (use-package ido-completing-read+)
+
+(use-package counsel
+  :bind (("C-s" . swiper)
+         ("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-h f" . counsel-describe-function)
+         ("C-h v" . counsel-describe-variable))
+
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-re-builders-alist
+        '((counsel-M-x . ivy--regex-fuzzy)
+          (t . ivy--regex-plus))))
+
+(use-package hydra)
+(use-package ivy-hydra
+  :after (ivy hydra))
 
 (use-package ag
   :config
