@@ -188,7 +188,7 @@
   :bind ("C-c p s t" . my:projectile-ag-test)
   :config
   (setq projectile-completion-system 'ivy)
-  (setq projectile-switch-project-action #'projectile-dired)
+  (setq projectile-switch-project-action #'projectile-find-file-dwim)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "A-p") 'projectile-command-map)
@@ -259,7 +259,10 @@ Largely a copy-paste of projectile-ag, need to refactor"
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-re-builders-alist
         '((counsel-M-x . ivy--regex-fuzzy)
-          (t . ivy--regex-plus))))
+          (t . ivy--regex-plus)))
+
+  ; Backspace at beginning in minibuffer quits by default.  Don't do that.
+  (setq ivy-on-del-error-function #'ignore))
 
 (use-package hydra)
 (use-package ivy-hydra

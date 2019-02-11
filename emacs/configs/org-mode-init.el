@@ -12,6 +12,7 @@ if there is no schedule (so these are sorted to the bottom)"
 
 (use-package org
   :straight org-plus-contrib
+  :after (hydra)
   :mode ("\\.org$" . org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
@@ -61,6 +62,21 @@ if there is no schedule (so these are sorted to the bottom)"
   ;;       (define-key global-map "\C-cr" rememberFn)))
 
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory))
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images))
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+
+  (defhydra my:org-item-hydra (:color pink
+                               :hint nil)
+    "
+  _h_: <-      _l_: ->    _-_: Toggle item
+  ^ ^          ^ ^        _*_: Toggle heading
+  _q_: _q_uit             _t_: Cycle _t_odo
+   "
+    ("h" #'org-metaleft)
+    ("l" #'org-metaright)
+    ("-" #'org-toggle-item)
+    ("*" #'org-toggle-heading)
+    ("t" #'org-todo)
+    ("q" nil))
+  (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map))
 
 (use-package htmlize)
