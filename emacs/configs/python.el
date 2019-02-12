@@ -65,7 +65,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
   (unbind-key (kbd "C-c C-p") python-mode-map) ;Unbind run-python, which is easy to mis-hit with projectile
   (set-variable 'python-indent-def-block-scale 1)
-  ;; (add-hook 'python-mode-hook 'flycheck-mode)
+  (add-hook 'python-mode-hook 'flycheck-mode)
   )
 
 ;; (use-package elpy
@@ -96,6 +96,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   ;; this was invaluable for debugging communication with the MS Python Language Server
   ;; and comparing this with what vs.code is doing
   (setq lsp-print-io nil)
+  (setq lsp-prefer-flymake nil)
   (defun my:lsp--filter-variables (filter-fn sym)
     (if (= 13 (gethash "kind" sym))
         (progn
