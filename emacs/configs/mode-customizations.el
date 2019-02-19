@@ -95,6 +95,8 @@
 
 ;;Magit
 (use-package magit
+  :bind (("C-x M-g" . magit-file-popup)
+         ("C-x M-S-g" . magit-dispatch-popup))
   :config
   (when (and my:osx (not with-editor-emacsclient-executable))
     (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))
@@ -206,7 +208,22 @@
 
   (win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o"))
   (setq win-switch-idle-time 2)
-  (setq win-switch-window-threshold 0))
+  (setq win-switch-window-threshold 0)
+
+  (defun my:win-switch-on-feedback ()
+    (win-switch-on-alert)
+    (setq win-switch-saved-mode-line-faces (face-attribute 'mode-line :box))
+    (let ((box (plist-put (copy-sequence win-switch-saved-mode-line-faces) :color "red")))
+      (unless (eq box (face-attribute 'mode-line :box))
+        (set-face-attribute 'mode-line (selected-frame) :box box))))
+
+  (defun my:win-switch-off-feedback ()
+    (win-switch-off-alert)
+    (unless (eq win-switch-saved-mode-line-faces (face-attribute 'mode-line :box))
+      (set-face-attribute 'mode-line (selected-frame) :box win-switch-saved-mode-line-faces))
+    (setq win-switch-saved-mode-line-faces nil))
+  (setq win-switch-on-feedback-function #'my:win-switch-on-feedback)
+  (setq win-switch-off-feedback-function #'my:win-switch-off-feedback))
 
 (use-package typescript-mode
   :mode "\\.ts$")

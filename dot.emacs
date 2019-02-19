@@ -389,7 +389,8 @@ Largely a copy-paste of projectile-ag, need to refactor"
   :after (smart-mode-line-powerline-theme powerline)
   :config
   (sml/apply-theme 'smart-mode-line-light-powerline)
-  (sml/setup))
+  (sml/setup)
+  (set-face-attribute 'mode-line-inactive nil :box '(:width -1)))
 
 (use-package ace-jump-mode)
 

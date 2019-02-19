@@ -124,9 +124,8 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
     (push 'company-lsp company-backends))
 
   (use-package lsp-python-ms
-    ;; :load-path "~/dev/lsp-python-ms/"
     :after (projectile)
-    :straight (:host github :repo "emoses/lsp-python-ms")
+    :straight (:host github :repo "andrew-christianson/lsp-python-ms")
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll
     (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/"))))
