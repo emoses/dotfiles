@@ -64,8 +64,19 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
         (newline-and-indent))))
 
   (unbind-key (kbd "C-c C-p") python-mode-map) ;Unbind run-python, which is easy to mis-hit with projectile
+  (unbind-key (kbd "C-c C-r") python-mode-map) ; Conflict with my revert-buffer binding
   (set-variable 'python-indent-def-block-scale 1)
-  (add-hook 'python-mode-hook 'flycheck-mode)
+  (add-hook 'python-mode-hook 'flycheck-mode))
+
+(use-package python-pytest
+  :after python
+  :custom
+  (python-pytest-executable "devx pytest")
+  (python-pytest-shell-startfile "~/.bashrc")
+  (python-pytest-arguments '("--color"))
+  :bind (:map python-mode-map
+              ("C-c t" . python-pytest-popup)
+              ("C-c T" . python-pytest-repeat))
   )
 
 ;; (use-package elpy
