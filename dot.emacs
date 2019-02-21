@@ -331,7 +331,8 @@ Largely a copy-paste of projectile-ag, need to refactor"
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-re-builders-alist
         '((counsel-M-x . ivy--regex-fuzzy)
-          (t . ivy--regex-plus)))
+          (t . ivy--regex-fuzzy)))
+  (add-to-list 'ivy-initial-inputs-alist '(counsel-M-x . ""))
 
   ; Backspace at beginning in minibuffer quits by default.  Don't do that.
   (setq ivy-on-del-error-function #'ignore)
