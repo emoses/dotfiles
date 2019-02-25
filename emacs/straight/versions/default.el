@@ -21,6 +21,7 @@
  ("emacs-htmlize" . "8db0aa6aab77475a732b7363f0d57bd3933c18fd")
  ("emacs-memoize" . "9a561268ffb550b257a08710489a95cd087998b6")
  ("emacs-neotree" . "5e1271655170f4cdc6849258e383c548a4e6e3d0")
+ ("emacs-python-pytest" . "2ace9121aae75bbc7c61701954094ac1fbfe29d0")
  ("epkgs" . "362624785394a39d4d9ec769808c01a5d1a61446")
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")
  ("evil" . "506f758aa431128b40c987ff634b56c49f69fdb8")

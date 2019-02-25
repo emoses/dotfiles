@@ -69,6 +69,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   (add-hook 'python-mode-hook 'flycheck-mode))
 
 (use-package python-pytest
+  :straight (:host github :repo "emoses/emacs-python-pytest")
   :after python
   :custom
   (python-pytest-executable "devx pytest")
