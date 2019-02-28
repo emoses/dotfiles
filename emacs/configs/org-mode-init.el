@@ -11,7 +11,8 @@ if there is no schedule (so these are sorted to the bottom)"
           (t nil))))
 
 (use-package org
-  :quelpa t
+  :straight org-plus-contrib
+  :after (hydra)
   :mode ("\\.org$" . org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
@@ -22,12 +23,13 @@ if there is no schedule (so these are sorted to the bottom)"
   :init
   (add-hook 'org-mode-hook 'flyspell-mode)
   :config
-  (require 'org-install)
+  (message "org mode config")
   ;;normally bound to org-reveal, but that's moved to C-c r above
   (define-key org-mode-map (kbd "C-c C-r") nil)
 
   (setq org-mobile-directory "~/Nextcloud/MobileOrg")
   (setq org-directory "~/Nextcloud/org")
+  (setq org-mobile-inbox-for-pull (expand-file-name "from-mobile.org" org-directory))
   (setq org-agenda-files (mapcar (lambda (f) (expand-file-name f org-directory))
                                  '("work.org" "home.org")))
   (when my:windows
@@ -53,7 +55,7 @@ if there is no schedule (so these are sorted to the bottom)"
         (define-key global-map "\C-cr" rememberFn)))
 
   ;; (if (fboundp 'org-remember-insinuate)
-  ;;     (org-remember-insinuate))
+  ;;     (ssorg-remember-insinuate))
   ;; (let ((rememberFn (cond
   ;;                    ((fboundp 'org-remember) 'org-remember)
   ;;                    ((fboundp 'org-capture) 'org-capture)
@@ -62,8 +64,21 @@ if there is no schedule (so these are sorted to the bottom)"
   ;;       (define-key global-map "\C-cr" rememberFn)))
 
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory))
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((plantuml . t)))
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-  (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
+
+  (defhydra my:org-item-hydra (:color pink
+                               :hint nil)
+    "
+  _h_: <-      _l_: ->    _-_: Toggle item
+  ^ ^          ^ ^        _*_: Toggle heading
+  _q_: _q_uit             _t_: Cycle _t_odo
+   "
+    ("h" #'org-metaleft)
+    ("l" #'org-metaright)
+    ("-" #'org-toggle-item)
+    ("*" #'org-toggle-heading)
+    ("t" #'org-todo)
+    ("q" nil))
+  (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map))
+
+(use-package htmlize)

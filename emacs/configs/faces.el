@@ -1,15 +1,13 @@
-;;;Basic colors
-(set-face-background 'mode-line "white")
-(set-face-foreground 'mode-line "black")
-;(setq default-frame-alist
-;      '((background-color . "black")
-;      (foreground-color . "white")
-;      (cursor-color . "lightgray")))
 
-(use-package base16-theme
-  :ensure t
+;; (use-package base16-theme
+;;   :init
+;;   (load-theme 'base16-tomorrow-night))
+;; (use-package zenburn-theme
+;;   :init
+;;   (load-theme 'zenburn t))
+(use-package color-theme-sanityinc-tomorrow
   :init
-  (load-theme 'base16-tomorrow-night))
+  (load-theme 'sanityinc-tomorrow-night))
 
 ;;;Set up my favorite syntax-hilighting colors
 ;;(cond ((fboundp 'global-font-lock-mode)

@@ -7,15 +7,13 @@
 ;; 	  '(lambda () (auto-fill-mode 1)))
 
 (use-package google-c-style
-  :ensure t)
+  :straight  (:type git :host github :repo "google/styleguide" :branch "gh-pages"))
 
 (use-package cperl-mode
-  :ensure t
   :mode "\\.p[lm]\\'")
 
 ;;For PHP
 (use-package php-mode
-  :ensure t
   :mode (("\\.php$" . php-mode)
          ("\\.phtml$" . php-mode))
   :config
@@ -32,11 +30,9 @@
 
 (require 'generic-x)
 
-(use-package add-node-modules-path
-  :ensure t)
+(use-package add-node-modules-path)
 
 (use-package js2-mode
-  :ensure t
   :after (add-node-modules-path)
   :mode "\\.jsx?$"
   :config
@@ -63,15 +59,12 @@
   )
 
 (use-package css-mode
-  :ensure t
   :mode "\\.css$")
 
 (use-package less-css-mode
-  :ensure t
   :mode "\\.less$")
 
 (use-package markdown-mode
-  :ensure t
   :mode (("\\.md$" . markdown-mode)
          ("\\.markdown$" . markdown-mode))
   :init (setq markdown-command "pandoc"))
@@ -86,7 +79,6 @@
 
 ;;Haskell
 (use-package haskell-mode
-  :ensure t
   :mode "\\.hs$"
   :config
   (autoload 'ghc-init "ghc" nil t)
@@ -97,14 +89,14 @@
 
 ;;Haml
 (use-package haml-mode
-  :ensure t
   :config
   (add-hook 'haml-mode-hook (lambda ()
                               (local-unset-key (kbd "DEL")))))
 
 ;;Magit
 (use-package magit
-  :ensure t
+  :bind (("C-x M-g" . magit-file-popup)
+         ("C-x M-S-g" . magit-dispatch-popup))
   :config
   (when (and my:osx (not with-editor-emacsclient-executable))
     (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))
@@ -112,26 +104,40 @@
   (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
   (setq magit-completing-read-function #'magit-ido-completing-read)
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
-  (global-magit-file-mode t))
+  (setq magit-process-finish-apply-ansi-colors t)
+  (global-magit-file-mode t)
+  (defun my:magit-rebase-onto-origin-master (args)
+    (interactive (list (magit-rebase-arguments)))
+    (if-let ((remote (magit-get-some-remote)))
+        (magit-git-rebase (concat remote "/master") args)
+      (user-error "Remote `%s' doesn't exist" args)))
+  (magit-define-popup-action 'magit-rebase-popup ?o
+    (lambda ()
+      (--when-let (magit-get-some-remote) (concat it "/master\n")))
+    #'my:magit-rebase-onto-origin-master
+    ?e))
+
+(use-package forge
+  :requires (closql)
+  :config
+  (magit-define-popup-action 'forge-dispatch ?o "Open in browser" #'forge-browse-dwim))
 
 (use-package magit-gh-pulls
-  :ensure t
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
+
 (use-package company
-  :ensure t
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
-(use-package company-flx
-  :ensure t
-  :after company
-  :config
-  (company-flx-mode +1))
+;; (use-package company-flx
+;;   :ensure t
+;;   :after company
+;;   :config
+;;   (company-flx-mode +1))
 
-(use-package eldoc-overlay
-  :ensure t)
+(use-package eldoc-overlay)
 
 (use-package ediff
   :defer t
@@ -154,8 +160,8 @@
     (interactive)
     (ediff-copy-diff ediff-current-difference nil 'C nil
                      (concat
-                      (ediff-get-region-contents ediff-currrent-difference 'A ediff-control-buffer)
-                      (ediff-get-region-contents ediff-currrent-difference 'B ediff-control-buffer))))
+                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 
   (defun my:ediff-jump-to-control-frame-or-window ()
     (interactive)
@@ -168,20 +174,18 @@
                                        (define-key ediff-mode-map "~" #'my:ediff-jump-to-control-frame-or-window))))
 
 (use-package web-mode
-  :ensure t
-  :mode "\\.html?$")
+  :mode "\\.html?$"
+  :config
+  (setq web-mode-enable-auto-quoting nil))
 
 (use-package lua-mode
-  :ensure t
   :mode "\\.lua$" )
 
 (use-package arduino-mode
-  :ensure t
   :mode (("\\.ino$" . cc-mode)
          ("\\.pde$" . cc-mode)))
 
 (use-package win-switch
-  :ensure t
   :config
   (defun win-switch-setup-keys-hjkl (&rest dispatch-keys)
     (interactive)
@@ -204,14 +208,27 @@
 
   (win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o"))
   (setq win-switch-idle-time 2)
-  (setq win-switch-window-threshold 0))
+  (setq win-switch-window-threshold 0)
+
+  (defun my:win-switch-on-feedback ()
+    (win-switch-on-alert)
+    (setq win-switch-saved-mode-line-faces (face-attribute 'mode-line :box))
+    (let ((box (plist-put (copy-sequence win-switch-saved-mode-line-faces) :color "red")))
+      (unless (eq box (face-attribute 'mode-line :box))
+        (set-face-attribute 'mode-line (selected-frame) :box box))))
+
+  (defun my:win-switch-off-feedback ()
+    (win-switch-off-alert)
+    (unless (eq win-switch-saved-mode-line-faces (face-attribute 'mode-line :box))
+      (set-face-attribute 'mode-line (selected-frame) :box win-switch-saved-mode-line-faces))
+    (setq win-switch-saved-mode-line-faces nil))
+  (setq win-switch-on-feedback-function #'my:win-switch-on-feedback)
+  (setq win-switch-off-feedback-function #'my:win-switch-off-feedback))
 
 (use-package typescript-mode
-  :ensure t
   :mode "\\.ts$")
 
 (use-package json-mode
-  :ensure t
   :mode "\\.json$"
   :config
   (add-hook 'json-mode-hook
@@ -220,23 +237,23 @@
               (setq js-indent-level 2))))
 
 (use-package elm-mode
-  :ensure t
   :mode "\\.elm$")
 
 (use-package graphql-mode
-  :ensure t
   :mode "\\.graphqls$")
 
 (use-package groovy-mode
-  :ensure t
   :mode "\\.groovy$")
 
 (use-package plantuml-mode
-  :ensure t
-  :defer t
   :mode "\\.plantuml$"
+  :after (org)
   :config
-  (setq plantuml-jar-path "~/lib/plantuml.jar"))
+  (setq plantuml-jar-path "~/lib/plantuml.jar")
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((plantuml . t)))
+  (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
 
 (use-package eshell
   :bind (("C-c M-B" . eshell-insert-buffer-filename))
@@ -250,7 +267,6 @@
                                            (display-line-numbers-mode -1)))))
 
 (use-package xterm-color
-  :ensure t
   :after (magit eshell)
   :config
   (add-hook 'eshell-before-prompt-hook
@@ -267,13 +283,13 @@
   (advice-add 'magit-process-filter :filter-args #'my:xterm-color-magit))
 
 (use-package dockerfile-mode
-  :ensure t
   :mode "Dockerfile")
 
 (use-package yaml-mode
-  :ensure t
   :mode "\\.ya?ml$")
 
 (use-package scad-mode
-  :ensure t
   :mode "\\.scad$")
+
+(use-package groovy-mode
+  :mode "\\.groovy\\'")
