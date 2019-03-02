@@ -11,3 +11,5 @@ __flycheck*
 .lein-repl-history
 .lein-failures
 .nrepl-port
+*.iml
+.idea/

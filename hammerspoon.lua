@@ -34,14 +34,15 @@ end
 ------------------------------
 
 --Name -> {screenIndex, {grid spec}}
+local work_browser = {x = 0, y = 1, w = 7, h = 4}
 local work_display_table = {
-   Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
-   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 5}},
-   ["Google Chrome"] = {1, {x = 0, y = 0, w = 4, h = 5}},
-   Firefox = {1, {x = 0, y = 0, w = 4, h = 5}},
-   Slack = {1, {x = 4, y = 0, w = 3, h = 3}},
-   Terminal = {1, {x = 4, y = 3, w = 3, h = 2}},
-   iTerm2 = {1, {x = 4, y = 3, w = 3, h = 2}}
+   Emacs = {1, {x = 0, y = 0, w = 7, h = 5}},
+   ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
+   ["Google Chrome"] = {3, work_browser},
+   Firefox = {3, work_browser},
+   Slack = {2, {x = 0, y = 0, w = 7, h = 5}},
+   Terminal = {3, {x = 0, y = 0, w = 7, h = 1}},
+   iTerm2 = {3, {x = 0, y = 0, w = 7, h = 1}},
 }
 
 local home_display_table = {
@@ -54,6 +55,14 @@ local home_display_table = {
    iTerm2 = {1, {x = 4, y = 3, w = 3, h = 2}}
 }
 
+-- a function to filter out any windows you don't want moved by apply_layout
+local filterWindows = function(window)
+   if (window:application():title() == "Emacs" and window:title() == '*eshell*') then
+      return false
+   else
+      return true
+   end
+end
 
 hs.grid.GRIDWIDTH = 7
 hs.grid.GRIDHEIGHT = 5
@@ -69,7 +78,9 @@ local apply_layout = function(layout)
          local scrs = hs.screen.allScreens()
          local src = scrs[place[1]]
          for i, win in ipairs(app:allWindows()) do
-            hs.grid.set(win, place[2], src)
+            if (filterWindows(win)) then
+               hs.grid.set(win, place[2], src)
+            end
          end
       end
    end
@@ -81,12 +92,12 @@ local home_display = function() apply_layout(home_display_table) end
 
 local screenHandler = function()
    local screens = hs.screen.allScreens()
-   if (#screens == 2) then
-      if screens[1]:frame().w > 2000 and screens[2]:frame().w > 2000 then
+   if (#screens == 3) then
+      if screens[1]:frame().w > 1900 and screens[3]:frame().h > 1800 then
          work_display()
-      else
-         home_display()
       end
+   elseif (#screens == 2) then
+      home_display()
    end
 end
 hs.screen.watcher.new(screenHandler):start()
@@ -139,7 +150,7 @@ hs.hotkey.bind(mod1, "d", function()
 end)
 
 hs.hotkey.bind(mod1, "g", screenHandler)
-hs.hotkey.bind(mod1, "space", hs.caffeinate.startScreensaver) --
+hs.hotkey.bind(mod1shift, "space", hs.caffeinate.startScreensaver) --
 
 local chooserWindow = function(info)
    if info then

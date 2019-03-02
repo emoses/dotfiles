@@ -46,7 +46,7 @@ exec --no-startup-id emacs --daemon
 exec --no-startup-id owncloud
 exec --no-startup-id slack
 #needs a sleep to give time for the daemon to start
-exec --no-startup-id i3-msg 'sleep 5; workspace $w1; exec ec ~/ownCloud/org/work.org'
+exec --no-startup-id i3-msg 'sleep 5; workspace $w1; exec ec ~/NextCloud/org/work.org'
 
 assign [class="^P4v"] $w5
 assign [class="Eclipse"] $w3

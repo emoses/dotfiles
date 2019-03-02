@@ -20,6 +20,29 @@ by using nxml's indentation rules."
       (select-window (active-minibuffer-window))
     (error "Minibuffer is not active")))
 
+(defun find-file-other-from-eshell (filename &optional wildcards)
+  "If we're in our own frame, open a file in another frame.  If
+this is the only frame, open it in another window.  See
+find-file-other-frame and display-buffer"
+  (interactive
+   (find-file-read-args "Find file in other frame or window: "
+                        (confirm-nonexistent-file-or-buffer)))
+  (let* ((this-frame (window-frame (get-buffer-window)))
+         (use-other-frame (and (> (length (frame-list)) 1)
+                               (= 1 (length (window-list this-frame))))))
+    (if (not use-other-frame)
+        (find-file-other-window filename wildcards)
+      (let ((value (find-file-noselect filename nil nil wildcards)))
+        (if (listp value)
+	    (progn
+	      (setq value (nreverse value))
+	      (switch-to-buffer-other-frame (car value))
+	      (mapc 'switch-to-buffer (cdr value))
+	      value)
+          (pop-to-buffer value '((display-buffer-use-some-frame)
+                                 (reusable-frames . 0)
+                                 (inhibit-same-window . t))))))))
+
 (defun gh-change-profile (profile)
   "Change the profile used by gh.el"
   (interactive
@@ -102,3 +125,43 @@ by using nxml's indentation rules."
 (defun kebab-case-region-or-word ()
   (interactive)
   (caseify-word-at-point #'kebab-case))
+
+(defun get-github-file-and-line-link (filename lineno)
+  (interactive (list (buffer-file-name) (line-number-at-pos)))
+  (if-let ((repo (magit-gh-pulls-guess-repo)))
+      (let* ((path (file-relative-name filename (vc-root-dir)))
+             (gh-url (format "https://github.com/%s/%s/tree/master/%s#L%d"
+                             (car repo)
+                             (cdr repo)
+                             path
+                             lineno)))
+        (message "%s (copied to clipboard)" gh-url)
+        (kill-new gh-url))
+    (message "No github root detected")))
+
+(defun rename-current-buffer-file ()
+  "Renames current buffer and file it is visiting."
+  (interactive)
+  (let* ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (error "Buffer '%s' is not visiting a file!" name)
+      (let* ((dir (file-name-directory filename))
+             (new-name (read-file-name "New name: " dir)))
+        (cond ((get-buffer new-name)
+               (error "A buffer named '%s' already exists!" new-name))
+              (t
+               (let ((dir (file-name-directory new-name)))
+                 (when (and (not (file-exists-p dir)) (yes-or-no-p (format "Create directory '%s'?" dir)))
+                   (make-directory dir t)))
+               (rename-file filename new-name 1)
+               (rename-buffer new-name)
+               (set-visited-file-name new-name)
+               (set-buffer-modified-p nil)
+               (when (fboundp 'recentf-add-file)
+                   (recentf-add-file new-name)
+                   (recentf-remove-if-non-kept filename))
+               (when (and (fboundp 'projectile-invalidate-cache))
+                 (projectile-project-p)
+                 (call-interactively #'projectile-invalidate-cache))
+               (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))

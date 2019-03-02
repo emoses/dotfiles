@@ -14,12 +14,14 @@ else
 fi
 
 function make_link () {
+    set +e
     if [[ OS == "win" ]]
     then
         mklink $2 $1
     else
         ln -s $1 $2
     fi
+    set +e
 }
 
 
@@ -47,6 +49,8 @@ do
 done
 
 make_link $DIR/gitignore $INSTDIR/gitignore
+mkdir -p $INSTDIR/.emacs.d/straight/versions
+make_link $DIR/emacs/straight/versions/default.el $INSTDIR/.emacs.d/straight/versions/default.el
 
 mkdir $INSTDIR/.lein
 if [ ! -e $INSTDIR/.lein/profiles.clj ]
@@ -65,6 +69,8 @@ then
     curl -L 'https://github.com/vim-scripts/spectro.vim/raw/master/colors/spectro.vim' > $INSTDIR/.vim/colors/spectro.vim
 fi
 
+if [[ OS == "mac" ]]
+then
     echo "Detected MacOS, Setting up hammerspoon"
     mkdir $INSTDIR/.hammerspoon
     if [ ! -e $INSTDIR/.hammerspoon/init.lua ]

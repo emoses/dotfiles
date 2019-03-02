@@ -1,6 +1,10 @@
 (setq mac-command-modifier 'control)
 (setq mac-option-modifier 'alt)
 (setq mac-control-modifier 'meta)
+(setq mac-pass-command-to-system nil)
+
+(when (fboundp #'mac-auto-operator-composition-mode)
+  (mac-auto-operator-composition-mode))
 
 
 (defun my:frame-fullscreen-p ()
@@ -9,10 +13,9 @@
 
 ;;If the emacs window is in fullscreen on osx, the ediff control frame will
 ;;show up on another desktop.  This will fix that by opening it in the same
-;;frame if we're currently maximized 
+;;frame if we're currently maximized
 (setq ediff-window-setup-function
       (lambda (&rest args)
           (if (my:frame-fullscreen-p)
               (apply #'ediff-setup-windows-plain args)
             (apply #'ediff-setup-windows-default args))))
-                                       
