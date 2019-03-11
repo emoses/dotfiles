@@ -67,7 +67,7 @@
           js2-mode
           lsp-ui-imenu
           lua-mode
-          magit
+          ;magit
           neotree
           (occur replace)
           (package-menu package)
@@ -81,7 +81,10 @@
   (defun my:customize-evil-collection-occur (mode keymaps &rest _rest)
     (when (equal mode 'occur)
       (evil-define-key 'normal occur-mode-map
-        "q" #'quit-window)))
+        "q" #'quit-window))
+    (when (equal mode 'magit)
+      (evil-define-key 'normal 'magit-blame-mode-map)
+      (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)))
 
   (add-hook 'evil-collection-setup-hook #'my:customize-evil-collection-occur)
   (evil-collection-init))
