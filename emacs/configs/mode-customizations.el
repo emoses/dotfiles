@@ -1,11 +1,10 @@
 
 
 ;; ;;Load auctex
-(use-package auctex
-  :ensure t
-  :defer t
+(use-package tex
+  :straight auctex
   :config
-  (set-variable LaTeX-electric-left-right-brace t))
+  (setq LaTeX-electric-left-right-brace t))
 ;; (add-hook 'text-mode-hook
 ;; 	  '(lambda () (auto-fill-mode 1)))
 
@@ -81,14 +80,15 @@
     (setq diredp-hide-details-propagate-flag t)))
 
 ;;Haskell
-(use-package haskell-mode
-  :mode "\\.hs$"
-  :config
-  (autoload 'ghc-init "ghc" nil t)
-  (autoload 'ghc-debug "ghc" nil t)
-  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook 'ghc-init))
+(unless (eq system-type 'windows-nt)
+  (use-package haskell-mode
+    :mode "\\.hs$"
+    :config
+    (autoload 'ghc-init "ghc" nil t)
+    (autoload 'ghc-debug "ghc" nil t)
+    (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+    (add-hook 'haskell-mode-hook 'ghc-init)))
 
 ;;Haml
 (use-package haml-mode
@@ -126,6 +126,7 @@
   (magit-define-popup-action 'forge-dispatch ?o "Open in browser" #'forge-browse-dwim))
 
 (use-package magit-gh-pulls
+  :after magit
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
