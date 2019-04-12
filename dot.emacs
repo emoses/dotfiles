@@ -324,7 +324,10 @@ Largely a copy-paste of projectile-ag, need to refactor"
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
          :map ivy-minibuffer-map
-         ([remap previous-line] . my:previous-line-or-history))
+         ([remap previous-line] . my:previous-line-or-history)
+         ("C-c RET" . ivy-immediate-done)
+         :map counsel-find-file-map
+         ("C-x C-f" . find-file))
 
   :config
   (setq ivy-use-virtual-buffers t)
@@ -342,7 +345,26 @@ Largely a copy-paste of projectile-ag, need to refactor"
       (ivy-previous-history-element 1))
     (ivy-previous-line arg)))
 
-(use-package hydra)
+(use-package hydra
+  :config
+  (defhydra hydra-next-error
+    (global-map "C-x")
+    "
+Compilation errors:
+_j_: next error        _h_: first error    _q_uit
+_k_: previous error    _l_: last error
+"
+    ("`" next-error     nil)
+    ("j" next-error     nil :bind nil)
+    ("k" previous-error nil :bind nil)
+    ("h" first-error    nil :bind nil)
+    ("l" (condition-case err
+	     (while t
+	       (next-error))
+	   (user-error nil))
+     nil :bind nil)
+    ("q" nil            nil :color blue)))
+
 (use-package ivy-hydra
   :after (ivy hydra))
 
@@ -354,17 +376,17 @@ Largely a copy-paste of projectile-ag, need to refactor"
   (defun ag-kill-all-buffers ()
     (interactive)
     (mapc (lambda (buff)
-            (let ((name (buffer-name buff)))
-              (when (string-prefix-p "*ag search " name)
-                (kill-buffer buff))))
-          (buffer-list))))
+	    (let ((name (buffer-name buff)))
+	      (when (string-prefix-p "*ag search " name)
+		(kill-buffer buff))))
+	  (buffer-list))))
 
 (use-package find-file-in-repository)
 
 (use-package exec-path-from-shell
   :config
   (when my:osx
-    ;(add-to-list 'exec-path-from-shell-arguments "--norc")
+					;(add-to-list 'exec-path-from-shell-arguments "--norc")
     (exec-path-from-shell-initialize)))
 
 
@@ -378,8 +400,8 @@ Largely a copy-paste of projectile-ag, need to refactor"
 (setq visible-bell nil)
 (setq ring-bell-function
       (lambda ()
-        (invert-face 'mode-line)
-        (run-with-timer 0.1 nil #'invert-face 'mode-line)))
+	(invert-face 'mode-line)
+	(run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
 (use-package powerline
   :config
@@ -408,10 +430,10 @@ Largely a copy-paste of projectile-ag, need to refactor"
 
 (use-package zoom-frm
   :bind (("C-x C--" . zoom-in/out)
-         ("C-x C-=" . zoom-in/out)
-         ("C-x C-0" . zoom-in/out)
-         ("C-x C-+" . zoom-in/out)
-         ([C-S-wheel-right] . zoom-out)
-         ([C-S-wheel-left] . zoom-in)))
+	 ("C-x C-=" . zoom-in/out)
+	 ("C-x C-0" . zoom-in/out)
+	 ("C-x C-+" . zoom-in/out)
+	 ([C-S-wheel-right] . zoom-out)
+	 ([C-S-wheel-left] . zoom-in)))
 
 (projectile-mode +1)

@@ -21,7 +21,7 @@
  ("emacs-htmlize" . "8db0aa6aab77475a732b7363f0d57bd3933c18fd")
  ("emacs-memoize" . "9a561268ffb550b257a08710489a95cd087998b6")
  ("emacs-neotree" . "5e1271655170f4cdc6849258e383c548a4e6e3d0")
- ("emacs-python-pytest" . "2ace9121aae75bbc7c61701954094ac1fbfe29d0")
+ ("emacs-python-pytest" . "1c642537702994d3b05f7fd4f241f2b262366fde")
  ("epkgs" . "362624785394a39d4d9ec769808c01a5d1a61446")
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")
  ("evil" . "506f758aa431128b40c987ff634b56c49f69fdb8")
@@ -99,5 +99,6 @@
  ("with-editor" . "9dd9f176d96abc60365369de6d08c26c414ef1f3")
  ("xterm-color" . "42374a98f1039e105cad9f16ce585dffc96a3f1c")
  ("yaml-mode" . "40067a10ac1360f0b9533f0bbbb2eea128e2574d")
+ ("yapfify" . "b858225e1debe6734ee718e5c3c209152652a8b3")
  ("zoom-frm" . "4695c088b767f8f268fe3fe8f6d6bff61b9b890f"))
 :saturn

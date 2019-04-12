@@ -70,18 +70,20 @@ if there is no schedule (so these are sorted to the bottom)"
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
   (defhydra my:org-item-hydra (:color pink
-                               :hint nil)
+                                      :hint nil
+                                      :timeout 2)
     "
   _h_: <-      _l_: ->    _-_: Toggle item
   ^ ^          ^ ^        _*_: Toggle heading
-  _q_: _q_uit             _t_: Cycle _t_odo
+  _q_/_RET_: _q_uit   ^^  _t_: Cycle _t_odo
    "
     ("h" #'org-metaleft)
     ("l" #'org-metaright)
     ("-" #'org-toggle-item)
     ("*" #'org-toggle-heading)
     ("t" #'org-todo)
-    ("q" nil))
+    ("q" nil)
+    ("RET" nil))
   (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map))
 
 (use-package htmlize)

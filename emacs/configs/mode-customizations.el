@@ -98,6 +98,7 @@
 
 ;;Magit
 (use-package magit
+  :after ivy
   :bind (("C-x M-g" . magit-file-popup)
          ("C-x M-S-g" . magit-dispatch-popup))
   :config
@@ -105,7 +106,7 @@
     (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))
   (setq magit-branch-read-upstream-first nil)
   (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
-  (setq magit-completing-read-function #'magit-ido-completing-read)
+  (setq magit-completing-read-function #'ivy-completing-read)
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-process-finish-apply-ansi-colors t)
   (global-magit-file-mode t)

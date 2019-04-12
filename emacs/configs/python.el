@@ -68,6 +68,11 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   (set-variable 'python-indent-def-block-scale 1)
   (add-hook 'python-mode-hook 'flycheck-mode))
 
+(use-package yapfify
+  :after python
+  :config
+  (add-hook 'python-mode-hook 'yapf-mode))
+
 (use-package python-pytest
   :straight (:host github :repo "emoses/emacs-python-pytest")
   :after python
