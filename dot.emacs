@@ -19,7 +19,7 @@
  '(custom-safe-themes
    (quote
     ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default)))
-'(evil-overriding-maps
+ '(evil-overriding-maps
    (quote
     ((Buffer-menu-mode-map)
      (color-theme-mode-map)
@@ -53,6 +53,9 @@
  '(package-selected-packages
    (quote
     (forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+ '(python-pytest-arguments (quote ("--color")))
+ '(python-pytest-executable "devx pytest")
+ '(python-pytest-shell-startfile "~/.bashrc")
  '(safe-local-variable-values (quote ((create-lockfiles))))
  '(sml/mode-width
    (if
@@ -151,13 +154,11 @@
  '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
  '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
+ '(highlight ((t (:background "#41444a" :inverse-video nil))))
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
- '(lsp-ui-sideline-global ((t (:background "medium blue"))))
-; '(org-block ((t (:background "gray20" :foreground "#de935f"))))
-; '(org-todo ((t (:background "light coralq" :foreground "light pink" :box (:line-width 1 :color "dim gray") :weight bold))))
- )
+ '(lsp-ui-sideline-global ((t (:background "medium blue")))))
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
@@ -435,5 +436,9 @@ _k_: previous error    _l_: last error
 	 ("C-x C-+" . zoom-in/out)
 	 ([C-S-wheel-right] . zoom-out)
 	 ([C-S-wheel-left] . zoom-in)))
+
+(use-package terminal-here
+  :bind (("C-<f2>" . terminal-here-launch)
+         ("C-S-<f2>" . terminal-here-project-launch)))
 
 (projectile-mode +1)

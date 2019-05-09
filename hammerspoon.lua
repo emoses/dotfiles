@@ -34,13 +34,13 @@ end
 ------------------------------
 
 --Name -> {screenIndex, {grid spec}}
-local work_browser = {x = 0, y = 1, w = 7, h = 4}
+local work_browser = {x = 0, y = 0, w = 7, h = 5}
 local work_display_table = {
    Emacs = {1, {x = 0, y = 0, w = 7, h = 5}},
    ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
-   ["Google Chrome"] = {3, work_browser},
-   Firefox = {3, work_browser},
-   Slack = {2, {x = 0, y = 0, w = 7, h = 5}},
+   ["Google Chrome"] = {2, work_browser},
+   Firefox = {2, work_browser},
+   Slack = {3, {x = 0, y = 1, w = 7, h = 4}},
    Terminal = {3, {x = 0, y = 0, w = 7, h = 1}},
    iTerm2 = {3, {x = 0, y = 0, w = 7, h = 1}},
 }

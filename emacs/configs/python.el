@@ -68,10 +68,8 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   (set-variable 'python-indent-def-block-scale 1)
   (add-hook 'python-mode-hook 'flycheck-mode))
 
-(use-package yapfify
-  :after python
-  :config
-  (add-hook 'python-mode-hook 'yapf-mode))
+;; (use-package yapfify
+;;   :hook (python-mode . yapf-mode))
 
 (use-package python-pytest
   :straight (:host github :repo "emoses/emacs-python-pytest")
@@ -103,9 +101,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename))
-  :after (python)
-  :init
-  (add-hook 'python-mode-hook 'lsp)
+  :hook (python-mode . lsp)
   ;; lsp-python-enable is created by macro above
   :config
 
@@ -142,7 +138,9 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
   (use-package lsp-python-ms
     :after (projectile)
-    :straight (:host github :repo "andrew-christianson/lsp-python-ms")
+    :straight (:host github :repo "emoses/lsp-python-ms")
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll
+    (setq lsp-python-ms-server-setings
+          '(:python.analysis.logLevel "info"))
     (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/"))))

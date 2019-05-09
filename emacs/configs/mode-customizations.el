@@ -95,7 +95,7 @@
 
 ;;Magit
 (use-package magit
-  :after ivy
+  :after (ivy evil)
   :bind (("C-x M-g" . magit-file-popup)
          ("C-x M-S-g" . magit-dispatch-popup))
   :config
@@ -116,7 +116,8 @@
     (lambda ()
       (--when-let (magit-get-some-remote) (concat it "/master\n")))
     #'my:magit-rebase-onto-origin-master
-    ?e))
+    ?e)
+ (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition))
 
 (use-package forge
   :requires (closql)

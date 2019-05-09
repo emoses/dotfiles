@@ -82,3 +82,7 @@ if there is no schedule (so these are sorted to the bottom)"
   (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map))
 
 (use-package htmlize)
+
+(use-package ox-slack
+  :after org
+  :straight (:type git :host github :repo "titaniumbones/ox-slack"))

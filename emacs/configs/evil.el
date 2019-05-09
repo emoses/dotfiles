@@ -14,6 +14,7 @@
   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
   (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
   (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
+  (evil-ex-define-cmd "gh" #'get-github-file-and-line-link)
 
   (cl-loop for (mode . state) in '( ;; Start in emacs mode
                                 (dired-mode . emacs)
@@ -81,13 +82,16 @@
   (defun my:customize-evil-collection-occur (mode keymaps &rest _rest)
     (when (equal mode 'occur)
       (evil-define-key 'normal occur-mode-map
-        "q" #'quit-window))
-    (when (equal mode 'magit)
-      (evil-define-key 'normal 'magit-blame-mode-map)
-      (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)))
+        "q" #'quit-window)))
 
   (add-hook 'evil-collection-setup-hook #'my:customize-evil-collection-occur)
   (evil-collection-init))
 
 (use-package evil-cleverparens
   :after evil)
+
+(use-package iedit)
+
+(use-package evil-iedit-state
+  :bind ("C-;" . evil-iedit-state/iedit-mode)
+  :after (evil iedit))
