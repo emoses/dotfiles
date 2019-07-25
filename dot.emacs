@@ -44,6 +44,7 @@
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
+ '(org-agenda-files (quote ("/Users/emoses/Nextcloud/org/home.org")))
  '(org-export-backends (quote (ascii html icalendar latex md odt)))
  '(org-log-done (quote time))
  '(org-modules
@@ -53,10 +54,14 @@
  '(package-selected-packages
    (quote
     (forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
- '(python-pytest-arguments (quote ("--color")))
- '(python-pytest-executable "devx pytest")
- '(python-pytest-shell-startfile "~/.bashrc")
- '(safe-local-variable-values (quote ((create-lockfiles))))
+ '(python-pytest-arguments (quote ("--color")) t)
+ '(python-pytest-executable "devx pytest" t)
+ '(python-pytest-shell-startfile "~/.bashrc" t)
+ '(safe-local-variable-values
+   (quote
+    ((python-shell-intepreter-args . "-i --profile=devx --simple-prompt")
+     (python-shell-interpreter . "devx-ipython")
+     (create-lockfiles))))
  '(sml/mode-width
    (if
        (eq

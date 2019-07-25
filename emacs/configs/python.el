@@ -110,6 +110,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   ;; and comparing this with what vs.code is doing
   (setq lsp-print-io nil)
   (setq lsp-prefer-flymake nil)
+  (setq lsp-enable-snippet nil)
   (defun my:lsp--filter-variables (filter-fn sym)
     (if (= 13 (gethash "kind" sym))
         (progn
@@ -133,6 +134,8 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   ;; install LSP company backend for LSP-driven completion
   (use-package company-lsp
     :after company-mode
+    :custom
+    (company-lsp-enable-snippet nil)
     :config
     (push 'company-lsp company-backends))
 

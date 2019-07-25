@@ -290,8 +290,14 @@
 (use-package yaml-mode
   :mode "\\.ya?ml$")
 
+(use-package  flycheck-yamllint
+  :after (yaml-mode flycheck)
+  :hook (flycheck-mode . flycheck-yamllint-setup))
+
 (use-package scad-mode
   :mode "\\.scad$")
 
 (use-package groovy-mode
   :mode "\\.groovy\\'")
+
+(use-package restclient)

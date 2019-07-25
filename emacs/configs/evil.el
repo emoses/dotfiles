@@ -42,11 +42,13 @@
 (use-package evil-org
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
   :after (evil org)
+  :hook org-mode
   :config
   ;;Unbind J and K from evil org.
   (evil-define-key 'normal evil-org-mode-map
     "J" nil
-    "K" nil))
+    "K" nil)
+  (add-hook 'evil-org-mode-hook #'evil-org-set-key-theme))
 
 (use-package evil-collection
   :after evil
