@@ -14,6 +14,7 @@
   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
   (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
   (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
+  (evil-ex-define-cmd "gh" #'get-github-file-and-line-link)
 
   (cl-loop for (mode . state) in '( ;; Start in emacs mode
                                 (dired-mode . emacs)
@@ -41,11 +42,13 @@
 (use-package evil-org
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
   :after (evil org)
+  :hook org-mode
   :config
   ;;Unbind J and K from evil org.
   (evil-define-key 'normal evil-org-mode-map
     "J" nil
-    "K" nil))
+    "K" nil)
+  (add-hook 'evil-org-mode-hook #'evil-org-set-key-theme))
 
 (use-package evil-collection
   :after evil
@@ -67,7 +70,7 @@
           js2-mode
           lsp-ui-imenu
           lua-mode
-          magit
+          ;magit
           neotree
           (occur replace)
           (package-menu package)
@@ -88,3 +91,9 @@
 
 (use-package evil-cleverparens
   :after evil)
+
+(use-package iedit)
+
+(use-package evil-iedit-state
+  :bind ("C-;" . evil-iedit-state/iedit-mode)
+  :after (evil iedit))

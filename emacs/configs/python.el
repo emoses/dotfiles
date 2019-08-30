@@ -68,6 +68,9 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   (set-variable 'python-indent-def-block-scale 1)
   (add-hook 'python-mode-hook 'flycheck-mode))
 
+;; (use-package yapfify
+;;   :hook (python-mode . yapf-mode))
+
 (use-package python-pytest
   :straight (:host github :repo "emoses/emacs-python-pytest")
   :after python
@@ -98,9 +101,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename))
-  :after (python)
-  :init
-  (add-hook 'python-mode-hook 'lsp)
+  :hook (python-mode . lsp)
   ;; lsp-python-enable is created by macro above
   :config
 
@@ -109,6 +110,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   ;; and comparing this with what vs.code is doing
   (setq lsp-print-io nil)
   (setq lsp-prefer-flymake nil)
+  (setq lsp-enable-snippet nil)
   (defun my:lsp--filter-variables (filter-fn sym)
     (if (= 13 (gethash "kind" sym))
         (progn
@@ -132,12 +134,16 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   ;; install LSP company backend for LSP-driven completion
   (use-package company-lsp
     :after company-mode
+    :custom
+    (company-lsp-enable-snippet nil)
     :config
     (push 'company-lsp company-backends))
 
   (use-package lsp-python-ms
     :after (projectile)
-    :straight (:host github :repo "andrew-christianson/lsp-python-ms")
+    :straight (:host github :repo "emoses/lsp-python-ms")
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll
+    (setq lsp-python-ms-server-setings
+          '(:python.analysis.logLevel "info"))
     (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/"))))
