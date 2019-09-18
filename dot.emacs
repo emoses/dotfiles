@@ -59,7 +59,17 @@
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
    (quote
-    ((python-shell-intepreter-args . "-i --profile=devx --simple-prompt")
+    ((auto-save-file-name-transforms
+      ("." "~/dev/patreon/.patreon_py~/" t))
+     (backup-directory-alist
+      ("." . "~/dev/patreon/.patreon_py~/"))
+     (delete-old-versions . t)
+     (auto-save-file-name-transforms quote
+                                     ((".*" "~/dev/patreon/.patreon_py~/" t)))
+     (backup-directory-alist quote
+                             ((".*" . "~/dev/patreon/.patreon_py~/")))
+     (backup-by-copying . t)
+     (python-shell-intepreter-args . "-i --profile=devx --simple-prompt")
      (python-shell-interpreter . "devx-ipython")
      (create-lockfiles))))
  '(sml/mode-width
@@ -338,9 +348,12 @@ Largely a copy-paste of projectile-ag, need to refactor"
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-re-builders-alist
-        '((counsel-M-x . ivy--regex-fuzzy)
-          (t . ivy--regex-fuzzy)))
+  ; I don't know why, but this doesn't seem to work if I just do it in this :config
+  (add-hook 'after-init-hook
+            (lambda ()
+              (setq ivy-re-builders-alist
+                    '((counsel-M-x . ivy--regex-fuzzy)
+                      (t . ivy--regex-fuzzy)))))
   (add-to-list 'ivy-initial-inputs-alist '(counsel-M-x . ""))
 
   ; Backspace at beginning in minibuffer quits by default.  Don't do that.

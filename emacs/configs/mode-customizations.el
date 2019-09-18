@@ -64,7 +64,10 @@
 (use-package less-css-mode
   :mode "\\.less$")
 
+(use-package flymd)
+
 (use-package markdown-mode
+  :after flymd
   :mode (("\\.md$" . markdown-mode)
          ("\\.markdown$" . markdown-mode))
   :init (setq markdown-command "pandoc"))
@@ -118,11 +121,6 @@
     #'my:magit-rebase-onto-origin-master
     ?e)
  (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition))
-
-(use-package forge
-  :requires (closql)
-  :config
-  (magit-define-popup-action 'forge-dispatch ?o "Open in browser" #'forge-browse-dwim))
 
 (use-package magit-gh-pulls
   :config
@@ -300,4 +298,9 @@
 (use-package groovy-mode
   :mode "\\.groovy\\'")
 
-(use-package restclient)
+(use-package restclient
+  :config
+  (defun restclient-start ()
+    (interactive)
+    (pop-to-buffer "*restclient*")
+    (restclient-mode)))

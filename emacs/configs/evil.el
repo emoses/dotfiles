@@ -42,7 +42,7 @@
 (use-package evil-org
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
   :after (evil org)
-  :hook org-mode
+  :hook (org-mode . evil-org-mode)
   :config
   ;;Unbind J and K from evil org.
   (evil-define-key 'normal evil-org-mode-map
