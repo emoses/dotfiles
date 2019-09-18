@@ -32,6 +32,8 @@ if there is no schedule (so these are sorted to the bottom)"
   (setq org-mobile-inbox-for-pull (expand-file-name "from-mobile.org" org-directory))
   (setq org-agenda-files (mapcar (lambda (f) (expand-file-name f org-directory))
                                  '("work.org" "home.org")))
+  (when my:windows
+    (setq org-mobile-checksum-binary "c:\\Program Files (x86)\\GnuWin32\\bin\\md5sum.exe"))
   (add-hook 'org-mode-hook
             (lambda ()
               (org-defkey org-mode-map (kbd "RET") 'org-return-indent)
