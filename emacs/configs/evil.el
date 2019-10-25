@@ -97,3 +97,8 @@
 (use-package evil-iedit-state
   :bind ("C-;" . evil-iedit-state/iedit-mode)
   :after (evil iedit))
+
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))

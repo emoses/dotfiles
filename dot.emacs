@@ -346,15 +346,16 @@ Largely a copy-paste of projectile-ag, need to refactor"
          :map counsel-find-file-map
          ("C-x C-f" . find-file))
 
-  :config
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-  ; I don't know why, but this doesn't seem to work if I just do it in this :config
+  :init
   (add-hook 'after-init-hook
             (lambda ()
               (setq ivy-re-builders-alist
                     '((counsel-M-x . ivy--regex-fuzzy)
                       (t . ivy--regex-fuzzy)))))
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  ; I don't know why, but this doesn't seem to work if I just do it in this :config
   (add-to-list 'ivy-initial-inputs-alist '(counsel-M-x . ""))
 
   ; Backspace at beginning in minibuffer quits by default.  Don't do that.

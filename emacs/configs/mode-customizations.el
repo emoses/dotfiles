@@ -100,7 +100,9 @@
 (use-package magit
   :after (ivy evil)
   :bind (("C-x M-g" . magit-file-popup)
-         ("C-x M-S-g" . magit-dispatch-popup))
+         ("C-x M-S-g" . magit-dispatch-popup)
+         :map magit-blame-mode-map
+         ("C-c RET" . magit-show-commit))
   :config
   (when (and my:osx (not with-editor-emacsclient-executable))
     (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))
@@ -120,7 +122,7 @@
       (--when-let (magit-get-some-remote) (concat it "/master\n")))
     #'my:magit-rebase-onto-origin-master
     ?e)
- (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition))
+  (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition))
 
 (use-package magit-gh-pulls
   :config
