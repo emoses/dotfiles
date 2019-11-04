@@ -112,17 +112,21 @@
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-process-finish-apply-ansi-colors t)
   (global-magit-file-mode t)
+
   (defun my:magit-rebase-onto-origin-master (args)
     (interactive (list (magit-rebase-arguments)))
     (if-let ((remote (magit-get-some-remote)))
         (magit-git-rebase (concat remote "/master") args)
       (user-error "Remote `%s' doesn't exist" args)))
+
   (magit-define-popup-action 'magit-rebase-popup ?o
     (lambda ()
       (--when-let (magit-get-some-remote) (concat it "/master\n")))
     #'my:magit-rebase-onto-origin-master
     ?e)
-  (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition))
+
+  (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
+  (evil-ex-define-cmd "history" #'magit-log-buffer-file))
 
 (use-package magit-gh-pulls
   :config
