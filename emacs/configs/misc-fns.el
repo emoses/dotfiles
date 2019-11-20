@@ -165,3 +165,12 @@ find-file-other-frame and display-buffer"
                  (projectile-project-p)
                  (call-interactively #'projectile-invalidate-cache))
                (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))
+
+(defun kill-ag-buffers ()
+  "Kill all ag results buffers"
+  (interactive)
+  (let ((ag-buffers (-filter
+                     (lambda (buf)
+                       (s-matches? "\*ag search text:.*\*$" (buffer-name buf)))
+                     (buffer-list))))
+    (-each ag-buffers 'kill-buffer)))
