@@ -223,7 +223,8 @@
 		       "misc-fns.el"
 		       "clojure.el"
                        "python.el"
-                       "present-minor-mode.el"))
+                       "present-minor-mode.el"
+                       "go.el"))
 
 (put 'narrow-to-region 'disabled nil)
 (setq create-lockfiles nil)
