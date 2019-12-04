@@ -128,7 +128,11 @@
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
 
+;; magit-gh-pulls requires magit-popup but doesn't specify it
+(use-package magit-popup)
+
 (use-package magit-gh-pulls
+  :after magit-popup
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
