@@ -139,13 +139,18 @@ find-file-other-frame and display-buffer"
         (kill-new gh-url))
     (message "No github root detected")))
 
+(defun get-current-buffer-filename ()
+  (let ((filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        nil
+      filename)))
+
 (defun rename-current-buffer-file ()
   "Renames current buffer and file it is visiting."
   (interactive)
-  (let* ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (error "Buffer '%s' is not visiting a file!" name)
+  (let ((filename (get-current-buffer-filename)))
+    (if (not filename)
+        (error "Buffer '%s' is not visiting a file!" (buffer-name))
       (let* ((dir (file-name-directory filename))
              (new-name (read-file-name "New name: " dir)))
         (cond ((get-buffer new-name)
@@ -164,7 +169,15 @@ find-file-other-frame and display-buffer"
                (when (and (fboundp 'projectile-invalidate-cache))
                  (projectile-project-p)
                  (call-interactively #'projectile-invalidate-cache))
-               (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))
+               (message "File '%s' successfully renamed to '%s'" filename (file-name-nondirectory new-name))))))))
+
+(defun delete-this-file ()
+  "Delete the file being visited by this buffer"
+  (interactive)
+  (let ((filename (get-current-buffer-filename)))
+    (if (not filename)
+        (error "Buffer %s is not visiting a file!", (buffer-name))
+      (delete-file filename))))
 
 (defun kill-ag-buffers ()
   "Kill all ag results buffers"
@@ -174,3 +187,13 @@ find-file-other-frame and display-buffer"
                        (s-matches? "\*ag search text:.*\*$" (buffer-name buf)))
                      (buffer-list))))
     (-each ag-buffers 'kill-buffer)))
+
+(defun find-executable-in-node-modules (filename)
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (executable (and root
+                          (expand-file-name (concat (file-name-as-directory "node_modules/.bin") filename)
+                                            root))))
+    (when (and executable (file-executable-p executable ))
+      executable)))

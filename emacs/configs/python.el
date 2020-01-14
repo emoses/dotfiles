@@ -98,52 +98,11 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 ;;   (setq elpy-modules (cl-set-difference elpy-modules
 ;;                                         '('elpy-module-flymake 'elpy-module-company 'elpy-module-eldoc)))
 ;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-(use-package lsp-mode
-  :bind (("C-c M-r" . lsp-rename))
-  :hook (python-mode . lsp)
-  ;; lsp-python-enable is created by macro above
-  :config
-
-  ;; change nil to 't to enable logging of packets between emacs and the LS
-  ;; this was invaluable for debugging communication with the MS Python Language Server
-  ;; and comparing this with what vs.code is doing
-  (setq lsp-print-io nil)
-  (setq lsp-prefer-flymake nil)
-  (setq lsp-enable-snippet nil)
-  (defun my:lsp--filter-variables (filter-fn sym)
-    (if (= 13 (gethash "kind" sym))
-        (progn
-          (message "found var")
-          nil)
-      (funcall filter-fn sym)))
-  (advice-add 'lsp--symbol-filter :around #'my:lsp--filter-variables)
-
-  ;; lsp-ui gives us the blue documentation boxes and the sidebar info
-  (use-package lsp-ui
-    :config
-    (setq lsp-ui-sideline-ignore-duplicate t)
-    (setq lsp-ui-sideline-enable nil)
-    (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-    (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1))))
-
-  ;; make sure we have lsp-imenu everywhere we have LSP
-  ;;  (require 'lsp-imenu)
-  ;; (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
-
-  ;; install LSP company backend for LSP-driven completion
-  (use-package company-lsp
-    :after company-mode
-    :custom
-    (company-lsp-enable-snippet nil)
-    :config
-    (push 'company-lsp company-backends))
-
-  (use-package lsp-python-ms
-    :after (projectile)
+(use-package lsp-python-ms
+    :after (projectile lsp-mode)
     :straight (:host github :repo "emoses/lsp-python-ms")
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll
     (setq lsp-python-ms-server-setings
           '(:python.analysis.logLevel "info"))
-    (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/"))))
+    (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/")))

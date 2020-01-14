@@ -36,13 +36,14 @@ end
 --Name -> {screenIndex, {grid spec}}
 local work_browser = {x = 0, y = 0, w = 7, h = 5}
 local work_display_table = {
-   Emacs = {1, {x = 0, y = 0, w = 7, h = 5}},
-   ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
-   ["Google Chrome"] = {2, work_browser},
-   Firefox = {2, work_browser},
+   Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
+   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 5}},
+   ["Google Chrome"] = {1, work_browser},
+   Firefox = {1, work_browser},
    Slack = {3, {x = 0, y = 1, w = 7, h = 4}},
    Terminal = {3, {x = 0, y = 0, w = 7, h = 1}},
    iTerm2 = {3, {x = 0, y = 0, w = 7, h = 1}},
+   ["Microsoft Outlook"] = {1, work_browser}
 }
 
 local home_display_table = {
@@ -71,15 +72,22 @@ hs.grid.MARGINY = 0
 
 hs.hints.showTitleThresh = 100
 
+-- Return all screens sorted by x position
+local screens_sorted = function()
+   local screens = hs.screen.allScreens()
+   table.sort(screens, function(a, b) return a:frame().x < b:frame().x end)
+   return screens
+end
+
 local apply_layout = function(layout)
+   local scrs = screens_sorted()
    for appName, place in pairs(layout) do
       local app = hs.appfinder.appFromName(appName)
       if (app) then
-         local scrs = hs.screen.allScreens()
-         local src = scrs[place[1]]
+         local scr = scrs[place[1]]
          for i, win in ipairs(app:allWindows()) do
             if (filterWindows(win)) then
-               hs.grid.set(win, place[2], src)
+               hs.grid.set(win, place[2], scr)
             end
          end
       end
@@ -91,14 +99,18 @@ local home_display = function() apply_layout(home_display_table) end
 
 
 local screenHandler = function()
-   local screens = hs.screen.allScreens()
+   local screens = screens_sorted()
+   print(string.format("screenHandler: %d screens", #screens))
    if (#screens == 3) then
-      if screens[1]:frame().w > 1900 and screens[3]:frame().h > 1800 then
+      if screens[2]:frame().w > 1900 and screens[3]:frame().h > 1800 then
+         print("Using work_display")
          work_display()
       end
    elseif (#screens == 2) then
+      print("Using home_display")
       home_display()
    end
+   print("Unknown screen format")
 end
 hs.screen.watcher.new(screenHandler):start()
 

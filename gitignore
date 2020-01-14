@@ -13,3 +13,4 @@ __flycheck*
 .nrepl-port
 *.iml
 .idea/
+.projectile

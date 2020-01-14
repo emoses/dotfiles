@@ -11,7 +11,7 @@
     pager = diff-so-fancy | less --tabs=1,5 -R
 [user]
 	name = Evan Moses
-	email = emoses@patreon.com
+	email = evan.moses@okta.com
 [merge]
         tool = p4merge
 [mergetool "p4merge"]
@@ -34,8 +34,6 @@
 	helper = cache --timeout=86400
 [push]
 	default = simple
-[github "github-patreon"]
-        user = emosesPatreon
 [github "github-emoses"]
 	user = emoses
 [filter "lfs"]
@@ -47,8 +45,6 @@
     oldHighlight = red bold 52
     newNormal = green bold
     newHighlight = green bold 22
-#[url "git@github.com-emosesSfdc:sfdc-matrix"]
-#	insteadOf = git://github.com/sfdc-matrix
 [github]
 	oauth-token = 61c8d18b291dd5ee8c69d382d28f536fc459caae
 	user = emosesPatreon

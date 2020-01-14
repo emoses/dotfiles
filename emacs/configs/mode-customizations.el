@@ -236,7 +236,10 @@
   (setq win-switch-off-feedback-function #'my:win-switch-off-feedback))
 
 (use-package typescript-mode
-  :mode "\\.ts$")
+  :after flycheck
+  :mode "\\.tsx?$"
+  :config
+  (flycheck-add-mode 'javascript-eslint 'typescript-mode))
 
 (use-package json-mode
   :mode "\\.json$"
@@ -314,3 +317,7 @@
     (interactive)
     (pop-to-buffer "*restclient*")
     (restclient-mode)))
+
+(use-package cram-test-mode
+  :mode "\\.t$"
+  :straight  (:type git :host github :repo "macmodrov/cram-test-mode"))
