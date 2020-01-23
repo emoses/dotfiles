@@ -184,9 +184,18 @@
                                        (define-key ediff-mode-map "~" #'my:ediff-jump-to-control-frame-or-window))))
 
 (use-package web-mode
-  :mode "\\.html?$"
+  :mode (("\\.html?$" . web-mode)
+         ("\\.[jt]sx$" . web-mode))
   :config
-  (setq web-mode-enable-auto-quoting nil))
+  (setq web-mode-enable-auto-quoting nil)
+  (setq web-mode-content-types-alist
+        '(("jsx" . "\\.tsx$")))
+  (defun web-mode-tsx-hook ()
+    (let* ((name (buffer-file-name))
+           (name (or name (buffer-name))))
+      (when (string-match-p "\\.tsx$" name)
+        (lsp))))
+  (add-hook 'web-mode-hook #'web-mode-tsx-hook))
 
 (use-package lua-mode
   :mode "\\.lua$" )
@@ -237,9 +246,11 @@
 
 (use-package typescript-mode
   :after flycheck
-  :mode "\\.tsx?$"
+  :mode "\\.ts$"
   :config
-  (flycheck-add-mode 'javascript-eslint 'typescript-mode))
+  ;TODO: merge this with web-mode setup?
+  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
+  (flycheck-add-next-checker 'lsp-ui '(t . javascript-eslint)))
 
 (use-package json-mode
   :mode "\\.json$"

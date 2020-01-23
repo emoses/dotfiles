@@ -14,7 +14,8 @@ if there is no schedule (so these are sorted to the bottom)"
   :straight org-plus-contrib
   :after (hydra)
   :mode ("\\.org$" . org-mode)
-  :bind (("C-c l" . org-store-link)
+  :bind (:map org-mode-map
+         ("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("C-c i" . org-toggle-item)
          ("C-c h" . org-toggle-heading)
@@ -65,6 +66,14 @@ if there is no schedule (so these are sorted to the bottom)"
 
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory))
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+
+  ;;Add the "Insert" submenu
+  (defvar org-org-menu-insert-menu
+    (easy-menu-create-menu
+     "Insert"
+     '(["Insert structure template" org-insert-structure-template t]))
+    "Org submenu for inserting stuff")
+  (easy-menu-add-item org-org-menu nil org-org-menu-insert-menu "Archive")
 
   (defhydra my:org-item-hydra (:color pink
                                       :hint nil

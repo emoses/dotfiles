@@ -14,3 +14,4 @@ __flycheck*
 *.iml
 .idea/
 .projectile
+.ignore

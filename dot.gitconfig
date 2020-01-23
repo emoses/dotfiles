@@ -54,3 +54,10 @@
         smtpUser = evan@emoses.org
         smtpServerPort = 587
 	annotate = yes
+[url "git@github.com-emoses:emoses"]
+     insteadOf = https://github.com/emoses
+#Okta stuff
+[url "git@github.com:okta"]
+     insteadOf = https://github.com/okta
+[url "git@github.com:ScaleFT"]
+     insteadOf = https://github.com/ScaleFT

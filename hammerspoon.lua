@@ -47,13 +47,13 @@ local work_display_table = {
 }
 
 local home_display_table = {
-   Emacs = {1, {x = 0, y = 0, w = 7, h = 5}},
-   ["IntelliJ IDEA"] = {1, {x = 0, y = 0, w = 7, h = 5}},
-   ["Google Chrome"] = {2, {x = 0, y = 0, w = 7, h = 5}},
-   Firefox = {2, {x = 0, y = 0, w = 7, h = 5}},
-   Slack = {2, {x = 1, y = 0, w = 6, h = 5}},
-   Terminal = {1, {x = 4, y = 3, w = 3, h = 2}},
-   iTerm2 = {1, {x = 4, y = 3, w = 3, h = 2}}
+   Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
+   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 5}},
+   ["Google Chrome"] = {1, {x = 0, y = 0, w = 7, h = 5}},
+   Firefox = {1, {x = 0, y = 0, w = 7, h = 5}},
+   Slack = {1, {x = 1, y = 0, w = 6, h = 5}},
+   Terminal = {2, {x = 4, y = 3, w = 3, h = 2}},
+   iTerm2 = {2, {x = 4, y = 3, w = 3, h = 2}}
 }
 
 -- a function to filter out any windows you don't want moved by apply_layout
@@ -109,8 +109,9 @@ local screenHandler = function()
    elseif (#screens == 2) then
       print("Using home_display")
       home_display()
+   else
+      print("Unknown screen format")
    end
-   print("Unknown screen format")
 end
 hs.screen.watcher.new(screenHandler):start()
 

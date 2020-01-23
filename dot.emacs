@@ -62,7 +62,118 @@
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
    (quote
-    ((auto-save-file-name-transforms
+    ((projectile-project-type quote go)
+     (eval set
+           (make-local-variable
+            (quote my-project-path))
+           (if-let
+               ((root
+                 (projectile-project-root)))
+               root
+             (if-let
+                 ((dir-local-root
+                   (file-name-directory
+                    (let
+                        ((d
+                          (dir-locals-find-file ".")))
+                      (if
+                          (stringp d)
+                          d
+                        (car d))))))
+                 dir-local-root)
+             nil))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio" "--log-level 3" "--tsserver-log-file /Users/evanmoses/tsserver-log.txt"
+                 (concat "--tsserver-path "
+                         (file-name-as-directory my-project-path)
+                         "node_modules/.bin/tsserver")))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio"
+                 (concat "--tsserver-path "
+                         (file-name-as-directory my-project-path)
+                         "node_modules/.bin/tsserver")))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio"
+                 (concat
+                  (file-name-as-directory my-project-path)
+                  "node_modules/.bin/tsserver")))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio"
+                 (concat
+                  (file-name-as-directory my-project-path)
+                  "node_modules/.bin/tsserver" my-project-path)))
+     (eval progn
+           (set
+            (make-local-variable my-project-path)
+            (file-name-directory
+             (let
+                 ((d
+                   (dir-locals-find-file ".")))
+               (if
+                   (stringp d)
+                   d
+                 (car d)))))
+           (let
+               ((tsserver-path
+                 (concat
+                  (file-name-as-directory my-project-path)
+                  "node_modules/.bin/tsserver" my-project-path)))
+             (setq lsp-clients-typescript-server-args
+                   (list "--stdio" tsserver-path))))
+     (eval setq
+           (make-local-variable my-project-path)
+           (file-name-directory
+            (let
+                ((d
+                  (dir-locals-find-file ".")))
+              (if
+                  (stringp d)
+                  d
+                (car d)))))
+     (eval let
+           ((tsserver-path
+             (concat
+              (file-name-as-directory my-project-path)
+              "node_modules/.bin/tsserver" my-project-path)))
+           (setq lsp-clients-typescript-server-args
+                 (list "--stdio" tsserver-path)))
+     (eval set
+           (make-local-variable my-project-path)
+           (file-name-directory
+            (let
+                ((d
+                  (dir-locals-find-file ".")))
+              (if
+                  (stringp d)
+                  d
+                (car d)))))
+     (eval let
+           ((tsserver-path
+             (concat
+              (file-name-as-directory my-project-path)
+              "node_modules/.bin/tsserver" my-project-path)))
+           (setq lsp-clients-typescript-server-args
+                 (quote
+                  ("--stdio" tsserver-path))))
+     (eval setq lsp-clients-typescript-server-args
+           ("--stdio"
+            (concat
+             (file-name-as-directory my-project-path)
+             "node_modules/.bin/tsserver" my-project-path)))
+     (eval setq cmake-ide-build-dir
+           (concat my-project-path "build"))
+     (eval set
+           (make-local-variable
+            (quote my-project-path))
+           (file-name-directory
+            (let
+                ((d
+                  (dir-locals-find-file ".")))
+              (if
+                  (stringp d)
+                  d
+                (car d)))))
+     (auto-save-file-name-transforms
       ("." "~/dev/patreon/.patreon_py~/" t))
      (backup-directory-alist
       ("." . "~/dev/patreon/.patreon_py~/"))
@@ -225,9 +336,11 @@
 		       "keys.el"
 		       "misc-fns.el"
 		       "clojure.el"
+                       "lsp.el"
                        "python.el"
                        "present-minor-mode.el"
-                       "go.el"))
+                       "go.el"
+                       "okta.el"))
 
 (put 'narrow-to-region 'disabled nil)
 (setq create-lockfiles nil)
@@ -316,13 +429,14 @@ Largely a copy-paste of projectile-ag, need to refactor"
       (error "Package 'ag' is not available"))))
 
 
-                       "lsp.el"
-                       "lsp.el"
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 (use-package flycheck
+  :bind (:map flycheck-mode-map
+              ("<f6>" . flycheck-next-error)
+              ("S-<f6>" . flycheck-previous-error))
   :config
   (global-flycheck-mode t)
   (add-hook 'flycheck-mode-hook (lambda ()
