@@ -23,23 +23,7 @@ Also, switch to that buffer."
     (when-let ((window (get-buffer-window "*Occur*")))
       (select-window window))
     (switch-to-buffer "*Occur*"))
-  (defun my:projectile-ag-symbol (search-term &optional arg)
-    "Run an ag search for symbol at point, or region if active.
 
-With optional prefix ARG, SEARCH-TERM is treated as a regexp"
-    (interactive
-     (list
-      (let ((symbol
-             (if (use-region-p)
-                 (buffer-substring-no-properties (region-beginning)
-                                                 (region-end))
-               (thing-at-point 'symbol))))
-        (if (and symbol (not current-prefix-arg))
-            symbol
-          (projectile--read-search-string-with-default
-           (format "Search in project for %s: " (if current-prefix-arg "regexp" "string")))))
-      current-prefix-arg))
-    (projectile-ag search-term arg))
 
   (defun python-lineify-arguments ()
     "TODO: make idempotent, handle more errors"

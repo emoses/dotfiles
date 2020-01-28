@@ -3,6 +3,7 @@
          ("M-/" . lsp-find-definition))
   :hook ((python-mode . lsp)
          (typescript-mode . lsp))
+  :commands (lsp lsp-deferred)
   :config
 
   ;; change nil to 't to enable logging of packets between emacs and the LS

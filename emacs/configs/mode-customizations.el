@@ -187,6 +187,7 @@
   :mode (("\\.html?$" . web-mode)
          ("\\.[jt]sx$" . web-mode))
   :config
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
   (setq web-mode-enable-auto-quoting nil)
   (setq web-mode-content-types-alist
         '(("jsx" . "\\.tsx$")))
@@ -245,7 +246,7 @@
   (setq win-switch-off-feedback-function #'my:win-switch-off-feedback))
 
 (use-package typescript-mode
-  :after flycheck
+  :after (lsp lsp-ui flycheck)
   :mode "\\.ts$"
   :config
   ;TODO: merge this with web-mode setup?

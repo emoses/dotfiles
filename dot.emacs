@@ -62,7 +62,19 @@
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
    (quote
-    ((projectile-project-type quote go)
+    ((eval font-lock-add-keywords nil
+           (\`
+            (((\,
+               (concat "("
+                       (regexp-opt
+                        (quote
+                         ("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl"))
+                        t)
+                       "\\_>"))
+              1
+              (quote font-lock-variable-name-face)))))
+     (sql-product . "postgres")
+     (projectile-project-type quote go)
      (eval set
            (make-local-variable
             (quote my-project-path))
@@ -357,6 +369,8 @@
 (setq help-window-select t)
 (setq ispell-program-name "/usr/local/bin/aspell")
 
+(setq compilation-scroll-output t)
+
 ;;Global mode enablement
 (show-paren-mode t)
 (savehist-mode t)
@@ -388,7 +402,8 @@
   (editorconfig-mode 1))
 
 (use-package projectile
-  :bind ("C-c p s t" . my:projectile-ag-test)
+  :bind (("C-c p s t" . my:projectile-ag-test)
+         ("C-c C-s" . my:projectile-ag-symbol))
   :config
   (setq projectile-completion-system 'ivy)
   (setq projectile-switch-project-action #'projectile-find-file-dwim)
@@ -426,7 +441,25 @@ Largely a copy-paste of projectile-ag, need to refactor"
               ;; reset the prefix arg, otherwise it will affect the ag-command
               (current-prefix-arg nil))
           (funcall ag-command search-term (my:projectile-test-root)))
-      (error "Package 'ag' is not available"))))
+      (error "Package 'ag' is not available")))
+
+  (defun my:projectile-ag-symbol (search-term &optional arg)
+    "Run an ag search for symbol at point, or region if active.
+
+With optional prefix ARG, SEARCH-TERM is treated as a regexp"
+    (interactive
+     (list
+      (let ((symbol
+             (if (use-region-p)
+                 (buffer-substring-no-properties (region-beginning)
+                                                 (region-end))
+               (thing-at-point 'symbol))))
+        (if (and symbol (not current-prefix-arg))
+            symbol
+          (projectile--read-search-string-with-default
+           (format "Search in project for %s: " (if current-prefix-arg "regexp" "string")))))
+      current-prefix-arg))
+    (projectile-ag search-term arg)))
 
 
 (require 'uniquify)
@@ -478,10 +511,10 @@ Largely a copy-paste of projectile-ag, need to refactor"
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
-  ; I don't know why, but this doesn't seem to work if I just do it in this :config
+                                        ; I don't know why, but this doesn't seem to work if I just do it in this :config
   (add-to-list 'ivy-initial-inputs-alist '(counsel-M-x . ""))
 
-  ; Backspace at beginning in minibuffer quits by default.  Don't do that.
+                                        ; Backspace at beginning in minibuffer quits by default.  Don't do that.
   (setq ivy-on-del-error-function #'ignore)
   (defun my:previous-line-or-history (arg)
     (interactive "p")
@@ -503,9 +536,9 @@ _k_: previous error    _l_: last error
     ("k" previous-error nil :bind nil)
     ("h" first-error    nil :bind nil)
     ("l" (condition-case err
-	     (while t
-	       (next-error))
-	   (user-error nil))
+             (while t
+               (next-error))
+           (user-error nil))
      nil :bind nil)
     ("q" nil            nil :color blue)))
 
@@ -520,17 +553,17 @@ _k_: previous error    _l_: last error
   (defun ag-kill-all-buffers ()
     (interactive)
     (mapc (lambda (buff)
-	    (let ((name (buffer-name buff)))
-	      (when (string-prefix-p "*ag search " name)
-		(kill-buffer buff))))
-	  (buffer-list))))
+            (let ((name (buffer-name buff)))
+              (when (string-prefix-p "*ag search " name)
+                (kill-buffer buff))))
+          (buffer-list))))
 
 (use-package find-file-in-repository)
 
 (use-package exec-path-from-shell
   :config
   (when my:osx
-					;(add-to-list 'exec-path-from-shell-arguments "--norc")
+                                        ;(add-to-list 'exec-path-from-shell-arguments "--norc")
     (exec-path-from-shell-initialize)))
 
 
@@ -544,8 +577,8 @@ _k_: previous error    _l_: last error
 (setq visible-bell nil)
 (setq ring-bell-function
       (lambda ()
-	(invert-face 'mode-line)
-	(run-with-timer 0.1 nil #'invert-face 'mode-line)))
+        (invert-face 'mode-line)
+        (run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
 (use-package powerline
   :config
@@ -574,11 +607,11 @@ _k_: previous error    _l_: last error
 
 (use-package zoom-frm
   :bind (("C-x C--" . zoom-in/out)
-	 ("C-x C-=" . zoom-in/out)
-	 ("C-x C-0" . zoom-in/out)
-	 ("C-x C-+" . zoom-in/out)
-	 ([C-S-wheel-right] . zoom-out)
-	 ([C-S-wheel-left] . zoom-in)))
+         ("C-x C-=" . zoom-in/out)
+         ("C-x C-0" . zoom-in/out)
+         ("C-x C-+" . zoom-in/out)
+         ([C-S-wheel-right] . zoom-out)
+         ([C-S-wheel-left] . zoom-in)))
 
 (use-package terminal-here
   :bind (("C-<f2>" . terminal-here-launch)
