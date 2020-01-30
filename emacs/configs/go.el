@@ -1,5 +1,4 @@
 (use-package go-mode
-  :after (lsp-mode)
   :mode "\\.go$"
   :bind (("C-c C-c" . compile))
   :config
