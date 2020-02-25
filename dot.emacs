@@ -62,7 +62,9 @@
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
    (quote
-    ((eval font-lock-add-keywords nil
+    ((jest-executable . "yarn utest")
+     (checkdoc-package-keywords-flag)
+     (eval font-lock-add-keywords nil
            (\`
             (((\,
                (concat "("
@@ -345,6 +347,7 @@
 		       "evil.el"
 		       "faces.el"
 		       "mode-customizations.el"
+                       "javascript.el"
 		       "keys.el"
 		       "misc-fns.el"
 		       "clojure.el"
@@ -616,5 +619,11 @@ _k_: previous error    _l_: last error
 (use-package terminal-here
   :bind (("C-<f2>" . terminal-here-launch)
          ("C-S-<f2>" . terminal-here-project-launch)))
+
+(use-package yasnippet
+  :config
+  (yas-global-mode t))
+
+(use-package yasnippet-snippets)
 
 (projectile-mode +1)

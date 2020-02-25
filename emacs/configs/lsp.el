@@ -22,6 +22,8 @@
 
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
   (use-package lsp-ui
+    :bind (:map lsp-ui-mode-map
+           ("S-<f4>" . lsp-ui-imenu))
     :config
     (setq lsp-ui-sideline-ignore-duplicate t)
     (setq lsp-ui-sideline-enable nil)

@@ -30,39 +30,6 @@
 
 (require 'generic-x)
 
-(use-package add-node-modules-path)
-
-(use-package js2-mode
-  :after (add-node-modules-path)
-  :mode "\\.jsx?$"
-  :config
-  (defun my:js2-externs (filename)
-    (if (not filename)
-        nil
-      (let ((path-list (split-string (file-name-directory filename) "/"))
-            (base-includes '("global")))
-        (when (member "keymaker" path-list)
-          (cond
-           ((member "test" path-list) (append '("describe" "before" "beforeEach" "after" "afterEach" "it" "assert" "sinon" "include") base-includes))
-           ((member "src" path-list) (append '("global") base-includes))
-           ((member "lib" path-list) (append '("global" "include" "process"))))))))
-
-  (add-hook 'js2-mode-hook
-            (function (lambda ()
-                        (local-unset-key (kbd "C-c C-a"))
-                        (js2-mode-hide-warnings-and-errors)
-                        (set-variable 'indent-tabs-mode nil)
-                        (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name)))
-                        (add-node-modules-path))))
-  (setq js2-global-externs '("require" "module"))
-  (setq js-indent-level 2)
-  )
-
-(use-package css-mode
-  :mode "\\.css$")
-
-(use-package less-css-mode
-  :mode "\\.less$")
 
 (use-package flymd)
 
@@ -183,20 +150,6 @@
                                        (define-key ediff-mode-map "d" #'my:ediff-copy-both-to-C)
                                        (define-key ediff-mode-map "~" #'my:ediff-jump-to-control-frame-or-window))))
 
-(use-package web-mode
-  :mode (("\\.html?$" . web-mode)
-         ("\\.[jt]sx$" . web-mode))
-  :config
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (setq web-mode-enable-auto-quoting nil)
-  (setq web-mode-content-types-alist
-        '(("jsx" . "\\.tsx$")))
-  (defun web-mode-tsx-hook ()
-    (let* ((name (buffer-file-name))
-           (name (or name (buffer-name))))
-      (when (string-match-p "\\.tsx$" name)
-        (lsp))))
-  (add-hook 'web-mode-hook #'web-mode-tsx-hook))
 
 (use-package lua-mode
   :mode "\\.lua$" )
@@ -245,21 +198,6 @@
   (setq win-switch-on-feedback-function #'my:win-switch-on-feedback)
   (setq win-switch-off-feedback-function #'my:win-switch-off-feedback))
 
-(use-package typescript-mode
-  :after (lsp lsp-ui flycheck)
-  :mode "\\.ts$"
-  :config
-  ;TODO: merge this with web-mode setup?
-  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-  (flycheck-add-next-checker 'lsp-ui '(t . javascript-eslint)))
-
-(use-package json-mode
-  :mode "\\.json$"
-  :config
-  (add-hook 'json-mode-hook
-            (lambda ()
-              (make-local-variable 'js-indent-level)
-              (setq js-indent-level 2))))
 
 (use-package elm-mode
   :mode "\\.elm$")
