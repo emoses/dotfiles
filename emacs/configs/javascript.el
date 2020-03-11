@@ -1,6 +1,12 @@
+(use-package jest)
+(defun -jest-add-bindings (mode-map)
+  (bind-key (kbd "C-c t") #'jest-popup mode-map)
+  (bind-key (kbd "C-c T") #'jest-repeat mode-map))
+
 (use-package add-node-modules-path)
 
 (use-package js2-mode
+  :mode "\\.js$"
   :after (add-node-modules-path)
   :config
   (add-hook 'js2-mode-hook
@@ -10,7 +16,8 @@
                         (set-variable 'indent-tabs-mode nil)
                         (add-node-modules-path))))
   (setq js2-global-externs '("require" "module"))
-  (setq js-indent-level 2))
+  (setq js-indent-level 2)
+  (-jest-add-bindings js2-mode-map))
 
 
 (use-package rjsx-mode
@@ -39,7 +46,8 @@
            (name (or name (buffer-name))))
       (when (string-match-p "\\.tsx$" name)
         (lsp))))
-  (add-hook 'web-mode-hook #'web-mode-tsx-hook))
+  (add-hook 'web-mode-hook #'web-mode-tsx-hook)
+  (-jest-add-bindings web-mode-map))
 
 (use-package typescript-mode
   :after (lsp lsp-ui flycheck)
@@ -47,7 +55,8 @@
   :config
   ;TODO: merge this with web-mode setup?
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-  (flycheck-add-next-checker 'lsp-ui '(t . javascript-eslint)))
+  (flycheck-add-next-checker 'lsp-ui '(t . javascript-eslint))
+  (-jest-add-bindings typescript-mode-map))
 
 (use-package json-mode
   :mode "\\.json$"
@@ -63,14 +72,6 @@
 
 (use-package less-css-mode
   :mode "\\.less$")
-
-(use-package jest
-  :after (typescript-mode web-mode js2-mode)
-  :config
-  (-map (lambda (mode-map)
-          (bind-key (kbd "C-c t") #'jest-popup mode-map)
-          (bind-key (kbd "C-c T") #'jest-repeat mode-map))
-        (list typescript-mode-map web-mode-map js2-mode-map)))
 
 ;; Copied from https://github.com/Fuco1/compile-eslint/
 ;; Which has problems with loading 'compile before evaluating 'form below

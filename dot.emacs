@@ -62,7 +62,16 @@
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
    (quote
-    ((jest-executable . "yarn utest")
+    ((auto-save-file-name-transforms
+      ("." "~/dev/.go.sudo.wtf~/frontend/" t))
+     (backup-directory-alist
+      ("." . "~/dev/.go.sudo.wtf~/frontend/"))
+     (projectile-indexing-method . hybrid)
+     (auto-save-file-name-transforms quote
+                                     (("." "~/dev/.go.sudo.wtf~/frontend" t)))
+     (backup-directory-alist quote
+                             (("." . "~/dev/.go.sudo.wtf~/frontend")))
+     (jest-executable . "yarn utest")
      (checkdoc-package-keywords-flag)
      (eval font-lock-add-keywords nil
            (\`
@@ -285,6 +294,7 @@
      ("~/dev/patreon/" ":WORK:"))))
  '(sml/shorten-directory nil)
  '(tls-checktrust t)
+ '(xref-js2-ignored-dirs (quote ("node-modules" "build" "dist" "fontawesome")))
  '(xref-prompt-for-identifier
    (quote
     (not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references))))
@@ -473,8 +483,9 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   :bind (:map flycheck-mode-map
               ("<f6>" . flycheck-next-error)
               ("S-<f6>" . flycheck-previous-error))
-  :config
+  :init
   (global-flycheck-mode t)
+  :config
   (add-hook 'flycheck-mode-hook (lambda ()
                                   (when-let ((local-eslint (find-executable-in-node-modules "eslint")))
                                     (setq-local flycheck-javascript-eslint-executable local-eslint)))))
