@@ -62,7 +62,8 @@
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
    (quote
-    ((auto-save-file-name-transforms
+    ((sql-product . postgres)
+     (auto-save-file-name-transforms
       ("." "~/dev/.go.sudo.wtf~/frontend/" t))
      (backup-directory-alist
       ("." . "~/dev/.go.sudo.wtf~/frontend/"))
@@ -84,7 +85,6 @@
                        "\\_>"))
               1
               (quote font-lock-variable-name-face)))))
-     (sql-product . "postgres")
      (projectile-project-type quote go)
      (eval set
            (make-local-variable
@@ -426,7 +426,7 @@
 
   (defun my:projectile-test-root ()
       (let* ((project-root (projectile-project-root))
-             (test-dir-name (projectile-test-directory (projectile-project-type))))
+             (test-dir-name (or  (projectile-project-type-attribute (projectile-project-type) 'test-dir) ".")))
         (expand-file-name test-dir-name project-root)))
 
   (defun my:projectile-ag-test (search-term &optional arg)
@@ -438,8 +438,7 @@ Largely a copy-paste of projectile-ag, need to refactor"
             (format "Ag %ssearch tests for" (if current-prefix-arg "regexp " "")))
            current-prefix-arg))
     (if (require 'ag nil 'noerror)
-        (let ((ag-command (if arg 'ag-regexp 'ag))
-              (ag-ignore-list (delq nil
+        (let ((ag-ignore-list (delq nil
                                     (delete-dups
                                      (append
                                       ag-ignore-list
@@ -452,8 +451,10 @@ Largely a copy-paste of projectile-ag, need to refactor"
                                                 grep-find-ignored-directories
                                                 '()))))))
               ;; reset the prefix arg, otherwise it will affect the ag-command
-              (current-prefix-arg nil))
-          (funcall ag-command search-term (my:projectile-test-root)))
+              (current-prefix-arg nil)
+              ;; TODO prefix
+              (suffix (projectile-test-suffix (projectile-project-type))))
+          (ag/search search-term (my:projectile-test-root) :regexp arg :file-regex suffix))
       (error "Package 'ag' is not available")))
 
   (defun my:projectile-ag-symbol (search-term &optional arg)

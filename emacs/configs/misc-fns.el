@@ -145,7 +145,7 @@ find-file-other-frame and display-buffer"
         nil
       filename)))
 
-(defun rename-current-buffer-file ()
+(defun rename-this-file ()
   "Renames current buffer and file it is visiting."
   (interactive)
   (let ((filename (get-current-buffer-filename)))

@@ -271,3 +271,6 @@
 (use-package cram-test-mode
   :mode "\\.t$"
   :straight  (:type git :host github :repo "macmodrov/cram-test-mode"))
+
+(use-package protobuf-mode
+  :mode "\\.proto$")
