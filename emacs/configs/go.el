@@ -8,7 +8,8 @@
                               (ivy-mode t)
                               (add-hook 'before-save-hook #'lsp-format-buffer t t)
                               (add-hook 'before-save-hook #'lsp-organize-imports t t)
-                              (set (make-local-variable 'compile-command) "go build"))))
+                              (set (make-local-variable 'compile-command) "go build")
+                              (set (make-local-variable 'yas-ident-line) 'fixed))))
   (defun go-lineify-arguments ()
     "TODO: make idempotent, handle more errors"
     (interactive)

@@ -9,7 +9,7 @@
   ;; change nil to 't to enable logging of packets between emacs and the LS
   ;; this was invaluable for debugging communication with the MS Python Language Server
   ;; and comparing this with what vs.code is doing
-  (setq lsp-print-io nil)
+  (setq lsp-log-io nil)
   (setq lsp-prefer-flymake nil)
   (setq lsp-enable-snippet nil)
   (defun my:lsp--filter-variables (filter-fn sym)

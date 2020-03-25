@@ -7,7 +7,7 @@
                  '(-okta-integration-test-history . 1)
                  "GO111MODULE=on SFT_DB_AUTOCLEAN=true SFT_DB_INTEGRATION_TESTS=true go test -failfast -v ")))
   (compile command))
-(eval-after-load "go-mode"
+(with-eval-after-load "go-mode"
   (bind-key (kbd "C-c t") #'okta-integration-test go-mode-map))
 
 (defun dlv-integration-test ()
