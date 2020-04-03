@@ -10,6 +10,12 @@
                               (add-hook 'before-save-hook #'lsp-organize-imports t t)
                               (set (make-local-variable 'compile-command) "go build")
                               (set (make-local-variable 'yas-ident-line) 'fixed))))
+
+  (defun go-compile-for-test-debug ()
+    (interactive)
+    (let ((compile-command "go test -c -gcflags \"all=-N -l\""))
+      (call-interactively #'compile)))
+
   (defun go-lineify-arguments ()
     "TODO: make idempotent, handle more errors"
     (interactive)

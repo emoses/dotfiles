@@ -318,6 +318,10 @@
 (add-to-list 'load-path my:emacs-base)
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
 
+;;Performance tuning (see https://github.com/emacs-lsp/lsp-mode#performance)
+(setq gc-cons-threshold (* 100 1024 1024))
+(setq read-process-output-max (* 1024 1024))
+
 ;; utility finction to auto-load my package configurations
 (defun my:load-config-file (filelist)
   (dolist (fileOrFn filelist)
@@ -390,7 +394,7 @@
 (electric-indent-mode t)
 
 ;;New stuff for emacs 26
-(when (>= 26 emacs-major-version)
+(when (>= emacs-major-version 26)
   (pixel-scroll-mode)
   (setq mouse-wheel-tilt-scroll t)
   (setq mouse-wheel-flip-direction t)
@@ -398,11 +402,11 @@
   (setq display-line-numbers-grow-only t)
   (global-display-line-numbers-mode t))
 
-(when (< 26 emacs-major-version)
+(when (< emacs-major-version 26)
   (use-package nlinum
     :config
     (defun my:nlinum-hook-min-lines ()
-      (when nlinum-mode
+      (when (fboundp 'nlinum-mode)
         (let* ((approx-lines (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
                (lineno-width (max 3 approx-lines)))
           (setq-local nlinum-format

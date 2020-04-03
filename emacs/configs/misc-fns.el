@@ -197,3 +197,15 @@ find-file-other-frame and display-buffer"
                                             root))))
     (when (and executable (file-executable-p executable ))
       executable)))
+
+(defun fix-newlines ()
+  "Replace  in the middle of lines with a newline, and remove  at end of lines"
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (while (search-forward "\n" nil t)
+      (replace-match "\n")))
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward "" nil t)
+      (replace-match "\n" nil t))))

@@ -225,7 +225,13 @@
     (interactive "bName of buffer:")
     (insert-and-inherit "\"" (buffer-file-name (get-buffer buffer-name)) "\""))
 
-  (add-hook 'eshell-mode-hook (lambda () (if (< 26 emacs-major-version)
+  (add-hook 'eshell-mode-hook (lambda () (if (< emacs-major-version 26)
+                                             (nlinum-mode -1)
+                                           (display-line-numbers-mode -1)))))
+
+(use-package compile
+  :config
+  (add-hook 'compilation-mode-hook (lambda () (if (< emacs-major-version 26)
                                              (nlinum-mode -1)
                                            (display-line-numbers-mode -1)))))
 
