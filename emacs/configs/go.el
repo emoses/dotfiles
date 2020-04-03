@@ -40,3 +40,5 @@
         (newline-and-indent)))) )
 
 (use-package go-dlv)
+
+(use-package gotest)
