@@ -395,7 +395,7 @@
 
 ;;New stuff for emacs 26
 (when (>= emacs-major-version 26)
-  (pixel-scroll-mode)
+  ;; (pixel-scroll-mode)
   (setq mouse-wheel-tilt-scroll t)
   (setq mouse-wheel-flip-direction t)
   (setq display-line-numbers-width-start 3)

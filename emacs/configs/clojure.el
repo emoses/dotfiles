@@ -20,6 +20,7 @@
   )
 
 (use-package clojure-mode
+  :mode "\\.bb$"
   :config
   (add-hook 'clojure-mode-hook #'lisp-modes))
 
