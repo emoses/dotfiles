@@ -102,3 +102,6 @@
   :after evil
   :config
   (global-evil-surround-mode 1))
+
+(use-package treemacs-evil
+  :after (evil treemacs))

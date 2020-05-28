@@ -59,3 +59,14 @@
              (t (setq result (s-concat result val ",\n")))))))
       (setq result (s-concat result "}"))
       result)))
+
+(use-package vagrant-tramp)
+
+(defun my:fix-log-file-on-open ()
+  (when (string-match-p ".log\\'" (buffer-file-name))
+    (save-excursion
+      (when (search-forward "" 1000 t)
+        (message "Fixing up newlines")
+        (fix-newlines)))))
+
+(add-hook 'find-file-hook #'my:fix-log-file-on-open)

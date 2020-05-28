@@ -130,9 +130,13 @@ find-file-other-frame and display-buffer"
   (interactive (list (buffer-file-name) (line-number-at-pos)))
   (if-let ((repo (magit-gh-pulls-guess-repo)))
       (let* ((path (file-relative-name filename (vc-root-dir)))
-             (gh-url (format "https://github.com/%s/%s/tree/master/%s#L%d"
+             (branch (if (or current-prefix-arg (bound-and-true-p evil-ex-argument))
+                         (magit-get-current-branch)
+                       "master"))
+             (gh-url (format "https://github.com/%s/%s/tree/%s/%s#L%d"
                              (car repo)
                              (cdr repo)
+                             branch
                              path
                              lineno)))
         (message "%s (copied to clipboard)" gh-url)

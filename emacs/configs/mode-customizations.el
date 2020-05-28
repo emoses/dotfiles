@@ -280,3 +280,8 @@
 
 (use-package protobuf-mode
   :mode "\\.proto$")
+
+(use-package treemacs)
+
+(use-package powershell-mode
+  :mode "\\.ps1")

@@ -383,6 +383,7 @@
       '((width . 250)
         (height . 70)))
 (setq fill-column 120)
+(setq split-width-threshold 180)
 (setq help-window-select t)
 (setq ispell-program-name "/usr/local/bin/aspell")
 
@@ -618,11 +619,11 @@ _k_: previous error    _l_: last error
 
 (use-url help-fns+ "https://raw.githubusercontent.com/emacsmirror/help-fns-plus/master/help-fns%2B.el")
 
-(use-package neotree
-  :bind ("M-\\" . neotree-toggle)
-  :after (projectile)
-  :config
-  (setq neo-smart-open t))
+;; (use-package neotree
+;;   :bind ("M-\\" . neotree-toggle)
+;;   :after (projectile)
+;;   :config
+;;   (setq neo-smart-open t))
 
 (use-package zoom-frm
   :bind (("C-x C--" . zoom-in/out)
@@ -637,9 +638,25 @@ _k_: previous error    _l_: last error
          ("C-S-<f2>" . terminal-here-project-launch)))
 
 (use-package yasnippet
+  :bind (:map yas-keymap
+              ([tab] . nil)
+              ([backtab] . nil)
+              ("TAB" . nil)
+              ([(shift tab)] . nil)
+              ("C-o" . yas-next-field-or-maybe-expand)
+              ("C-S-o" . yas-prev-field))
   :config
   (yas-global-mode t))
 
 (use-package yasnippet-snippets)
+
+(use-package treemacs
+  :config
+  (setq treemacs-space-between-root-nodes nil)
+  (treemacs-resize-icons 16)
+  (add-hook 'treemacs-mode-hook (lambda () (text-scale-set -1))))
+
+(use-package treemacs-projectile
+  :after treemacs)
 
 (projectile-mode +1)

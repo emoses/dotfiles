@@ -40,4 +40,6 @@
     :custom
     (company-lsp-enable-snippet nil)
     :config
-    (push 'company-lsp company-backends)))
+    (push 'company-lsp company-backends))
+
+  (use-package lsp-treemacs))
