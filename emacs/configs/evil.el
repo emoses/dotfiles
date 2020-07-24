@@ -1,3 +1,5 @@
+(use-package undo-tree)
+
 (use-package evil
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))

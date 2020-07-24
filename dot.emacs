@@ -14,14 +14,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-sources
-   (quote
-    (macos-keychain-generic macos-keychain-internet "~/.authinfo.gpg" "~/.authinfo" "~/.netrc")))
+   '(macos-keychain-generic macos-keychain-internet "~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
  '(custom-safe-themes
-   (quote
-    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default)))
+   '("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
  '(evil-overriding-maps
-   (quote
-    ((Buffer-menu-mode-map)
+   '((Buffer-menu-mode-map)
      (color-theme-mode-map)
      (comint-mode-map)
      (compilation-mode-map)
@@ -33,36 +30,32 @@
      (speedbar-file-key-map)
      (speedbar-buffers-key-map)
      (cider-popup-buffer-mode-map)
-     (cider-stacktrace-mode-map))))
- '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc python-pylint)))
+     (cider-stacktrace-mode-map)))
+ '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
- '(js2-global-externs (quote ("require" "module")))
+ '(js2-global-externs '("require" "module"))
  '(js2-strict-inconsistent-return-warning nil)
- '(lsp-imenu-sort-methods (quote (position kind)))
+ '(lsp-imenu-sort-methods '(position kind))
  '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
- '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
- '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
- '(org-agenda-files (quote ("/Users/emoses/Nextcloud/org/home.org")))
- '(org-export-backends (quote (ascii html icalendar latex md odt)))
- '(org-log-done (quote time))
+ '(magit-gh-pulls-arguments '("--open-new-in-browser"))
+ '(mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
+ '(org-agenda-files '("/Users/emoses/Nextcloud/org/home.org"))
+ '(org-export-backends '(ascii html icalendar latex md odt))
+ '(org-log-done 'time)
  '(org-modules
-   (quote
-    (org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse)))
- '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+   '(org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse))
+ '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(package-selected-packages
-   (quote
-    (forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
+   '(forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half))
  '(projectile-project-root-files
-   (quote
-    ("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json")))
- '(python-pytest-arguments (quote ("--color")) t)
+   '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
+ '(python-pytest-arguments '("--color") t)
  '(python-pytest-executable "devx pytest" t)
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
-   (quote
-    ((sql-product . postgres)
+   '((sql-product . postgres)
      (auto-save-file-name-transforms
       ("." "~/dev/.go.sudo.wtf~/frontend/" t))
      (backup-directory-alist
@@ -75,20 +68,15 @@
      (jest-executable . "yarn utest")
      (checkdoc-package-keywords-flag)
      (eval font-lock-add-keywords nil
-           (\`
-            (((\,
-               (concat "("
+           `((,(concat "("
                        (regexp-opt
-                        (quote
-                         ("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl"))
+                        '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
                         t)
-                       "\\_>"))
-              1
-              (quote font-lock-variable-name-face)))))
+                       "\\_>")
+              1 'font-lock-variable-name-face)))
      (projectile-project-type quote go)
      (eval set
-           (make-local-variable
-            (quote my-project-path))
+           (make-local-variable 'my-project-path)
            (if-let
                ((root
                  (projectile-project-root)))
@@ -176,8 +164,7 @@
               (file-name-as-directory my-project-path)
               "node_modules/.bin/tsserver" my-project-path)))
            (setq lsp-clients-typescript-server-args
-                 (quote
-                  ("--stdio" tsserver-path))))
+                 '("--stdio" tsserver-path)))
      (eval setq lsp-clients-typescript-server-args
            ("--stdio"
             (concat
@@ -186,8 +173,7 @@
      (eval setq cmake-ide-build-dir
            (concat my-project-path "build"))
      (eval set
-           (make-local-variable
-            (quote my-project-path))
+           (make-local-variable 'my-project-path)
            (file-name-directory
             (let
                 ((d
@@ -208,79 +194,60 @@
      (backup-by-copying . t)
      (python-shell-intepreter-args . "-i --profile=devx --simple-prompt")
      (python-shell-interpreter . "devx-ipython")
-     (create-lockfiles))))
- '(sml/mode-width
-   (if
-       (eq
-        (powerline-current-separator)
-        (quote arrow))
-       (quote right)
-     (quote full)))
+     (create-lockfiles)))
+ '(sml/mode-width (if (eq (powerline-current-separator) 'arrow) 'right 'full))
  '(sml/name-width 44)
  '(sml/pos-id-separator
-   (quote
-    (""
+   '(""
      (:propertize " " face powerline-active1)
      (:eval
-      (propertize " "
-                  (quote display)
+      (propertize " " 'display
                   (funcall
                    (intern
                     (format "powerline-%s-%s"
                             (powerline-current-separator)
                             (car powerline-default-separator-dir)))
-                   (quote powerline-active1)
-                   (quote powerline-active2))))
-     (:propertize " " face powerline-active2))))
+                   'powerline-active1 'powerline-active2)))
+     (:propertize " " face powerline-active2)))
  '(sml/pos-minor-modes-separator
-   (quote
-    (""
+   '(""
      (:propertize " " face powerline-active1)
      (:eval
-      (propertize " "
-                  (quote display)
+      (propertize " " 'display
                   (funcall
                    (intern
                     (format "powerline-%s-%s"
                             (powerline-current-separator)
                             (cdr powerline-default-separator-dir)))
-                   (quote powerline-active1)
-                   (quote sml/global))))
-     (:propertize " " face sml/global))))
+                   'powerline-active1 'sml/global)))
+     (:propertize " " face sml/global)))
  '(sml/pre-id-separator
-   (quote
-    (""
+   '(""
      (:propertize " " face sml/global)
      (:eval
-      (propertize " "
-                  (quote display)
+      (propertize " " 'display
                   (funcall
                    (intern
                     (format "powerline-%s-%s"
                             (powerline-current-separator)
                             (car powerline-default-separator-dir)))
-                   (quote sml/global)
-                   (quote powerline-active1))))
-     (:propertize " " face powerline-active1))))
+                   'sml/global 'powerline-active1)))
+     (:propertize " " face powerline-active1)))
  '(sml/pre-minor-modes-separator
-   (quote
-    (""
+   '(""
      (:propertize " " face powerline-active2)
      (:eval
-      (propertize " "
-                  (quote display)
+      (propertize " " 'display
                   (funcall
                    (intern
                     (format "powerline-%s-%s"
                             (powerline-current-separator)
                             (cdr powerline-default-separator-dir)))
-                   (quote powerline-active2)
-                   (quote powerline-active1))))
-     (:propertize " " face powerline-active1))))
- '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
+                   'powerline-active2 'powerline-active1)))
+     (:propertize " " face powerline-active1)))
+ '(sml/pre-modes-separator (propertize " " 'face 'sml/modes))
  '(sml/replacer-regexp-list
-   (quote
-    (("^~/ownCloud/org" ":Org:")
+   '(("^~/ownCloud/org" ":Org:")
      ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
      ("^~/\\.emacs\\.d/" ":ED:")
      ("^/sudo:.*:" ":SU:")
@@ -291,13 +258,12 @@
      ("^~/[Gg]it[Hh]ub/" ":Git:")
      ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:")
      ("^.*/patreon_py/" ":P_PY:")
-     ("~/dev/patreon/" ":WORK:"))))
+     ("~/dev/patreon/" ":WORK:")))
  '(sml/shorten-directory nil)
  '(tls-checktrust t)
- '(xref-js2-ignored-dirs (quote ("node-modules" "build" "dist" "fontawesome")))
+ '(xref-js2-ignored-dirs '("node-modules" "build" "dist" "fontawesome"))
  '(xref-prompt-for-identifier
-   (quote
-    (not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references))))
+   '(not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -420,19 +386,29 @@
   (editorconfig-mode 1))
 
 (use-package projectile
-  :bind (("C-c p s t" . my:projectile-ag-test)
-         ("C-c C-s" . my:projectile-ag-symbol))
+  :bind (("C-c C-s" . my:projectile-ag-symbol))
   :config
   (setq projectile-completion-system 'ivy)
   (setq projectile-switch-project-action #'projectile-find-file-dwim)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "A-p") 'projectile-command-map)
+  (define-key projectile-command-map (kbd "s t") #'my:projectile-ag-test)
+  (define-key projectile-command-map (kbd "C") #'projectile-go-compile-tests)
 
   (defun my:projectile-test-root ()
       (let* ((project-root (projectile-project-root))
              (test-dir-name (or  (projectile-project-type-attribute (projectile-project-type) 'test-dir) ".")))
         (expand-file-name test-dir-name project-root)))
+
+  (defun projectile-go-compile-tests ()
+    (interactive)
+    (if (not (eq projectile-project-type 'go))
+        (message "Not a go project")
+      (let ((compilation-read-command nil)
+            (compile-command "go test -run=none ./..."))
+        (projectile--run-project-cmd compile-command nil
+                                     :save-buffers t))))
 
   (defun my:projectile-ag-test (search-term &optional arg)
     "Run an ag search starting at the test root
@@ -660,3 +636,12 @@ _k_: previous error    _l_: last error
   :after treemacs)
 
 (projectile-mode +1)
+
+(use-package edit-server
+  :bind (:map edit-server-edit-mode-map
+              ("C-c C-q" . edit-server-abort))
+  :commands edit-server-start
+  :init (if after-init-time
+            (edit-server-start)
+          (add-hook 'after-init-hook #'edit-server-start))
+  :custom (edit-server-url-major-mode-alist . ('(("^github.com" . markdown-mode)))))

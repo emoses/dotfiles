@@ -213,3 +213,19 @@ find-file-other-frame and display-buffer"
     (beginning-of-buffer)
     (while (re-search-forward "" nil t)
       (replace-match "\n" nil t))))
+
+(defun unescape-nt ()
+  "Replace \n with newline and \t with tab.  Operates on region if active, current line if not"
+  (interactive)
+  (let (beg end)
+    (if mark-active
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (save-excursion
+      (goto-char beg)
+      (while (search-forward "\\n" end t)
+        (replace-match "
+"))
+      (goto-char beg)
+      (while (search-forward "\\t" end t)
+        (replace-match "	")))))

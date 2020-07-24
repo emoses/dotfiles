@@ -83,7 +83,7 @@ Also, switch to that buffer."
 ;;                                         '('elpy-module-flymake 'elpy-module-company 'elpy-module-eldoc)))
 ;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
 (use-package lsp-python-ms
-    :after (projectile lsp-mode)
+    :after (projectile lsp)
     :straight (:host github :repo "emoses/lsp-python-ms")
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll

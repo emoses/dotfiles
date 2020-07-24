@@ -1,5 +1,6 @@
 local mod1 = {"cmd", "ctrl"}
 local mod1shift = {"cmd", "ctrl", "shift"}
+local spaces = require("hs._asm.undocumented.spaces")
 
 local vimDirs = {
    h='West',
@@ -32,6 +33,13 @@ end
 ------------------------------
 -- Grid and layout stuff
 ------------------------------
+
+function focusWithMouse(win)
+   print(win)
+   win:focus()
+   local center = hs.geometry.rectMidPoint(win:frame())
+   hs.mouse.setAbsolutePosition(center)
+end
 
 --Name -> {screenIndex, {grid spec}}
 local work_browser = {x = 0, y = 0, w = 7, h = 5}
@@ -113,7 +121,7 @@ local screenHandler = function()
       print("Unknown screen format")
    end
 end
-hs.screen.watcher.new(screenHandler):start()
+--hs.screen.watcher.new(screenHandler):start()
 
 --We sometimes get windows with a role of AXUnknown that get in the way of this working at the edge of the screen
 --Keep focusing in th proper direction until we focus the same window twice or we end up on a window with a role
@@ -154,31 +162,37 @@ hs.hotkey.bind(mod1shift, ";", function()
                   hs.hints.windowHints(hs.window.focusedWindow():application():allWindows(), nil, true)
 end)
 
-hs.hotkey.bind(mod1, "a", function()
-                  hs.window.focusedWindow():moveOneScreenWest()
-end)
+-- hs.hotkey.bind(mod1, "a", function()
+--                   hs.window.focusedWindow():moveOneScreenWest()
+-- end)
 
-hs.hotkey.bind(mod1, "d", function()
-                  hs.window.focusedWindow():moveOneScreenEast()
-end)
+-- hs.hotkey.bind(mod1, "d", function()
+--                   hs.window.focusedWindow():moveOneScreenEast()
+-- end)
 
 hs.hotkey.bind(mod1, "g", screenHandler)
 hs.hotkey.bind(mod1shift, "space", hs.caffeinate.startScreensaver) --
 
 local chooserWindow = function(info)
    if info then
-      hs.window.get(info.winId):focus()
+      for k,v in pairs(info) do print(k, v) end
+      if info.spaceId ~= spaces.activeSpace() then
+         spaces.changeToSpace(info.spaceId)
+      end
+      focusWithMouse(hs.window.get(winId))
    end
 end
 
+local wf = hs.window.filter
 hs.hotkey.bind(mod1, "/", function()
                   local c = hs.chooser.new(chooserWindow)
                   local windowInfo = {}
-                  for k, v in pairs(hs.window.allWindows()) do
+                  for k, v in pairs(wf.default:getWindows()) do
                      table.insert(windowInfo, {
                                      ["text"] = v:application():title(),
                                      ["subText"] = v:title(),
-                                     ["winId"] = v:id()
+                                     ["winId"] = v:id(),
+                                     ["spaceId"] = v:spaces()[1]
                      })
                   end
                   c:choices(windowInfo)

@@ -70,6 +70,9 @@
          ("C-x M-S-g" . magit-dispatch-popup)
          :map magit-blame-mode-map
          ("C-c RET" . magit-show-commit))
+  :custom-face
+  (magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
+  (magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
   :config
   (when (and my:osx (not with-editor-emacsclient-executable))
     (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))
@@ -213,6 +216,7 @@
   :after (org)
   :config
   (setq plantuml-jar-path "~/lib/plantuml.jar")
+  (setq plantuml-default-exec-mode 'jar)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((plantuml . t)))

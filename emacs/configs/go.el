@@ -10,11 +10,21 @@
   (add-hook 'go-mode-hook (lambda ()
                             (progn
                               (ivy-mode t)
-                              (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                              (add-hook 'before-save-hook #'lsp-organize-imports t t)
+                              (add-hook 'before-save-hook #'maybe-lsp-format-buffer t t)
+                              (add-hook 'before-save-hook #'maybe-lsp-organize-imports t t)
                               (set (make-local-variable 'compile-command) "go build")
                               (set (make-local-variable 'yas-ident-line) 'fixed)
                               (set (make-local-variable 'compilation-skip-threshold) 2))))
+
+  (defun maybe-lsp-format-buffer ()
+    (when (lsp-workspaces)
+      (condition-case nil
+          (lsp-format-buffer)
+        (lsp-capability-not-supported nil))))
+
+  (defun maybe-lsp-organize-imports ()
+    (when (lsp-workspaces)
+      (lsp-organize-imports)))
 
   (defun my:godoc-maybe-at-point (lookup-at-point)
     (interactive "P")

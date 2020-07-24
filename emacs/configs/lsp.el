@@ -1,8 +1,11 @@
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename)
-         ("M-/" . lsp-find-definition))
+         ("M-/" . lsp-find-definition)
+         ("C-}" . lsp-find-implementation))
   :hook ((python-mode . lsp)
          (typescript-mode . lsp))
+  :init
+  (setq lsp-keymap-prefix "A-l")
   :commands (lsp lsp-deferred)
   :config
 
@@ -27,8 +30,12 @@
     :config
     (setq lsp-ui-sideline-ignore-duplicate t)
     (setq lsp-ui-sideline-enable nil)
+    (setq lsp-ui-peek-always-show t)
     (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-    (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1))))
+    (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1)))
+    (defun lsp-ui-peek-find-type-definition (&optional extra)
+      (interactive)
+      (lsp-ui-peek-find-custom "textDocument/typeDefinition" extra)))
 
   ;; make sure we have lsp-imenu everywhere we have LSP
   ;;  (require 'lsp-imenu)
@@ -42,4 +49,7 @@
     :config
     (push 'company-lsp company-backends))
 
-  (use-package lsp-treemacs))
+  (use-package lsp-treemacs)
+  (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols (fboundp 'lsp-treemacs-symbols))
+  (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition (and (lsp-feature? "textDocument/typeDefinition")
+                                                                                         (fboundp 'lsp-ui-peek-find-custom))))

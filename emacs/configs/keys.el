@@ -20,6 +20,8 @@
 (global-set-key (kbd "C-c c C") 'camel-case-region-or-word)
 (global-set-key (kbd "<f5>") 'next-error)
 (global-set-key (kbd "S-<f5>") 'previous-error)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x 4 C-]") 'xref-find-definitions-other-window)
 
 ;;; If I'm using a terminal, set delete to backwards delete
 ;;; I find this fixes a lot of the trouble I have with the delete button

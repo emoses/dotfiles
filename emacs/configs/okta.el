@@ -6,9 +6,11 @@
                  (elt -okta-integration-test-history 0)
                  '(-okta-integration-test-history . 1)
                  "GO111MODULE=on SFT_DB_AUTOCLEAN=true SFT_DB_INTEGRATION_TESTS=true go test -failfast -v ")))
+  (save-some-buffers (not compilation-ask-about-save))
   (compile command))
 
 (defun -okta-integration-test (args)
+  (save-some-buffers (not compilation-ask-about-save))
   (go-test--go-test args "GO111MODULE=on SFT_DB_AUTOCLEAN=true SFT_DB_INTEGRATION_TESTS=true"))
 
 (defun okta-integration-test-current-file ()
@@ -65,7 +67,8 @@
 (defun my:fix-log-file-on-open ()
   (when (string-match-p ".log\\'" (buffer-file-name))
     (save-excursion
-      (when (search-forward "" 1000 t)
+      (goto-char (point-min))
+      (when (search-forward "" (+ (point-min) 5000) t)
         (message "Fixing up newlines")
         (fix-newlines)))))
 
