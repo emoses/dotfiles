@@ -42,24 +42,25 @@ function focusWithMouse(win)
 end
 
 --Name -> {screenIndex, {grid spec}}
-local work_browser = {x = 0, y = 0, w = 7, h = 5}
+local work_h = 9
+local work_browser = {x = 0, y = 0, w = 7, h = work_h}
 local work_display_table = {
-   Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
-   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 5}},
+   Emacs = {2, {x = 0, y = 0, w = 7, h = work_h}},
+   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = work_h}},
    ["Google Chrome"] = {1, work_browser},
    Firefox = {1, work_browser},
-   Slack = {3, {x = 0, y = 1, w = 7, h = 4}},
-   Terminal = {3, {x = 0, y = 0, w = 7, h = 1}},
-   iTerm2 = {3, {x = 0, y = 0, w = 7, h = 1}},
+   Slack = {3, {x = 0, y = 4, w = 7, h = 5}},
+   Terminal = {3, {x = 0, y = 0, w = 7, h = 4}},
+   iTerm2 = {3, {x = 0, y = 0, w = 7, h = 4}},
    ["Microsoft Outlook"] = {1, work_browser}
 }
 
 local home_display_table = {
-   Emacs = {2, {x = 0, y = 0, w = 7, h = 5}},
-   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 5}},
-   ["Google Chrome"] = {1, {x = 0, y = 0, w = 7, h = 5}},
-   Firefox = {1, {x = 0, y = 0, w = 7, h = 5}},
-   Slack = {1, {x = 1, y = 0, w = 6, h = 5}},
+   Emacs = {2, {x = 0, y = 0, w = 7, h = 9}},
+   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 9}},
+   ["Google Chrome"] = {1, {x = 0, y = 0, w = 7, h = 9}},
+   Firefox = {1, {x = 0, y = 0, w = 7, h = 9}},
+   Slack = {1, {x = 1, y = 0, w = 6, h = 9}},
    Terminal = {2, {x = 4, y = 3, w = 3, h = 2}},
    iTerm2 = {2, {x = 4, y = 3, w = 3, h = 2}}
 }
@@ -74,7 +75,7 @@ local filterWindows = function(window)
 end
 
 hs.grid.GRIDWIDTH = 7
-hs.grid.GRIDHEIGHT = 5
+hs.grid.GRIDHEIGHT = work_h
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 

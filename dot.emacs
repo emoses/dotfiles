@@ -55,7 +55,20 @@
  '(python-pytest-executable "devx pytest" t)
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
-   '((sql-product . postgres)
+   '((eval set
+           (make-local-variable '-dirlocal-project-path)
+           (when-let
+               ((d
+                 (dir-locals-find-file ".")))
+             (file-name-directory
+              (if
+                  (stringp d)
+                  d
+                (car d)))))
+     
+     (eval setq flycheck-golangci-lint-config
+           (concat -dirlocal-project-path ".golangci.yml"))
+     (sql-product . postgres)
      (auto-save-file-name-transforms
       ("." "~/dev/.go.sudo.wtf~/frontend/" t))
      (backup-directory-alist
@@ -277,7 +290,9 @@
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
- '(lsp-ui-sideline-global ((t (:background "medium blue")))))
+ '(lsp-ui-sideline-global ((t (:background "medium blue"))))
+ '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
+ '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold)))))
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
@@ -587,6 +602,10 @@ _k_: previous error    _l_: last error
   (sml/apply-theme 'smart-mode-line-light-powerline)
   (sml/setup)
   (set-face-attribute 'mode-line-inactive nil :box '(:width -1)))
+(use-package flycheck-color-mode-line
+  :hook (flycheck-mode . flycheck-color-mode-line-mode)
+  :config
+  (setq flycheck-color-mode-line-face-to-color 'sml/filename))
 
 (use-package ace-jump-mode)
 

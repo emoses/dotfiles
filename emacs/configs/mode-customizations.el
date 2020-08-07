@@ -182,7 +182,7 @@
     (dolist (key dispatch-keys)
       (global-set-key key 'win-switch-dispatch)))
 
-  (win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o"))
+  (win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o") (kbd "A-o"))
   (setq win-switch-idle-time 2)
   (setq win-switch-window-threshold 0)
 

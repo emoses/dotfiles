@@ -13,8 +13,6 @@
   ;; this was invaluable for debugging communication with the MS Python Language Server
   ;; and comparing this with what vs.code is doing
   (setq lsp-log-io nil)
-  (setq lsp-prefer-flymake nil)
-  (setq lsp-enable-snippet nil)
   (defun my:lsp--filter-variables (filter-fn sym)
     (if (= 13 (gethash "kind" sym))
         (progn
@@ -40,14 +38,6 @@
   ;; make sure we have lsp-imenu everywhere we have LSP
   ;;  (require 'lsp-imenu)
   ;; (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
-
-  ;; install LSP company backend for LSP-driven completion
-  (use-package company-lsp
-    :after company-mode
-    :custom
-    (company-lsp-enable-snippet nil)
-    :config
-    (push 'company-lsp company-backends))
 
   (use-package lsp-treemacs)
   (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols (fboundp 'lsp-treemacs-symbols))
