@@ -39,7 +39,9 @@
   ;;  (require 'lsp-imenu)
   ;; (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
 
-  (use-package lsp-treemacs)
+  (use-package lsp-treemacs
+    :straight (:files (:defaults "icons")))
+
   (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols (fboundp 'lsp-treemacs-symbols))
   (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition (and (lsp-feature? "textDocument/typeDefinition")
                                                                                          (fboundp 'lsp-ui-peek-find-custom))))
