@@ -1,11 +1,12 @@
+(setq lsp-keymap-prefix "A-l")
+
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename)
          ("M-/" . lsp-find-definition)
          ("C-}" . lsp-find-implementation))
   :hook ((python-mode . lsp)
          (typescript-mode . lsp))
-  :init
-  (setq lsp-keymap-prefix "A-l")
+  ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
   :config
 
@@ -21,10 +22,14 @@
       (funcall filter-fn sym)))
   (advice-add 'lsp--symbol-filter :around #'my:lsp--filter-variables)
 
+  (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols (fboundp 'lsp-treemacs-symbols))
+  (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition (and (lsp-feature? "textDocument/typeDefinition")
+                                                                                         (fboundp 'lsp-ui-peek-find-custom))))
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
-  (use-package lsp-ui
+(use-package lsp-ui
     :bind (:map lsp-ui-mode-map
            ("S-<f4>" . lsp-ui-imenu))
+    :commands lsp-ui-mode
     :config
     (setq lsp-ui-sideline-ignore-duplicate t)
     (setq lsp-ui-sideline-enable nil)
@@ -35,13 +40,9 @@
       (interactive)
       (lsp-ui-peek-find-custom "textDocument/typeDefinition" extra)))
 
-  ;; make sure we have lsp-imenu everywhere we have LSP
-  ;;  (require 'lsp-imenu)
-  ;; (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+(use-package lsp-ivy
+  :commands lsp-ivy-workspace-symbol)
 
-  (use-package lsp-treemacs
-    :straight (:files (:defaults "icons")))
-
-  (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols (fboundp 'lsp-treemacs-symbols))
-  (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition (and (lsp-feature? "textDocument/typeDefinition")
-                                                                                         (fboundp 'lsp-ui-peek-find-custom))))
+(use-package lsp-treemacs
+  :commands lsp-treemacs-errors-list
+  :straight (:files (:defaults "icons")))

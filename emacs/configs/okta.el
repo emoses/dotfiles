@@ -1,3 +1,5 @@
+(require 'gotest)
+
 (defvar -okta-integration-test-history nil)
 (defun okta-integration-test (command)
   (interactive

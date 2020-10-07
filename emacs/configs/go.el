@@ -6,18 +6,19 @@
               ("C-c C-d" . my:godoc-maybe-at-point)
               ("C-c d" . godef-describe))
   :config
-  (defun -go-mode-hooks ()
+  (defun my:go-mode-hooks ()
     (ivy-mode t)
     (add-hook 'before-save-hook #'maybe-lsp-format-buffer t t)
     (add-hook 'before-save-hook #'maybe-lsp-organize-imports t t)
     ;;this can improperly remove trailing whitespace from multiline strings
     (remove-hook 'before-save-hook #'delete-trailing-whitespace)
     (set (make-local-variable 'compile-command) "go build")
-    (set (make-local-variable 'yas-ident-line) 'fixed)
+    (set (make-local-variable 'yas-indent-line) 'fixed)
     (set (make-local-variable 'compilation-skip-threshold) 2))
 
+  (add-hook 'go-mode-hook #'-flycheck-golangci-lint-setup)
   (add-hook 'go-mode-hook #'lsp)
-  (add-hook 'go-mode-hook #'-go-mode-hooks)
+  (add-hook 'go-mode-hook #'my:go-mode-hooks)
 
   (defun maybe-lsp-format-buffer ()
     (when (lsp-workspaces)
@@ -93,12 +94,22 @@
 
 (use-package go-dlv)
 
-(use-package gotest)
+(use-package gotest
+  :bind (:map go-mode-map
+              ("C-c \\" . quit-compilation)
+              :map go-test-mode-map
+              ("C-c \\" . quit-compilation))
+  :config
+  (defun quit-compilation ()
+    (interactive)
+    (let ((buffer (compilation-find-buffer)))
+      (if (get-buffer-process buffer)
+	  (quit-process (get-buffer-process buffer))
+        (error "The %s process is not running" (downcase mode-name))))
+    ))
 
 (use-package flycheck-golangci-lint
-  :after (go-mode lsp)
   :init
   (defun -flycheck-golangci-lint-setup ()
     (flycheck-golangci-lint-setup)
-    (flycheck-add-next-checker 'lsp 'golangci-lint))
-  :hook (go-mode . -flycheck-golangci-lint-setup))
+    (flycheck-add-next-checker 'lsp 'golangci-lint)))

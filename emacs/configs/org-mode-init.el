@@ -21,6 +21,8 @@ if there is no schedule (so these are sorted to the bottom)"
          ("C-c h" . org-toggle-heading)
          ("C-c r" . org-reveal)
          ("M-q" . org-fill-paragraph))
+  :custom
+  (org-export-with-toc nil)
   :init
   (add-hook 'org-mode-hook 'flyspell-mode)
   :config
@@ -91,7 +93,8 @@ if there is no schedule (so these are sorted to the bottom)"
     ("t" #'org-todo)
     ("q" nil)
     ("RET" nil))
-  (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map))
+  (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map)
+  (require 'ox-confluence))
 
 (use-package htmlize)
 

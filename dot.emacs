@@ -65,7 +65,6 @@
                   (stringp d)
                   d
                 (car d)))))
-     
      (eval setq flycheck-golangci-lint-config
            (concat -dirlocal-project-path ".golangci.yml"))
      (sql-product . postgres)
@@ -292,7 +291,8 @@
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(lsp-ui-sideline-global ((t (:background "medium blue"))))
  '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
- '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold)))))
+ '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
+ '(sml/global ((t (:background "grey85" :foreground "grey20" :inverse-video nil :weight semi-light :height 1.05 :family "Avenir")))))
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
@@ -568,6 +568,8 @@ _k_: previous error    _l_: last error
               (when (string-prefix-p "*ag search " name)
                 (kill-buffer buff))))
           (buffer-list))))
+
+(use-package ripgrep)
 
 (use-package find-file-in-repository)
 
