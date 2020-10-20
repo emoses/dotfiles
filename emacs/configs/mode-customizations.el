@@ -69,7 +69,8 @@
   :bind (("C-x M-g" . magit-file-popup)
          ("C-x M-S-g" . magit-dispatch-popup)
          :map magit-blame-mode-map
-         ("C-c RET" . magit-show-commit))
+         ("C-c RET" . magit-show-commit)
+         ("C-c c" . magit-blame-cycle-style))
   :custom-face
   (magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
   (magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
@@ -283,7 +284,9 @@
   :straight  (:type git :host github :repo "macmodrov/cram-test-mode"))
 
 (use-package protobuf-mode
-  :mode "\\.proto$")
+  :mode "\\.proto$"
+  :bind (:map protobuf-mode-map
+              ("C-c C-c" . compile)))
 
 (use-package treemacs)
 

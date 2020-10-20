@@ -16,9 +16,14 @@
     (set (make-local-variable 'yas-indent-line) 'fixed)
     (set (make-local-variable 'compilation-skip-threshold) 2))
 
-  (add-hook 'go-mode-hook #'-flycheck-golangci-lint-setup)
-  (add-hook 'go-mode-hook #'lsp)
+  (defun my:go-local-var-hooks ()
+    (when (derived-mode-p 'go-mode)
+      (lsp)
+      (-flycheck-golangci-lint-setup)))
+
   (add-hook 'go-mode-hook #'my:go-mode-hooks)
+  ;; Instead of adding to go-mode-hook, add lsp to hack-local-variables-hook so the .dir-locals.el is loaded before lsp comes up
+  (add-hook 'hack-local-variables-hook #'my:go-local-var-hooks)
 
   (defun maybe-lsp-format-buffer ()
     (when (lsp-workspaces)
