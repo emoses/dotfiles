@@ -10,10 +10,7 @@
   :commands (lsp lsp-deferred)
   :config
 
-  ;; change nil to 't to enable logging of packets between emacs and the LS
-  ;; this was invaluable for debugging communication with the MS Python Language Server
-  ;; and comparing this with what vs.code is doing
-  (setq lsp-log-io nil)
+  (setq lsp-nested-project-separator nil)
   (defun my:lsp--filter-variables (filter-fn sym)
     (if (= 13 (gethash "kind" sym))
         (progn

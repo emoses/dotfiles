@@ -13,8 +13,8 @@
   (evil-mode 1)
   (setq evil-default-cursor t)
 
-  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
-  (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
+  (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-mode)
+  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-char-mode)
   (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
   (evil-ex-define-cmd "gh" #'get-github-file-and-line-link)
 
@@ -22,6 +22,7 @@
                                 (dired-mode . emacs)
                                 (cider-docview-mode . emacs)
                                 (git-rebase-mode . emacs)
+                                (image-mode . emacs)
                                  ;; Start in insert mode
                                 (cider-repl-mode . insert)
                                 (inf-clojure-mode . insert)

@@ -95,7 +95,12 @@
            (backward-char))))
       (when (not (equal (char-before) ?,))
         (insert ?,)
-        (newline-and-indent)))) )
+        (newline-and-indent))))
+
+  (with-eval-after-load 'lsp-mode
+    (defvar my:lsp-go-directory-filters '())
+    (lsp-register-custom-settings
+     '(("gopls.directoryFilters" my:lsp-go-directory-filters)))))
 
 (use-package go-dlv)
 
@@ -118,3 +123,9 @@
   (defun -flycheck-golangci-lint-setup ()
     (flycheck-golangci-lint-setup)
     (flycheck-add-next-checker 'lsp 'golangci-lint)))
+
+;;Relies on `impl` and `godoc`
+;;
+;; go get -u github.com/josharian/impl
+;; go get -u golang.org/x/tools/cmd/godoc
+(use-package go-impl)

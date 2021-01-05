@@ -75,3 +75,35 @@
         (fix-newlines)))))
 
 (add-hook 'find-file-hook #'my:fix-log-file-on-open)
+
+
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+(defmacro dev:with-tramp-host (host &rest body)
+  (declare (indent 1) (debug let))
+  `(let ((default-directory ,(concat "/ssh:" host ":")))
+     ,@body))
+
+(defmacro dev:with-vagrant (&rest body)
+  (declare (indent 1) (debug let))
+  `(dev:with-tramp-host "devvagrant"
+     ,@body))
+
+
+(defun dev:restart-api ()
+  (interactive)
+  (dev:with-vagrant
+      (let ((status (shell-command "sudo systemctl restart api")))
+        (if (= status 0)
+            (message "API Restarted")
+          (message "Error status, check *Shell Command Output*: " status)))))
+
+(defun dev:vagrant-eshell ()
+  (interactive)
+  (dev:with-vagrant
+      (let ((eshell-buffer-name "*eshell dev-vagrant*"))
+        (eshell))))
+
+(defun dev:vagrant-shell ()
+  (interactive)
+  (dev:with-vagrant
+      (shell)))

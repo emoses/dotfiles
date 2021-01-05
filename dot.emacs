@@ -648,6 +648,8 @@ _k_: previous error    _l_: last error
 (use-package yasnippet-snippets)
 
 (use-package treemacs
+  :init
+  (setq treemacs-width 50)
   :config
   (setq treemacs-space-between-root-nodes nil)
   (treemacs-resize-icons 16)
