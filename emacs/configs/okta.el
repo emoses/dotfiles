@@ -106,4 +106,5 @@
 (defun dev:vagrant-shell ()
   (interactive)
   (dev:with-vagrant
-      (shell)))
+      (let ((remote-shell "/bin/bash"))
+        (shell))))

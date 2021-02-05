@@ -12,6 +12,9 @@
 (use-package cperl-mode
   :mode "\\.p[lm]\\'")
 
+(use-package make-mode
+  :mode (("^Makefile\\." . makefile-bsdmake-mode)))
+
 ;;For PHP
 (use-package php-mode
   :mode (("\\.php$" . php-mode)

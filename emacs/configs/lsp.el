@@ -19,6 +19,12 @@
       (funcall filter-fn sym)))
   (advice-add 'lsp--symbol-filter :around #'my:lsp--filter-variables)
 
+  ;;Requires modified lsp-mode
+  (setq lsp-show-message-request-filter (lambda (message actions)
+                                          (if (string-match-p "^Inconsistent vendoring detected" message)
+                                              nil
+                                            actions)))
+
   (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols (fboundp 'lsp-treemacs-symbols))
   (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition (and (lsp-feature? "textDocument/typeDefinition")
                                                                                          (fboundp 'lsp-ui-peek-find-custom))))
