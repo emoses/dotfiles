@@ -233,6 +233,10 @@
     (interactive "bName of buffer:")
     (insert-and-inherit "\"" (buffer-file-name (get-buffer buffer-name)) "\""))
 
+  (defalias 'eshell/ff 'find-file)
+  (defalias 'eshell/ffo 'find-file-other-from-eshell)
+  (add-to-list 'eshell-modules-list 'eshell-tramp)
+
   (add-hook 'eshell-mode-hook (lambda () (if (< emacs-major-version 26)
                                              (nlinum-mode -1)
                                            (display-line-numbers-mode -1)))))

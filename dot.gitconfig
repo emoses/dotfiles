@@ -31,15 +31,16 @@
 [difftool]
 	prompt = true
 [credential]
-	helper = cache --timeout=86400
+	helper = store
 [push]
 	default = simple
 [github "github-emoses"]
 	user = emoses
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 [color "diff-highlight"]
 	oldNormal = red bold
     oldHighlight = red bold 52
