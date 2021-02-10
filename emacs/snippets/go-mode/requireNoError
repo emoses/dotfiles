@@ -1,0 +1,4 @@
+# key: reqerr
+# name: requireNoError
+# --
+require.NoError(t, err)
