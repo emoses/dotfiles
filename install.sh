@@ -69,7 +69,7 @@ then
     curl -L 'https://github.com/vim-scripts/spectro.vim/raw/master/colors/spectro.vim' > $INSTDIR/.vim/colors/spectro.vim
 fi
 
-if [[ OS == "mac" ]]
+if [[ "$OS" == "mac" ]]
 then
     echo "Detected MacOS, Setting up hammerspoon"
     mkdir $INSTDIR/.hammerspoon
