@@ -51,6 +51,7 @@ done
 make_link $DIR/gitignore $INSTDIR/gitignore
 mkdir -p $INSTDIR/.emacs.d/straight/versions
 make_link $DIR/emacs/straight/versions/default.el $INSTDIR/.emacs.d/straight/versions/default.el
+make_link $DIR/emacs/snippets $INSTDIR/.emacs.d/snippets
 
 mkdir $INSTDIR/.lein
 if [ ! -e $INSTDIR/.lein/profiles.clj ]

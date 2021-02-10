@@ -1,0 +1,6 @@
+# key: errretn
+# name: return nil, err
+# --
+if err != nil {
+       return nil, err
+}
