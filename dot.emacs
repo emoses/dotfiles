@@ -707,6 +707,7 @@ is the buffer position of the start of the containing expression."
  '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))
  '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
  '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
+ '(flycheck-color-mode-line-success-face ((t (:foreground "dark green"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
  '(highlight ((t (:background "#41444a" :inverse-video nil))))
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))

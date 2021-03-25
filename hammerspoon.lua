@@ -172,6 +172,9 @@ end)
 -- end)
 
 hs.hotkey.bind(mod1, "g", screenHandler)
+hs.hotkey.bind(mod1shift, "g", function()
+                  hs.execute(os.getenv("HOME") .. "/bin/placedisplays", true)
+end)
 hs.hotkey.bind(mod1shift, "space", hs.caffeinate.startScreensaver) --
 
 local chooserWindow = function(info)

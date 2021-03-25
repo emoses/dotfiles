@@ -18,6 +18,7 @@
 (global-set-key (kbd "C-c c -") 'kebab-case-region-or-word)
 (global-set-key (kbd "C-c c c") 'lower-camel-case-region-or-word)
 (global-set-key (kbd "C-c c C") 'camel-case-region-or-word)
+(global-set-key (kbd "C-c C-o") 'browse-url)
 (global-set-key (kbd "<f5>") 'next-error)
 (global-set-key (kbd "S-<f5>") 'previous-error)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
