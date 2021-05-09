@@ -14,6 +14,9 @@
 (use-package cperl-mode
   :mode "\\.p[lm]\\'")
 
+(use-package make-mode
+  :mode (("^Makefile\\." . makefile-bsdmake-mode)))
+
 ;;For PHP
 (use-package php-mode
   :mode (("\\.php$" . php-mode)
@@ -32,41 +35,11 @@
 
 (require 'generic-x)
 
-(use-package add-node-modules-path)
 
-(use-package js2-mode
-  :after (add-node-modules-path)
-  :mode "\\.jsx?$"
-  :config
-  (defun my:js2-externs (filename)
-    (if (not filename)
-        nil
-      (let ((path-list (split-string (file-name-directory filename) "/"))
-            (base-includes '("global")))
-        (when (member "keymaker" path-list)
-          (cond
-           ((member "test" path-list) (append '("describe" "before" "beforeEach" "after" "afterEach" "it" "assert" "sinon" "include") base-includes))
-           ((member "src" path-list) (append '("global") base-includes))
-           ((member "lib" path-list) (append '("global" "include" "process"))))))))
-
-  (add-hook 'js2-mode-hook
-            (function (lambda ()
-                        (local-unset-key (kbd "C-c C-a"))
-                        (js2-mode-hide-warnings-and-errors)
-                        (set-variable 'indent-tabs-mode nil)
-                        (set-variable 'js2-additional-externs (my:js2-externs (buffer-file-name)))
-                        (add-node-modules-path))))
-  (setq js2-global-externs '("require" "module"))
-  (setq js-indent-level 2)
-  )
-
-(use-package css-mode
-  :mode "\\.css$")
-
-(use-package less-css-mode
-  :mode "\\.less$")
+(use-package flymd)
 
 (use-package markdown-mode
+  :after flymd
   :mode (("\\.md$" . markdown-mode)
          ("\\.markdown$" . markdown-mode))
   :init (setq markdown-command "pandoc"))
@@ -98,9 +71,15 @@
 
 ;;Magit
 (use-package magit
-  :after ivy
+  :after (ivy evil)
   :bind (("C-x M-g" . magit-file-popup)
-         ("C-x M-S-g" . magit-dispatch-popup))
+         ("C-x M-S-g" . magit-dispatch-popup)
+         :map magit-blame-mode-map
+         ("C-c RET" . magit-show-commit)
+         ("C-c c" . magit-blame-cycle-style))
+  :custom-face
+  (magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
+  (magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
   :config
   (when (and my:osx (not with-editor-emacsclient-executable))
     (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))
@@ -110,24 +89,27 @@
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-process-finish-apply-ansi-colors t)
   (global-magit-file-mode t)
+
   (defun my:magit-rebase-onto-origin-master (args)
     (interactive (list (magit-rebase-arguments)))
     (if-let ((remote (magit-get-some-remote)))
         (magit-git-rebase (concat remote "/master") args)
       (user-error "Remote `%s' doesn't exist" args)))
+
   (magit-define-popup-action 'magit-rebase-popup ?o
     (lambda ()
       (--when-let (magit-get-some-remote) (concat it "/master\n")))
     #'my:magit-rebase-onto-origin-master
-    ?e))
+    ?e)
 
-(use-package forge
-  :requires (closql)
-  :config
-  (magit-define-popup-action 'forge-dispatch ?o "Open in browser" #'forge-browse-dwim))
+  (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
+  (evil-ex-define-cmd "history" #'magit-log-buffer-file))
+
+;; magit-gh-pulls requires magit-popup but doesn't specify it
+(use-package magit-popup)
 
 (use-package magit-gh-pulls
-  :after magit
+  :after magit-popup
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
@@ -178,10 +160,6 @@
                                        (define-key ediff-mode-map "d" #'my:ediff-copy-both-to-C)
                                        (define-key ediff-mode-map "~" #'my:ediff-jump-to-control-frame-or-window))))
 
-(use-package web-mode
-  :mode "\\.html?$"
-  :config
-  (setq web-mode-enable-auto-quoting nil))
 
 (use-package lua-mode
   :mode "\\.lua$" )
@@ -211,7 +189,7 @@
     (dolist (key dispatch-keys)
       (global-set-key key 'win-switch-dispatch)))
 
-  (win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o"))
+  (win-switch-setup-keys-hjkl (kbd "C-x o") (kbd "C-x C-o") (kbd "A-o"))
   (setq win-switch-idle-time 2)
   (setq win-switch-window-threshold 0)
 
@@ -230,16 +208,6 @@
   (setq win-switch-on-feedback-function #'my:win-switch-on-feedback)
   (setq win-switch-off-feedback-function #'my:win-switch-off-feedback))
 
-(use-package typescript-mode
-  :mode "\\.ts$")
-
-(use-package json-mode
-  :mode "\\.json$"
-  :config
-  (add-hook 'json-mode-hook
-            (lambda ()
-              (make-local-variable 'js-indent-level)
-              (setq js-indent-level 2))))
 
 (use-package elm-mode
   :mode "\\.elm$")
@@ -255,10 +223,16 @@
   :after (org)
   :config
   (setq plantuml-jar-path "~/lib/plantuml.jar")
+  (setq plantuml-default-exec-mode 'jar)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((plantuml . t)))
   (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
+
+(defun my:line-numbers-off ()
+  (if (< emacs-major-version 26)
+      (nlinum-mode -1)
+    (display-line-numbers-mode -1)))
 
 (use-package eshell
   :bind (("C-c M-B" . eshell-insert-buffer-filename))
@@ -267,9 +241,15 @@
     (interactive "bName of buffer:")
     (insert-and-inherit "\"" (buffer-file-name (get-buffer buffer-name)) "\""))
 
-  (add-hook 'eshell-mode-hook (lambda () (if (< 26 emacs-major-version)
-                                             (nlinum-mode -1)
-                                           (display-line-numbers-mode -1)))))
+  (defalias 'eshell/ff 'find-file)
+  (defalias 'eshell/ffo 'find-file-other-from-eshell)
+  (add-to-list 'eshell-modules-list 'eshell-tramp)
+
+  (add-hook 'eshell-mode-hook #'my:line-numbers-off))
+
+(use-package compile
+  :config
+  (add-hook 'compilation-mode-hook #'my:line-numbers-off))
 
 (use-package xterm-color
   :after (magit eshell)
@@ -293,8 +273,36 @@
 (use-package yaml-mode
   :mode "\\.ya?ml$")
 
+(use-package  flycheck-yamllint
+  :after (yaml-mode flycheck)
+  :hook (flycheck-mode . flycheck-yamllint-setup))
+
 (use-package scad-mode
   :mode "\\.scad$")
 
 (use-package groovy-mode
   :mode "\\.groovy\\'")
+
+(use-package restclient
+  :config
+  (defun restclient-start ()
+    (interactive)
+    (pop-to-buffer "*restclient*")
+    (restclient-mode)))
+
+(use-package cram-test-mode
+  :mode "\\.t$"
+  :straight  (:type git :host github :repo "macmodrov/cram-test-mode"))
+
+(use-package protobuf-mode
+  :mode "\\.proto$"
+  :bind (:map protobuf-mode-map
+              ("C-c C-c" . compile)))
+
+(use-package treemacs)
+
+(use-package powershell-mode
+  :mode "\\.ps1")
+
+(use-package vterm
+  :hook (vterm-mode . my:line-numbers-off))

@@ -69,7 +69,8 @@ Inserted by installing org-mode or when a release is made."
 
 ;; (require 'el-patch)
 
-(use-package dired-details+)
+(use-package dired-details+
+  :straight (:host github :repo "emacsmirror/dired-details-plus"))
 (use-package flx-ido)
 (use-package ido-completing-read+)
 (use-package editorconfig)

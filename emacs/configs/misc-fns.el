@@ -130,22 +130,31 @@ find-file-other-frame and display-buffer"
   (interactive (list (buffer-file-name) (line-number-at-pos)))
   (if-let ((repo (magit-gh-pulls-guess-repo)))
       (let* ((path (file-relative-name filename (vc-root-dir)))
-             (gh-url (format "https://github.com/%s/%s/tree/master/%s#L%d"
+             (branch (if (or current-prefix-arg (bound-and-true-p evil-ex-argument))
+                         (magit-get-current-branch)
+                       "master"))
+             (gh-url (format "https://github.com/%s/%s/tree/%s/%s#L%d"
                              (car repo)
                              (cdr repo)
+                             branch
                              path
                              lineno)))
         (message "%s (copied to clipboard)" gh-url)
         (kill-new gh-url))
     (message "No github root detected")))
 
-(defun rename-current-buffer-file ()
+(defun get-current-buffer-filename ()
+  (let ((filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        nil
+      filename)))
+
+(defun rename-this-file ()
   "Renames current buffer and file it is visiting."
   (interactive)
-  (let* ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (error "Buffer '%s' is not visiting a file!" name)
+  (let ((filename (get-current-buffer-filename)))
+    (if (not filename)
+        (error "Buffer '%s' is not visiting a file!" (buffer-name))
       (let* ((dir (file-name-directory filename))
              (new-name (read-file-name "New name: " dir)))
         (cond ((get-buffer new-name)
@@ -164,4 +173,59 @@ find-file-other-frame and display-buffer"
                (when (and (fboundp 'projectile-invalidate-cache))
                  (projectile-project-p)
                  (call-interactively #'projectile-invalidate-cache))
-               (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))
+               (message "File '%s' successfully renamed to '%s'" filename (file-name-nondirectory new-name))))))))
+
+(defun delete-this-file ()
+  "Delete the file being visited by this buffer"
+  (interactive)
+  (let ((filename (get-current-buffer-filename)))
+    (if (not filename)
+        (error "Buffer %s is not visiting a file!", (buffer-name))
+      (delete-file filename))))
+
+(defun kill-ag-buffers ()
+  "Kill all ag results buffers"
+  (interactive)
+  (let ((ag-buffers (-filter
+                     (lambda (buf)
+                       (s-matches? "\*ag search text:.*\*$" (buffer-name buf)))
+                     (buffer-list))))
+    (-each ag-buffers 'kill-buffer)))
+
+(defun find-executable-in-node-modules (filename)
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (executable (and root
+                          (expand-file-name (concat (file-name-as-directory "node_modules/.bin") filename)
+                                            root))))
+    (when (and executable (file-executable-p executable ))
+      executable)))
+
+(defun fix-newlines ()
+  "Replace  in the middle of lines with a newline, and remove  at end of lines"
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (while (search-forward "\n" nil t)
+      (replace-match "\n")))
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward "" nil t)
+      (replace-match "\n" nil t))))
+
+(defun unescape-nt ()
+  "Replace \n with newline and \t with tab.  Operates on region if active, current line if not"
+  (interactive)
+  (let (beg end)
+    (if mark-active
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (save-excursion
+      (goto-char beg)
+      (while (search-forward "\\n" end t)
+        (replace-match "
+"))
+      (goto-char beg)
+      (while (search-forward "\\t" end t)
+        (replace-match "	")))))

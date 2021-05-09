@@ -11,7 +11,7 @@
     pager = diff-so-fancy | less --tabs=1,5 -R
 [user]
 	name = Evan Moses
-	email = emoses@patreon.com
+	email = evan.moses@okta.com
 [merge]
         tool = p4merge
 [mergetool "p4merge"]
@@ -31,30 +31,34 @@
 [difftool]
 	prompt = true
 [credential]
-	helper = cache --timeout=86400
+	helper = store
 [push]
 	default = simple
-[github "github-patreon"]
-        user = emosesPatreon
 [github "github-emoses"]
 	user = emoses
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 [color "diff-highlight"]
 	oldNormal = red bold
     oldHighlight = red bold 52
     newNormal = green bold
     newHighlight = green bold 22
-#[url "git@github.com-emosesSfdc:sfdc-matrix"]
-#	insteadOf = git://github.com/sfdc-matrix
 [github]
-	oauth-token = 61c8d18b291dd5ee8c69d382d28f536fc459caae
-	user = emosesPatreon
+	oauth-token = 
+	user = 
 [sendemail]
         smptEncryption = tls
         smptServer = smtp.gmail.com
         smtpUser = evan@emoses.org
         smtpServerPort = 587
 	annotate = yes
+[url "git@github.com-emoses:emoses"]
+     insteadOf = https://github.com/emoses
+#Okta stuff
+[url "git@github.com:okta"]
+     insteadOf = https://github.com/okta
+[url "git@github.com:ScaleFT"]
+     insteadOf = https://github.com/ScaleFT

@@ -23,23 +23,7 @@ Also, switch to that buffer."
     (when-let ((window (get-buffer-window "*Occur*")))
       (select-window window))
     (switch-to-buffer "*Occur*"))
-  (defun my:projectile-ag-symbol (search-term &optional arg)
-    "Run an ag search for symbol at point, or region if active.
 
-With optional prefix ARG, SEARCH-TERM is treated as a regexp"
-    (interactive
-     (list
-      (let ((symbol
-             (if (use-region-p)
-                 (buffer-substring-no-properties (region-beginning)
-                                                 (region-end))
-               (thing-at-point 'symbol))))
-        (if (and symbol (not current-prefix-arg))
-            symbol
-          (projectile--read-search-string-with-default
-           (format "Search in project for %s: " (if current-prefix-arg "regexp" "string")))))
-      current-prefix-arg))
-    (projectile-ag search-term arg))
 
   (defun python-lineify-arguments ()
     "TODO: make idempotent, handle more errors"
@@ -68,10 +52,8 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   (set-variable 'python-indent-def-block-scale 1)
   (add-hook 'python-mode-hook 'flycheck-mode))
 
-(use-package yapfify
-  :after python
-  :config
-  (add-hook 'python-mode-hook 'yapf-mode))
+;; (use-package yapfify
+;;   :hook (python-mode . yapf-mode))
 
 (use-package python-pytest
   :straight (:host github :repo "emoses/emacs-python-pytest")
@@ -100,49 +82,11 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 ;;   (setq elpy-modules (cl-set-difference elpy-modules
 ;;                                         '('elpy-module-flymake 'elpy-module-company 'elpy-module-eldoc)))
 ;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-(use-package lsp-mode
-  :bind (("C-c M-r" . lsp-rename))
-  :after (python)
-  :init
-  (add-hook 'python-mode-hook 'lsp)
-  ;; lsp-python-enable is created by macro above
-  :config
-
-  ;; change nil to 't to enable logging of packets between emacs and the LS
-  ;; this was invaluable for debugging communication with the MS Python Language Server
-  ;; and comparing this with what vs.code is doing
-  (setq lsp-print-io nil)
-  (setq lsp-prefer-flymake nil)
-  (defun my:lsp--filter-variables (filter-fn sym)
-    (if (= 13 (gethash "kind" sym))
-        (progn
-          (message "found var")
-          nil)
-      (funcall filter-fn sym)))
-  (advice-add 'lsp--symbol-filter :around #'my:lsp--filter-variables)
-
-  ;; lsp-ui gives us the blue documentation boxes and the sidebar info
-  (use-package lsp-ui
-    :config
-    (setq lsp-ui-sideline-ignore-duplicate t)
-    (setq lsp-ui-sideline-enable nil)
-    (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-    (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1))))
-
-  ;; make sure we have lsp-imenu everywhere we have LSP
-  ;;  (require 'lsp-imenu)
-  ;; (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
-
-  ;; install LSP company backend for LSP-driven completion
-  (use-package company-lsp
-    :after company-mode
-    :config
-    (push 'company-lsp company-backends))
-
-  (use-package lsp-python-ms
-    :after (projectile)
-    :straight (:host github :repo "andrew-christianson/lsp-python-ms")
+(use-package lsp-python-ms
+    :after (projectile lsp)
+    :straight (:host github :repo "emoses/lsp-python-ms")
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll
-    (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/"))))
+    (setq lsp-python-ms-server-setings
+          '(:python.analysis.logLevel "info"))
+    (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/")))

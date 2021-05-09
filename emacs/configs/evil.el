@@ -1,3 +1,5 @@
+(use-package undo-tree)
+
 (use-package evil
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))
@@ -11,18 +13,21 @@
   (evil-mode 1)
   (setq evil-default-cursor t)
 
-  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
-  (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
+  (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-mode)
+  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-char-mode)
   (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
+  (evil-ex-define-cmd "gh" #'get-github-file-and-line-link)
 
   (cl-loop for (mode . state) in '( ;; Start in emacs mode
                                 (dired-mode . emacs)
                                 (cider-docview-mode . emacs)
                                 (git-rebase-mode . emacs)
+                                (image-mode . emacs)
                                  ;; Start in insert mode
                                 (cider-repl-mode . insert)
                                 (inf-clojure-mode . insert)
-                                (git-commit-mode . insert))
+                                (git-commit-mode . insert)
+                                (vterm-mode . insert))
         do (evil-set-initial-state mode state))
 
   (defun my:evil-write (&rest args)
@@ -41,11 +46,13 @@
 (use-package evil-org
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
   :after (evil org)
+  :hook (org-mode . evil-org-mode)
   :config
   ;;Unbind J and K from evil org.
   (evil-define-key 'normal evil-org-mode-map
     "J" nil
-    "K" nil))
+    "K" nil)
+  (add-hook 'evil-org-mode-hook #'evil-org-set-key-theme))
 
 (use-package evil-collection
   :after evil
@@ -75,19 +82,31 @@
           ruby-mode
           (term term ansi-term multi-term)
           which-key
+          vterm
           xref
           ))
 
   (defun my:customize-evil-collection-occur (mode keymaps &rest _rest)
     (when (equal mode 'occur)
       (evil-define-key 'normal occur-mode-map
-        "q" #'quit-window))
-    (when (equal mode 'magit)
-      (evil-define-key 'normal 'magit-blame-mode-map)
-      (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)))
+        "q" #'quit-window)))
 
   (add-hook 'evil-collection-setup-hook #'my:customize-evil-collection-occur)
   (evil-collection-init))
 
 (use-package evil-cleverparens
   :after evil)
+
+(use-package iedit)
+
+(use-package evil-iedit-state
+  :bind ("C-;" . evil-iedit-state/iedit-mode)
+  :after (evil iedit))
+
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
+(use-package treemacs-evil
+  :after (evil treemacs))

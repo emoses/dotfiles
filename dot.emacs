@@ -14,14 +14,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-sources
-   (quote
-    (macos-keychain-generic macos-keychain-internet "~/.authinfo.gpg" "~/.authinfo" "~/.netrc")))
+   '(macos-keychain-generic macos-keychain-internet "~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
  '(custom-safe-themes
-   (quote
-    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default)))
-'(evil-overriding-maps
-   (quote
-    ((Buffer-menu-mode-map)
+   '("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
+ '(evil-overriding-maps
+   '((Buffer-menu-mode-map)
      (color-theme-mode-map)
      (comint-mode-map)
      (compilation-mode-map)
@@ -33,99 +30,659 @@
      (speedbar-file-key-map)
      (speedbar-buffers-key-map)
      (cider-popup-buffer-mode-map)
-     (cider-stacktrace-mode-map))))
- '(flycheck-disabled-checkers (quote (emacs-lisp-checkdoc python-pylint)))
+     (cider-stacktrace-mode-map)))
+ '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
- '(js2-global-externs (quote ("require" "module")))
+ '(js2-global-externs '("require" "module"))
  '(js2-strict-inconsistent-return-warning nil)
- '(lsp-imenu-sort-methods (quote (position kind)))
+ '(lsp-imenu-sort-methods '(position kind))
  '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
- '(magit-gh-pulls-arguments (quote ("--open-new-in-browser")))
- '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
- '(org-export-backends (quote (ascii html icalendar latex md odt)))
- '(org-log-done (quote time))
+ '(magit-gh-pulls-arguments '("--open-new-in-browser"))
+ '(mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
+ '(org-agenda-files '("/Users/emoses/Nextcloud/org/home.org"))
+ '(org-export-backends '(ascii html icalendar latex md odt))
+ '(org-log-done 'time)
  '(org-modules
-   (quote
-    (org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse)))
- '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3))))
+   '(org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse))
+ '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(package-selected-packages
-   (quote
-    (forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half)))
- '(safe-local-variable-values (quote ((create-lockfiles))))
- '(sml/mode-width
-   (if
-       (eq
-        (powerline-current-separator)
-        (quote arrow))
-       (quote right)
-     (quote full)))
+   '(forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half))
+ '(projectile-project-root-files
+   '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
+ '(python-pytest-arguments '("--color") t)
+ '(python-pytest-executable "devx pytest" t)
+ '(python-pytest-shell-startfile "~/.bashrc" t)
+ '(safe-local-variable-values
+   '((my:lsp-go-directory-filters .
+                                  ["-frontend"])
+     (my:lsp-go-directory-filters quote
+                                  ("-frontend"))
+     (lsp-nested-project-separator)
+     (lsp--override-calculate-lisp-indent\? . t)
+     (eval progn
+           (let
+               ((dirloc-lsp-defun-regexp
+                 (concat
+                  (concat "^\\s-*(" "lsp-defun" "\\s-+\\(")
+                  (or
+                   (bound-and-true-p lisp-mode-symbol-regexp)
+                   "\\(?:\\sw\\|\\s_\\|\\\\.\\)+")
+                  "\\)")))
+             (add-to-list 'imenu-generic-expression
+                          (list "Functions" dirloc-lsp-defun-regexp 1)))
+           (defvar lsp--override-calculate-lisp-indent\? nil "Whether to override `lisp-indent-function' with
+              the updated `calculate-lisp-indent' definition from
+              Emacs 28.")
+           (defun wrap-calculate-lisp-indent
+               (func &optional parse-start)
+             "Return appropriate indentation for current line as Lisp code.
+In usual case returns an integer: the column to indent to.
+If the value is nil, that means don't change the indentation
+because the line starts inside a string.
+
+PARSE-START may be a buffer position to start parsing from, or a
+parse state as returned by calling `parse-partial-sexp' up to the
+beginning of the current line.
+
+The value can also be a list of the form (COLUMN CONTAINING-SEXP-START).
+This means that following lines at the same level of indentation
+should not necessarily be indented the same as this line.
+Then COLUMN is the column to indent to, and CONTAINING-SEXP-START
+is the buffer position of the start of the containing expression."
+             (if
+                 (not lsp--override-calculate-lisp-indent\?)
+                 (funcall func parse-start)
+               (save-excursion
+                 (beginning-of-line)
+                 (let
+                     ((indent-point
+                       (point))
+                      state
+                      (desired-indent nil)
+                      (retry t)
+                      whitespace-after-open-paren calculate-lisp-indent-last-sexp containing-sexp)
+                   (cond
+                    ((or
+                      (markerp parse-start)
+                      (integerp parse-start))
+                     (goto-char parse-start))
+                    ((null parse-start)
+                     (beginning-of-defun))
+                    (t
+                     (setq state parse-start)))
+                   (unless state
+                     (while
+                         (<
+                          (point)
+                          indent-point)
+                       (setq state
+                             (parse-partial-sexp
+                              (point)
+                              indent-point 0))))
+                   (while
+                       (and retry state
+                            (>
+                             (elt state 0)
+                             0))
+                     (setq retry nil)
+                     (setq calculate-lisp-indent-last-sexp
+                           (elt state 2))
+                     (setq containing-sexp
+                           (elt state 1))
+                     (goto-char
+                      (1+ containing-sexp))
+                     (if
+                         (and calculate-lisp-indent-last-sexp
+                              (> calculate-lisp-indent-last-sexp
+                                 (point)))
+                         (let
+                             ((peek
+                               (parse-partial-sexp calculate-lisp-indent-last-sexp indent-point 0)))
+                           (if
+                               (setq retry
+                                     (car
+                                      (cdr peek)))
+                               (setq state peek)))))
+                   (if retry nil
+                     (goto-char
+                      (1+ containing-sexp))
+                     (setq whitespace-after-open-paren
+                           (looking-at
+                            (rx whitespace)))
+                     (if
+                         (not calculate-lisp-indent-last-sexp)
+                         (setq desired-indent
+                               (current-column))
+                       (parse-partial-sexp
+                        (point)
+                        calculate-lisp-indent-last-sexp 0 t)
+                       (cond
+                        ((looking-at "\\s("))
+                        ((>
+                          (save-excursion
+                            (forward-line 1)
+                            (point))
+                          calculate-lisp-indent-last-sexp)
+                         (if
+                             (or
+                              (=
+                               (point)
+                               calculate-lisp-indent-last-sexp)
+                              whitespace-after-open-paren)
+                             nil
+                           (progn
+                             (forward-sexp 1)
+                             (parse-partial-sexp
+                              (point)
+                              calculate-lisp-indent-last-sexp 0 t)))
+                         (backward-prefix-chars))
+                        (t
+                         (goto-char calculate-lisp-indent-last-sexp)
+                         (beginning-of-line)
+                         (parse-partial-sexp
+                          (point)
+                          calculate-lisp-indent-last-sexp 0 t)
+                         (backward-prefix-chars)))))
+                   (let
+                       ((normal-indent
+                         (current-column)))
+                     (cond
+                      ((elt state 3)
+                       nil)
+                      ((and
+                        (integerp lisp-indent-offset)
+                        containing-sexp)
+                       (goto-char containing-sexp)
+                       (+
+                        (current-column)
+                        lisp-indent-offset))
+                      (calculate-lisp-indent-last-sexp
+                       (or
+                        (and lisp-indent-function
+                             (not retry)
+                             (funcall lisp-indent-function indent-point state))
+                        (and
+                         (save-excursion
+                           (goto-char indent-point)
+                           (skip-chars-forward " 	")
+                           (looking-at ":"))
+                         (save-excursion
+                           (goto-char calculate-lisp-indent-last-sexp)
+                           (backward-prefix-chars)
+                           (while
+                               (not
+                                (or
+                                 (looking-back "^[ 	]*\\|([ 	]+"
+                                               (line-beginning-position))
+                                 (and containing-sexp
+                                      (>=
+                                       (1+ containing-sexp)
+                                       (point)))))
+                             (forward-sexp -1)
+                             (backward-prefix-chars))
+                           (setq calculate-lisp-indent-last-sexp
+                                 (point)))
+                         (> calculate-lisp-indent-last-sexp
+                            (save-excursion
+                              (goto-char
+                               (1+ containing-sexp))
+                              (parse-partial-sexp
+                               (point)
+                               calculate-lisp-indent-last-sexp 0 t)
+                              (point)))
+                         (let
+                             ((parse-sexp-ignore-comments t)
+                              indent)
+                           (goto-char calculate-lisp-indent-last-sexp)
+                           (or
+                            (and
+                             (looking-at ":")
+                             (setq indent
+                                   (current-column)))
+                            (and
+                             (<
+                              (line-beginning-position)
+                              (prog2
+                                  (backward-sexp)
+                                  (point)))
+                             (looking-at ":")
+                             (setq indent
+                                   (current-column))))
+                           indent))
+                        normal-indent))
+                      (desired-indent)
+                      (t normal-indent)))))))
+           (when
+               (< emacs-major-version 28)
+             (advice-add #'calculate-lisp-indent :around #'wrap-calculate-lisp-indent)))
+     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6061" "-logfile=/Users/evanmoses/dev/go/src/github.com/ScaleFT/device-tools/gopls.log")
+     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060" "-logfile=/Users/evanmoses/dev/go/src/go.sudo.wtf/gopls.log")
+     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060")
+     (flycheck-disabled-checkers quote
+                                 (emacs-lisp-checkdoc))
+     (eval progn
+           (let
+               ((dirloc-lsp-defun-regexp
+                 (concat
+                  (concat "^\\s-*(" "lsp-defun" "\\s-+\\(")
+                  (or
+                   (bound-and-true-p lisp-mode-symbol-regexp)
+                   "\\(?:\\sw\\|\\s_\\|\\\\.\\)+")
+                  "\\)")))
+             (add-to-list 'imenu-generic-expression
+                          (list "Functions" dirloc-lsp-defun-regexp 1)))
+           (defvar lsp--override-calculate-lisp-indent\? nil "Whether to override the default
+              `calculate-lisp-indent'.")
+           (setq-local lsp--override-calculate-lisp-indent\? t)
+           (defun wrap~calculate-lisp-indent
+               (fn &optional parse-start)
+             "Add better indentation for quoted and backquoted lists."
+             (if
+                 (not lsp--override-calculate-lisp-indent\?)
+                 (funcall fn parse-start)
+               (defvar calculate-lisp-indent-last-sexp)
+               (save-excursion
+                 (beginning-of-line)
+                 (let
+                     ((indent-point
+                       (point))
+                      state
+                      (desired-indent nil)
+                      (retry t)
+                      calculate-lisp-indent-last-sexp containing-sexp)
+                   (cond
+                    ((or
+                      (markerp parse-start)
+                      (integerp parse-start))
+                     (goto-char parse-start))
+                    ((null parse-start)
+                     (beginning-of-defun))
+                    (t
+                     (setq state parse-start)))
+                   (unless state
+                     (while
+                         (<
+                          (point)
+                          indent-point)
+                       (setq state
+                             (parse-partial-sexp
+                              (point)
+                              indent-point 0))))
+                   (while
+                       (and retry state
+                            (>
+                             (elt state 0)
+                             0))
+                     (setq retry nil)
+                     (setq calculate-lisp-indent-last-sexp
+                           (elt state 2))
+                     (setq containing-sexp
+                           (elt state 1))
+                     (goto-char
+                      (1+ containing-sexp))
+                     (if
+                         (and calculate-lisp-indent-last-sexp
+                              (> calculate-lisp-indent-last-sexp
+                                 (point)))
+                         (let
+                             ((peek
+                               (parse-partial-sexp calculate-lisp-indent-last-sexp indent-point 0)))
+                           (if
+                               (setq retry
+                                     (car
+                                      (cdr peek)))
+                               (setq state peek)))))
+                   (if retry nil
+                     (goto-char
+                      (1+ containing-sexp))
+                     (if
+                         (not calculate-lisp-indent-last-sexp)
+                         (setq desired-indent
+                               (current-column))
+                       (parse-partial-sexp
+                        (point)
+                        calculate-lisp-indent-last-sexp 0 t)
+                       (cond
+                        ((looking-at "\\s("))
+                        ((>
+                          (save-excursion
+                            (forward-line 1)
+                            (point))
+                          calculate-lisp-indent-last-sexp)
+                         (if
+                             (or
+                              (=
+                               (point)
+                               calculate-lisp-indent-last-sexp)
+                              (let*
+                                  ((positions
+                                    (elt state 9))
+                                   (last
+                                    (car
+                                     (last positions)))
+                                   (rest
+                                    (reverse
+                                     (butlast positions)))
+                                   (any-quoted-p nil)
+                                   (point nil))
+                                (or
+                                 (when-let
+                                     ((char
+                                       (char-before last)))
+                                   (or
+                                    (char-equal char 39)
+                                    (char-equal char 96)))
+                                 (progn
+                                   (while
+                                       (and rest
+                                            (not any-quoted-p))
+                                     (setq point
+                                           (pop rest))
+                                     (setq any-quoted-p
+                                           (or
+                                            (when-let
+                                                ((char
+                                                  (char-before point)))
+                                              (or
+                                               (char-equal char 39)
+                                               (char-equal char 96)))
+                                            (save-excursion
+                                              (goto-char
+                                               (1+ point))
+                                              (looking-at-p "\\(?:back\\)?quote[
+ ]+(")))))
+                                   any-quoted-p))))
+                             nil
+                           (progn
+                             (forward-sexp 1)
+                             (parse-partial-sexp
+                              (point)
+                              calculate-lisp-indent-last-sexp 0 t)))
+                         (backward-prefix-chars))
+                        (t
+                         (goto-char calculate-lisp-indent-last-sexp)
+                         (beginning-of-line)
+                         (parse-partial-sexp
+                          (point)
+                          calculate-lisp-indent-last-sexp 0 t)
+                         (backward-prefix-chars)))))
+                   (let
+                       ((normal-indent
+                         (current-column)))
+                     (cond
+                      ((elt state 3)
+                       nil)
+                      ((and
+                        (integerp lisp-indent-offset)
+                        containing-sexp)
+                       (goto-char containing-sexp)
+                       (+
+                        (current-column)
+                        lisp-indent-offset))
+                      (calculate-lisp-indent-last-sexp
+                       (or
+                        (and lisp-indent-function
+                             (not retry)
+                             (funcall lisp-indent-function indent-point state))
+                        (and
+                         (save-excursion
+                           (goto-char indent-point)
+                           (skip-chars-forward " 	")
+                           (looking-at ":"))
+                         (save-excursion
+                           (goto-char calculate-lisp-indent-last-sexp)
+                           (backward-prefix-chars)
+                           (while
+                               (not
+                                (or
+                                 (looking-back "^[ 	]*\\|([ 	]+"
+                                               (line-beginning-position))
+                                 (and containing-sexp
+                                      (>=
+                                       (1+ containing-sexp)
+                                       (point)))))
+                             (forward-sexp -1)
+                             (backward-prefix-chars))
+                           (setq calculate-lisp-indent-last-sexp
+                                 (point)))
+                         (> calculate-lisp-indent-last-sexp
+                            (save-excursion
+                              (goto-char
+                               (1+ containing-sexp))
+                              (parse-partial-sexp
+                               (point)
+                               calculate-lisp-indent-last-sexp 0 t)
+                              (point)))
+                         (let
+                             ((parse-sexp-ignore-comments t)
+                              indent)
+                           (goto-char calculate-lisp-indent-last-sexp)
+                           (or
+                            (and
+                             (looking-at ":")
+                             (setq indent
+                                   (current-column)))
+                            (and
+                             (<
+                              (line-beginning-position)
+                              (prog2
+                                  (backward-sexp)
+                                  (point)))
+                             (looking-at ":")
+                             (setq indent
+                                   (current-column))))
+                           indent))
+                        normal-indent))
+                      (desired-indent)
+                      (t normal-indent)))))))
+           (advice-add #'calculate-lisp-indent :around #'wrap~calculate-lisp-indent))
+     (eval set
+           (make-local-variable '-dirlocal-project-path)
+           (when-let
+               ((d
+                 (dir-locals-find-file ".")))
+             (file-name-directory
+              (if
+                  (stringp d)
+                  d
+                (car d)))))
+     (eval setq flycheck-golangci-lint-config
+           (concat -dirlocal-project-path ".golangci.yml"))
+     (sql-product . postgres)
+     (auto-save-file-name-transforms
+      ("." "~/dev/.go.sudo.wtf~/frontend/" t))
+     (backup-directory-alist
+      ("." . "~/dev/.go.sudo.wtf~/frontend/"))
+     (projectile-indexing-method . hybrid)
+     (auto-save-file-name-transforms quote
+                                     (("." "~/dev/.go.sudo.wtf~/frontend" t)))
+     (backup-directory-alist quote
+                             (("." . "~/dev/.go.sudo.wtf~/frontend")))
+     (jest-executable . "yarn utest")
+     (checkdoc-package-keywords-flag)
+     (eval font-lock-add-keywords nil
+           `((,(concat "("
+                       (regexp-opt
+                        '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
+                        t)
+                       "\\_>")
+              1 'font-lock-variable-name-face)))
+     (projectile-project-type quote go)
+     (eval set
+           (make-local-variable 'my-project-path)
+           (if-let
+               ((root
+                 (projectile-project-root)))
+               root
+             (if-let
+                 ((dir-local-root
+                   (file-name-directory
+                    (let
+                        ((d
+                          (dir-locals-find-file ".")))
+                      (if
+                          (stringp d)
+                          d
+                        (car d))))))
+                 dir-local-root)
+             nil))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio" "--log-level 3" "--tsserver-log-file /Users/evanmoses/tsserver-log.txt"
+                 (concat "--tsserver-path "
+                         (file-name-as-directory my-project-path)
+                         "node_modules/.bin/tsserver")))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio"
+                 (concat "--tsserver-path "
+                         (file-name-as-directory my-project-path)
+                         "node_modules/.bin/tsserver")))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio"
+                 (concat
+                  (file-name-as-directory my-project-path)
+                  "node_modules/.bin/tsserver")))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio"
+                 (concat
+                  (file-name-as-directory my-project-path)
+                  "node_modules/.bin/tsserver" my-project-path)))
+     (eval progn
+           (set
+            (make-local-variable my-project-path)
+            (file-name-directory
+             (let
+                 ((d
+                   (dir-locals-find-file ".")))
+               (if
+                   (stringp d)
+                   d
+                 (car d)))))
+           (let
+               ((tsserver-path
+                 (concat
+                  (file-name-as-directory my-project-path)
+                  "node_modules/.bin/tsserver" my-project-path)))
+             (setq lsp-clients-typescript-server-args
+                   (list "--stdio" tsserver-path))))
+     (eval setq
+           (make-local-variable my-project-path)
+           (file-name-directory
+            (let
+                ((d
+                  (dir-locals-find-file ".")))
+              (if
+                  (stringp d)
+                  d
+                (car d)))))
+     (eval let
+           ((tsserver-path
+             (concat
+              (file-name-as-directory my-project-path)
+              "node_modules/.bin/tsserver" my-project-path)))
+           (setq lsp-clients-typescript-server-args
+                 (list "--stdio" tsserver-path)))
+     (eval set
+           (make-local-variable my-project-path)
+           (file-name-directory
+            (let
+                ((d
+                  (dir-locals-find-file ".")))
+              (if
+                  (stringp d)
+                  d
+                (car d)))))
+     (eval let
+           ((tsserver-path
+             (concat
+              (file-name-as-directory my-project-path)
+              "node_modules/.bin/tsserver" my-project-path)))
+           (setq lsp-clients-typescript-server-args
+                 '("--stdio" tsserver-path)))
+     (eval setq lsp-clients-typescript-server-args
+           ("--stdio"
+            (concat
+             (file-name-as-directory my-project-path)
+             "node_modules/.bin/tsserver" my-project-path)))
+     (eval setq cmake-ide-build-dir
+           (concat my-project-path "build"))
+     (eval set
+           (make-local-variable 'my-project-path)
+           (file-name-directory
+            (let
+                ((d
+                  (dir-locals-find-file ".")))
+              (if
+                  (stringp d)
+                  d
+                (car d)))))
+     (auto-save-file-name-transforms
+      ("." "~/dev/patreon/.patreon_py~/" t))
+     (backup-directory-alist
+      ("." . "~/dev/patreon/.patreon_py~/"))
+     (delete-old-versions . t)
+     (auto-save-file-name-transforms quote
+                                     ((".*" "~/dev/patreon/.patreon_py~/" t)))
+     (backup-directory-alist quote
+                             ((".*" . "~/dev/patreon/.patreon_py~/")))
+     (backup-by-copying . t)
+     (python-shell-intepreter-args . "-i --profile=devx --simple-prompt")
+     (python-shell-interpreter . "devx-ipython")
+     (create-lockfiles)))
+ '(sml/mode-width (if (eq (powerline-current-separator) 'arrow) 'right 'full))
  '(sml/name-width 44)
  '(sml/pos-id-separator
-   (quote
-    (""
+   '(""
      (:propertize " " face powerline-active1)
      (:eval
-      (propertize " "
-                  (quote display)
+      (propertize " " 'display
                   (funcall
                    (intern
                     (format "powerline-%s-%s"
                             (powerline-current-separator)
                             (car powerline-default-separator-dir)))
-                   (quote powerline-active1)
-                   (quote powerline-active2))))
-     (:propertize " " face powerline-active2))))
+                   'powerline-active1 'powerline-active2)))
+     (:propertize " " face powerline-active2)))
  '(sml/pos-minor-modes-separator
-   (quote
-    (""
+   '(""
      (:propertize " " face powerline-active1)
      (:eval
-      (propertize " "
-                  (quote display)
+      (propertize " " 'display
                   (funcall
                    (intern
                     (format "powerline-%s-%s"
                             (powerline-current-separator)
                             (cdr powerline-default-separator-dir)))
-                   (quote powerline-active1)
-                   (quote sml/global))))
-     (:propertize " " face sml/global))))
+                   'powerline-active1 'sml/global)))
+     (:propertize " " face sml/global)))
  '(sml/pre-id-separator
-   (quote
-    (""
+   '(""
      (:propertize " " face sml/global)
      (:eval
-      (propertize " "
-                  (quote display)
+      (propertize " " 'display
                   (funcall
                    (intern
                     (format "powerline-%s-%s"
                             (powerline-current-separator)
                             (car powerline-default-separator-dir)))
-                   (quote sml/global)
-                   (quote powerline-active1))))
-     (:propertize " " face powerline-active1))))
+                   'sml/global 'powerline-active1)))
+     (:propertize " " face powerline-active1)))
  '(sml/pre-minor-modes-separator
-   (quote
-    (""
+   '(""
      (:propertize " " face powerline-active2)
      (:eval
-      (propertize " "
-                  (quote display)
+      (propertize " " 'display
                   (funcall
                    (intern
                     (format "powerline-%s-%s"
                             (powerline-current-separator)
                             (cdr powerline-default-separator-dir)))
-                   (quote powerline-active2)
-                   (quote powerline-active1))))
-     (:propertize " " face powerline-active1))))
- '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
+                   'powerline-active2 'powerline-active1)))
+     (:propertize " " face powerline-active1)))
+ '(sml/pre-modes-separator (propertize " " 'face 'sml/modes))
  '(sml/replacer-regexp-list
-   (quote
-    (("^~/ownCloud/org" ":Org:")
+   '(("^~/ownCloud/org" ":Org:")
      ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
      ("^~/\\.emacs\\.d/" ":ED:")
      ("^/sudo:.*:" ":SU:")
@@ -136,12 +693,12 @@
      ("^~/[Gg]it[Hh]ub/" ":Git:")
      ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:")
      ("^.*/patreon_py/" ":P_PY:")
-     ("~/dev/patreon/" ":WORK:"))))
+     ("~/dev/patreon/" ":WORK:")))
  '(sml/shorten-directory nil)
  '(tls-checktrust t)
+ '(xref-js2-ignored-dirs '("node-modules" "build" "dist" "fontawesome"))
  '(xref-prompt-for-identifier
-   (quote
-    (not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references))))
+   '(not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -150,19 +707,25 @@
  '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))
  '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
  '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
+ '(flycheck-color-mode-line-success-face ((t (:foreground "dark green"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
+ '(highlight ((t (:background "#41444a" :inverse-video nil))))
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(lsp-ui-sideline-global ((t (:background "medium blue"))))
-; '(org-block ((t (:background "gray20" :foreground "#de935f"))))
-; '(org-todo ((t (:background "light coralq" :foreground "light pink" :box (:line-width 1 :color "dim gray") :weight bold))))
- )
+ '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
+ '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
+ '(sml/global ((t (:background "grey85" :foreground "grey20" :inverse-video nil :weight semi-light :height 1.05 :family "Avenir")))))
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
 (add-to-list 'load-path my:emacs-base)
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
+
+;;Performance tuning (see https://github.com/emacs-lsp/lsp-mode#performance)
+(setq gc-cons-threshold (* 100 1024 1024))
+(setq read-process-output-max (* 1024 1024))
 
 ;; utility finction to auto-load my package configurations
 (defun my:load-config-file (filelist)
@@ -181,6 +744,7 @@
 
 ;;Mac-specific changes
 (defvar my:osx (eq system-type 'darwin))
+(defvar my:windows (eq system-type 'windows-nt))
 
 ;;Deal with TLS certs.  See https://glyph.twistedmatrix.com/2015/11/editor-malware.html
 (let ((trustfile
@@ -202,11 +766,15 @@
 		       "evil.el"
 		       "faces.el"
 		       "mode-customizations.el"
+                       "javascript.el"
 		       "keys.el"
 		       "misc-fns.el"
 		       "clojure.el"
+                       "lsp.el"
                        "python.el"
-                       "present-minor-mode.el"))
+                       "present-minor-mode.el"
+                       "go.el"
+                       "okta.el"))
 
 (put 'narrow-to-region 'disabled nil)
 (setq create-lockfiles nil)
@@ -220,8 +788,11 @@
       '((width . 250)
         (height . 70)))
 (setq fill-column 120)
+(setq split-width-threshold 180)
 (setq help-window-select t)
 (setq ispell-program-name "/usr/local/bin/aspell")
+
+(setq compilation-scroll-output t)
 
 ;;Global mode enablement
 (show-paren-mode t)
@@ -229,19 +800,19 @@
 (electric-indent-mode t)
 
 ;;New stuff for emacs 26
-(when (>= 26 emacs-major-version)
-  (pixel-scroll-mode)
+(when (>= emacs-major-version 26)
+  ;; (pixel-scroll-mode)
   (setq mouse-wheel-tilt-scroll t)
   (setq mouse-wheel-flip-direction t)
   (setq display-line-numbers-width-start 3)
   (setq display-line-numbers-grow-only t)
   (global-display-line-numbers-mode t))
 
-(when (< 26 emacs-major-version)
+(when (< emacs-major-version 26)
   (use-package nlinum
     :config
     (defun my:nlinum-hook-min-lines ()
-      (when nlinum-mode
+      (when (fboundp 'nlinum-mode)
         (let* ((approx-lines (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
                (lineno-width (max 3 approx-lines)))
           (setq-local nlinum-format
@@ -254,18 +825,29 @@
   (editorconfig-mode 1))
 
 (use-package projectile
-  :bind ("C-c p s t" . my:projectile-ag-test)
+  :bind (("C-c C-s" . my:projectile-ag-symbol))
   :config
   (setq projectile-completion-system 'ivy)
   (setq projectile-switch-project-action #'projectile-find-file-dwim)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "A-p") 'projectile-command-map)
+  (define-key projectile-command-map (kbd "s t") #'my:projectile-ag-test)
+  (define-key projectile-command-map (kbd "C") #'projectile-go-compile-tests)
 
   (defun my:projectile-test-root ()
       (let* ((project-root (projectile-project-root))
-             (test-dir-name (projectile-test-directory (projectile-project-type))))
+             (test-dir-name (or  (projectile-project-type-attribute (projectile-project-type) 'test-dir) ".")))
         (expand-file-name test-dir-name project-root)))
+
+  (defun projectile-go-compile-tests ()
+    (interactive)
+    (if (not (eq projectile-project-type 'go))
+        (message "Not a go project")
+      (let ((compilation-read-command nil)
+            (compile-command "go test -run=none ./..."))
+        (projectile--run-project-cmd compile-command nil
+                                     :save-buffers t))))
 
   (defun my:projectile-ag-test (search-term &optional arg)
     "Run an ag search starting at the test root
@@ -276,8 +858,7 @@ Largely a copy-paste of projectile-ag, need to refactor"
             (format "Ag %ssearch tests for" (if current-prefix-arg "regexp " "")))
            current-prefix-arg))
     (if (require 'ag nil 'noerror)
-        (let ((ag-command (if arg 'ag-regexp 'ag))
-              (ag-ignore-list (delq nil
+        (let ((ag-ignore-list (delq nil
                                     (delete-dups
                                      (append
                                       ag-ignore-list
@@ -290,9 +871,52 @@ Largely a copy-paste of projectile-ag, need to refactor"
                                                 grep-find-ignored-directories
                                                 '()))))))
               ;; reset the prefix arg, otherwise it will affect the ag-command
-              (current-prefix-arg nil))
-          (funcall ag-command search-term (my:projectile-test-root)))
-      (error "Package 'ag' is not available"))))
+              (current-prefix-arg nil)
+              ;; TODO prefix
+              (suffix (projectile-test-suffix (projectile-project-type))))
+          (ag/search search-term (my:projectile-test-root) :regexp arg :file-regex suffix))
+      (error "Package 'ag' is not available")))
+
+  ;; WIP, needs to turn into a real glob
+  (defun my:projectile-ripgrep-test (search-term &optional arg)
+    "Run a Ripgrep search with `SEARCH-TERM' at current project root.
+
+With an optional prefix argument ARG SEARCH-TERM is interpreted as a
+regular expression."
+    (interactive
+     (list (projectile--read-search-string-with-default
+            (format "Ripgrep %ssearch tests for" (if current-prefix-arg "regexp " "")))
+           current-prefix-arg))
+    (if (require 'ripgrep nil 'noerror)
+        (let* ((args (mapcar (lambda (val) (concat "--glob !" val))
+                             (append projectile-globally-ignored-files
+                                     projectile-globally-ignored-directories)))
+               (suffix (projectile-test-suffix (projectile-project-type)))
+               (args (append args (list (concat  "--glob '" suffix "*'")))))
+          (ripgrep-regexp search-term
+                          (my:projectile-test-root)
+                          (if arg
+                              args
+                            (cons "--fixed-strings" args))))
+      (error "Package `ripgrep' is not available")))
+
+  (defun my:projectile-ag-symbol (search-term &optional arg)
+    "Run an ag search for symbol at point, or region if active.
+
+With optional prefix ARG, SEARCH-TERM is treated as a regexp"
+    (interactive
+     (list
+      (let ((symbol
+             (if (use-region-p)
+                 (buffer-substring-no-properties (region-beginning)
+                                                 (region-end))
+               (thing-at-point 'symbol))))
+        (if (and symbol (not current-prefix-arg))
+            symbol
+          (projectile--read-search-string-with-default
+           (format "Search in project for %s: " (if current-prefix-arg "regexp" "string")))))
+      current-prefix-arg))
+    (projectile-ag search-term arg)))
 
 
 (require 'uniquify)
@@ -300,8 +924,15 @@ Largely a copy-paste of projectile-ag, need to refactor"
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 (use-package flycheck
+  :bind (:map flycheck-mode-map
+              ("<f6>" . flycheck-next-error)
+              ("S-<f6>" . flycheck-previous-error))
+  :init
+  (global-flycheck-mode t)
   :config
-  (global-flycheck-mode t))
+  (add-hook 'flycheck-mode-hook (lambda ()
+                                  (when-let ((local-eslint (find-executable-in-node-modules "eslint")))
+                                    (setq-local flycheck-javascript-eslint-executable local-eslint)))))
 
 ;;ido
 ;; (use-package flx-ido
@@ -329,15 +960,19 @@ Largely a copy-paste of projectile-ag, need to refactor"
          :map counsel-find-file-map
          ("C-x C-f" . find-file))
 
+  :init
+  (add-hook 'after-init-hook
+            (lambda ()
+              (setq ivy-re-builders-alist
+                    '((counsel-M-x . ivy--regex-fuzzy)
+                      (t . ivy--regex-fuzzy)))))
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-re-builders-alist
-        '((counsel-M-x . ivy--regex-fuzzy)
-          (t . ivy--regex-fuzzy)))
+                                        ; I don't know why, but this doesn't seem to work if I just do it in this :config
   (add-to-list 'ivy-initial-inputs-alist '(counsel-M-x . ""))
 
-  ; Backspace at beginning in minibuffer quits by default.  Don't do that.
+                                        ; Backspace at beginning in minibuffer quits by default.  Don't do that.
   (setq ivy-on-del-error-function #'ignore)
   (defun my:previous-line-or-history (arg)
     (interactive "p")
@@ -359,9 +994,9 @@ _k_: previous error    _l_: last error
     ("k" previous-error nil :bind nil)
     ("h" first-error    nil :bind nil)
     ("l" (condition-case err
-	     (while t
-	       (next-error))
-	   (user-error nil))
+             (while t
+               (next-error))
+           (user-error nil))
      nil :bind nil)
     ("q" nil            nil :color blue)))
 
@@ -376,17 +1011,19 @@ _k_: previous error    _l_: last error
   (defun ag-kill-all-buffers ()
     (interactive)
     (mapc (lambda (buff)
-	    (let ((name (buffer-name buff)))
-	      (when (string-prefix-p "*ag search " name)
-		(kill-buffer buff))))
-	  (buffer-list))))
+            (let ((name (buffer-name buff)))
+              (when (string-prefix-p "*ag search " name)
+                (kill-buffer buff))))
+          (buffer-list))))
+
+(use-package ripgrep)
 
 (use-package find-file-in-repository)
 
 (use-package exec-path-from-shell
   :config
   (when my:osx
-					;(add-to-list 'exec-path-from-shell-arguments "--norc")
+                                        ;(add-to-list 'exec-path-from-shell-arguments "--norc")
     (exec-path-from-shell-initialize)))
 
 
@@ -400,8 +1037,8 @@ _k_: previous error    _l_: last error
 (setq visible-bell nil)
 (setq ring-bell-function
       (lambda ()
-	(invert-face 'mode-line)
-	(run-with-timer 0.1 nil #'invert-face 'mode-line)))
+        (invert-face 'mode-line)
+        (run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
 (use-package powerline
   :config
@@ -414,6 +1051,10 @@ _k_: previous error    _l_: last error
   (sml/apply-theme 'smart-mode-line-light-powerline)
   (sml/setup)
   (set-face-attribute 'mode-line-inactive nil :box '(:width -1)))
+(use-package flycheck-color-mode-line
+  :hook (flycheck-mode . flycheck-color-mode-line-mode)
+  :config
+  (setq flycheck-color-mode-line-face-to-color 'sml/filename))
 
 (use-package ace-jump-mode)
 
@@ -422,18 +1063,55 @@ _k_: previous error    _l_: last error
 
 (use-url help-fns+ "https://raw.githubusercontent.com/emacsmirror/help-fns-plus/master/help-fns%2B.el")
 
-(use-package neotree
-  :bind ("M-\\" . neotree-toggle)
-  :after (projectile)
-  :config
-  (setq neo-smart-open t))
+;; (use-package neotree
+;;   :bind ("M-\\" . neotree-toggle)
+;;   :after (projectile)
+;;   :config
+;;   (setq neo-smart-open t))
 
 (use-package zoom-frm
   :bind (("C-x C--" . zoom-in/out)
-	 ("C-x C-=" . zoom-in/out)
-	 ("C-x C-0" . zoom-in/out)
-	 ("C-x C-+" . zoom-in/out)
-	 ([C-S-wheel-right] . zoom-out)
-	 ([C-S-wheel-left] . zoom-in)))
+         ("C-x C-=" . zoom-in/out)
+         ("C-x C-0" . zoom-in/out)
+         ("C-x C-+" . zoom-in/out)
+         ([C-S-wheel-right] . zoom-out)
+         ([C-S-wheel-left] . zoom-in)))
+
+(use-package terminal-here
+  :bind (("C-<f2>" . terminal-here-launch)
+         ("C-S-<f2>" . terminal-here-project-launch)))
+
+(use-package yasnippet
+  :bind (:map yas-keymap
+              ([tab] . nil)
+              ([backtab] . nil)
+              ("TAB" . nil)
+              ([(shift tab)] . nil)
+              ("C-o" . yas-next-field-or-maybe-expand)
+              ("C-S-o" . yas-prev-field))
+  :config
+  (yas-global-mode t))
+
+(use-package yasnippet-snippets)
+
+(use-package treemacs
+  :init
+  (setq treemacs-width 50)
+  :config
+  (setq treemacs-space-between-root-nodes nil)
+  (treemacs-resize-icons 16)
+  (add-hook 'treemacs-mode-hook (lambda () (text-scale-set -1))))
+
+(use-package treemacs-projectile
+  :after treemacs)
 
 (projectile-mode +1)
+
+(use-package edit-server
+  :bind (:map edit-server-edit-mode-map
+              ("C-c C-q" . edit-server-abort))
+  :commands edit-server-start
+  :init (if after-init-time
+            (edit-server-start)
+          (add-hook 'after-init-hook #'edit-server-start))
+  :custom (edit-server-url-major-mode-alist . ('(("^github.com" . markdown-mode)))))

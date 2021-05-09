@@ -4,7 +4,7 @@
    (directory-file-name (file-name-directory path))))
 
 (defun aura:switch-file (ext &optional cmd)
-  (let ((file-cmd (if cmd cmd 'find-file)))
+  (let ((file-cmd (or cmd 'find-file)))
     (funcall file-cmd (concat (containing-dir (buffer-file-name)) ext))))
 
 (setq auto-mode-alist
@@ -52,6 +52,3 @@
 		    nil
 		    nil)))
   (aura:switch-file (cdr (assoc ext-name file-ext-alist)) 'find-file-other-window))
-
-(global-set-key (kbd "C-c C-a") 'aura-switch-to-ext)
-(global-set-key (kbd "C-c 4 a") 'aura-switch-to-ext-other-window)
