@@ -1,6 +1,6 @@
 local mod1 = {"cmd", "ctrl"}
 local mod1shift = {"cmd", "ctrl", "shift"}
-local spaces = require("hs._asm.undocumented.spaces")
+-- local spaces = require("hs._asm.undocumented.spaces")
 
 local vimDirs = {
    h='West',
@@ -172,14 +172,17 @@ end)
 -- end)
 
 hs.hotkey.bind(mod1, "g", screenHandler)
+hs.hotkey.bind(mod1shift, "g", function()
+                  hs.execute(os.getenv("HOME") .. "/bin/placedisplays", true)
+end)
 hs.hotkey.bind(mod1shift, "space", hs.caffeinate.startScreensaver) --
 
 local chooserWindow = function(info)
    if info then
       for k,v in pairs(info) do print(k, v) end
-      if info.spaceId ~= spaces.activeSpace() then
-         spaces.changeToSpace(info.spaceId)
-      end
+--      if info.spaceId ~= spaces.activeSpace() then
+--         spaces.changeToSpace(info.spaceId)
+--      end
       focusWithMouse(hs.window.get(winId))
    end
 end

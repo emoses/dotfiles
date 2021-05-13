@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: struct_json
+# key: json
+# --
+
+\`json:"$0"\`

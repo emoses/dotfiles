@@ -14,9 +14,10 @@ if there is no schedule (so these are sorted to the bottom)"
   :straight org-plus-contrib
   :after (hydra)
   :mode ("\\.org$" . org-mode)
-  :bind (:map org-mode-map
-         ("C-c l" . org-store-link)
+  :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
+         ("C-c o" . org-capture)
+         :map org-mode-map
          ("C-c i" . org-toggle-item)
          ("C-c h" . org-toggle-heading)
          ("C-c r" . org-reveal)

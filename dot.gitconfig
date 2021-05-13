@@ -31,23 +31,24 @@
 [difftool]
 	prompt = true
 [credential]
-	helper = cache --timeout=86400
+	helper = store
 [push]
 	default = simple
 [github "github-emoses"]
 	user = emoses
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 [color "diff-highlight"]
 	oldNormal = red bold
     oldHighlight = red bold 52
     newNormal = green bold
     newHighlight = green bold 22
 [github]
-	oauth-token = 61c8d18b291dd5ee8c69d382d28f536fc459caae
-	user = emosesPatreon
+	oauth-token = 
+	user = 
 [sendemail]
         smptEncryption = tls
         smptServer = smtp.gmail.com

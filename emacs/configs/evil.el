@@ -26,7 +26,8 @@
                                  ;; Start in insert mode
                                 (cider-repl-mode . insert)
                                 (inf-clojure-mode . insert)
-                                (git-commit-mode . insert))
+                                (git-commit-mode . insert)
+                                (vterm-mode . insert))
         do (evil-set-initial-state mode state))
 
   (defun my:evil-write (&rest args)
@@ -81,6 +82,7 @@
           ruby-mode
           (term term ansi-term multi-term)
           which-key
+          vterm
           xref
           ))
 

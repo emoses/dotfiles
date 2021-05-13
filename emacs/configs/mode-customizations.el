@@ -12,6 +12,9 @@
 (use-package cperl-mode
   :mode "\\.p[lm]\\'")
 
+(use-package make-mode
+  :mode (("^Makefile\\." . makefile-bsdmake-mode)))
+
 ;;For PHP
 (use-package php-mode
   :mode (("\\.php$" . php-mode)
@@ -223,6 +226,11 @@
    '((plantuml . t)))
   (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
 
+(defun my:line-numbers-off ()
+  (if (< emacs-major-version 26)
+      (nlinum-mode -1)
+    (display-line-numbers-mode -1)))
+
 (use-package eshell
   :bind (("C-c M-B" . eshell-insert-buffer-filename))
   :config
@@ -230,15 +238,15 @@
     (interactive "bName of buffer:")
     (insert-and-inherit "\"" (buffer-file-name (get-buffer buffer-name)) "\""))
 
-  (add-hook 'eshell-mode-hook (lambda () (if (< emacs-major-version 26)
-                                             (nlinum-mode -1)
-                                           (display-line-numbers-mode -1)))))
+  (defalias 'eshell/ff 'find-file)
+  (defalias 'eshell/ffo 'find-file-other-from-eshell)
+  (add-to-list 'eshell-modules-list 'eshell-tramp)
+
+  (add-hook 'eshell-mode-hook #'my:line-numbers-off))
 
 (use-package compile
   :config
-  (add-hook 'compilation-mode-hook (lambda () (if (< emacs-major-version 26)
-                                             (nlinum-mode -1)
-                                           (display-line-numbers-mode -1)))))
+  (add-hook 'compilation-mode-hook #'my:line-numbers-off))
 
 (use-package xterm-color
   :after (magit eshell)
@@ -292,3 +300,6 @@
 
 (use-package powershell-mode
   :mode "\\.ps1")
+
+(use-package vterm
+  :hook (vterm-mode . my:line-numbers-off))

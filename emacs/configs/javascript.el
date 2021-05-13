@@ -55,7 +55,7 @@
   :config
   ;TODO: merge this with web-mode setup?
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-  (flycheck-add-next-checker 'lsp-ui '(t . javascript-eslint))
+  (flycheck-add-next-checker 'lsp '(t . javascript-eslint))
   (-jest-add-bindings typescript-mode-map))
 
 (use-package json-mode
