@@ -80,10 +80,11 @@ then
     echo "Detected WSL"
 else
     echo "No MacOS, Setting up i3"
-    mkdir $INSTDIR/.i3
-    if [ ! -e $INSTDIR/.i3/config ]
+    XDG=${XDG_CONFIG_HOME:-$INSTDIR/.config}
+    mkdir -p $XDG/i3
+    if [ ! -e $XDG/i3/config ]
     then
-        make_link $DIR/i3config $INSTDIR/.i3/config
+        make_link $DIR/i3config $XDG/i3/config
     fi
 fi
 

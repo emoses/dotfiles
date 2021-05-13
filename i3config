@@ -6,23 +6,24 @@
 # # i3 config file (v4) # # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 #Compositing with compton
-exec --no-startup-id /home/emoses/bin/runIfNotNx compton -bC --config /home/emoses/.compton.conf
+#exec --no-startup-id /home/emoses/bin/runIfNotNx compton -bC --config /home/emoses/.compton.conf
+exec --no-startup-id dex -a -e i3
 
 
 #Set up screens
 set $w1 1
-set $w2 "2: chrome"
+set $w2 "2: browser"
 set $w3 "3: ide"
 set $w4 4
-set $w5 "5: perforce"
+set $w5 5
 set $w6 "6: irc"
 set $w7 7
 set $w8 8
 set $w9 9
 set $w10 10
 
-set $display1 DP-1.1
-set $display2 DP-1.8
+# set $display1 DP-1.1
+# set $display2 DP-1.8
 
 workspace $w1 output $display1
 workspace $w2 output $display2
@@ -30,32 +31,29 @@ workspace $w2 output $display2
 set $mod Mod4
 
 #pulseaudio sink number
-set $audioSink "alsa_output.usb-Logitech_Logitech_USB_Headset-00-Headset.analog-stereo"
+set $audioSink 0
 
 # font for window titles. ISO 10646 = Unicode
-font pango: Anonymous Pro 12
+font pango:Fira Code Retina 8
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 #start basic utils
 exec --no-startup-id xbindkeys -f ~/.xbindkeysrc
-exec --no-startup-id i3-msg 'workspace $w2; exec google-chrome'
-exec gnome-sound-applet
+exec --no-startup-id i3-msg 'workspace $w2; exec firefox'
 exec --no-startup-id emacs --daemon
-exec --no-startup-id owncloud
 exec --no-startup-id slack
 #needs a sleep to give time for the daemon to start
-exec --no-startup-id i3-msg 'sleep 5; workspace $w1; exec ec ~/NextCloud/org/work.org'
 
-assign [class="^P4v"] $w5
 assign [class="Eclipse"] $w3
 assign [class="jetbrains*"] $w3
 assign [class="Slack"] $w6
 
 # Pulse Audio controls
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $audioSink toggle
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $audioSink +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $audioSink -- -5% #decrease sound
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $audioSink -5% #decrease sound
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
@@ -76,8 +74,8 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -P 'Jump to mar
 bindsym $mod+i exec i3-input -F '%s' -P 'Cmd: '
 
 # lock screen
-exec --no-startup-id /home/emoses/bin/runIfNotNx xautolock -locker 'i3lock --color=000000' -time 10
-bindsym $mod+ctrl+l exec i3lock --color=000000
+exec --no-startup-id xautolock -locker 'dm-tool lock' -time 10
+bindsym $mod+ctrl+l exec dm-tool lock
 
 #winmenu from i3-py
 bindsym $mod+Tab exec quickswitch.py
