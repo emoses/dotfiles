@@ -747,6 +747,7 @@ is the buffer position of the start of the containing expression."
 ;;Mac-specific changes
 (defvar my:osx (eq system-type 'darwin))
 (defvar my:windows (eq system-type 'windows-nt))
+(defvar my:linux (eq system-type 'gnu/linux))
 
 ;;Deal with TLS certs.  See https://glyph.twistedmatrix.com/2015/11/editor-malware.html
 (let ((trustfile
@@ -1117,3 +1118,8 @@ _k_: previous error    _l_: last error
             (edit-server-start)
           (add-hook 'after-init-hook #'edit-server-start))
   :custom (edit-server-url-major-mode-alist . ('(("^github.com" . markdown-mode)))))
+
+(when my:linux
+  (use-package keychain-environment
+    :init
+    (keychain-refresh-environment)))
