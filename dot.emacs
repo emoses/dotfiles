@@ -727,6 +727,8 @@ is the buffer position of the start of the containing expression."
 (setq gc-cons-threshold (* 100 1024 1024))
 (setq read-process-output-max (* 1024 1024))
 
+(setq initial-scratch-message nil)
+
 ;; utility finction to auto-load my package configurations
 (defun my:load-config-file (filelist)
   (dolist (fileOrFn filelist)
@@ -746,6 +748,7 @@ is the buffer position of the start of the containing expression."
 ;;Mac-specific changes
 (defvar my:osx (eq system-type 'darwin))
 (defvar my:windows (eq system-type 'windows-nt))
+(defvar my:linux (eq system-type 'gnu/linux))
 
 ;;Deal with TLS certs.  See https://glyph.twistedmatrix.com/2015/11/editor-malware.html
 (let ((trustfile
@@ -843,7 +846,7 @@ is the buffer position of the start of the containing expression."
 
   (defun projectile-go-compile-tests ()
     (interactive)
-    (if (not (eq projectile-project-type 'go))
+    (if (not (eq (projectile-project-type) 'go))
         (message "Not a go project")
       (let ((compilation-read-command nil)
             (compile-command "go test -run=none ./..."))
@@ -1062,7 +1065,7 @@ _k_: previous error    _l_: last error
 (use-package ace-window
   :bind ("M-SPC" . ace-window))
 
-(use-url help-fns+ "https://raw.githubusercontent.com/emacsmirror/help-fns-plus/master/help-fns%2B.el")
+(use-package help-fns+)
 
 ;; (use-package neotree
 ;;   :bind ("M-\\" . neotree-toggle)
@@ -1116,3 +1119,8 @@ _k_: previous error    _l_: last error
             (edit-server-start)
           (add-hook 'after-init-hook #'edit-server-start))
   :custom (edit-server-url-major-mode-alist . ('(("^github.com" . markdown-mode)))))
+
+(when my:linux
+  (use-package keychain-environment
+    :init
+    (keychain-refresh-environment)))

@@ -72,7 +72,7 @@
 ;;Magit
 (use-package magit
   :after (ivy evil)
-  :bind (("C-x M-g" . magit-file-popup)
+  :bind (("C-x M-g" . magit-file-dispatch)
          ("C-x M-S-g" . magit-dispatch-popup)
          :map magit-blame-mode-map
          ("C-c RET" . magit-show-commit)
@@ -95,11 +95,11 @@
         (magit-git-rebase (concat remote "/master") args)
       (user-error "Remote `%s' doesn't exist" args)))
 
-  (magit-define-popup-action 'magit-rebase-popup ?o
-    (lambda ()
-      (--when-let (magit-get-some-remote) (concat it "/master\n")))
-    #'my:magit-rebase-onto-origin-master
-    ?e)
+  (transient-insert-suffix 'magit-rebase #'magit-rebase-branch
+    '("o"
+      (lambda ()
+        (--when-let (magit-get-some-remote) (concat it "/master\n")))
+      my:magit-rebase-onto-origin-master))
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
@@ -306,5 +306,8 @@
 (unless (eq system-type 'windows-nt)
   (use-package vterm
     :hook (vterm-mode . my:line-numbers-off)))
+
+(use-package terraform-mode
+  :hook (terraform-mode . terraform-format-on-save-mode))
 
 (use-package elixir-mode)

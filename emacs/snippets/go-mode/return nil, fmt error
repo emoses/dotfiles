@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: return fmt err
+# key: errretf
+# --
+if err != nil {
+	return fmt.Errorf("$1: %w", err)
+}
