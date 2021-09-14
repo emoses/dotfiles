@@ -1,3 +1,4 @@
+(when (boundp 'okta)
 (require 'gotest)
 
 (defvar -okta-integration-test-history nil)
@@ -107,4 +108,4 @@
   (interactive)
   (dev:with-vagrant
       (let ((remote-shell "/bin/bash"))
-        (shell))))
+        (shell)))))

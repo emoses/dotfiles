@@ -6,9 +6,12 @@
          ("C-}" . lsp-find-implementation))
   :hook ((python-mode . lsp)
          (typescript-mode . lsp)
-         (rjsx-mode . lsp))
+         (rjsx-mode . lsp)
+         (elixir-mode . lsp))
   ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
+  :init
+  (add-to-list 'exec-path "D:/elixir-ls-1.11")
   :config
 
   (setq lsp-nested-project-separator nil)
@@ -44,7 +47,8 @@
       (interactive)
       (lsp-ui-peek-find-custom "textDocument/typeDefinition" extra)))
 
-(use-package lsp-ivy
+(use-package  lsp-ivy
+  :straight (lsp-ivy :type git :host github :repo "emacs-lsp/lsp-ivy")
   :commands lsp-ivy-workspace-symbol)
 
 (use-package lsp-treemacs

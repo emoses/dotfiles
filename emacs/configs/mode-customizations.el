@@ -88,7 +88,6 @@
   (setq magit-completing-read-function #'ivy-completing-read)
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-process-finish-apply-ansi-colors t)
-  (global-magit-file-mode t)
 
   (defun my:magit-rebase-onto-origin-master (args)
     (interactive (list (magit-rebase-arguments)))
@@ -304,5 +303,8 @@
 (use-package powershell-mode
   :mode "\\.ps1")
 
-(use-package vterm
-  :hook (vterm-mode . my:line-numbers-off))
+(unless (eq system-type 'windows-nt)
+  (use-package vterm
+    :hook (vterm-mode . my:line-numbers-off)))
+
+(use-package elixir-mode)
