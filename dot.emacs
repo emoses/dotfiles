@@ -791,7 +791,7 @@ is the buffer position of the start of the containing expression."
       '((width . 250)
         (height . 70)))
 (setq fill-column 120)
-(setq split-width-threshold 180)
+(setq split-width-threshold 190)
 (setq help-window-select t)
 (setq ispell-program-name "/usr/local/bin/aspell")
 

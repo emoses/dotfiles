@@ -28,7 +28,10 @@
 
   (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols "Treemacs symbols" (fboundp 'lsp-treemacs-symbols))
   (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition "Go to type definition" (and (lsp-feature? "textDocument/typeDefinition")
-                                                                                                                 (fboundp 'lsp-ui-peek-find-custom))))
+                                                                                                                 (fboundp 'lsp-ui-peek-find-custom)))
+  (lsp-define-conditional-key lsp-command-map "sr" lsp-workspace-restart "Restart server" (lsp-workspaces))
+  (lsp-define-conditional-key lsp-command-map "ss" lsp "Start server" t))
+
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
 (use-package lsp-ui
     :bind (:map lsp-ui-mode-map

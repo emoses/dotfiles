@@ -131,4 +131,5 @@
 ;;
 ;; go get -u github.com/josharian/impl
 ;; go get -u golang.org/x/tools/cmd/godoc
-(use-package go-impl)
+(use-package go-impl
+  :after exec-path-from-shell)

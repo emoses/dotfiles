@@ -24,6 +24,7 @@ if there is no schedule (so these are sorted to the bottom)"
          ("M-q" . org-fill-paragraph))
   :custom
   (org-export-with-toc nil)
+  (org-startup-folded 'overview)
   :init
   (add-hook 'org-mode-hook 'flyspell-mode)
   :config
