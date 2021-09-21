@@ -1,8 +1,10 @@
 
 
 ;; ;;Load auctex
-;; (require 'tex-site)
-;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(use-package tex
+  :straight auctex
+  :config
+  (setq LaTeX-electric-left-right-brace t))
 ;; (add-hook 'text-mode-hook
 ;; 	  '(lambda () (auto-fill-mode 1)))
 
@@ -51,14 +53,15 @@
     (setq diredp-hide-details-propagate-flag t)))
 
 ;;Haskell
-(use-package haskell-mode
-  :mode "\\.hs$"
-  :config
-  (autoload 'ghc-init "ghc" nil t)
-  (autoload 'ghc-debug "ghc" nil t)
-  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook 'ghc-init))
+(unless (eq system-type 'windows-nt)
+  (use-package haskell-mode
+    :mode "\\.hs$"
+    :config
+    (autoload 'ghc-init "ghc" nil t)
+    (autoload 'ghc-debug "ghc" nil t)
+    (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+    (add-hook 'haskell-mode-hook 'ghc-init)))
 
 ;;Haml
 (use-package haml-mode
@@ -93,7 +96,7 @@
       (user-error "Remote `%s' doesn't exist" args)))
 
   (transient-insert-suffix 'magit-rebase #'magit-rebase-branch
-    '("o" 
+    '("o"
       (lambda ()
         (--when-let (magit-get-some-remote) (concat it "/master\n")))
       my:magit-rebase-onto-origin-master))
@@ -300,8 +303,11 @@
 (use-package powershell-mode
   :mode "\\.ps1")
 
-(use-package vterm
-  :hook (vterm-mode . my:line-numbers-off))
+(unless (eq system-type 'windows-nt)
+  (use-package vterm
+    :hook (vterm-mode . my:line-numbers-off)))
 
 (use-package terraform-mode
   :hook (terraform-mode . terraform-format-on-save-mode))
+
+(use-package elixir-mode)

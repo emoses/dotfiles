@@ -1,4 +1,4 @@
-(use-package pyenv-mode)
+; (use-package pyenv-mode)
 
 (use-package python
   :mode ("\\.py\\'" . python-mode)
