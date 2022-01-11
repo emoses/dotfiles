@@ -1,5 +1,9 @@
 (setq lsp-keymap-prefix "A-l")
 
+(use-package ccls
+  :custom
+  (ccls-executable "/usr/local/bin/ccls"))
+
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename)
          ("M-/" . lsp-find-definition)
@@ -7,7 +11,8 @@
   :hook ((python-mode . lsp)
          (typescript-mode . lsp)
          (rjsx-mode . lsp)
-         (elixir-mode . lsp))
+         (elixir-mode . lsp)
+         (c-mode . lsp))
   ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
   :init

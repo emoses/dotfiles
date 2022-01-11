@@ -15,3 +15,6 @@ __flycheck*
 .idea/
 .projectile
 .ignore
+#ccls C LSP server
+.ccls
+.ccls-cache

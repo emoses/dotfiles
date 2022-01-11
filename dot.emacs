@@ -720,6 +720,12 @@ is the buffer position of the start of the containing expression."
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
+
+;WTF why does the debugger randomly get turned on?
+;; (add-variable-watcher 'debug-on-error (lambda (symbol newval op where)
+;;                                         (when newval
+;;                                           (debug--implement-debug-watch symbol newval op where))))
+
 (add-to-list 'load-path my:emacs-base)
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
 
@@ -761,6 +767,8 @@ is the buffer position of the start of the containing expression."
         (list
          (format "gnutls-cli%s --x509cafile %s -p %%p %%h"
                  (if (eq window-system 'w32) ".exe" "") trustfile))))
+
+(setq okta t)
 
 (my:load-config-file '("package-bootstrap.el"
 		       (lambda () (if my:osx "osx.el" nil))

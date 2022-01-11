@@ -311,3 +311,5 @@
   :hook (terraform-mode . terraform-format-on-save-mode))
 
 (use-package elixir-mode)
+
+(use-package kubernetes-evil)
