@@ -46,6 +46,13 @@
     (setenv "SFT_DB_INTEGRATION_TESTS" "true")
     (call-interactively 'dlv)))
 
+(defun dlv-integration-test-current-func ()
+  (interactive)
+  (progn
+    (setenv "SFT_DB_AUTOCLEAN" "true")
+    (setenv "SFT_DB_INTEGRATION_TESTS" "true")
+    (call-interactively 'dlv-current-func)))
+
 (defun transform-route ()
   (when-let ((pt (re-search-forward "<Route.*?/>" nil t)))
     (let ((start (match-beginning 0))

@@ -11,7 +11,7 @@ if there is no schedule (so these are sorted to the bottom)"
           (t nil))))
 
 (use-package org
-  :straight org-plus-contrib
+  :straight (:type built-in)
   :after (hydra)
   :mode ("\\.org$" . org-mode)
   :bind (("C-c l" . org-store-link)

@@ -106,9 +106,10 @@
 
 ;; magit-gh-pulls requires magit-popup but doesn't specify it
 (use-package magit-popup)
+(use-package  magit-section)
 
 (use-package magit-gh-pulls
-  :after magit-popup
+  :after (magit-popup magit-section)
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 

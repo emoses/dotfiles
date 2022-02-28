@@ -4,10 +4,17 @@
   :custom
   (ccls-executable "/usr/local/bin/ccls"))
 
+(defmacro wrap-other-window-impl (name fn)
+  (declare (indent 1) (debug defun))
+  (let ((arg (make-symbol "arg")))
+    `(defun ,name (,arg)
+       (interactive "P")
+       (apply ,fn (if ,arg '(:display-action window) nil)))))
+
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename)
-         ("M-/" . lsp-find-definition)
-         ("C-}" . lsp-find-implementation))
+         ("M-/" . my:lsp-find-definition)
+         ("C-}" . my:lsp-find-implementation))
   :hook ((python-mode . lsp)
          (typescript-mode . lsp)
          (rjsx-mode . lsp)
@@ -18,6 +25,9 @@
   :init
   (add-to-list 'exec-path "D:/elixir-ls-1.11")
   :config
+
+  (wrap-other-window-impl my:lsp-find-definition #'lsp-find-definition)
+  (wrap-other-window-impl my:lsp-find-implemenation #'lsp-find-implemenation)
 
   (setq lsp-nested-project-separator nil)
   (defun my:lsp--filter-variables (filter-fn sym)
