@@ -1,4 +1,6 @@
-(use-package undo-tree)
+(use-package undo-tree
+  :init
+  (global-undo-tree-mode))
 
 (use-package evil
   :bind (:map evil-motion-state-map
@@ -6,6 +8,8 @@
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+  :custom
+  (evil-undo-system 'undo-tree)
   :config
   (use-package evil-leader
     :config
@@ -110,3 +114,9 @@
 
 (use-package treemacs-evil
   :after (evil treemacs))
+
+(use-package evil-numbers
+  :after evil
+  :config
+  (global-set-key (kbd "C-c +") 'evil-numbers/inc-at-pt)
+  (global-set-key (kbd "C-c -") 'evil-numbers/dec-at-pt))

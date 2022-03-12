@@ -1,4 +1,4 @@
-(use-package pyenv-mode)
+; (use-package pyenv-mode)
 
 (use-package python
   :mode ("\\.py\\'" . python-mode)
@@ -84,9 +84,12 @@ Also, switch to that buffer."
 ;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
 (use-package lsp-python-ms
     :after (projectile lsp)
-    :straight (:host github :repo "emoses/lsp-python-ms")
+    :init (setq lsp-python-ms-auto-install-server t)
     :config
     ;; dir containing Microsoft.Python.LanguageServer.dll
-    (setq lsp-python-ms-server-setings
-          '(:python.analysis.logLevel "info"))
-    (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/")))
+    ;; (setq lsp-python-ms-server-setings
+    ;;       '(:python.analysis.logLevel "info"))
+    ;; (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/"))
+    )
+
+(use-package pyvenv)

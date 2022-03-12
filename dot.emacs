@@ -16,7 +16,7 @@
  '(auth-sources
    '(macos-keychain-generic macos-keychain-internet "~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
  '(custom-safe-themes
-   '("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
+   '("0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de" "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
  '(evil-overriding-maps
    '((Buffer-menu-mode-map)
      (color-theme-mode-map)
@@ -52,9 +52,6 @@
    '(forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half))
  '(projectile-project-root-files
    '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
- '(python-pytest-arguments '("--color") t)
- '(python-pytest-executable "devx pytest" t)
- '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
    '((elisp-lint-indent-specs
       (if-let* . 2)
@@ -93,6 +90,7 @@
       (thread-last . 1))
      (cider-shadow-cljs-default-options . "app")
      (cider-default-cljs-repl . shadow)
+   '((lsp-python-ms-python-executable-cmd . "python3")
      (my:lsp-go-directory-filters .
                                   ["-frontend"])
      (my:lsp-go-directory-filters quote
@@ -734,7 +732,7 @@ is the buffer position of the start of the containing expression."
      ("~/dev/patreon/" ":WORK:")))
  '(sml/shorten-directory nil)
  '(tls-checktrust t)
- '(xref-js2-ignored-dirs '("node-modules" "build" "dist" "fontawesome"))
+ '(xref-js2-ignored-dirs '("node-modules" "build" "dist" "fontawesome") nil nil "Customized with use-package xref-js2")
  '(xref-prompt-for-identifier
    '(not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references)))
 (custom-set-faces
@@ -758,12 +756,20 @@ is the buffer position of the start of the containing expression."
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
+
+;WTF why does the debugger randomly get turned on?
+;; (add-variable-watcher 'debug-on-error (lambda (symbol newval op where)
+;;                                         (when newval
+;;                                           (debug--implement-debug-watch symbol newval op where))))
+
 (add-to-list 'load-path my:emacs-base)
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
 
 ;;Performance tuning (see https://github.com/emacs-lsp/lsp-mode#performance)
 (setq gc-cons-threshold (* 100 1024 1024))
 (setq read-process-output-max (* 1024 1024))
+
+(setq initial-scratch-message nil)
 
 ;; utility finction to auto-load my package configurations
 (defun my:load-config-file (filelist)
@@ -779,6 +785,7 @@ is the buffer position of the start of the containing expression."
     ))
 
 (defconst my:xml-mode 'nxml-mode)
+
 
 ;;Mac-specific changes
 (defvar my:osx (eq system-type 'darwin))
@@ -796,6 +803,8 @@ is the buffer position of the start of the containing expression."
         (list
          (format "gnutls-cli%s --x509cafile %s -p %%p %%h"
                  (if (eq window-system 'w32) ".exe" "") trustfile))))
+
+(setq okta t)
 
 (my:load-config-file '("package-bootstrap.el"
 		       (lambda () (if my:osx "osx.el" nil))
@@ -827,7 +836,7 @@ is the buffer position of the start of the containing expression."
       '((width . 250)
         (height . 70)))
 (setq fill-column 120)
-(setq split-width-threshold 180)
+(setq split-width-threshold 190)
 (setq help-window-select t)
 (setq ispell-program-name "/usr/local/bin/aspell")
 
@@ -881,7 +890,7 @@ is the buffer position of the start of the containing expression."
 
   (defun projectile-go-compile-tests ()
     (interactive)
-    (if (not (eq projectile-project-type 'go))
+    (if (not (eq (projectile-project-type) 'go))
         (message "Not a go project")
       (let ((compilation-read-command nil)
             (compile-command "go test -run=none ./..."))
@@ -1098,7 +1107,7 @@ _k_: previous error    _l_: last error
 (use-package ace-window
   :bind ("M-SPC" . ace-window))
 
-(use-url help-fns+ "https://raw.githubusercontent.com/emacsmirror/help-fns-plus/master/help-fns%2B.el")
+(use-package help-fns+)
 
 ;; (use-package neotree
 ;;   :bind ("M-\\" . neotree-toggle)

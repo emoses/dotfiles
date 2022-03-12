@@ -100,9 +100,12 @@
   (with-eval-after-load 'lsp-mode
     (defvar my:lsp-go-directory-filters '())
     (lsp-register-custom-settings
-     '(("gopls.directoryFilters" my:lsp-go-directory-filters)))))
+     '(("gopls.directoryFilters" my:lsp-go-directory-filters)
+       ("gopls.buildFlags" ["-tags=dev"])))))
 
-(use-package go-dlv)
+(use-package go-dlv
+  :config
+  (defalias 'dlv-this-func #'dlv-current-func))
 
 (use-package gotest
   :bind (:map go-mode-map
@@ -128,4 +131,5 @@
 ;;
 ;; go get -u github.com/josharian/impl
 ;; go get -u golang.org/x/tools/cmd/godoc
-(use-package go-impl)
+(use-package go-impl
+  :after exec-path-from-shell)

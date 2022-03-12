@@ -1,8 +1,10 @@
 
 
 ;; ;;Load auctex
-;; (require 'tex-site)
-;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(use-package tex
+  :straight auctex
+  :config
+  (setq LaTeX-electric-left-right-brace t))
 ;; (add-hook 'text-mode-hook
 ;; 	  '(lambda () (auto-fill-mode 1)))
 
@@ -51,14 +53,15 @@
     (setq diredp-hide-details-propagate-flag t)))
 
 ;;Haskell
-(use-package haskell-mode
-  :mode "\\.hs$"
-  :config
-  (autoload 'ghc-init "ghc" nil t)
-  (autoload 'ghc-debug "ghc" nil t)
-  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook 'ghc-init))
+(unless (eq system-type 'windows-nt)
+  (use-package haskell-mode
+    :mode "\\.hs$"
+    :config
+    (autoload 'ghc-init "ghc" nil t)
+    (autoload 'ghc-debug "ghc" nil t)
+    (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+    (add-hook 'haskell-mode-hook 'ghc-init)))
 
 ;;Haml
 (use-package haml-mode
@@ -69,7 +72,7 @@
 ;;Magit
 (use-package magit
   :after (ivy evil)
-  :bind (("C-x M-g" . magit-file-popup)
+  :bind (("C-x M-g" . magit-file-dispatch)
          ("C-x M-S-g" . magit-dispatch-popup)
          :map magit-blame-mode-map
          ("C-c RET" . magit-show-commit)
@@ -85,7 +88,6 @@
   (setq magit-completing-read-function #'ivy-completing-read)
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-process-finish-apply-ansi-colors t)
-  (global-magit-file-mode t)
 
   (defun my:magit-rebase-onto-origin-master (args)
     (interactive (list (magit-rebase-arguments)))
@@ -93,20 +95,21 @@
         (magit-git-rebase (concat remote "/master") args)
       (user-error "Remote `%s' doesn't exist" args)))
 
-  (magit-define-popup-action 'magit-rebase-popup ?o
-    (lambda ()
-      (--when-let (magit-get-some-remote) (concat it "/master\n")))
-    #'my:magit-rebase-onto-origin-master
-    ?e)
+  (transient-insert-suffix 'magit-rebase #'magit-rebase-branch
+    '("o"
+      (lambda ()
+        (--when-let (magit-get-some-remote) (concat it "/master\n")))
+      my:magit-rebase-onto-origin-master))
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
 
 ;; magit-gh-pulls requires magit-popup but doesn't specify it
 (use-package magit-popup)
+(use-package  magit-section)
 
 (use-package magit-gh-pulls
-  :after magit-popup
+  :after (magit-popup magit-section)
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 
@@ -301,7 +304,13 @@
 (use-package powershell-mode
   :mode "\\.ps1")
 
-(use-package vterm
-  :hook (vterm-mode . my:line-numbers-off))
+(unless (eq system-type 'windows-nt)
+  (use-package vterm
+    :hook (vterm-mode . my:line-numbers-off)))
+
+(use-package terraform-mode
+  :hook (terraform-mode . terraform-format-on-save-mode))
 
 (use-package elixir-mode)
+
+(use-package kubernetes-evil)

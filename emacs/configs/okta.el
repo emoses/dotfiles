@@ -1,3 +1,4 @@
+(when (boundp 'okta)
 (require 'gotest)
 
 (defvar -okta-integration-test-history nil)
@@ -44,6 +45,13 @@
     (setenv "SFT_DB_AUTOCLEAN" "true")
     (setenv "SFT_DB_INTEGRATION_TESTS" "true")
     (call-interactively 'dlv)))
+
+(defun dlv-integration-test-current-func ()
+  (interactive)
+  (progn
+    (setenv "SFT_DB_AUTOCLEAN" "true")
+    (setenv "SFT_DB_INTEGRATION_TESTS" "true")
+    (call-interactively 'dlv-current-func)))
 
 (defun transform-route ()
   (when-let ((pt (re-search-forward "<Route.*?/>" nil t)))
@@ -107,4 +115,4 @@
   (interactive)
   (dev:with-vagrant
       (let ((remote-shell "/bin/bash"))
-        (shell))))
+        (shell)))))

@@ -11,6 +11,7 @@ if there is no schedule (so these are sorted to the bottom)"
           (t nil))))
 
 (use-package org
+  :straight (:type built-in)
   :after (hydra)
   :mode ("\\.org$" . org-mode)
   :bind (("C-c l" . org-store-link)
@@ -23,15 +24,21 @@ if there is no schedule (so these are sorted to the bottom)"
          ("M-q" . org-fill-paragraph))
   :custom
   (org-export-with-toc nil)
+  (org-startup-folded 'overview)
   :init
   (add-hook 'org-mode-hook 'flyspell-mode)
   :config
-  (message "org mode config")
+  (when (eq system-type 'windows-nt)
+    (setq org-mobile-checksum-binary "d:/program files/gnu/sha1sum.exe"))
+  ;(require 'org-install)
   ;;normally bound to org-reveal, but that's moved to C-c r above
   (define-key org-mode-map (kbd "C-c C-r") nil)
 
-  (setq org-mobile-directory "~/Nextcloud/MobileOrg")
-  (setq org-directory "~/Nextcloud/org")
+  ;Local windows
+  (setq org-mobile-directory "~/ownCloud/MobileOrg")
+  (setq org-directory "~/ownCloud/org")
+  ;(setq org-mobile-directory "~/Nextcloud/MobileOrg")
+  ;(setq org-directory "~/Nextcloud/org")
   (setq org-mobile-inbox-for-pull (expand-file-name "from-mobile.org" org-directory))
   (setq org-agenda-files (mapcar (lambda (f) (expand-file-name f org-directory))
                                  '("work.org" "home.org")))

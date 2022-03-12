@@ -1,16 +1,33 @@
 (setq lsp-keymap-prefix "A-l")
 
+(use-package ccls
+  :custom
+  (ccls-executable "/usr/local/bin/ccls"))
+
+(defmacro wrap-other-window-impl (name fn)
+  (declare (indent 1) (debug defun))
+  (let ((arg (make-symbol "arg")))
+    `(defun ,name (,arg)
+       (interactive "P")
+       (apply ,fn (if ,arg '(:display-action window) nil)))))
+
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename)
-         ("M-/" . lsp-find-definition)
-         ("C-}" . lsp-find-implementation))
+         ("M-/" . my:lsp-find-definition)
+         ("C-}" . my:lsp-find-implementation))
   :hook ((python-mode . lsp)
          (typescript-mode . lsp)
          (rjsx-mode . lsp)
-         (elixir-mode . lsp))
+         (elixir-mode . lsp)
+         (c-mode . lsp))
   ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
+  :init
+  (add-to-list 'exec-path "D:/elixir-ls-1.11")
   :config
+
+  (wrap-other-window-impl my:lsp-find-definition #'lsp-find-definition)
+  (wrap-other-window-impl my:lsp-find-implemenation #'lsp-find-implemenation)
 
   (setq lsp-nested-project-separator nil)
   (defun my:lsp--filter-variables (filter-fn sym)
@@ -30,7 +47,10 @@
 
   (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols "Treemacs symbols" (fboundp 'lsp-treemacs-symbols))
   (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition "Go to type definition" (and (lsp-feature? "textDocument/typeDefinition")
-                                                                                                                 (fboundp 'lsp-ui-peek-find-custom))))
+                                                                                                                 (fboundp 'lsp-ui-peek-find-custom)))
+  (lsp-define-conditional-key lsp-command-map "sr" lsp-workspace-restart "Restart server" (lsp-workspaces))
+  (lsp-define-conditional-key lsp-command-map "ss" lsp "Start server" t))
+
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
 (use-package lsp-ui
     :bind (:map lsp-ui-mode-map
@@ -47,7 +67,8 @@
       (interactive)
       (lsp-ui-peek-find-custom "textDocument/typeDefinition" extra)))
 
-(use-package lsp-ivy
+(use-package  lsp-ivy
+  :straight (lsp-ivy :type git :host github :repo "emacs-lsp/lsp-ivy")
   :commands lsp-ivy-workspace-symbol)
 
 (use-package lsp-treemacs
