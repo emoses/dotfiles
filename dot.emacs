@@ -31,6 +31,7 @@
      (speedbar-buffers-key-map)
      (cider-popup-buffer-mode-map)
      (cider-stacktrace-mode-map)))
+ '(evil-undo-system 'undo-tree)
  '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
@@ -55,7 +56,44 @@
  '(python-pytest-executable "devx pytest" t)
  '(python-pytest-shell-startfile "~/.bashrc" t)
  '(safe-local-variable-values
-   '((my:lsp-go-directory-filters .
+   '((elisp-lint-indent-specs
+      (if-let* . 2)
+      (when-let* . 1)
+      (let* . defun)
+      (nrepl-dbind-response . 2)
+      (cider-save-marker . 1)
+      (cider-propertize-region . 1)
+      (cider-map-repls . 1)
+      (cider--jack-in . 1)
+      (cider--make-result-overlay . 1)
+      (insert-label . defun)
+      (insert-align-label . defun)
+      (insert-rect . defun)
+      (cl-defun . 2)
+      (with-parsed-tramp-file-name . 2)
+      (thread-first . 1)
+      (thread-last . 1))
+     (elisp-lint-indent-specs
+      (if-let* . 2)
+      (when-let* . 1)
+      (let* . defun)
+      (nrepl-dbind-response . 2)
+      (cider-save-marker . 1)
+      (cider-propertize-region . 1)
+      (cider-map-repls . 1)
+      (cider--jack-in . 1)
+      (cider--make-result-overlay . 1)
+      (multiline-comment-handler . defun)
+      (insert-label . defun)
+      (insert-align-label . defun)
+      (insert-rect . defun)
+      (cl-defun . 2)
+      (with-parsed-tramp-file-name . 2)
+      (thread-first . 1)
+      (thread-last . 1))
+     (cider-shadow-cljs-default-options . "app")
+     (cider-default-cljs-repl . shadow)
+     (my:lsp-go-directory-filters .
                                   ["-frontend"])
      (my:lsp-go-directory-filters quote
                                   ("-frontend"))
@@ -1023,9 +1061,7 @@ _k_: previous error    _l_: last error
 
 (use-package exec-path-from-shell
   :config
-  (when my:osx
-                                        ;(add-to-list 'exec-path-from-shell-arguments "--norc")
-    (exec-path-from-shell-initialize)))
+  (exec-path-from-shell-initialize))
 
 
 ;;Tramp defaults

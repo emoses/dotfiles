@@ -11,7 +11,6 @@ if there is no schedule (so these are sorted to the bottom)"
           (t nil))))
 
 (use-package org
-  :straight org-plus-contrib
   :after (hydra)
   :mode ("\\.org$" . org-mode)
   :bind (("C-c l" . org-store-link)
@@ -96,6 +95,7 @@ if there is no schedule (so these are sorted to the bottom)"
     ("RET" nil))
   (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map)
   (require 'ox-confluence))
+(use-package org-contrib)
 
 (use-package htmlize)
 

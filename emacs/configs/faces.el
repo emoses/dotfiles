@@ -1,3 +1,4 @@
+(set-face-attribute 'default nil :height 80)
 
 ;; (use-package base16-theme
 ;;   :init

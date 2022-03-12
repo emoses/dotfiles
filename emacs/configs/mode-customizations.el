@@ -303,3 +303,5 @@
 
 (use-package vterm
   :hook (vterm-mode . my:line-numbers-off))
+
+(use-package elixir-mode)
