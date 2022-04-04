@@ -1,3 +1,5 @@
+(require 'url-util)
+
 (defun bf-pretty-print-xml-region (begin end)
   "Pretty format XML markup in region. You need to have nxml-mode
 http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
@@ -229,3 +231,13 @@ find-file-other-frame and display-buffer"
       (goto-char beg)
       (while (search-forward "\\t" end t)
         (replace-match "	")))))
+
+(defun urldecode-region (start end)
+  (interactive "r")
+  (let ((text (delete-and-extract-region start end)))
+    (insert (url-unhex-string text))))
+
+(defun urlencode-region (start end)
+  (interactive "r")
+  (let ((text (delete-and-extract-region start end)))
+    (insert (url-unhex-string text))))

@@ -31,6 +31,7 @@
      (speedbar-buffers-key-map)
      (cider-popup-buffer-mode-map)
      (cider-stacktrace-mode-map)))
+ '(fill-column 120)
  '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-temp-prefix "__flycheck")
  '(js2-bounce-indent-flag nil)
@@ -1014,6 +1015,7 @@ _k_: previous error    _l_: last error
   :after (ivy hydra))
 
 (use-package ag
+  :bind ("A-s" . 'ag)
   :config
   (defun eshell/ag (string)
     (ag/search string (eshell/pwd)))

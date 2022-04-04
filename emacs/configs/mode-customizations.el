@@ -299,7 +299,9 @@
   :bind (:map protobuf-mode-map
               ("C-c C-c" . compile)))
 
-(use-package treemacs)
+(use-package treemacs
+  :config
+  (add-hook 'treemacs-mode-hook #'my:line-numbers-off))
 
 (use-package powershell-mode
   :mode "\\.ps1")
