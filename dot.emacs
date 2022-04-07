@@ -787,6 +787,7 @@ is the buffer position of the start of the containing expression."
                        "go.el"
                        "okta.el"))
 
+;;Random options
 (put 'narrow-to-region 'disabled nil)
 (setq create-lockfiles nil)
 (setq inhibit-splash-screen t)
@@ -801,7 +802,15 @@ is the buffer position of the start of the containing expression."
 (setq fill-column 120)
 (setq split-width-threshold 190)
 (setq help-window-select t)
-(setq ispell-program-name "/usr/local/bin/aspell")
+;;New in Emacs 28
+(when (>= emacs-major-version 28)
+  (setq next-error-message-highlight t)
+  (setq read-minibuffer-restore-windows nil)
+  (setq dired-kill-when-opening-new-dired-buffer t)
+  (setq completions-detailed t))
+
+(use-package ispell
+  :custom (ispell-program-name "/usr/local/bin/aspell"))
 
 (setq compilation-scroll-output t)
 
