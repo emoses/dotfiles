@@ -54,10 +54,13 @@
 (use-package lsp-ui
     :bind (:map lsp-ui-mode-map
            ("S-<f4>" . lsp-ui-imenu))
+    :custom
+    (lsp-ui-sideline-show-code-actions t)
+    (lsp-ui-sideline-show-symbol nil)
     :commands lsp-ui-mode
     :config
     (setq lsp-ui-sideline-ignore-duplicate t)
-    (setq lsp-ui-sideline-enable nil)
+    (setq lsp-ui-sideline-enable t)
     (setq lsp-ui-peek-always-show t)
     (add-hook 'lsp-mode-hook 'lsp-ui-mode)
     (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1)))
@@ -71,4 +74,6 @@
 
 (use-package lsp-treemacs
   :commands lsp-treemacs-errors-list
-  :straight (:files (:defaults "icons")))
+  :straight (:files (:defaults "icons"))
+  :config
+  (lsp-treemacs-sync-mode 1))

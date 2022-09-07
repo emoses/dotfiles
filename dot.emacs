@@ -40,7 +40,6 @@
  '(lsp-imenu-sort-methods '(position kind))
  '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
- '(magit-gh-pulls-arguments '("--open-new-in-browser"))
  '(mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
  '(org-agenda-files '("/Users/emoses/Nextcloud/org/home.org"))
  '(org-export-backends '(ascii html icalendar latex md odt))
@@ -49,7 +48,7 @@
    '(org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse))
  '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(package-selected-packages
-   '(forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode magit-gh-pulls lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half))
+   '(forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half))
  '(projectile-project-root-files
    '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
@@ -695,7 +694,6 @@ is the buffer position of the start of the containing expression."
      ("~/dev/patreon/" ":WORK:")))
  '(sml/shorten-directory nil)
  '(tls-checktrust t)
- '(xref-js2-ignored-dirs '("node-modules" "build" "dist" "fontawesome") nil nil "Customized with use-package xref-js2")
  '(xref-prompt-for-identifier
    '(not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references)))
 (custom-set-faces
@@ -1024,7 +1022,10 @@ _k_: previous error    _l_: last error
   :after (ivy hydra))
 
 (use-package ag
-  :bind ("A-s" . 'ag)
+  :bind (("A-s" . 'ag)
+          ("A-S" . 'ag-regexp)
+          ;;On Macos A-S-s will send §
+          ("§" . 'ag-regexp))
   :config
   (defun eshell/ag (string)
     (ag/search string (eshell/pwd)))
@@ -1103,13 +1104,14 @@ _k_: previous error    _l_: last error
          ("C-S-<f2>" . terminal-here-project-launch)))
 
 (use-package yasnippet
-  :bind (:map yas-keymap
-              ([tab] . nil)
-              ([backtab] . nil)
-              ("TAB" . nil)
-              ([(shift tab)] . nil)
-              ("C-o" . yas-next-field-or-maybe-expand)
-              ("C-S-o" . yas-prev-field))
+  :bind (("C-'" . yas-expand)
+         :map yas-keymap
+         ([tab] . nil)
+         ([backtab] . nil)
+         ("TAB" . nil)
+         ([(shift tab)] . nil)
+         ("C-o" . yas-next-field-or-maybe-expand)
+         ("C-S-o" . yas-prev-field))
   :config
   (yas-global-mode t))
 

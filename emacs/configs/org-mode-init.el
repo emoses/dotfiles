@@ -21,10 +21,15 @@ if there is no schedule (so these are sorted to the bottom)"
          ("C-c i" . org-toggle-item)
          ("C-c h" . org-toggle-heading)
          ("C-c r" . org-reveal)
-         ("M-q" . org-fill-paragraph))
+         ("M-q" . org-fill-paragraph)
+         ("A-h" . org-promote-subtree)
+         ("A-j" . org-move-subtree-up)
+         ("A-h" . org-move-subtree-down)
+         ("A-h" . org-demote-subtree))
   :custom
   (org-export-with-toc nil)
   (org-startup-folded 'overview)
+  (org-adapt-indentation t)
   :init
   (add-hook 'org-mode-hook 'flyspell-mode)
   :config
