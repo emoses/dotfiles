@@ -110,7 +110,8 @@
   :after magit
   :init
   (defun my:forge-browse-after-create-pr (value headers status req)
-    (message value))
+    (if-let ((url (assoc 'html_url value)))
+        (browse-url (cdr url))))
   (add-hook 'forge-post-submit-callback-hook #'my:forge-browse-after-create-pr))
 
 
@@ -303,7 +304,7 @@
   :config
   (add-hook 'treemacs-mode-hook #'my:line-numbers-off))
 
-(use-package powershell-mode
+(use-package powershell
   :mode "\\.ps1")
 
 (unless (eq system-type 'windows-nt)
@@ -322,3 +323,5 @@
   :custom
   (rego-repl-executable "/usr/local/bin/opa")
   (rego-opa-command "/usr/local/bin/opa"))
+
+(use-package nix-mode)

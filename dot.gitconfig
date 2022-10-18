@@ -57,6 +57,8 @@
 	annotate = yes
 [url "git@github.com-emoses:emoses"]
      insteadOf = https://github.com/emoses
+[git-link]
+    branch = master
 #Okta stuff
 [url "git@github.com:okta"]
      insteadOf = https://github.com/okta

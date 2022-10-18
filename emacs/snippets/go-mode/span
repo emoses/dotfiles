@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: span
+# key: spn
+# --
+ctx, spn := c.Metrics.Span(ctx, "$0")
+defer spn.End()
+

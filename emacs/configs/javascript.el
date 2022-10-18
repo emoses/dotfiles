@@ -33,6 +33,9 @@
   (add-hook 'js2-mode-hook (lambda ()
                              (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
 
+(defun -flycheck-ts-setup ()
+  (flycheck-add-next-checker 'lsp '(t . javascript-eslint)))
+
 (use-package web-mode
   :mode (("\\.html?$" . web-mode)
          ("\\.tsx$" . web-mode))
@@ -47,6 +50,7 @@
       (when (string-match-p "\\.tsx$" name)
         (lsp))))
   (add-hook 'web-mode-hook #'web-mode-tsx-hook)
+  (add-hook 'web-mode-hook #'-flycheck-ts-setup)
   (-jest-add-bindings web-mode-map))
 
 (use-package typescript-mode
@@ -55,7 +59,7 @@
   :config
   ;TODO: merge this with web-mode setup?
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-  (flycheck-add-next-checker 'lsp '(t . javascript-eslint))
+  (add-hook 'typescript-mode-hook #'-flycheck-ts-setup)
   (-jest-add-bindings typescript-mode-map))
 
 (use-package json-mode
