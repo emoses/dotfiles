@@ -2,6 +2,8 @@
   :init
   (global-undo-tree-mode))
 
+(use-package git-link)
+
 (use-package evil
   :bind (:map evil-motion-state-map
               ("[tab]" . nil))
@@ -20,7 +22,8 @@
   (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-mode)
   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-char-mode)
   (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
-  (evil-ex-define-cmd "gh" #'get-github-file-and-line-link)
+  ;;TODO: fix get-github-file-and-line-link
+  (evil-ex-define-cmd "gh" #'git-link)
 
   (cl-loop for (mode . state) in '( ;; Start in emacs mode
                                 (dired-mode . emacs)
@@ -67,6 +70,7 @@
                                         ;calc
           cider
           company
+          compile
           diff-mode
           ;; dired
           elisp-mode

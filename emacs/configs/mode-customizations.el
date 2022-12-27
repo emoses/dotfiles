@@ -104,14 +104,15 @@
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
 
-;; magit-gh-pulls requires magit-popup but doesn't specify it
-(use-package magit-popup)
-(use-package  magit-section)
+(use-package magit-delta)
 
-(use-package magit-gh-pulls
-  :after (magit-popup magit-section)
-  :config
-  (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
+(use-package forge
+  :after magit
+  :init
+  (defun my:forge-browse-after-create-pr (value headers status req)
+    (if-let ((url (assoc 'html_url value)))
+        (browse-url (cdr url))))
+  (add-hook 'forge-post-submit-callback-hook #'my:forge-browse-after-create-pr))
 
 
 (use-package company
@@ -299,9 +300,11 @@
   :bind (:map protobuf-mode-map
               ("C-c C-c" . compile)))
 
-(use-package treemacs)
+(use-package treemacs
+  :config
+  (add-hook 'treemacs-mode-hook #'my:line-numbers-off))
 
-(use-package powershell-mode
+(use-package powershell
   :mode "\\.ps1")
 
 (unless (eq system-type 'windows-nt)
@@ -314,3 +317,11 @@
 (use-package elixir-mode)
 
 (use-package kubernetes-evil)
+
+(use-package rego-mode
+  :mode "\\.rego"
+  :custom
+  (rego-repl-executable "/usr/local/bin/opa")
+  (rego-opa-command "/usr/local/bin/opa"))
+
+(use-package nix-mode)

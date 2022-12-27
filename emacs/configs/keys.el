@@ -11,7 +11,6 @@
 (global-set-key (kbd "C-c C-r") 'revert-buffer)
 (global-set-key (kbd "C-c m") 'switch-to-minibuffer)
 (global-set-key (kbd "TAB") 'indent-for-tab-command)
-(global-set-key (kbd "A-v") 'yank) ;;for non-evil yanking
 (global-set-key (kbd "C-`") 'other-frame) ;;mac-like frame switching
 (global-set-key (kbd "C-h C-f") 'find-function)
 (global-set-key (kbd "C-c c _") 'snake-case-region-or-word)
@@ -23,8 +22,12 @@
 (global-set-key (kbd "S-<f5>") 'previous-error)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x 4 C-]") 'xref-find-definitions-other-window)
-(global-set-key (kbd "A-t") 'imenu)
 (global-set-key (kbd "C-c C-x C-f") 'magit-find-file)
+;; Super commands
+(global-set-key (kbd "A-v") 'yank) ;;for non-evil yanking
+(global-set-key (kbd "A-t") 'imenu)
+(global-set-key (kbd "A-w") 'other-window-prefix)
+
 
 ;;; If I'm using a terminal, set delete to backwards delete
 ;;; I find this fixes a lot of the trouble I have with the delete button

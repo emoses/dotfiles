@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: db annotation
+# key: db
+# --
+	\`db:"$0"\`

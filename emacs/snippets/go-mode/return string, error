@@ -1,0 +1,6 @@
+# key: errrets
+# name: return string, error
+# --
+if err != nil {
+	return "", err
+}
