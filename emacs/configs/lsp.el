@@ -41,6 +41,7 @@
           nil)
       (funcall filter-fn sym)))
   (advice-add 'lsp--symbol-filter :around #'my:lsp--filter-variables)
+  (add-to-list 'exec-path (concat (getenv "HOME") "/dev/elixir-ls"))
 
   ;;Requires modified lsp-mode
   (setq lsp-show-message-request-filter (lambda (message actions)
@@ -66,6 +67,7 @@
     (setq lsp-ui-sideline-ignore-duplicate t)
     (setq lsp-ui-sideline-enable t)
     (setq lsp-ui-peek-always-show t)
+    ;(setq lsp-ui-doc-show-with-cursor nil)
     (add-hook 'lsp-mode-hook 'lsp-ui-mode)
     (add-hook 'lsp-ui-imenu-mode-hook (lambda () (display-line-numbers-mode -1)))
     (defun lsp-ui-peek-find-type-definition (&optional extra)

@@ -64,3 +64,5 @@
      insteadOf = https://github.com/okta
 [url "git@github.com:ScaleFT"]
      insteadOf = https://github.com/ScaleFT
+[init]
+	defaultBranch = main
