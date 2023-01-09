@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (require 'url-util)
 
 (defun bf-pretty-print-xml-region (begin end)
@@ -241,3 +243,15 @@ find-file-other-frame and display-buffer"
   (interactive "r")
   (let ((text (delete-and-extract-region start end)))
     (insert (url-unhex-string text))))
+
+(defun file-notify-rm-all-watches ()
+  "Remove all existing file watches"
+  (interactive)
+  (maphash
+   (lambda (k _v)
+     (file-notify-rm-watch k))
+   file-notify-descriptors))
+
+(defun make-display-buffer-matcher-function (major-modes)
+  (lambda (buffer-name _action)
+    (with-current-buffer buffer-name (apply #'derived-mode-p major-modes))))

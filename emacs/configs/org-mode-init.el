@@ -105,11 +105,16 @@ if there is no schedule (so these are sorted to the bottom)"
     ("t" #'org-todo)
     ("q" nil)
     ("RET" nil))
-  (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map)
-  (require 'ox-confluence))
+  (bind-key (kbd "A-t") #'my:org-item-hydra/body org-mode-map))
 
 (use-package htmlize)
 
 (use-package ox-slack
   :after org
   :straight (:type git :host github :repo "titaniumbones/ox-slack"))
+
+(use-package ob-restclient
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((restclient . t))))

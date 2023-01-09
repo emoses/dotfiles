@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Web error
+# key: errw
+# --
+if err != nil {
+        uweb.ReturnJSONError(rw, req.Request, err)
+        return
+}

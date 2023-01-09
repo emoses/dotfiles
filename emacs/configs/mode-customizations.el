@@ -284,8 +284,11 @@
 (use-package groovy-mode
   :mode "\\.groovy\\'")
 
+(use-package jq-mode)
+
 (use-package restclient
   :config
+  ;(require 'restclient-jq)
   (defun restclient-start ()
     (interactive)
     (pop-to-buffer "*restclient*")
@@ -325,3 +328,9 @@
   (rego-opa-command "/usr/local/bin/opa"))
 
 (use-package nix-mode)
+
+(use-package atomic-chrome
+  :config
+  (setq atomic-chrome-url-major-mode-alist
+        '(("github\\.com" . gfm-mode)))
+  (atomic-chrome-start-server))

@@ -1,7 +1,8 @@
 (use-package jest)
-(defun -jest-add-bindings (mode-map)
-  (bind-key (kbd "C-c t") #'jest-popup mode-map)
-  (bind-key (kbd "C-c T") #'jest-repeat mode-map))
+;; TODO: customize bindings for jest projects vs others with projectile?
+;; (defun -jest-add-bindings (mode-map)
+;;   (bind-key (kbd "C-c t") #'jest-popup mode-map)
+;;   (bind-key (kbd "C-c T") #'jest-repeat mode-map))
 
 (use-package add-node-modules-path)
 
@@ -17,7 +18,8 @@
                         (add-node-modules-path))))
   (setq js2-global-externs '("require" "module"))
   (setq js-indent-level 2)
-  (-jest-add-bindings js2-mode-map))
+  ;(-jest-add-bindings js2-mode-map)
+  )
 
 
 (use-package rjsx-mode
@@ -46,12 +48,13 @@
         '(("jsx" . "\\.tsx$")))
   (defun web-mode-tsx-hook ()
     (let* ((name (buffer-file-name))
-           (name (or name (buffer-name))))
+           (name (or name (buffer-name)))sss)
       (when (string-match-p "\\.tsx$" name)
         (lsp))))
   (add-hook 'web-mode-hook #'web-mode-tsx-hook)
   (add-hook 'web-mode-hook #'-flycheck-ts-setup)
-  (-jest-add-bindings web-mode-map))
+  ;;(-jest-add-bindings web-mode-map)
+  )
 
 (use-package typescript-mode
   :after (lsp lsp-ui flycheck)
@@ -60,7 +63,8 @@
   ;TODO: merge this with web-mode setup?
   (flycheck-add-mode 'javascript-eslint 'typescript-mode)
   (add-hook 'typescript-mode-hook #'-flycheck-ts-setup)
-  (-jest-add-bindings typescript-mode-map))
+  ;;(-jest-add-bindings typescript-mode-map)
+  )
 
 (use-package json-mode
   :mode "\\.json$"
@@ -104,3 +108,22 @@
     (push form compilation-error-regexp-alist-alist)))
 ;; End copy
 (push 'eslint compilation-error-regexp-alist)
+
+(use-package prettier-js
+  :hook ((js2-mode web-mode) . prettier-js-mode))
+
+
+
+(use-package mocha
+  :bind (:map js2-mode-map
+              ("C-c t" . mocha-test-file))
+  :config
+  (add-to-list 'mocha-debuggers '(realgud-inspect :must-bind realgud:node-inspect :attach-fn mocha-realgud:nodejs-inspect))
+  (setq mocha-debugger 'realgud-inspect)
+  ;;Override built-in, it doesn't use the right name for realgud's node function
+  (defun mocha-realgud:nodejs-inspect (node buf port file test)
+    (ignore buf file test)
+    (realgud:node-inspect (concat node " debug localhost:" port))))
+
+(use-package realgud)
+(use-package realgud-node-inspect)

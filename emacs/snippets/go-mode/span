@@ -2,6 +2,6 @@
 # name: span
 # key: spn
 # --
-ctx, spn := c.Metrics.Span(ctx, "$0")
+ctx, spn := c.Telemetry.Span(ctx, "$0")
 defer spn.End()
 

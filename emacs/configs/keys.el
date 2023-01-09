@@ -29,6 +29,10 @@
 (global-set-key (kbd "A-w") 'other-window-prefix)
 
 
+(global-set-key (kbd "<f2>") 'gud-next)
+(global-set-key (kbd "S-<f2>") 'gud-step)
+(global-set-key (kbd "<f3>") 'gud-cont)
+
 ;;; If I'm using a terminal, set delete to backwards delete
 ;;; I find this fixes a lot of the trouble I have with the delete button
 (cond ((not window-system)
