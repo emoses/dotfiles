@@ -31,7 +31,6 @@
      (speedbar-buffers-key-map)
      (cider-popup-buffer-mode-map)
      (cider-stacktrace-mode-map)))
- '(evil-undo-system 'undo-tree)
  '(fill-column 120)
  '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-temp-prefix "__flycheck")
@@ -53,44 +52,15 @@
  '(projectile-project-root-files
    '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((elisp-lint-indent-specs
-      (if-let* . 2)
-      (when-let* . 1)
-      (let* . defun)
-      (nrepl-dbind-response . 2)
-      (cider-save-marker . 1)
-      (cider-propertize-region . 1)
-      (cider-map-repls . 1)
-      (cider--jack-in . 1)
-      (cider--make-result-overlay . 1)
-      (insert-label . defun)
-      (insert-align-label . defun)
-      (insert-rect . defun)
-      (cl-defun . 2)
-      (with-parsed-tramp-file-name . 2)
-      (thread-first . 1)
-      (thread-last . 1))
-     (elisp-lint-indent-specs
-      (if-let* . 2)
-      (when-let* . 1)
-      (let* . defun)
-      (nrepl-dbind-response . 2)
-      (cider-save-marker . 1)
-      (cider-propertize-region . 1)
-      (cider-map-repls . 1)
-      (cider--jack-in . 1)
-      (cider--make-result-overlay . 1)
-      (multiline-comment-handler . defun)
-      (insert-label . defun)
-      (insert-align-label . defun)
-      (insert-rect . defun)
-      (cl-defun . 2)
-      (with-parsed-tramp-file-name . 2)
-      (thread-first . 1)
-      (thread-last . 1))
-     (cider-shadow-cljs-default-options . "app")
-     (cider-default-cljs-repl . shadow)
-   '((lsp-python-ms-python-executable-cmd . "python3")
+   '((projectile-indexing-method quote hybrid)
+     (projectile-project-test-suffix . "_spec.js")
+     (projectile-project-test-suffix . "_spec")
+     (mocha-command . "node_modules/.bin/mocha")
+     (mocha-options . "-u bdd --no-timeouts server/lib/testing/bootstrap_js_tests.js")
+     (mocha-opts-file . "config/mocha/local.opts")
+     (mocha-reporter)
+     (projectile-project-test-cmd . "$(npm bin)/mocha -u bdd --no-timeouts --opts config/mocha/local.opts server/lib/testing/bootstrap_js_tests.js")
+     (lsp-python-ms-python-executable-cmd . "python3")
      (my:lsp-go-directory-filters .
                                   ["-frontend"])
      (my:lsp-go-directory-filters quote
@@ -742,6 +712,7 @@ is the buffer position of the start of the containing expression."
  '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))
  '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
  '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
+ '(flycheck-color-mode-line-info-face ((t (:foreground "dim gray"))))
  '(flycheck-color-mode-line-success-face ((t (:foreground "dark green"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
  '(highlight ((t (:background "#41444a" :inverse-video nil))))
@@ -857,7 +828,7 @@ is the buffer position of the start of the containing expression."
 
 ;;New stuff for emacs 26
 (when (>= emacs-major-version 26)
-  ;; (pixel-scroll-mode)
+  (pixel-scroll-mode)
   (setq mouse-wheel-tilt-scroll t)
   (setq mouse-wheel-flip-direction t)
   (setq display-line-numbers-width-start 3)
@@ -1082,7 +1053,9 @@ _k_: previous error    _l_: last error
 
 (use-package exec-path-from-shell
   :config
-  (exec-path-from-shell-initialize))
+  (when my:osx
+                                        ;(add-to-list 'exec-path-from-shell-arguments "--norc")
+    (exec-path-from-shell-initialize)))
 
 
 ;;Tramp defaults
@@ -1179,3 +1152,14 @@ _k_: previous error    _l_: last error
   (use-package keychain-environment
     :init
     (keychain-refresh-environment)))
+
+;; Display buffer
+
+(add-to-list 'display-buffer-alist
+             `(,(make-display-buffer-matcher-function '(compilation-mode))
+               (display-buffer-reuse-window)
+               (inhibit-same-window . t)))
+(add-to-list 'display-buffer-alist
+             '("\\*gud-test\\*"
+               (display-buffer-use-some-window)
+               (inhibit-same-window . t) ))

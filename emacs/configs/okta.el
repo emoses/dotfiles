@@ -36,8 +36,8 @@
           (-okta-integration-test (s-concat test-flag test-name "\\$ . -failfast -v " additional-arguments)))))))
 
 (with-eval-after-load "go-mode"
-  (bind-key (kbd "C-c t") #'okta-integration-test-current-test)
-  (bind-key (kbd "C-c C-t") #'okta-integration-test-current-file))
+  (define-key go-mode-map (kbd "C-c t") #'okta-integration-test-current-test)
+  (define-key go-mode-map (kbd "C-c C-t") #'okta-integration-test-current-file))
 
 (defun dlv-integration-test ()
   (interactive)

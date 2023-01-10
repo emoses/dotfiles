@@ -55,6 +55,12 @@ local work_display_table = {
    ["Microsoft Outlook"] = {1, work_browser}
 }
 
+local ultrawide_display_table = {
+   Emacs = {1, {x = 0, y = 0, w = 4, h = work_h}},
+   Firefox = {1, {x = 4, y = 0, w = 3, h = work_h}},
+   Slack = {2, {x = 0, y = 0, w = 7, h = work_h}},
+}
+
 local home_display_table = {
    Emacs = {2, {x = 0, y = 0, w = 7, h = 9}},
    ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 9}},
@@ -104,6 +110,7 @@ local apply_layout = function(layout)
 end
 local work_display = function() apply_layout(work_display_table) end
 local home_display = function() apply_layout(home_display_table) end
+local ultrawide_display = function() apply_layout(ultrawide_display_table) end
 
 
 
@@ -115,6 +122,9 @@ local screenHandler = function()
          print("Using work_display")
          work_display()
       end
+   elseif (#screens == 2 and (screens[1]:frame().w > 3000 or screens[2]:frame().w > 3000)) then
+      print("Using ultrawide display")
+      ultrawide_display()
    elseif (#screens == 2) then
       print("Using home_display")
       home_display()

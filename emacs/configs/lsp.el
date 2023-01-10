@@ -4,6 +4,8 @@
   :custom
   (ccls-executable "/usr/local/bin/ccls"))
 
+(use-package lsp-java)
+
 (defmacro wrap-other-window-impl (name fn)
   (declare (indent 1) (debug defun))
   (let ((arg (make-symbol "arg")))
@@ -19,7 +21,9 @@
          (typescript-mode . lsp)
          (rjsx-mode . lsp)
          (elixir-mode . lsp)
-         (c-mode . lsp))
+         (c-mode . lsp)
+         (java-mode . lsp)
+         (js2-mode . lsp))
   ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
   :init
@@ -76,6 +80,5 @@
 
 (use-package lsp-treemacs
   :commands lsp-treemacs-errors-list
-  :straight (:files (:defaults "icons"))
   :config
   (lsp-treemacs-sync-mode 1))
