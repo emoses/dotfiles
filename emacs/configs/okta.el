@@ -72,8 +72,6 @@
       (setq result (s-concat result "}"))
       result)))
 
-(use-package vagrant-tramp)
-
 (defun my:fix-log-file-on-open ()
   (when (string-match-p ".log\\'" (buffer-file-name))
     (save-excursion

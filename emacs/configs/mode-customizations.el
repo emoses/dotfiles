@@ -104,8 +104,6 @@
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
 
-(use-package magit-delta)
-
 (use-package forge
   :after magit
   :init
