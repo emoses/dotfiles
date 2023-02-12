@@ -11,7 +11,7 @@
     (add-hook 'before-save-hook #'maybe-lsp-format-buffer t t)
     (add-hook 'before-save-hook #'maybe-lsp-organize-imports t t)
     ;;this can improperly remove trailing whitespace from multiline strings
-    (remove-hook 'before-save-hook #'delete-trailing-whitespace)
+    (remove-hook 'before-save-hook #'delete-trailing-whitespace t)
     (set (make-local-variable 'compile-command) "go build")
     (set (make-local-variable 'yas-indent-line) 'fixed)
     (set (make-local-variable 'compilation-skip-threshold) 2))
