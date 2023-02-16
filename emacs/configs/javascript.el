@@ -1,8 +1,8 @@
 (use-package jest)
 ;; TODO: customize bindings for jest projects vs others with projectile?
-;; (defun -jest-add-bindings (mode-map)
-;;   (bind-key (kbd "C-c t") #'jest-popup mode-map)
-;;   (bind-key (kbd "C-c T") #'jest-repeat mode-map))
+(defun -jest-add-bindings (mode-map)
+  (bind-key (kbd "C-c t") #'jest-popup mode-map)
+  (bind-key (kbd "C-c T") #'jest-repeat mode-map))
 
 (use-package add-node-modules-path)
 
@@ -18,14 +18,14 @@
                         (add-node-modules-path))))
   (setq js2-global-externs '("require" "module"))
   (setq js-indent-level 2)
-  ;(-jest-add-bindings js2-mode-map)
+  (-jest-add-bindings js2-mode-map)
   )
 
 
 (use-package rjsx-mode
   :mode "\\.jsx$"
   :config
-  (flycheck-add-mode 'javascript-eslint 'rjsx-mode))
+  (flycheck-add-mode 'lsp 'rjsx-mode))
 
 (use-package xref-js2
   :after js2-mode
@@ -36,13 +36,13 @@
                              (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
 
 (defun -flycheck-ts-setup ()
-  (flycheck-add-next-checker 'lsp '(t . javascript-eslint)))
+  (flycheck-add-next-checker 'lsp))
 
 (use-package web-mode
   :mode (("\\.html?$" . web-mode)
          ("\\.tsx$" . web-mode))
   :config
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'lsp 'web-mode)
   (setq web-mode-enable-auto-quoting nil)
   (setq web-mode-content-types-alist
         '(("jsx" . "\\.tsx$")))
@@ -53,7 +53,7 @@
         (lsp))))
   (add-hook 'web-mode-hook #'web-mode-tsx-hook)
   (add-hook 'web-mode-hook #'-flycheck-ts-setup)
-  ;;(-jest-add-bindings web-mode-map)
+  (-jest-add-bindings web-mode-map)
   )
 
 (use-package typescript-mode
@@ -61,9 +61,9 @@
   :mode "\\.ts$"
   :config
   ;TODO: merge this with web-mode setup?
-  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
+  (flycheck-add-mode 'lsp 'typescript-mode)
   (add-hook 'typescript-mode-hook #'-flycheck-ts-setup)
-  ;;(-jest-add-bindings typescript-mode-map)
+  (-jest-add-bindings typescript-mode-map)
   )
 
 (use-package json-mode

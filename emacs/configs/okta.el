@@ -33,7 +33,7 @@
                                       (funcall go-test-additional-arguments-function
                                                test-suite test-name) "")))
         (when test-name
-          (-okta-integration-test (s-concat test-flag test-name "\\$ . -failfast -v " additional-arguments)))))))
+          (-okta-integration-test (s-concat test-flag test-name "\\$ . -v " additional-arguments)))))))
 
 (with-eval-after-load "go-mode"
   (define-key go-mode-map (kbd "C-c t") #'okta-integration-test-current-test)

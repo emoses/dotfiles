@@ -52,7 +52,11 @@
  '(projectile-project-root-files
    '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((projectile-indexing-method quote hybrid)
+   '((lsp-eslint-package-manager . "yarn")
+     (lsp-eslint-working-directories .
+                                     ["frontend/"])
+     (jest-executable . "yarn utest --")
+     (projectile-indexing-method quote hybrid)
      (projectile-project-test-suffix . "_spec.js")
      (projectile-project-test-suffix . "_spec")
      (mocha-command . "node_modules/.bin/mocha")
@@ -702,6 +706,7 @@ is the buffer position of the start of the containing expression."
      ("~/dev/patreon/" ":WORK:")))
  '(sml/shorten-directory nil)
  '(tls-checktrust t)
+ '(undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree-history")))
  '(xref-prompt-for-identifier
    '(not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references)))
 (custom-set-faces
