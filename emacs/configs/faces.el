@@ -1,3 +1,9 @@
+(let ((mmperpix (/ (float (x-display-mm-width)) (float (x-display-pixel-width)))))
+  (when (> mmperpix 0.2)
+    (set-face-attribute 'default nil :height 80)))
+
+
+
 ;; (use-package base16-theme
 ;;   :init
 ;;   (load-theme 'base16-tomorrow-night))

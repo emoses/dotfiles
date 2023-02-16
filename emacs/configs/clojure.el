@@ -20,7 +20,8 @@
   )
 
 (use-package clojure-mode
-  :mode "\\.bb$"
+  :mode (("\\.bb$" . clojure-mode)
+          (".lein-env" . clojure-mode))
   :config
   (add-hook 'clojure-mode-hook #'lisp-modes))
 
