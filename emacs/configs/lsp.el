@@ -53,7 +53,15 @@
   (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition "Go to type definition" (and (lsp-feature? "textDocument/typeDefinition")
                                                                                                                  (fboundp 'lsp-ui-peek-find-custom)))
   (lsp-define-conditional-key lsp-command-map "sr" lsp-workspace-restart "Restart server" (lsp-workspaces))
-  (lsp-define-conditional-key lsp-command-map "ss" lsp "Start server" t))
+  (lsp-define-conditional-key lsp-command-map "ss" lsp "Start server" t)
+
+  (defun lsp--eslint-before-save (orig-fun)
+    (when lsp-eslint-auto-fix-on-save (lsp-eslint-fix-all))
+    (funcall orig-fun))
+
+  (advice-add 'lsp--before-save :around #'lsp--eslint-before-save)
+
+  )
 
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
 (use-package lsp-ui

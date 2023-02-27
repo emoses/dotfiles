@@ -223,9 +223,7 @@
   :config
   (setq plantuml-jar-path "~/lib/plantuml.jar")
   (setq plantuml-default-exec-mode 'jar)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((plantuml . t)))
+  (add-to-list 'org-babel-load-languages '(plantuml . t))
   (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
 
 (defun my:line-numbers-off ()
@@ -286,11 +284,12 @@
 
 (use-package restclient
   :config
-  ;(require 'restclient-jq)
   (defun restclient-start ()
     (interactive)
     (pop-to-buffer "*restclient*")
     (restclient-mode)))
+
+(use-package restclient-jq)
 
 (use-package cram-test-mode
   :mode "\\.t$"

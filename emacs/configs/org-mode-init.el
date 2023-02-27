@@ -53,6 +53,7 @@ if there is no schedule (so these are sorted to the bottom)"
             (lambda ()
               (org-defkey org-mode-map (kbd "RET") 'org-return-indent)
               (org-defkey org-mode-map "\C-j" 'org-return)
+              (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
               (display-line-numbers-mode -1)
               (auto-composition-mode -1)))
   (global-set-key (kbd  "C-c C-`") #'org-cycle-agenda-files)
@@ -114,7 +115,6 @@ if there is no schedule (so these are sorted to the bottom)"
   :straight (:type git :host github :repo "titaniumbones/ox-slack"))
 
 (use-package ob-restclient
+  :after org
   :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((restclient . t))))
+  (add-to-list 'org-babel-load-languages '(restclient . t)))

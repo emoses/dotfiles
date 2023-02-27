@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t -*-
 
 (require 'url-util)
+(require 'subr-x)
 
 (defun bf-pretty-print-xml-region (begin end)
   "Pretty format XML markup in region. You need to have nxml-mode
@@ -252,6 +253,20 @@ find-file-other-frame and display-buffer"
      (file-notify-rm-watch k))
    file-notify-descriptors))
 
+
 (defun make-display-buffer-matcher-function (major-modes)
   (lambda (buffer-name _action)
     (with-current-buffer buffer-name (apply #'derived-mode-p major-modes))))
+
+(defun insert-uuid ()
+  "Insert a UUID. This commands calls “uuidgen” on MacOS, Linux,
+and calls PowelShell on Microsoft Windows."
+  (interactive)
+  (let ((uuid (cond
+                ((string-equal system-type "windows-nt")
+                 (shell-command-to-string "pwsh.exe -Command [guid]::NewGuid().toString()"))
+                ((string-equal system-type "darwin") ; Mac
+                 (shell-command-to-string "uuidgen"))
+                ((string-equal system-type "gnu/linux")
+                 (shell-command-to-string "uuidgen")))))
+    (insert (downcase (string-trim uuid)))))

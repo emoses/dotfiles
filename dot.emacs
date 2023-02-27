@@ -37,6 +37,7 @@
  '(js2-bounce-indent-flag nil)
  '(js2-global-externs '("require" "module"))
  '(js2-strict-inconsistent-return-warning nil)
+ '(lsp-eslint-auto-fix-on-save t)
  '(lsp-imenu-sort-methods '(position kind))
  '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
@@ -55,6 +56,7 @@
    '((lsp-eslint-package-manager . "yarn")
      (lsp-eslint-working-directories .
                                      ["frontend/"])
+     (lsp-eslint-package-manager . yarn)
      (jest-executable . "yarn utest --")
      (projectile-indexing-method quote hybrid)
      (projectile-project-test-suffix . "_spec.js")
