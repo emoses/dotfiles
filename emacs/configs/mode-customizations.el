@@ -278,11 +278,12 @@
   :mode "\\.scad$")
 
 (use-package groovy-mode
-  :mode "\\.groovy\\'")
+  :mode "\\.groovy$")
 
 (use-package jq-mode)
 
 (use-package restclient
+  :mode "\\.restclient$"
   :config
   (defun restclient-start ()
     (interactive)

@@ -54,7 +54,7 @@
 (use-package typescript-mode
   :after (lsp lsp-ui flycheck)
   :mode "\\.ts$"
-  :config
+  :init
   ;TODO: merge this with web-mode setup?
   (flycheck-add-mode 'lsp 'typescript-mode)
   (-jest-add-bindings typescript-mode-map)

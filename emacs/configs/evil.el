@@ -87,6 +87,7 @@
           (occur replace)
           (package-menu package)
           python
+          restclient
           ruby-mode
           (term term ansi-term multi-term)
           which-key
