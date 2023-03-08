@@ -1,4 +1,6 @@
-(use-package jest)
+(use-package jest
+  :config
+  (magit-define-popup-switch 'jest-popup ?u "update snapshots" "--updateSnapshot"))
 ;; TODO: customize bindings for jest projects vs others with projectile?
 (defun -jest-add-bindings (mode-map)
   (bind-key (kbd "C-c t") #'jest-popup mode-map)

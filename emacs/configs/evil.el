@@ -48,7 +48,13 @@
             (lambda ()
               (setq evil-symbol-word-search t)))
   ;;Make snake_case part of words for python
-  (add-hook 'python-mode-hook (lambda () (modify-syntax-entry ?_ "w"))))
+  (add-hook 'python-mode-hook (lambda () (modify-syntax-entry ?_ "w")))
+
+  ;;evil-repeat should ignore flycheck jumps
+  (mapc #'evil-declare-ignore-repeat
+        '(flycheck-next-error
+          flycheck-previous-error))
+  )
 
 (use-package evil-org
   ;:load-path "~/.emacs.d/plugins/evil-org-mode"
