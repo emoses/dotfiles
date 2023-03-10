@@ -283,7 +283,7 @@
 (use-package jq-mode)
 
 (use-package restclient
-  :mode "\\.restclient$"
+  :mode ("\\.restclient$" . restclient-mode)
   :config
   (defun restclient-start ()
     (interactive)
