@@ -332,3 +332,10 @@
   (setq atomic-chrome-url-major-mode-alist
         '(("github\\.com" . gfm-mode)))
   (atomic-chrome-start-server))
+
+(when (executable-find "pg_format")
+  (use-package sqlformat
+    :bind (:map sql-mode-map
+                ("C-c C-f" . 'sqlformat))
+    :config
+    (setq sqlformat-command 'pgformatter)))

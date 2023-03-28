@@ -270,3 +270,12 @@ and calls PowelShell on Microsoft Windows."
                 ((string-equal system-type "gnu/linux")
                  (shell-command-to-string "uuidgen")))))
     (insert (downcase (string-trim uuid)))))
+
+(defun secret-from-auth-source (&rest search)
+  "Use SEARCH, the arguments to auth-source-search, to find a
+secret and return just the secret part.  Nil if not found"
+  (when-let ((s (apply #'auth-source-search search))
+             (secret (plist-get (car s) :secret)))
+    (if (functionp secret)
+        (funcall secret)
+      secret)))
