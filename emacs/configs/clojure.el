@@ -42,6 +42,7 @@
 ;;   (setq inf-clojure-program '("localhost" . 5555)))
 
 (add-hook 'emacs-lisp-mode-hook #'lisp-modes)
+(add-hook 'lisp-data-mode #'lisp-modes)
 
 (use-package racket-mode
   :mode "\\.rkt$"

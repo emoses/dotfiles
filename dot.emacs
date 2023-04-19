@@ -53,7 +53,8 @@
  '(projectile-project-root-files
    '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((lsp-eslint-package-manager . "yarn")
+   '((my:prettify . t)
+     (lsp-eslint-package-manager . "yarn")
      (lsp-eslint-working-directories .
                                      ["frontend/"])
      (lsp-eslint-package-manager . yarn)

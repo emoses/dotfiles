@@ -46,7 +46,7 @@
         '(("jsx" . "\\.tsx$")))
   (defun web-mode-tsx-hook ()
     (let* ((name (buffer-file-name))
-           (name (or name (buffer-name)))sss)
+           (name (or name (buffer-name))))
       (when (string-match-p "\\.tsx$" name)
         (lsp))))
   (add-hook 'web-mode-hook #'web-mode-tsx-hook)
@@ -105,10 +105,17 @@
 ;; End copy
 (push 'eslint compilation-error-regexp-alist)
 
+(defvar my:prettify nil
+  "Turn prettier formatting on for all javascript and typescript
+modes.  Expected to be set in .dir-locals.el for a project")
 (use-package prettier-js
-  :hook ((js2-mode web-mode) . prettier-js-mode))
-
-
+  :hook (hack-local-variables . my:prettier-local-hook)
+  :init
+  (defun my:prettier-local-hook ()
+    (let* ((name (buffer-file-name))
+            (name (or name (buffer-name))))
+      (when (and my:prettify (string-match-p "\\.[tj]sx?$" name))
+        (prettier-js-mode 1)))))
 
 (use-package mocha
   :bind (:map js2-mode-map
