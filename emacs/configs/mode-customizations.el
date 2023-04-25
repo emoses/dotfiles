@@ -335,6 +335,7 @@
 
 (when (executable-find "pg_format")
   (use-package sqlformat
+    :after sql
     :bind (:map sql-mode-map
                 ("C-c C-f" . 'sqlformat))
     :config

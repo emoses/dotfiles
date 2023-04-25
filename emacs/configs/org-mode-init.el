@@ -10,6 +10,8 @@ if there is no schedule (so these are sorted to the bottom)"
           ((> schedB schedA) -1)
           (t nil))))
 
+(defvar org-babel-safe-languages '("plantuml"))
+
 (use-package org
   :straight (:type built-in)
   :after (hydra)
@@ -28,6 +30,7 @@ if there is no schedule (so these are sorted to the bottom)"
          ("A-h" . org-demote-subtree))
   :custom
   (org-export-with-toc nil)
+  (org-export-date-timestamp-format "%Y-%m-%d")
   (org-startup-folded 'overview)
   (org-adapt-indentation t)
   :init
@@ -71,15 +74,6 @@ if there is no schedule (so these are sorted to the bottom)"
     (if rememberFn
         (define-key global-map "\C-cr" rememberFn)))
 
-  ;; (if (fboundp 'org-remember-insinuate)
-  ;;     (ssorg-remember-insinuate))
-  ;; (let ((rememberFn (cond
-  ;;                    ((fboundp 'org-remember) 'org-remember)
-  ;;                    ((fboundp 'org-capture) 'org-capture)
-  ;;                    (t nil))))
-  ;;   (if rememberFn
-  ;;       (define-key global-map "\C-cr" rememberFn)))
-
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory))
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
@@ -90,6 +84,11 @@ if there is no schedule (so these are sorted to the bottom)"
      '(["Insert structure template" org-insert-structure-template t]))
     "Org submenu for inserting stuff")
   (easy-menu-add-item org-org-menu nil org-org-menu-insert-menu "Archive")
+
+  ;;Don't confirm on plantuml eval
+  (defun my:org-confirm-babel-evaluate (lang body)
+    (not (member lang org-babel-safe-languages)))
+  (setq org-confirm-babel-evaluate #'my:org-confirm-babel-evaluate)
 
   (defhydra my:org-item-hydra (:color pink
                                       :hint nil
@@ -118,3 +117,8 @@ if there is no schedule (so these are sorted to the bottom)"
   :after org
   :config
   (add-to-list 'org-babel-load-languages '(restclient . t)))
+
+(use-package org-reveal
+  :config
+  (setq org-reveal-root (concat "file://" (getenv "HOME") "/dev/reveal.js"))
+  (add-to-list 'org-structure-template-alist '("n" . "notes") t))
