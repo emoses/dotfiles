@@ -15,6 +15,90 @@
  ;; If there is more than one, they won't work right.
  '(auth-sources
    '(macos-keychain-generic macos-keychain-internet "~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
+ '(connection-local-criteria-alist
+   '(((:application eshell)
+      eshell-connection-default-profile)
+     ((:application tramp :machine "localhost")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "C02DR5M6MD6T")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp)
+      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
+ '(connection-local-profile-alist
+   '((eshell-connection-default-profile
+      (eshell-path-env-list))
+     (tramp-connection-local-darwin-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . tramp-ps-time)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-busybox-ps-profile
+      (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (user . string)
+       (group . string)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (ttname . string)
+       (time . tramp-ps-time)
+       (nice . number)
+       (etime . tramp-ps-time)
+       (args)))
+     (tramp-connection-local-bsd-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (group . string)
+       (comm . 52)
+       (state . string)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . number)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-default-shell-profile
+      (shell-file-name . "/bin/sh")
+      (shell-command-switch . "-c"))
+     (tramp-connection-local-default-system-profile
+      (path-separator . ":")
+      (null-device . "/dev/null"))))
  '(custom-safe-themes
    '("0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de" "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
  '(evil-overriding-maps
@@ -42,6 +126,7 @@
  '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
+ '(native-comp-async-report-warnings-errors 'silent)
  '(org-agenda-files '("/Users/emoses/Nextcloud/org/home.org"))
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(org-log-done 'time)
@@ -53,7 +138,9 @@
  '(projectile-project-root-files
    '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((my:prettify . t)
+   '((lsp-enabled-clients deno-ls)
+     (org-html-metadata-timestamp-format . "%Y-%m-%d")
+     (my:prettify . t)
      (lsp-eslint-package-manager . "yarn")
      (lsp-eslint-working-directories .
                                      ["frontend/"])
@@ -73,7 +160,7 @@
      (my:lsp-go-directory-filters quote
                                   ("-frontend"))
      (lsp-nested-project-separator)
-     (lsp--override-calculate-lisp-indent\? . t)
+     (lsp--override-calculate-lisp-indent? . t)
      (eval progn
            (let
                ((dirloc-lsp-defun-regexp
@@ -85,27 +172,12 @@
                   "\\)")))
              (add-to-list 'imenu-generic-expression
                           (list "Functions" dirloc-lsp-defun-regexp 1)))
-           (defvar lsp--override-calculate-lisp-indent\? nil "Whether to override `lisp-indent-function' with
-              the updated `calculate-lisp-indent' definition from
-              Emacs 28.")
+           (defvar lsp--override-calculate-lisp-indent? nil "Whether to override `lisp-indent-function' with\12              the updated `calculate-lisp-indent' definition from\12              Emacs 28.")
            (defun wrap-calculate-lisp-indent
                (func &optional parse-start)
-             "Return appropriate indentation for current line as Lisp code.
-In usual case returns an integer: the column to indent to.
-If the value is nil, that means don't change the indentation
-because the line starts inside a string.
-
-PARSE-START may be a buffer position to start parsing from, or a
-parse state as returned by calling `parse-partial-sexp' up to the
-beginning of the current line.
-
-The value can also be a list of the form (COLUMN CONTAINING-SEXP-START).
-This means that following lines at the same level of indentation
-should not necessarily be indented the same as this line.
-Then COLUMN is the column to indent to, and CONTAINING-SEXP-START
-is the buffer position of the start of the containing expression."
+             "Return appropriate indentation for current line as Lisp code.\12In usual case returns an integer: the column to indent to.\12If the value is nil, that means don't change the indentation\12because the line starts inside a string.\12\12PARSE-START may be a buffer position to start parsing from, or a\12parse state as returned by calling `parse-partial-sexp' up to the\12beginning of the current line.\12\12The value can also be a list of the form (COLUMN CONTAINING-SEXP-START).\12This means that following lines at the same level of indentation\12should not necessarily be indented the same as this line.\12Then COLUMN is the column to indent to, and CONTAINING-SEXP-START\12is the buffer position of the start of the containing expression."
              (if
-                 (not lsp--override-calculate-lisp-indent\?)
+                 (not lsp--override-calculate-lisp-indent?)
                  (funcall func parse-start)
                (save-excursion
                  (beginning-of-line)
@@ -219,7 +291,7 @@ is the buffer position of the start of the containing expression."
                         (and
                          (save-excursion
                            (goto-char indent-point)
-                           (skip-chars-forward " 	")
+                           (skip-chars-forward " \11")
                            (looking-at ":"))
                          (save-excursion
                            (goto-char calculate-lisp-indent-last-sexp)
@@ -227,7 +299,7 @@ is the buffer position of the start of the containing expression."
                            (while
                                (not
                                 (or
-                                 (looking-back "^[ 	]*\\|([ 	]+"
+                                 (looking-back "^[ \11]*\\|([ \11]+"
                                                (line-beginning-position))
                                  (and containing-sexp
                                       (>=
@@ -286,14 +358,13 @@ is the buffer position of the start of the containing expression."
                   "\\)")))
              (add-to-list 'imenu-generic-expression
                           (list "Functions" dirloc-lsp-defun-regexp 1)))
-           (defvar lsp--override-calculate-lisp-indent\? nil "Whether to override the default
-              `calculate-lisp-indent'.")
-           (setq-local lsp--override-calculate-lisp-indent\? t)
+           (defvar lsp--override-calculate-lisp-indent? nil "Whether to override the default\12              `calculate-lisp-indent'.")
+           (setq-local lsp--override-calculate-lisp-indent? t)
            (defun wrap~calculate-lisp-indent
                (fn &optional parse-start)
              "Add better indentation for quoted and backquoted lists."
              (if
-                 (not lsp--override-calculate-lisp-indent\?)
+                 (not lsp--override-calculate-lisp-indent?)
                  (funcall fn parse-start)
                (defvar calculate-lisp-indent-last-sexp)
                (save-excursion
@@ -404,8 +475,7 @@ is the buffer position of the start of the containing expression."
                                             (save-excursion
                                               (goto-char
                                                (1+ point))
-                                              (looking-at-p "\\(?:back\\)?quote[
- ]+(")))))
+                                              (looking-at-p "\\(?:back\\)?quote[\12\14 ]+(")))))
                                    any-quoted-p))))
                              nil
                            (progn
@@ -442,7 +512,7 @@ is the buffer position of the start of the containing expression."
                         (and
                          (save-excursion
                            (goto-char indent-point)
-                           (skip-chars-forward " 	")
+                           (skip-chars-forward " \11")
                            (looking-at ":"))
                          (save-excursion
                            (goto-char calculate-lisp-indent-last-sexp)
@@ -450,7 +520,7 @@ is the buffer position of the start of the containing expression."
                            (while
                                (not
                                 (or
-                                 (looking-back "^[ 	]*\\|([ 	]+"
+                                 (looking-back "^[ \11]*\\|([ \11]+"
                                                (line-beginning-position))
                                  (and containing-sexp
                                       (>=
@@ -811,12 +881,11 @@ is the buffer position of the start of the containing expression."
   (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
-(when (and my:osx ))
 (setq default-frame-alist
       '((width . 250)
         (height . 70)))
 (setq fill-column 120)
-(setq split-width-threshold 190)
+(setq split-width-threshold 200)
 (setq help-window-select t)
 ;;New in Emacs 28
 (when (>= emacs-major-version 28)
@@ -837,7 +906,9 @@ is the buffer position of the start of the containing expression."
 
 ;;New stuff for emacs 26
 (when (>= emacs-major-version 26)
-  (pixel-scroll-mode)
+  (if (fboundp 'pixel-scroll-precision-mode)
+      (pixel-scroll-precision-mode)
+      (pixel-scroll-mode))
   (setq mouse-wheel-tilt-scroll t)
   (setq mouse-wheel-flip-direction t)
   (setq display-line-numbers-width-start 3)
@@ -1072,7 +1143,6 @@ _k_: previous error    _l_: last error
 (setq-default indent-tabs-mode nil)
 
 ;;Misc
-(put 'scroll-left 'disabled nil)
 ;;Visible-bell causes problems in OSX, so blink the mode-line instead
 (setq visible-bell nil)
 (setq ring-bell-function
@@ -1172,3 +1242,9 @@ _k_: previous error    _l_: last error
              '("\\*gud-test\\*"
                (display-buffer-use-some-window)
                (inhibit-same-window . t) ))
+(put 'scroll-left 'disabled nil)
+
+;; (defun -debug-delete-windows (win param val)
+;;   (when (and  (eq param 'no-delete-other-windows) val)
+;;     (debug)))
+;; (advice-add 'set-window-parameter :before #'-debug-delete-windows)

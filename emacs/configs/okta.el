@@ -38,16 +38,22 @@
               (when test-name
                 (-okta-integration-test (s-concat test-flag test-name "\\$ . -v " additional-arguments)))))))))
 
-  (with-eval-after-load "go-mode"
+  (with-eval-after-load 'go-mode
     (define-key go-mode-map (kbd "C-c t") #'okta-integration-test-current-test)
     (define-key go-mode-map (kbd "C-c C-t") #'okta-integration-test-current-file))
 
-  (defun dlv-integration-test ()
+  (with-eval-after-load 'go-ts-mode
+    (define-key go-ts-mode-map (kbd "C-c t") #'okta-integration-test-current-test)
+    (define-key go-ts-mode-map (kbd "C-c C-t") #'okta-integration-test-current-file))
+
+  (defun dlv-integration-test (&optional cmd)
     (interactive)
     (progn
       (setenv "SFT_DB_AUTOCLEAN" "true")
       (setenv "SFT_DB_INTEGRATION_TESTS" "true")
-      (call-interactively 'dlv)))
+      (if (called-interactively-p)
+          (call-interactively 'dlv)
+        (dlv cmd))))
 
   (defun dlv-integration-test-current-func ()
     (interactive)

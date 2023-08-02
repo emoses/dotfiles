@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (use-package jest
   :config
   (magit-define-popup-switch 'jest-popup ?u "update snapshots" "--updateSnapshot"))
@@ -6,7 +7,29 @@
   (bind-key (kbd "C-c t") #'jest-popup mode-map)
   (bind-key (kbd "C-c T") #'jest-repeat mode-map))
 
-(use-package add-node-modules-path)
+(use-package add-node-modules-path
+  :hook ((typescript-mode
+          scss-mode
+          js2-mode
+          web-mode
+          typescript-ts-mode
+          js-ts-mode
+          json-ts-mode
+          json-mode
+          tsx-ts-mode) . add-node-modules-path))
+
+(with-eval-after-load 'flycheck
+  (with-eval-after-load 'lsp
+    (mapc (lambda (mode)
+	    (with-eval-after-load mode
+	      (progn
+	        (lsp-flycheck-add-mode mode)
+	        (-jest-add-bindings (intern (concat (symbol-name mode) "-map"))))))
+	  '(js-ts-mode
+	    tsx-ts-mode
+	    typescript-ts-mode))))
+
+
 
 (use-package js2-mode
   :mode "\\.js$"
@@ -16,8 +39,7 @@
             (function (lambda ()
                         (local-unset-key (kbd "C-c C-a"))
                         (js2-mode-hide-warnings-and-errors)
-                        (set-variable 'indent-tabs-mode nil)
-                        (add-node-modules-path))))
+                        (set-variable 'indent-tabs-mode nil))))
   (setq js2-global-externs '("require" "module"))
   (setq js-indent-level 2)
   (-jest-add-bindings js2-mode-map)
@@ -59,8 +81,7 @@
   :init
   ;TODO: merge this with web-mode setup?
   (flycheck-add-mode 'lsp 'typescript-mode)
-  (-jest-add-bindings typescript-mode-map)
-  )
+  (-jest-add-bindings typescript-mode-map))
 
 (use-package json-mode
   :mode "\\.json$"
@@ -114,7 +135,10 @@ modes.  Expected to be set in .dir-locals.el for a project")
   (defun my:prettier-local-hook ()
     (let* ((name (buffer-file-name))
             (name (or name (buffer-name))))
-      (when (and my:prettify (string-match-p "\\.[tj]sx?$" name))
+      (when (and my:prettify (or
+                              (string-match-p "\\.scss$" name)
+                              (string-match-p "\\.[tj]sx?$" name)
+                              (string-match-p "\\.json$" name)))
         (prettier-js-mode 1)))))
 
 (use-package mocha
@@ -128,5 +152,5 @@ modes.  Expected to be set in .dir-locals.el for a project")
     (ignore buf file test)
     (realgud:node-inspect (concat node " debug localhost:" port))))
 
-(use-package realgud)
-(use-package realgud-node-inspect)
+;; (use-package realgud)
+;; (use-package realgud-node-inspect)

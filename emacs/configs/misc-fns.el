@@ -161,7 +161,8 @@ find-file-other-frame and display-buffer"
     (if (not filename)
         (error "Buffer '%s' is not visiting a file!" (buffer-name))
       (let* ((dir (file-name-directory filename))
-             (new-name (read-file-name "New name: " dir)))
+             (fname (file-name-nondirectory filename))
+             (new-name (read-file-name "New name: " dir nil nil fname)))
         (cond ((get-buffer new-name)
                (error "A buffer named '%s' already exists!" new-name))
               (t

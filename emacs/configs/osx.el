@@ -1,3 +1,6 @@
+(require 'dired)
+(require 'ediff)
+
 (setq mac-command-modifier 'control)
 (setq mac-option-modifier 'alt)
 (setq mac-control-modifier 'meta)
@@ -19,3 +22,10 @@
           (if (my:frame-fullscreen-p)
               (apply #'ediff-setup-windows-plain args)
             (apply #'ediff-setup-windows-default args))))
+
+(defun my:dired-open-in-finder (files &optional arg)
+  (interactive (let (( files (dired-get-marked-files t current-prefix-arg nil nil t)))
+                 (list files current-prefix-arg)))
+  (dired-do-shell-command "open -R" arg files))
+
+(bind-key "F" #'my:dired-open-in-finder dired-mode-map)

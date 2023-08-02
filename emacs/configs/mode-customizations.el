@@ -1,4 +1,9 @@
 
+;;Start tree-sitter modes
+(when (fboundp 'treesit-available-p)
+  (use-package treesit-auto
+    :config
+    (global-treesit-auto-mode)))
 
 ;; ;;Load auctex
 (use-package tex
@@ -103,6 +108,9 @@
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
+
+;; Don't enable by default
+(use-package magit-delta)
 
 (use-package forge
   :after magit

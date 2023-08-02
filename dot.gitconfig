@@ -1,3 +1,5 @@
+[include]
+    path = ~/dotfiles/delta/themes.gitconfig
 [alias]
         co = checkout
 	logf = log -1 --stat
@@ -8,20 +10,29 @@
 [core]
     excludesfile = ~/gitignore
     autocrlf = input
-    pager = diff-so-fancy | less --tabs=1,5 -R
+#   pager = diff-so-fancy | less --tabs=1,5 -R
+    pager = delta
+[interactive]
+    diffFilter = delta --color-only
+[add.interactive]
+    useBuiltin = false
 [user]
 	name = Evan Moses
 	email = evan.moses@okta.com
+[diff]
+    colorMoved = default
 [merge]
+     conflictsylte = diff3
         tool = p4merge
 [mergetool "p4merge"]
     cmd = /home/emoses/bin/p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
     trustExitCode = false
     keepTemporaries = false
-[diff]
-    tool = intellij
-[difftool "intellij"]
-    cmd =/usr/local/bin/idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
+[delta]
+    navigate = true
+    light = false
+    features = chameleon
+
 [color]
         status = auto
         diff = auto

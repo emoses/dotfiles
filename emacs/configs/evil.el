@@ -90,7 +90,7 @@
           lua-mode
           ;magit
           neotree
-          (occur replace)
+          replace
           (package-menu package)
           python
           restclient
@@ -101,12 +101,6 @@
           xref
           ))
 
-  (defun my:customize-evil-collection-occur (mode keymaps &rest _rest)
-    (when (equal mode 'occur)
-      (evil-define-key 'normal occur-mode-map
-        "q" #'quit-window)))
-
-  (add-hook 'evil-collection-setup-hook #'my:customize-evil-collection-occur)
   (evil-collection-init))
 
 (use-package evil-cleverparens
