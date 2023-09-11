@@ -8,13 +8,13 @@
       (read-string "Command: "
                    (elt -okta-integration-test-history 0)
                    '(-okta-integration-test-history . 1)
-                   "GO111MODULE=on SFT_DB_AUTOCLEAN=true SFT_DB_INTEGRATION_TESTS=true go test -failfast -v ")))
+                   "SFT_DB_AUTOCLEAN=true SFT_DB_INTEGRATION_TESTS=true go test -failfast -v ")))
     (save-some-buffers (not compilation-ask-about-save))
     (compile command))
 
   (defun -okta-integration-test (args)
     (save-some-buffers (not compilation-ask-about-save))
-    (go-test--go-test args "GO111MODULE=on SFT_DB_AUTOCLEAN=true SFT_DB_INTEGRATION_TESTS=true"))
+    (go-test--go-test args "SFT_DB_AUTOCLEAN=true SFT_DB_INTEGRATION_TESTS=true"))
 
   (defun okta-integration-test-current-file ()
     (interactive)

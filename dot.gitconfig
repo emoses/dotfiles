@@ -77,3 +77,5 @@
      insteadOf = https://github.com/ScaleFT
 [init]
 	defaultBranch = main
+[rerere]
+	enabled = true

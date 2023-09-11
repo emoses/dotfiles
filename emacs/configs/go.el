@@ -8,6 +8,9 @@
     (set (make-local-variable 'yas-indent-line) 'fixed)
     (set (make-local-variable 'compilation-skip-threshold) 2))
 
+;; This is easier than trying to the env var set properly on macos
+(setenv "ASDF_GOLANG_MOD_VERSION_ENABLED" "false")
+
 (when (treesit-available-p)
   (use-package go-ts-mode
     :bind (:map go-ts-mode-map

@@ -280,3 +280,21 @@ secret and return just the secret part.  Nil if not found"
     (if (functionp secret)
         (funcall secret)
       secret)))
+
+(require 'xref)
+;;Copy of xref-goto-xref that works for mouse pointer
+(defun my:xref-goto-xref-mouse (event &optional quit)
+  (interactive "eP")
+  (let* ((xref-buffer)
+         (xref (save-excursion
+                 (mouse-set-point event)
+                 (setq xref-buffer (current-buffer))
+                 (xref--set-arrow)
+                 (xref--item-at-point))))
+    (if (not xref)
+      (user-error "Choose a reference to visit")
+      (progn
+        (xref--show-location (xref-item-location xref) (if quit 'quit t))
+        (next-error-found xref-buffer (current-buffer))))))
+
+(bind-key [mouse-2] #'my:xref-goto-xref-mouse xref--button-map)
