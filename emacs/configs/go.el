@@ -155,7 +155,4 @@
 
 (when (treesit-available-p)
   (defun go-beginning-of-defun ()
-    (let ((n (treesit-parent-until
-              (treesit-node-at (point))
-              (lambda (n) (equal (treesit-node-type n) "function_declaration")))))
-      (when n (goto-char (treesit-node-start n))))))
+    (treesit-beginning-of-defun)))

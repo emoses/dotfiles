@@ -73,6 +73,8 @@
 #Okta stuff
 [url "git@github.com:okta"]
      insteadOf = https://github.com/okta
+[url "org-132695841@github.com-atko:atko-flow"]
+     insteadOf = https://github.com/atko-flow
 [url "git@github.com:ScaleFT"]
      insteadOf = https://github.com/ScaleFT
 [init]
