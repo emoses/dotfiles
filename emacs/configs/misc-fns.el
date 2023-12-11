@@ -298,3 +298,20 @@ secret and return just the secret part.  Nil if not found"
         (next-error-found xref-buffer (current-buffer))))))
 
 (bind-key [mouse-2] #'my:xref-goto-xref-mouse xref--button-map)
+
+(defun sql-pgify-placeholders (beg end)
+  "Replace ? with $n, starting at $1, in the region, or the whole
+buffer if the region is not active"
+  (interactive "r")
+  (unless (use-region-p)
+    (setq beg (point-min) end (point-max)))
+  (save-excursion
+    (goto-char beg)
+    (let ((n 1))
+      (while (search-forward "?" end t)
+        (if (and (/= (point) end) (char-equal (char-after) ??))
+            (forward-char)
+          (progn
+            (delete-char -1)
+            (insert (format "$%d" n))
+            (setq n (+ n 1))))))))

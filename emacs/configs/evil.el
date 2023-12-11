@@ -90,7 +90,6 @@
           lua-mode
           ;magit
           neotree
-          replace
           (package-menu package)
           python
           restclient

@@ -16,7 +16,9 @@
  '(auth-sources
    '(macos-keychain-generic macos-keychain-internet "~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
  '(connection-local-criteria-alist
-   '(((:application eshell)
+   '(((:application tramp :machine "FK00M29L63")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application eshell)
       eshell-connection-default-profile)
      ((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)
@@ -283,7 +285,8 @@
                 (car d)))))
      (delete-old-versions . t)
      (backup-by-copying . t)
-     (create-lockfiles)))
+     (create-lockfiles)
+     (add-node-modules-path-command "yarn bin")))
  '(sml/mode-width (if (eq (powerline-current-separator) 'arrow) 'right 'full))
  '(sml/name-width 44)
  '(sml/pos-id-separator
@@ -464,9 +467,6 @@
   (setq read-minibuffer-restore-windows nil)
   (setq dired-kill-when-opening-new-dired-buffer t)
   (setq completions-detailed t))
-
-(use-package ispell
-  :custom (ispell-program-name "/usr/local/bin/aspell"))
 
 (setq compilation-scroll-output t)
 

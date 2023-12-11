@@ -1,14 +1,30 @@
 ;; -*- lexical-binding: t; -*-
-(use-package jest
+(require 'dash)
+
+(use-package jest-test-mode
+  :after projectile
+  :commands jest-test-mode
+  :hook (typescript-ts-mode tsx-ts-mode js-ts-mode)
   :config
-  (magit-define-popup-switch 'jest-popup ?u "update snapshots" "--updateSnapshot"))
-;; TODO: customize bindings for jest projects vs others with projectile?
-(defun -jest-add-bindings (mode-map)
-  (bind-key (kbd "C-c t") #'jest-popup mode-map)
-  (bind-key (kbd "C-c T") #'jest-repeat mode-map))
+  (defun maybe-save-project-buffers (&rest _args)
+    (-when-let*
+        ((buffers
+          (projectile-buffers-with-file (projectile-project-buffers)))
+         (modified-buffers
+          (-filter 'buffer-modified-p buffers))
+         (confirmed
+          (y-or-n-p
+           (format "Save modified project buffers (%d)? "
+                   (length modified-buffers)))))
+      (--each modified-buffers
+        (with-current-buffer it
+          (save-buffer))))
+    )
+  (advice-add 'jest-test-run-command :before #'maybe-save-project-buffers)
+  )
 
 (use-package add-node-modules-path
-  :hook ((typescript-mode
+    :hook ((typescript-mode
           scss-mode
           js2-mode
           web-mode
@@ -16,15 +32,17 @@
           js-ts-mode
           json-ts-mode
           json-mode
-          tsx-ts-mode) . add-node-modules-path))
+          tsx-ts-mode) . my:node-modules-local-hook)
+    :init
+    (defun my:node-modules-local-hook ()
+      (add-hook 'hack-local-variables-hook #'add-node-modules-path nil t)))
 
 (with-eval-after-load 'flycheck
   (with-eval-after-load 'lsp
     (mapc (lambda (mode)
 	    (with-eval-after-load mode
 	      (progn
-	        (lsp-flycheck-add-mode mode)
-	        (-jest-add-bindings (intern (concat (symbol-name mode) "-map"))))))
+	        (lsp-flycheck-add-mode mode))))
 	  '(js-ts-mode
 	    tsx-ts-mode
 	    typescript-ts-mode))))
@@ -42,7 +60,6 @@
                         (set-variable 'indent-tabs-mode nil))))
   (setq js2-global-externs '("require" "module"))
   (setq js-indent-level 2)
-  (-jest-add-bindings js2-mode-map)
   )
 
 
@@ -72,16 +89,14 @@
       (when (string-match-p "\\.tsx$" name)
         (lsp))))
   (add-hook 'web-mode-hook #'web-mode-tsx-hook)
-  (-jest-add-bindings web-mode-map)
   )
 
 (use-package typescript-mode
   :after (lsp lsp-ui flycheck)
   :mode "\\.ts$"
   :init
-  ;TODO: merge this with web-mode setup?
-  (flycheck-add-mode 'lsp 'typescript-mode)
-  (-jest-add-bindings typescript-mode-map))
+                                        ;TODO: merge this with web-mode setup?
+  (flycheck-add-mode 'lsp 'typescript-mode))
 
 (use-package json-mode
   :mode "\\.json$"

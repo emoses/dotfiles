@@ -70,7 +70,8 @@
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
 (use-package lsp-ui
     :bind (:map lsp-ui-mode-map
-           ("S-<f4>" . lsp-ui-imenu))
+           ("S-<f4>" . lsp-ui-imenu)
+           )
     :custom
     (lsp-ui-sideline-show-code-actions t)
     (lsp-ui-sideline-show-symbol nil)
@@ -88,6 +89,7 @@
 
 (use-package  lsp-ivy
   :straight (lsp-ivy :type git :host github :repo "emacs-lsp/lsp-ivy")
+  :bind (("A-f" . lsp-ivy-workspace-symbol))
   :commands lsp-ivy-workspace-symbol)
 
 (use-package lsp-treemacs

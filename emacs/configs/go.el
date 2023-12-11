@@ -156,3 +156,6 @@
 (when (treesit-available-p)
   (defun go-beginning-of-defun ()
     (treesit-beginning-of-defun)))
+
+(defalias 'jsontag
+   (kmacro "^ y i W A SPC j s o n <tab> <escape> p v i \" M-x s n a k e c a <return> "))
