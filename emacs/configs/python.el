@@ -67,29 +67,10 @@ Also, switch to that buffer."
               ("C-c T" . python-pytest-repeat))
   )
 
-;; (use-package elpy
-;;   :after flycheck
-;;   :mode ("\\.py$" . python-mode)
-;;   :bind (:map elpy-mode-map
-;;               ;; ("M-/" . elpy-goto-definition)
-;;               ("C-c C-r f" . elpy-autopep8-fix-code))
-;;   :init
-;;   (pyenv-mode)
-;;   (elpy-enable)
-;;   :config
-;;   (setq elpy-rpc-python-command "python3")
-;;   (setq python-shell-interpreter "python3")
-;;   (setq elpy-modules (cl-set-difference elpy-modules
-;;                                         '('elpy-module-flymake 'elpy-module-company 'elpy-module-eldoc)))
-;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
-(use-package lsp-python-ms
-    :after (projectile lsp)
-    :init (setq lsp-python-ms-auto-install-server t)
-    :config
-    ;; dir containing Microsoft.Python.LanguageServer.dll
-    ;; (setq lsp-python-ms-server-setings
-    ;;       '(:python.analysis.logLevel "info"))
-    ;; (setq lsp-python-ms-dir (expand-file-name "~/dev/python-language-server/output/bin/Release/"))
-    )
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))
 
 (use-package pyvenv)

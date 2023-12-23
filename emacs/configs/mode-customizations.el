@@ -332,3 +332,9 @@
   (setq atomic-chrome-url-major-mode-alist
         '(("github\\.com" . gfm-mode)))
   (atomic-chrome-start-server))
+
+
+(use-package rustic
+  :mode ( "\\.rs$" . rust-mode)
+  :config
+  (setq rustic-format-on-save t))
