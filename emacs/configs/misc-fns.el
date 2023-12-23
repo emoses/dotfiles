@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t -*-
 
 (require 'url-util)
+(require 'subr-x)
 
 (defun bf-pretty-print-xml-region (begin end)
   "Pretty format XML markup in region. You need to have nxml-mode
@@ -160,7 +161,8 @@ find-file-other-frame and display-buffer"
     (if (not filename)
         (error "Buffer '%s' is not visiting a file!" (buffer-name))
       (let* ((dir (file-name-directory filename))
-             (new-name (read-file-name "New name: " dir)))
+             (fname (file-name-nondirectory filename))
+             (new-name (read-file-name "New name: " dir nil nil fname)))
         (cond ((get-buffer new-name)
                (error "A buffer named '%s' already exists!" new-name))
               (t
@@ -252,6 +254,64 @@ find-file-other-frame and display-buffer"
      (file-notify-rm-watch k))
    file-notify-descriptors))
 
+
 (defun make-display-buffer-matcher-function (major-modes)
   (lambda (buffer-name _action)
     (with-current-buffer buffer-name (apply #'derived-mode-p major-modes))))
+
+(defun insert-uuid ()
+  "Insert a UUID. This commands calls “uuidgen” on MacOS, Linux,
+and calls PowelShell on Microsoft Windows."
+  (interactive)
+  (let ((uuid (cond
+                ((string-equal system-type "windows-nt")
+                 (shell-command-to-string "pwsh.exe -Command [guid]::NewGuid().toString()"))
+                ((string-equal system-type "darwin") ; Mac
+                 (shell-command-to-string "uuidgen"))
+                ((string-equal system-type "gnu/linux")
+                 (shell-command-to-string "uuidgen")))))
+    (insert (downcase (string-trim uuid)))))
+
+(defun secret-from-auth-source (&rest search)
+  "Use SEARCH, the arguments to auth-source-search, to find a
+secret and return just the secret part.  Nil if not found"
+  (when-let ((s (apply #'auth-source-search search))
+             (secret (plist-get (car s) :secret)))
+    (if (functionp secret)
+        (funcall secret)
+      secret)))
+
+(require 'xref)
+;;Copy of xref-goto-xref that works for mouse pointer
+(defun my:xref-goto-xref-mouse (event &optional quit)
+  (interactive "eP")
+  (let* ((xref-buffer)
+         (xref (save-excursion
+                 (mouse-set-point event)
+                 (setq xref-buffer (current-buffer))
+                 (xref--set-arrow)
+                 (xref--item-at-point))))
+    (if (not xref)
+      (user-error "Choose a reference to visit")
+      (progn
+        (xref--show-location (xref-item-location xref) (if quit 'quit t))
+        (next-error-found xref-buffer (current-buffer))))))
+
+(bind-key [mouse-2] #'my:xref-goto-xref-mouse xref--button-map)
+
+(defun sql-pgify-placeholders (beg end)
+  "Replace ? with $n, starting at $1, in the region, or the whole
+buffer if the region is not active"
+  (interactive "r")
+  (unless (use-region-p)
+    (setq beg (point-min) end (point-max)))
+  (save-excursion
+    (goto-char beg)
+    (let ((n 1))
+      (while (search-forward "?" end t)
+        (if (and (/= (point) end) (char-equal (char-after) ??))
+            (forward-char)
+          (progn
+            (delete-char -1)
+            (insert (format "$%d" n))
+            (setq n (+ n 1))))))))

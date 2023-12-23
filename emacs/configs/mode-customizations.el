@@ -1,4 +1,9 @@
 
+;;Start tree-sitter modes
+(when (fboundp 'treesit-available-p)
+  (use-package treesit-auto
+    :config
+    (global-treesit-auto-mode)))
 
 ;; ;;Load auctex
 (use-package tex
@@ -103,6 +108,9 @@
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
+
+;; Don't enable by default
+(use-package magit-delta)
 
 (use-package forge
   :after magit
@@ -223,9 +231,7 @@
   :config
   (setq plantuml-jar-path "~/lib/plantuml.jar")
   (setq plantuml-default-exec-mode 'jar)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((plantuml . t)))
+  (add-to-list 'org-babel-load-languages '(plantuml . t))
   (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
 
 (defun my:line-numbers-off ()
@@ -280,17 +286,19 @@
   :mode "\\.scad$")
 
 (use-package groovy-mode
-  :mode "\\.groovy\\'")
+  :mode "\\.groovy$")
 
 (use-package jq-mode)
 
 (use-package restclient
+  :mode ("\\.restclient$" . restclient-mode)
   :config
-  ;(require 'restclient-jq)
   (defun restclient-start ()
     (interactive)
     (pop-to-buffer "*restclient*")
     (restclient-mode)))
+
+(use-package restclient-jq)
 
 (use-package cram-test-mode
   :mode "\\.t$"
@@ -333,8 +341,24 @@
         '(("github\\.com" . gfm-mode)))
   (atomic-chrome-start-server))
 
+(when (executable-find "pg_format")
+  (use-package sqlformat
+    :after sql
+    :bind (:map sql-mode-map
+                ("C-c C-f" . 'sqlformat))
+    :config
+    (setq sqlformat-command 'pgformatter)))
 
 (use-package rustic
-  :mode ( "\\.rs$" . rust-mode)
+  :mode "\\.rs$"
   :config
-  (setq rustic-format-on-save t))
+  (setq rustic-format-on-save t)
+  (add-hook 'rustic-mode-hook 'my:rustic-mode/hook)
+  (defun my:rustic-mode-hook ()
+    ;; so that run C-c C-c C-r works without having to confirm, but don't try to
+    ;; save rust buffers that are not file visiting. Once
+    ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+    ;; no longer be necessary.
+    (when buffer-file-name
+      (setq-local buffer-save-without-query t))
+    (add-hook 'before-save-hook 'lsp-format-buffer nil t)))

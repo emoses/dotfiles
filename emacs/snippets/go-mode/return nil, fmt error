@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
-# name: return fmt err
-# key: errretf
+# name: return nil, fmt err
+# key: errretnf
 # --
 if err != nil {
-	return fmt.Errorf("$1: %w", err)
+	return nil, fmt.Errorf("$1: %w", err)
 }

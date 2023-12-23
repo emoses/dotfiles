@@ -19,5 +19,4 @@ __flycheck*
 .ccls
 .ccls-cache
 # asdf.
-.tool-versions
 .direnv

@@ -1,3 +1,4 @@
+(setq native-comp-deferred-compilation-deny-list nil)
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -21,7 +22,6 @@
 
 ;; Org-mode Git installation from straight.el
 ;; from https://github.com/raxod502/straight.el#installing-org-with-straightel
-;;;
 ;; (require 'subr-x)
 ;; (straight-use-package 'git)
 
@@ -36,7 +36,6 @@
 ;;               "--match=release\*"
 ;;               "--abbrev=6"
 ;;               "HEAD"))))
-
 
 ;; (defun org-release ()
 ;;   "The release version of org-mode.

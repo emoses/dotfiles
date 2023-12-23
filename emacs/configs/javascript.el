@@ -1,10 +1,53 @@
-(use-package jest)
-;; TODO: customize bindings for jest projects vs others with projectile?
-;; (defun -jest-add-bindings (mode-map)
-;;   (bind-key (kbd "C-c t") #'jest-popup mode-map)
-;;   (bind-key (kbd "C-c T") #'jest-repeat mode-map))
+;; -*- lexical-binding: t; -*-
+(require 'dash)
 
-(use-package add-node-modules-path)
+(use-package jest-test-mode
+  :after projectile
+  :commands jest-test-mode
+  :hook (typescript-ts-mode tsx-ts-mode js-ts-mode)
+  :config
+  (defun maybe-save-project-buffers (&rest _args)
+    (-when-let*
+        ((buffers
+          (projectile-buffers-with-file (projectile-project-buffers)))
+         (modified-buffers
+          (-filter 'buffer-modified-p buffers))
+         (confirmed
+          (y-or-n-p
+           (format "Save modified project buffers (%d)? "
+                   (length modified-buffers)))))
+      (--each modified-buffers
+        (with-current-buffer it
+          (save-buffer))))
+    )
+  (advice-add 'jest-test-run-command :before #'maybe-save-project-buffers)
+  )
+
+(use-package add-node-modules-path
+    :hook ((typescript-mode
+          scss-mode
+          js2-mode
+          web-mode
+          typescript-ts-mode
+          js-ts-mode
+          json-ts-mode
+          json-mode
+          tsx-ts-mode) . my:node-modules-local-hook)
+    :init
+    (defun my:node-modules-local-hook ()
+      (add-hook 'hack-local-variables-hook #'add-node-modules-path nil t)))
+
+(with-eval-after-load 'flycheck
+  (with-eval-after-load 'lsp
+    (mapc (lambda (mode)
+	    (with-eval-after-load mode
+	      (progn
+	        (lsp-flycheck-add-mode mode))))
+	  '(js-ts-mode
+	    tsx-ts-mode
+	    typescript-ts-mode))))
+
+
 
 (use-package js2-mode
   :mode "\\.js$"
@@ -14,18 +57,16 @@
             (function (lambda ()
                         (local-unset-key (kbd "C-c C-a"))
                         (js2-mode-hide-warnings-and-errors)
-                        (set-variable 'indent-tabs-mode nil)
-                        (add-node-modules-path))))
+                        (set-variable 'indent-tabs-mode nil))))
   (setq js2-global-externs '("require" "module"))
   (setq js-indent-level 2)
-  ;(-jest-add-bindings js2-mode-map)
   )
 
 
 (use-package rjsx-mode
   :mode "\\.jsx$"
   :config
-  (flycheck-add-mode 'javascript-eslint 'rjsx-mode))
+  (flycheck-add-mode 'lsp 'rjsx-mode))
 
 (use-package xref-js2
   :after js2-mode
@@ -35,36 +76,27 @@
   (add-hook 'js2-mode-hook (lambda ()
                              (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
 
-(defun -flycheck-ts-setup ()
-  (flycheck-add-next-checker 'lsp '(t . javascript-eslint)))
-
 (use-package web-mode
   :mode (("\\.html?$" . web-mode)
          ("\\.tsx$" . web-mode))
   :config
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
   (setq web-mode-enable-auto-quoting nil)
   (setq web-mode-content-types-alist
         '(("jsx" . "\\.tsx$")))
   (defun web-mode-tsx-hook ()
     (let* ((name (buffer-file-name))
-           (name (or name (buffer-name)))sss)
+           (name (or name (buffer-name))))
       (when (string-match-p "\\.tsx$" name)
         (lsp))))
   (add-hook 'web-mode-hook #'web-mode-tsx-hook)
-  (add-hook 'web-mode-hook #'-flycheck-ts-setup)
-  ;;(-jest-add-bindings web-mode-map)
   )
 
 (use-package typescript-mode
   :after (lsp lsp-ui flycheck)
   :mode "\\.ts$"
-  :config
-  ;TODO: merge this with web-mode setup?
-  (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-  (add-hook 'typescript-mode-hook #'-flycheck-ts-setup)
-  ;;(-jest-add-bindings typescript-mode-map)
-  )
+  :init
+                                        ;TODO: merge this with web-mode setup?
+  (flycheck-add-mode 'lsp 'typescript-mode))
 
 (use-package json-mode
   :mode "\\.json$"
@@ -109,10 +141,20 @@
 ;; End copy
 (push 'eslint compilation-error-regexp-alist)
 
+(defvar my:prettify nil
+  "Turn prettier formatting on for all javascript and typescript
+modes.  Expected to be set in .dir-locals.el for a project")
 (use-package prettier-js
-  :hook ((js2-mode web-mode) . prettier-js-mode))
-
-
+  :hook (hack-local-variables . my:prettier-local-hook)
+  :init
+  (defun my:prettier-local-hook ()
+    (let* ((name (buffer-file-name))
+            (name (or name (buffer-name))))
+      (when (and my:prettify (or
+                              (string-match-p "\\.scss$" name)
+                              (string-match-p "\\.[tj]sx?$" name)
+                              (string-match-p "\\.json$" name)))
+        (prettier-js-mode 1)))))
 
 (use-package mocha
   :bind (:map js2-mode-map
@@ -125,5 +167,5 @@
     (ignore buf file test)
     (realgud:node-inspect (concat node " debug localhost:" port))))
 
-(use-package realgud)
-(use-package realgud-node-inspect)
+;; (use-package realgud)
+;; (use-package realgud-node-inspect)

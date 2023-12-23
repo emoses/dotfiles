@@ -1,11 +1,3 @@
-(use-package go-mode
-  :mode "\\.go$"
-  :bind (:map go-mode-map
-              ("C-c C-c" . compile)
-              ;; This overrides godef-describe
-              ("C-c C-d" . my:godoc-maybe-at-point)
-              ("C-c d" . godef-describe))
-  :config
   (defun my:go-mode-hooks ()
     (ivy-mode t)
     (add-hook 'before-save-hook #'maybe-lsp-format-buffer t t)
@@ -16,8 +8,32 @@
     (set (make-local-variable 'yas-indent-line) 'fixed)
     (set (make-local-variable 'compilation-skip-threshold) 2))
 
+;; This is easier than trying to the env var set properly on macos
+(setenv "ASDF_GOLANG_MOD_VERSION_ENABLED" "false")
+
+(when (treesit-available-p)
+  (use-package go-ts-mode
+    :bind (:map go-ts-mode-map
+                ("C-c C-a" . go-import-add)
+		("C-c C-c" . compile)
+		;; This overrides godef-describe
+		("C-c C-d" . my:godoc-maybe-at-point)
+		("C-c d" . godef-describe)
+		)
+    :config
+    (add-hook 'go-ts-mode-hook #'my:go-mode-hooks)
+    ))
+
+(use-package go-mode
+  :mode "\\.go$"
+  :bind (:map go-mode-map
+              ("C-c C-c" . compile)
+              ;; This overrides godef-describe
+              ("C-c C-d" . my:godoc-maybe-at-point)
+              ("C-c d" . godef-describe))
+  :config
   (defun my:go-local-var-hooks ()
-    (when (derived-mode-p 'go-mode)
+    (when (or (derived-mode-p 'go-mode) (derived-mode-p 'go-ts-mode))
       (lsp)
       (-flycheck-golangci-lint-setup)))
 
@@ -58,7 +74,7 @@
     (interactive)
     (let* ((interfaces (go-get-interfaces-in-buffer))
            (mock-interface (completing-read "Interface to mock" interfaces))
-           (current-file (file-name-nondirectory (buffer-file-name)))
+           (current-file (file-name-nondirectory (buffer-file-name)))q
            (current-dir (file-name-directory (buffer-file-name)))
            (mock-dir (concat current-dir "mocks"))
            (mock-file (concat (file-name-as-directory mock-dir) "mock.go")))
@@ -119,7 +135,10 @@
       (if (get-buffer-process buffer)
 	  (quit-process (get-buffer-process buffer))
         (error "The %s process is not running" (downcase mode-name))))
-    ))
+    )
+
+  (with-eval-after-load 'go-ts-mode
+    (define-key go-mode-map (kbd "C-c \\") #'quit-compilation)))
 
 (use-package flycheck-golangci-lint
   :init
@@ -133,3 +152,10 @@
 ;; go get -u golang.org/x/tools/cmd/godoc
 (use-package go-impl
   :after exec-path-from-shell)
+
+(when (treesit-available-p)
+  (defun go-beginning-of-defun ()
+    (treesit-beginning-of-defun)))
+
+(defalias 'jsontag
+   (kmacro "^ y i W A SPC j s o n <tab> <escape> p v i \" M-x s n a k e c a <return> "))

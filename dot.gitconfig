@@ -1,3 +1,5 @@
+[include]
+    path = ~/dotfiles/delta/themes.gitconfig
 [alias]
         co = checkout
 	logf = log -1 --stat
@@ -8,20 +10,28 @@
 [core]
     excludesfile = ~/gitignore
     autocrlf = input
-    pager = diff-so-fancy | less --tabs=1,5 -R
+#   pager = diff-so-fancy | less --tabs=1,5 -R
+    pager = delta
+	sshCommand = /Users/evan.moses/okta/developer-utilities/git/security/helpers/git-ssh-ca-aurm
+[interactive]
+    diffFilter = delta --color-only
 [user]
 	name = Evan Moses
 	email = evan.moses@okta.com
+[diff]
+    colorMoved = default
 [merge]
+     conflictsylte = diff3
         tool = p4merge
 [mergetool "p4merge"]
     cmd = /home/emoses/bin/p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
     trustExitCode = false
     keepTemporaries = false
-[diff]
-    tool = intellij
-[difftool "intellij"]
-    cmd =/usr/local/bin/idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
+[delta]
+    navigate = true
+    light = false
+    features = chameleon
+
 [color]
         status = auto
         diff = auto
@@ -31,7 +41,8 @@
 [difftool]
 	prompt = true
 [credential]
-	helper = store
+	helper = /opt/homebrew/opt/bash/bin/bash /Users/evan.moses/okta/developer-utilities/git/security/helpers/git-credential-okta-aurm --error --verbose -jq /opt/homebrew/bin/jq
+	useHttpPath = true
 [push]
 	default = simple
 [github "github-emoses"]
@@ -47,8 +58,7 @@
     newNormal = green bold
     newHighlight = green bold 22
 [github]
-	oauth-token = 
-	user = 
+	user = evanmoses-okta
 [sendemail]
         smptEncryption = tls
         smptServer = smtp.gmail.com
@@ -59,10 +69,12 @@
      insteadOf = https://github.com/emoses
 [git-link]
     branch = master
+[init]
+	defaultBranch = main
+[rerere]
+	enabled = true
 #Okta stuff
 [url "git@github.com:okta"]
      insteadOf = https://github.com/okta
 [url "git@github.com:ScaleFT"]
      insteadOf = https://github.com/ScaleFT
-[init]
-	defaultBranch = main

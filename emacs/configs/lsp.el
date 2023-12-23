@@ -16,14 +16,18 @@
 (use-package lsp-mode
   :bind (("C-c M-r" . lsp-rename)
          ("M-/" . my:lsp-find-definition)
-         ("C-}" . my:lsp-find-implementation))
+         ("C-}" . my:lsp-find-implementation)
+         ("C-=" . lsp-extend-selection))
   :hook ((python-mode . lsp)
          (typescript-mode . lsp)
          (rjsx-mode . lsp)
          (elixir-mode . lsp)
          (c-mode . lsp)
          (java-mode . lsp)
-         (js2-mode . lsp))
+         (js2-mode . lsp)
+         (js-ts-mode . lsp)
+         (tsx-ts-mode . lsp)
+         (typescript-ts-mode . lsp))
   ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
   :init
@@ -53,12 +57,21 @@
   (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition "Go to type definition" (and (lsp-feature? "textDocument/typeDefinition")
                                                                                                                  (fboundp 'lsp-ui-peek-find-custom)))
   (lsp-define-conditional-key lsp-command-map "sr" lsp-workspace-restart "Restart server" (lsp-workspaces))
-  (lsp-define-conditional-key lsp-command-map "ss" lsp "Start server" t))
+  (lsp-define-conditional-key lsp-command-map "ss" lsp "Start server" t)
+
+  (defun lsp--eslint-before-save (orig-fun)
+    (when lsp-eslint-auto-fix-on-save (lsp-eslint-fix-all))
+    (funcall orig-fun))
+
+  (advice-add 'lsp--before-save :around #'lsp--eslint-before-save)
+
+  )
 
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
 (use-package lsp-ui
     :bind (:map lsp-ui-mode-map
-           ("S-<f4>" . lsp-ui-imenu))
+           ("S-<f4>" . lsp-ui-imenu)
+           )
     :custom
     (lsp-ui-sideline-show-code-actions t)
     (lsp-ui-sideline-show-symbol nil)
@@ -76,6 +89,7 @@
 
 (use-package  lsp-ivy
   :straight (lsp-ivy :type git :host github :repo "emacs-lsp/lsp-ivy")
+  :bind (("A-f" . lsp-ivy-workspace-symbol))
   :commands lsp-ivy-workspace-symbol)
 
 (use-package lsp-treemacs
