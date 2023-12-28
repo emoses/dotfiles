@@ -12,7 +12,7 @@
     autocrlf = input
 #   pager = diff-so-fancy | less --tabs=1,5 -R
     pager = delta
-	sshCommand = /Users/evan.moses/okta/developer-utilities/git/security/helpers/git-ssh-ca-aurm
+	sshCommand = /Users/evan.moses/.git-helpers/git-ssh-ca-aurm
 [interactive]
     diffFilter = delta --color-only
 [user]
@@ -41,7 +41,7 @@
 [difftool]
 	prompt = true
 [credential]
-	helper = /opt/homebrew/opt/bash/bin/bash /Users/evan.moses/okta/developer-utilities/git/security/helpers/git-credential-okta-aurm --error --verbose -jq /opt/homebrew/bin/jq
+	helper = /opt/homebrew/opt/bash/bin/bash /Users/evan.moses/.git-helpers/git-credential-okta-aurm --error --verbose -jq /opt/homebrew/bin/jq
 	useHttpPath = true
 [push]
 	default = simple
