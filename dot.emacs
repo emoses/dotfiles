@@ -434,6 +434,7 @@
                        "secrets.el"
                        "gh.el"
 		       "org-mode-init.el"
+                       "hugo-markdown-mode.el"
 		       "evil.el"
 		       "faces.el"
 		       "mode-customizations.el"
