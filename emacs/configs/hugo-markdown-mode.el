@@ -33,17 +33,15 @@
 (require 'markdown-mode)
 
 (defun hugo-shortcode-nobreak-p ()
-  "Is the point in the middle of a Hugo Shortcode '{{< >}}'.
-Intended to be used in fill-nobreak-predicate"
-  (let ((before (point))
-        opening
-        limit)
-    (save-excursion
-      (backward-paragraph)
-      (setq limit (point))
-      (goto-char before)
-      (and (search-backward "{{<" limit t)
-           (not (search-forward ">}}" before t))))))
+  "Don't break between a shortcode opening and the shortcode name.
+Intended to be used by `fill-nobreak-predicate'.
+
+              {{< code arg1=arg2 >}}
+Don't break here ^    ^-- but here is OK"
+  (save-excursion
+    (skip-syntax-backward "w")
+    (skip-chars-backward " /")
+    (re-search-backward "{{[<%]" (- (point) 3) t)))
 
 (define-derived-mode hugo-markdown-mode markdown-mode "Hugo Markdown"
   "Major mode for editing Hugo markdown."

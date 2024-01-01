@@ -121,6 +121,10 @@
 
 
   (defun auth-source-git-credential-helper--append (result key &optional filter)
+    "Append the value between match-end and the end of the line to
+plist RESULT with KEY.  If FILTER is present, call it with the
+match data and any existing result at that key, and put its value
+at KEY."
     (let* ((data (buffer-substring-no-properties (match-end 0) (line-end-position)))
            (data (if (functionp filter) (funcall filter data (plist-get result key)) data)))
       (plist-put result key data)))
