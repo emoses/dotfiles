@@ -43,10 +43,10 @@ if there is no schedule (so these are sorted to the bottom)"
   (define-key org-mode-map (kbd "C-c C-r") nil)
 
   ;Local windows
-  (setq org-mobile-directory "~/ownCloud/MobileOrg")
-  (setq org-directory "~/ownCloud/org")
-  ;(setq org-mobile-directory "~/Nextcloud/MobileOrg")
-  ;(setq org-directory "~/Nextcloud/org")
+  ;(setq org-mobile-directory "~/ownCloud/MobileOrg")
+  ;(setq org-directory "~/ownCloud/org")
+  (setq org-mobile-directory "~/Nextcloud/MobileOrg")
+  (setq org-directory "~/Nextcloud/org")
   (setq org-mobile-inbox-for-pull (expand-file-name "from-mobile.org" org-directory))
   (setq org-agenda-files (mapcar (lambda (f) (expand-file-name f org-directory))
                                  '("work.org" "home.org")))
