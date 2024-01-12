@@ -133,39 +133,39 @@
 
 (use-package eldoc-overlay)
 
-(use-package ediff
-  :defer t
-  :config
-  (defun my:quit-ediff-kill-buffers ()
-    (interactive)
-    (ediff-barf-if-not-control-buffer)
-    (let ((ed-frame (window-frame ediff-window-A)))
-      (ediff-quit t)
-      (kill-buffer ediff-buffer-A)
-      (kill-buffer ediff-buffer-B)
-      (kill-buffer ediff-buffer-C)
-      (when ed-frame
-        (delete-frame ed-frame))))
+;; (use-package ediff
+;;   :defer t
+;;   :config
+;;   (defun my:quit-ediff-kill-buffers ()
+;;     (interactive)
+;;     (ediff-barf-if-not-control-buffer)
+;;     (let ((ed-frame (window-frame ediff-window-A)))
+;;       (ediff-quit t)
+;;       (kill-buffer ediff-buffer-A)
+;;       (kill-buffer ediff-buffer-B)
+;;       (kill-buffer ediff-buffer-C)
+;;       (when ed-frame
+;;         (delete-frame ed-frame))))
 
-  (defun my:ediff-copy-both-to-C ()
-    "Copy both regions to C during diff3
+;;   (defun my:ediff-copy-both-to-C ()
+;;     "Copy both regions to C during diff3
 
-   Via https://stackoverflow.com/a/29757750"
-    (interactive)
-    (ediff-copy-diff ediff-current-difference nil 'C nil
-                     (concat
-                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
-                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+;;    Via https://stackoverflow.com/a/29757750"
+;;     (interactive)
+;;     (ediff-copy-diff ediff-current-difference nil 'C nil
+;;                      (concat
+;;                       (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+;;                       (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
 
-  (defun my:ediff-jump-to-control-frame-or-window ()
-    (interactive)
-    (unless (or (boundp 'ediff-control-buffer) ediff-control-buffer (ediff-in-control-buffer-p))
-      (select-window (get-buffer-window ediff-control-buffer t))))
+;;   (defun my:ediff-jump-to-control-frame-or-window ()
+;;     (interactive)
+;;     (unless (or (boundp 'ediff-control-buffer) ediff-control-buffer (ediff-in-control-buffer-p))
+;;       (select-window (get-buffer-window ediff-control-buffer t))))
 
-  (add-hook 'ediff-keymap-setup-hook (lambda ()
-                                       (define-key ediff-mode-map "Q" #'my:quit-ediff-kill-buffers)
-                                       (define-key ediff-mode-map "d" #'my:ediff-copy-both-to-C)
-                                       (define-key ediff-mode-map "~" #'my:ediff-jump-to-control-frame-or-window))))
+;;   (add-hook 'ediff-keymap-setup-hook (lambda ()
+;;                                        (define-key ediff-mode-map "Q" #'my:quit-ediff-kill-buffers)
+;;                                        (define-key ediff-mode-map "d" #'my:ediff-copy-both-to-C)
+;;                                        (define-key ediff-mode-map "~" #'my:ediff-jump-to-control-frame-or-window))))
 
 
 (use-package lua-mode

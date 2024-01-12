@@ -93,3 +93,5 @@ Also, switch to that buffer."
     )
 
 (use-package pyvenv)
+
+(use-package pylint)

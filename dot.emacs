@@ -140,7 +140,9 @@
  '(projectile-project-root-files
    '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((lsp-enabled-clients deno-ls)
+   '((web-mode-engines-alist
+      ("go" . "\\.tpl\\.html"))
+     (lsp-enabled-clients deno-ls)
      (org-html-metadata-timestamp-format . "%Y-%m-%d")
      (my:prettify . t)
      (lsp-eslint-package-manager . "yarn")
@@ -386,6 +388,9 @@
 
 (add-to-list 'load-path my:emacs-base)
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
+
+(add-to-list 'auth-sources 'macos-keychain-generic)
+(add-to-list 'auth-sources 'macos-keychain-internet)
 
 ;;Performance tuning (see https://github.com/emacs-lsp/lsp-mode#performance)
 (setq gc-cons-threshold (* 100 1024 1024))
