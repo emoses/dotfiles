@@ -47,7 +47,11 @@
   :after flymd
   :mode (("\\.md$" . markdown-mode)
          ("\\.markdown$" . markdown-mode))
-  :init (setq markdown-command "pandoc"))
+  :init (setq markdown-command "pandoc")
+  :config
+  (defun my:markdown-mode-hook ()
+    (turn-on-auto-fill))
+  (add-hook 'markdown-mode-hook #'my:markdown-mode-hook))
 
 (setq nxml-child-indent 4)
 

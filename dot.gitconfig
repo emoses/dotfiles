@@ -78,3 +78,7 @@
      insteadOf = https://github.com/okta
 [url "git@github.com:ScaleFT"]
      insteadOf = https://github.com/ScaleFT
+[includeIf "gitdir:~/dev/github.com/emoses"]
+    path = ~/.gitconfig.personal
+[pull]
+	rebase = false
