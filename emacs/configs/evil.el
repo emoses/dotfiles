@@ -37,6 +37,11 @@
                                 (vterm-mode . insert))
         do (evil-set-initial-state mode state))
 
+  ;; https://emacs.stackexchange.com/a/886
+  (add-hook 'org-mode-hook (lambda ()
+                             (if (string= "*org-goto*" (buffer-name))
+                                 (evil-emacs-state))))
+
   (defun my:evil-write (&rest args)
     "I constantly hit :w2<ret> and save a file named 2.  Verify that I want to do that"
     (if (equal "2" (nth 3 args))

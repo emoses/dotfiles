@@ -129,7 +129,7 @@
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
  '(native-comp-async-report-warnings-errors 'silent)
- '(org-agenda-files '("/Users/emoses/Nextcloud/org/home.org"))
+ '(org-agenda-files nil)
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(org-log-done 'time)
  '(org-modules
@@ -140,7 +140,9 @@
  '(projectile-project-root-files
    '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((eval turn-on-auto-fill)
+   '((backup-directory-alist
+      ("." . "~/.emacs.d/backup-files/"))
+     (eval turn-on-auto-fill)
      (web-mode-engines-alist
       ("go" . "\\.tpl\\.html"))
      (lsp-enabled-clients deno-ls)
@@ -634,8 +636,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 ;; (use-package ido-completing-read+)
 
 (use-package counsel
-  :bind (("C-s" . swiper)
-         ("M-x" . counsel-M-x)
+  :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-x b" . ivy-switch-buffer)
          ("C-h f" . counsel-describe-function)

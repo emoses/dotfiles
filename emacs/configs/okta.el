@@ -110,6 +110,16 @@
           (delete-region (search-forward-regexp "[^\\]\"") (point-max))
           (unescape-nt)))))
 
+  (defun okta:get-test-postgres-container-id ()
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (if (search-forward "\"container_name\": \"landlord_sft_postgres_platform_ee2807f9_1a16_4636\"")
+        (progn
+          (when (search-forward-regexp "\"container_id\": \"\\([^\"]+\\)\"")
+            (kill-new (match-string 1))))
+        (error "No container id found"))))
+
   (require 'auth-source)
   (require 'ghub)
   (defun auth-source-backend-git-credential-helper (entry)
