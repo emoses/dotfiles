@@ -11,7 +11,7 @@
 ;; This is easier than trying to the env var set properly on macos
 (setenv "ASDF_GOLANG_MOD_VERSION_ENABLED" "false")
 
-(when (treesit-available-p)
+(when (and (fboundp 'treesit-available-p) (treesit-available-p))
   (use-package go-ts-mode
     :bind (:map go-ts-mode-map
                 ("C-c C-a" . go-import-add)

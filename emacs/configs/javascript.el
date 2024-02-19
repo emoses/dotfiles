@@ -107,7 +107,6 @@
               (setq js-indent-level 2))))
 
 (use-package counsel-jq
-  :after swiper
   :custom
   (counsel-jq-json-buffer-mode 'json-mode))
 

@@ -434,10 +434,10 @@
                        "secrets.el"
                        "gh.el"
 		       "org-mode-init.el"
-                       "hugo-markdown-mode.el"
 		       "evil.el"
 		       "faces.el"
 		       "mode-customizations.el"
+                       "hugo-markdown-mode.el"
                        "javascript.el"
 		       "keys.el"
 		       "misc-fns.el"
@@ -628,8 +628,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 ;; (use-package ido-completing-read+)
 
 (use-package counsel
-  :bind (("C-s" . swiper)
-         ("M-x" . counsel-M-x)
+  :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-x b" . ivy-switch-buffer)
          ("C-h f" . counsel-describe-function)
@@ -679,6 +678,88 @@ _k_: previous error    _l_: last error
            (user-error nil))
      nil :bind nil)
     ("q" nil            nil :color blue)))
+
+(require 'transient)
+
+(defun my:transient-with-keyprefix (key desc cmd &rest args)
+  (let ((seq (where-is-internal cmd isearch-mode-map)))
+    (append (list key
+                  (if seq (concat desc "[" (mapconcat #'key-description seq ", ") "]")
+                    desc)
+                  cmd)
+            args)))
+
+(transient-define-prefix my:isearch-menu ()
+  "isearch Menu, see
+http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.html "
+  [["Edit Search String"
+    ("e"
+     "Edit the search string (recursive)"
+     isearch-edit-string
+     :transient nil)
+    ("w"
+     "Pull next word or character word from buffer"
+     isearch-yank-word-or-char
+     :transient nil)
+    ("s"
+     "Pull next symbol or character from buffer"
+     isearch-yank-symbol-or-char
+     :transient nil)
+    ("l"
+     "Pull rest of line from buffer"
+     isearch-yank-line
+     :transient nil)
+    ("y"
+     "Pull string from kill ring"
+     isearch-yank-kill
+     :transient nil)
+    ("t"
+     "Pull thing from buffer"
+     isearch-forward-thing-at-point
+     :transient nil)]
+
+   ["Replace"
+    ("q"
+     "Start ‘query-replace’"
+     isearch-query-replace
+     :if-nil buffer-read-only
+     :transient nil)
+    ("x"
+     "Start ‘query-replace-regexp’"
+     isearch-query-replace-regexp
+     :if-nil buffer-read-only
+     :transient nil)]]
+
+  [["Toggle"
+    ("X"
+     "Toggle regexp searching"
+     isearch-toggle-regexp
+     :transient nil)
+    ("S"
+     "Toggle symbol searching"
+     isearch-toggle-symbol
+     :transient nil)
+    ("W"
+     "Toggle word searching"
+     isearch-toggle-word
+     :transient nil)
+    ("F"
+     "Toggle case fold"
+     isearch-toggle-case-fold
+     :transient nil)
+    ("L"
+     "Toggle lax whitespace"
+     isearch-toggle-lax-whitespace
+     :transient nil)]
+
+   ["Misc"
+    ("o"
+     "occur"
+     isearch-occur
+     :transient nil)]])
+
+(define-key isearch-mode-map (kbd "A-s") 'my:isearch-menu)
+
 
 (use-package ivy-hydra
   :after (ivy hydra))
