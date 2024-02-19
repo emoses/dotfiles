@@ -144,6 +144,7 @@
   :init
   (defun -flycheck-golangci-lint-setup ()
     (flycheck-golangci-lint-setup)
+    (flycheck-add-mode 'golangci-lint 'go-ts-mode)
     (flycheck-add-next-checker 'lsp 'golangci-lint)))
 
 ;;Relies on `impl` and `godoc`

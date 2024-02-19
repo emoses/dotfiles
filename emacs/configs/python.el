@@ -74,3 +74,5 @@ Also, switch to that buffer."
                           (lsp))))
 
 (use-package pyvenv)
+
+(use-package pylint)
