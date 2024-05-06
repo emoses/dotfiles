@@ -56,9 +56,10 @@ local work_display_table = {
 }
 
 local ultrawide_display_table = {
-   Emacs = {1, {x = 0, y = 0, w = 4, h = work_h}},
-   Firefox = {1, {x = 4, y = 0, w = 3, h = work_h}},
-   Slack = {2, {x = 0, y = 0, w = 7, h = work_h}},
+   Emacs = {2, {x = 0, y = 0, w = 4, h = work_h}},
+   Firefox = {2, {x = 4, y = 0, w = 3, h = work_h}},
+   ["Google Chrome"] = {2, {x = 4, y = 0, w = 3, h = work_h}},
+   Slack = {1, {x = 0, y = 0, w = 7, h = work_h}},
 }
 
 local home_display_table = {

@@ -10,7 +10,6 @@
 [core]
     excludesfile = ~/gitignore
     autocrlf = input
-#   pager = diff-so-fancy | less --tabs=1,5 -R
     pager = delta
 	sshCommand = /Users/evan.moses/.git-helpers/git-ssh-ca-aurm
 [interactive]
@@ -20,13 +19,9 @@
 	email = evan.moses@okta.com
 [diff]
     colorMoved = default
+    algorithm = histogram
 [merge]
-     conflictsylte = diff3
-        tool = p4merge
-[mergetool "p4merge"]
-    cmd = /home/emoses/bin/p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
-    trustExitCode = false
-    keepTemporaries = false
+     conflictsylte = zdiff3
 [delta]
     navigate = true
     light = false

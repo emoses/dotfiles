@@ -13,8 +13,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(auth-sources
-   '(macos-keychain-generic macos-keychain-internet "~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
+ '(company-dabbrev-downcase nil)
+ '(company-dabbrev-ignore-case nil)
  '(connection-local-criteria-alist
    '(((:application tramp :machine "FK00M29L63")
       tramp-connection-local-darwin-ps-profile)
@@ -392,9 +392,6 @@
 (add-to-list 'load-path my:emacs-base)
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
 
-(require 'auth-source)
-(add-to-list 'auth-sources 'macos-keychain-generic)
-(add-to-list 'auth-sources 'macos-keychain-internet)
 
 ;;Performance tuning (see https://github.com/emacs-lsp/lsp-mode#performance)
 (setq gc-cons-threshold (* 100 1024 1024))
@@ -422,6 +419,11 @@
 (defvar my:osx (eq system-type 'darwin))
 (defvar my:windows (eq system-type 'windows-nt))
 (defvar my:linux (eq system-type 'gnu/linux))
+
+(when my:osx
+  (require 'auth-source)
+  (add-to-list 'auth-sources 'macos-keychain-generic)
+  (add-to-list 'auth-sources 'macos-keychain-internet))
 
 ;;Deal with TLS certs.  See https://glyph.twistedmatrix.com/2015/11/editor-malware.html
 (let ((trustfile
@@ -766,10 +768,6 @@ _k_: previous error    _l_: last error
          ("C-x C-+" . zoom-in/out)
          ([C-S-wheel-right] . zoom-out)
          ([C-S-wheel-left] . zoom-in)))
-
-(use-package terminal-here
-  :bind (("C-<f2>" . terminal-here-launch)
-         ("C-S-<f2>" . terminal-here-project-launch)))
 
 (use-package yasnippet
   :bind (("C-'" . yas-expand)

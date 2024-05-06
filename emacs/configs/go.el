@@ -34,8 +34,7 @@
   :config
   (defun my:go-local-var-hooks ()
     (when (or (derived-mode-p 'go-mode) (derived-mode-p 'go-ts-mode))
-      (lsp)
-      (-flycheck-golangci-lint-setup)))
+      (lsp)))
 
   (add-hook 'go-mode-hook #'my:go-mode-hooks)
   ;; Instead of adding to go-mode-hook, add lsp to hack-local-variables-hook so the .dir-locals.el is loaded before lsp comes up
@@ -117,7 +116,22 @@
     (defvar my:lsp-go-directory-filters '())
     (lsp-register-custom-settings
      '(("gopls.directoryFilters" my:lsp-go-directory-filters)
-       ("gopls.buildFlags" ["-tags=dev"])))))
+       ("gopls.buildFlags" ["-tags=dev"])
+       ("golangci-lint.command"
+         ["golangci-lint" "run" "--modules-download-mode=vendor" "--enable-all" "--disable" "lll" "--out-format" "json" "--issues-exit-code=1"])))
+
+     (lsp-register-client
+      (make-lsp-client :new-connection (lsp-stdio-connection
+                                        '("golangci-lint-langserver"))
+                       :activation-fn (lsp-activate-on "go")
+                       :language-id "go"
+                       :priority 0
+                       :server-id 'golangci-lint
+                       :add-on? t
+                       :library-folders-fn #'lsp-go--library-default-directories
+                       :initialization-options (lambda ()
+                                                 (gethash "golangci-lint"
+                                                          (lsp-configuration-section "golangci-lint")))))))
 
 (use-package go-dlv
   :config
@@ -139,13 +153,6 @@
 
   (with-eval-after-load 'go-ts-mode
     (define-key go-mode-map (kbd "C-c \\") #'quit-compilation)))
-
-(use-package flycheck-golangci-lint
-  :init
-  (defun -flycheck-golangci-lint-setup ()
-    (flycheck-golangci-lint-setup)
-    (flycheck-add-mode 'golangci-lint 'go-ts-mode)
-    (flycheck-add-next-checker 'lsp 'golangci-lint)))
 
 ;;Relies on `impl` and `godoc`
 ;;

@@ -317,7 +317,7 @@
   :config
   (add-hook 'treemacs-mode-hook #'my:line-numbers-off))
 
-(use-package powershell
+(use-package powershell-mode
   :mode "\\.ps1")
 
 (unless (eq system-type 'windows-nt)
@@ -345,13 +345,12 @@
         '(("github\\.com" . gfm-mode)))
   (atomic-chrome-start-server))
 
-(when (executable-find "pg_format")
-  (use-package sqlformat
-    :after sql
-    :bind (:map sql-mode-map
-                ("C-c C-f" . 'sqlformat))
-    :config
-    (setq sqlformat-command 'pgformatter)))
+(use-package sqlformat
+  :after sql
+  :bind (:map sql-mode-map
+              ("C-c C-f" . 'sqlformat))
+  :config
+  (setq sqlformat-command 'pgformatter))
 
 (use-package rustic
   :mode "\\.rs$"
