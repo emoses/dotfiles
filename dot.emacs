@@ -120,11 +120,16 @@
  '(fill-column 120)
  '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-temp-prefix "__flycheck")
+ '(global-treesit-auto-modes
+   '(typescript-mode typescript-ts-mode tsx-ts-mode toml-mode conf-toml-mode toml-ts-mode rust-mode rust-ts-mode ruby-mode ruby-ts-mode ess-mode r-ts-mode python-mode python-ts-mode protobuf-mode protobuf-ts-mode markdown-mode poly-markdown-mode markdown-ts-mode makefile-mode makefile-ts-mode lua-mode lua-ts-mode latex-mode latex-ts-mode kotlin-mode kotlin-ts-mode julia-mode julia-ts-mode js-json-mode json-ts-mode js2-mode javascript-mode js-mode js-ts-mode java-mode java-ts-mode sgml-mode mhtml-mode html-ts-mode heex-mode heex-ts-mode go-mod-mode go-mod-ts-mode go-mode go-ts-mode elixir-mode elixir-ts-mode dockerfile-mode dockerfile-ts-mode css-mode css-ts-mode c++-mode c++-ts-mode common-lisp-mode commonlisp-ts-mode cmake-mode cmake-ts-mode clojure-mode clojure-ts-mode csharp-mode csharp-ts-mode c-mode c-ts-mode bibtex-mode bibtex-ts-mode sh-mode bash-ts-mode))
  '(js2-bounce-indent-flag nil)
  '(js2-global-externs '("require" "module"))
  '(js2-strict-inconsistent-return-warning nil)
  '(lsp-eslint-auto-fix-on-save t)
  '(lsp-imenu-sort-methods '(position kind))
+ '(lsp-ui-imenu-auto-refresh t)
+ '(lsp-ui-imenu-buffer-position 'left)
+ '(lsp-ui-imenu-window-width 60)
  '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
  '(mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
@@ -805,10 +810,10 @@ _k_: previous error    _l_: last error
           (add-hook 'after-init-hook #'edit-server-start))
   :custom (edit-server-url-major-mode-alist . ('(("^github.com" . markdown-mode)))))
 
-(when my:linux
-  (use-package keychain-environment
-    :init
-    (keychain-refresh-environment)))
+(use-package keychain-environment
+   :if my:linux
+   :init
+   (keychain-refresh-environment))
 
 ;; Display buffer
 

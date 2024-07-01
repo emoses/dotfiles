@@ -70,7 +70,7 @@
   ;; lsp-ui gives us the blue documentation boxes and the sidebar info
 (use-package lsp-ui
     :bind (:map lsp-ui-mode-map
-           ("S-<f4>" . lsp-ui-imenu)
+           ("S-<f12>" . lsp-ui-imenu)
            )
     :custom
     (lsp-ui-sideline-show-code-actions t)
@@ -96,3 +96,14 @@
   :commands lsp-treemacs-errors-list
   :config
   (lsp-treemacs-sync-mode 1))
+
+(use-package dap-mode
+  :bind (:map dap-mode-map
+              ("<f2>" . dap-next)
+              ("S-<f2>" . dap-step-in)
+              ("<f3>" . dap-step-out)
+              ("S-<f3>" . dap-continue))
+  :config
+  (require 'dap-dlv-go)
+  (setq dap-auto-configure-features '(locals controls tooltip))
+  (setq dap-ui-mode 1))

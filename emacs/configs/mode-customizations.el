@@ -1,9 +1,10 @@
 
 ;;Start tree-sitter modes
-(when (fboundp 'treesit-available-p)
-  (use-package treesit-auto
-    :config
-    (global-treesit-auto-mode)))
+(use-package treesit-auto
+   :if (fboundp 'treesit-available-p)
+   :config
+   (delete 'yaml treesit-auto-langs)
+   (global-treesit-auto-mode))
 
 ;; ;;Load auctex
 (use-package tex
@@ -55,22 +56,22 @@
 
 (setq nxml-child-indent 4)
 
-(when (not my:osx)
-  (use-package dired+
-    :load-path "~/.emacs.d/elisp"
-    :config
-    (setq diredp-hide-details-propagate-flag t)))
+(use-package dired+
+   :if (not my:osx)
+   :load-path "~/.emacs.d/elisp"
+   :config
+   (setq diredp-hide-details-propagate-flag t))
 
 ;;Haskell
-(unless (eq system-type 'windows-nt)
-  (use-package haskell-mode
-    :mode "\\.hs$"
-    :config
-    (autoload 'ghc-init "ghc" nil t)
-    (autoload 'ghc-debug "ghc" nil t)
-    (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-    (add-hook 'haskell-mode-hook 'ghc-init)))
+(use-package haskell-mode
+   :if (not (eq system-type 'windows-nt))
+   :mode "\\.hs$"
+   :config
+   (autoload 'ghc-init "ghc" nil t)
+   (autoload 'ghc-debug "ghc" nil t)
+   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+   (add-hook 'haskell-mode-hook 'ghc-init))
 
 ;;Haml
 (use-package haml-mode
@@ -365,3 +366,6 @@
     (when buffer-file-name
       (setq-local buffer-save-without-query t))
     (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
+
+(use-package cue-mode
+  :mode "\\.cue$")

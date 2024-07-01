@@ -11,18 +11,18 @@
 ;; This is easier than trying to the env var set properly on macos
 (setenv "ASDF_GOLANG_MOD_VERSION_ENABLED" "false")
 
-(when (treesit-available-p)
-  (use-package go-ts-mode
-    :bind (:map go-ts-mode-map
-                ("C-c C-a" . go-import-add)
-		("C-c C-c" . compile)
-		;; This overrides godef-describe
-		("C-c C-d" . my:godoc-maybe-at-point)
-		("C-c d" . godef-describe)
-		)
-    :config
-    (add-hook 'go-ts-mode-hook #'my:go-mode-hooks)
-    ))
+(use-package go-ts-mode
+   :if (treesit-available-p)
+   :bind (:map go-ts-mode-map
+               ("C-c C-a" . go-import-add)
+	       ("C-c C-c" . compile)
+	       ;; This overrides godef-describe
+	       ("C-c C-d" . my:godoc-maybe-at-point)
+	       ("C-c d" . godef-describe)
+	       )
+   :config
+   (add-hook 'go-ts-mode-hook #'my:go-mode-hooks)
+   )
 
 (use-package go-mode
   :mode "\\.go$"
