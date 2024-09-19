@@ -190,4 +190,26 @@ at KEY."
 
 
   (add-hook 'auth-source-backend-parser-functions #'auth-source-backend-git-credential-helper)
-  (add-to-list 'auth-sources "git-credential-helper"))
+  (add-to-list 'auth-sources "git-credential-helper")
+
+  (with-eval-after-load 'dap-mode
+    (dap-register-debug-template "Go Dlv Test Integration Current Function "
+                                 (list :type "go"
+                                       :request "launch"
+                                       :name "Test function"
+                                       :mode "test"
+                                       :program nil
+                                       :args nil
+                                       :env '(("SFT_DB_AUTOCLEAN" . "true")
+                                              ("SFT_DB_INTEGRATION_TESTS" . "true"))))
+
+    (dap-register-debug-template "Go Dlv Test Integration Current Subtest "
+                                 (list :type "go"
+                                       :request "launch"
+                                       :name "Test subtest"
+                                       :mode "test"
+                                       :program nil
+                                       :args nil
+                                       :env '(("SFT_DB_AUTOCLEAN" . "true")
+                                              ("SFT_DB_INTEGRATION_TESTS" . "true")))))
+    )

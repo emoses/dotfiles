@@ -154,6 +154,17 @@ find-file-other-frame and display-buffer"
         nil
       filename)))
 
+(defun copy-current-buffer-filename (arg)
+  "Copy the current buffer's filename into the kill ring.  If ARG is
+provided, copy the whole path, otherwise just the basename"
+  (interactive "P")
+  (if-let (filename (get-current-buffer-filename))
+      (progn
+        (unless arg (setq filename (file-name-nondirectory filename)))
+        (kill-new filename)
+        (message "Copied: %s" filename))
+    (message "This buffer has no file")))
+
 (defun rename-this-file ()
   "Renames current buffer and file it is visiting."
   (interactive)
@@ -174,8 +185,8 @@ find-file-other-frame and display-buffer"
                (set-visited-file-name new-name)
                (set-buffer-modified-p nil)
                (when (fboundp 'recentf-add-file)
-                   (recentf-add-file new-name)
-                   (recentf-remove-if-non-kept filename))
+                 (recentf-add-file new-name)
+                 (recentf-remove-if-non-kept filename))
                (when (and (fboundp 'projectile-invalidate-cache))
                  (projectile-project-p)
                  (call-interactively #'projectile-invalidate-cache))

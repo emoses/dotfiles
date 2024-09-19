@@ -42,17 +42,29 @@
 (require 'generic-x)
 
 
-(use-package flymd)
+(use-package impatient-mode)
 
 (use-package markdown-mode
-  :after flymd
   :mode (("\\.md$" . markdown-mode)
          ("\\.markdown$" . markdown-mode))
-  :init (setq markdown-command "pandoc")
-  :config
+  :hook (markdown-mode . my:markdown-mode-hook)
+  :bind (:map markdown-mode-map
+              ("C-c C-c i" . imp-visit-buffer))
+  :init
   (defun my:markdown-mode-hook ()
-    (turn-on-auto-fill))
-  (add-hook 'markdown-mode-hook #'my:markdown-mode-hook))
+    (turn-on-auto-fill)
+    (imp-set-user-filter #'markdown-filter))
+
+  (defun markdown-filter (buffer)
+    (princ
+     (with-temp-buffer
+       (let ((tmpname (buffer-name)))
+         (set-buffer buffer)
+         (set-buffer (markdown tmpname)) ; the function markdown is in `markdown-mode.el'
+         (buffer-string)))
+     (current-buffer)))
+  :custom
+  (markdown-command "pandoc" "Use pandoc for markdown"))
 
 (setq nxml-child-indent 4)
 
@@ -115,7 +127,8 @@
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
 
 ;; Don't enable by default
-(use-package magit-delta)
+(use-package magit-delta
+  :after magit)
 
 (use-package forge
   :after magit
@@ -237,6 +250,7 @@
   (setq plantuml-jar-path "~/lib/plantuml.jar")
   (setq plantuml-default-exec-mode 'jar)
   (add-to-list 'org-babel-load-languages '(plantuml . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
   (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
 
 (defun my:line-numbers-off ()
@@ -340,18 +354,11 @@
 
 (use-package nix-mode)
 
-(use-package atomic-chrome
-  :config
-  (setq atomic-chrome-url-major-mode-alist
-        '(("github\\.com" . gfm-mode)))
-  (atomic-chrome-start-server))
-
 (use-package sqlformat
-  :after sql
+  ;; :after sql
   :bind (:map sql-mode-map
               ("C-c C-f" . 'sqlformat))
-  :config
-  (setq sqlformat-command 'pgformatter))
+  :custom (sqlformat-command 'pgformatter))
 
 (use-package rustic
   :mode "\\.rs$"
