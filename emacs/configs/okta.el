@@ -104,10 +104,16 @@
           (bufname "*okta log panic*"))
       (with-help-window bufname
         (with-current-buffer bufname
-          (insert line)
           (goto-char (point-min))
-          (delete-region (point) (search-forward "\"stack\":\""))
-          (delete-region (search-forward-regexp "[^\\]\"") (point-max))
+          (condition-case nil
+              (let ((json (json-parse-string line)))
+                (insert (format "Error: %s\n\n" (gethash "recovered_error" json "Unknown")))
+                (insert (gethash "stack" json)))
+            (json-parse-error (progn
+                                ;;fall back to naive parse
+                                (insert line)
+                                (delete-region (point) (search-forward "\"stack\":\""))
+                                (delete-region (search-forward-regexp "[^\\]\"") (point-max)))))
           (unescape-nt)))))
 
   (defun okta:get-test-postgres-container-id ()
@@ -157,6 +163,8 @@ at KEY."
         (forward-line))
       ret))
 
+  (defvar auth-source-git-credential-helper-org "atko-pam")
+
   (cl-defun auth-source-git-credential-helper-search (&rest spec
                                                             &key create delete type
                                                             &allow-other-keys)
@@ -171,7 +179,9 @@ at KEY."
                 (out-buf (generate-new-buffer "output")))
             (unwind-protect
                 (progn
-                  (apply #'call-process-region (format "username=%s\nprotocol=https\nhost=github.com\n\n" user) nil (car helper-and-args) nil out-buf nil (cdr helper-and-args))
+                  (apply #'call-process-region
+                         (format "username=%s\nprotocol=https\nhost=github.com\norg=%s\n" user auth-source-git-credential-helper-org)
+                         nil (car helper-and-args) nil out-buf nil (cdr helper-and-args))
                   (with-current-buffer out-buf
                     (let ((processed (auth-source-git-credential-helper--process-output)))
                       (and (plist-get processed :secret) (list (plist-put processed :type type))))))
@@ -180,4 +190,26 @@ at KEY."
 
 
   (add-hook 'auth-source-backend-parser-functions #'auth-source-backend-git-credential-helper)
-  (add-to-list 'auth-sources "git-credential-helper"))
+  (add-to-list 'auth-sources "git-credential-helper")
+
+  (with-eval-after-load 'dap-mode
+    (dap-register-debug-template "Go Dlv Test Integration Current Function "
+                                 (list :type "go"
+                                       :request "launch"
+                                       :name "Test function"
+                                       :mode "test"
+                                       :program nil
+                                       :args nil
+                                       :env '(("SFT_DB_AUTOCLEAN" . "true")
+                                              ("SFT_DB_INTEGRATION_TESTS" . "true"))))
+
+    (dap-register-debug-template "Go Dlv Test Integration Current Subtest "
+                                 (list :type "go"
+                                       :request "launch"
+                                       :name "Test subtest"
+                                       :mode "test"
+                                       :program nil
+                                       :args nil
+                                       :env '(("SFT_DB_AUTOCLEAN" . "true")
+                                              ("SFT_DB_INTEGRATION_TESTS" . "true")))))
+    )

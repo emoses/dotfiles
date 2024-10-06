@@ -10,7 +10,6 @@
 [core]
     excludesfile = ~/gitignore
     autocrlf = input
-#   pager = diff-so-fancy | less --tabs=1,5 -R
     pager = delta
 	sshCommand = /Users/evan.moses/.git-helpers/git-ssh-ca-aurm
 [interactive]
@@ -18,19 +17,17 @@
 [user]
 	name = Evan Moses
 	email = evan.moses@okta.com
+	signingkey = E16816E7EC37808B
 [diff]
     colorMoved = default
+    algorithm = histogram
 [merge]
-     conflictsylte = diff3
-        tool = p4merge
-[mergetool "p4merge"]
-    cmd = /home/emoses/bin/p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
-    trustExitCode = false
-    keepTemporaries = false
+     conflictstyle = zdiff3
 [delta]
     navigate = true
     light = false
     features = chameleon
+    side-by-side = true
 
 [color]
         status = auto
@@ -74,11 +71,13 @@
 [rerere]
 	enabled = true
 #Okta stuff
-[url "git@github.com:okta"]
-     insteadOf = https://github.com/okta
 [url "git@github.com:ScaleFT"]
      insteadOf = https://github.com/ScaleFT
-[includeIf "gitdir:~/dev/github.com/emoses"]
-    path = ~/.gitconfig.personal
 [pull]
 	rebase = false
+[commit]
+	gpgsign = true
+[includeIf "gitdir:~/dev/github.com/emoses/"]
+    path = ~/.gitconfig.personal
+[includeIf "gitdir:~/dotfiles/"]
+    path = ~/.gitconfig.personal

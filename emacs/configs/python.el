@@ -12,7 +12,7 @@
   :config
                                         ; extracted from elpy
   (require 'subr-x)
-  (pyenv-mode)
+  (pyvenv-mode)
   (setq python-shell-interpreter "python3")
   (defun my:python-occur-definitions ()
     "Display an occur buffer of all definitions in the current buffer.

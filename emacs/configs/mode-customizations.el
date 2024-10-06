@@ -1,9 +1,10 @@
 
 ;;Start tree-sitter modes
-(when (fboundp 'treesit-available-p)
-  (use-package treesit-auto
-    :config
-    (global-treesit-auto-mode)))
+(use-package treesit-auto
+   :if (fboundp 'treesit-available-p)
+   :config
+   (delete 'yaml treesit-auto-langs)
+   (global-treesit-auto-mode))
 
 ;; ;;Load auctex
 (use-package tex
@@ -41,36 +42,48 @@
 (require 'generic-x)
 
 
-(use-package flymd)
+(use-package impatient-mode)
 
 (use-package markdown-mode
-  :after flymd
   :mode (("\\.md$" . markdown-mode)
          ("\\.markdown$" . markdown-mode))
-  :init (setq markdown-command "pandoc")
-  :config
+  :hook (markdown-mode . my:markdown-mode-hook)
+  :bind (:map markdown-mode-map
+              ("C-c C-c i" . imp-visit-buffer))
+  :init
   (defun my:markdown-mode-hook ()
-    (turn-on-auto-fill))
-  (add-hook 'markdown-mode-hook #'my:markdown-mode-hook))
+    (turn-on-auto-fill)
+    (imp-set-user-filter #'markdown-filter))
+
+  (defun markdown-filter (buffer)
+    (princ
+     (with-temp-buffer
+       (let ((tmpname (buffer-name)))
+         (set-buffer buffer)
+         (set-buffer (markdown tmpname)) ; the function markdown is in `markdown-mode.el'
+         (buffer-string)))
+     (current-buffer)))
+  :custom
+  (markdown-command "pandoc" "Use pandoc for markdown"))
 
 (setq nxml-child-indent 4)
 
-(when (not my:osx)
-  (use-package dired+
-    :load-path "~/.emacs.d/elisp"
-    :config
-    (setq diredp-hide-details-propagate-flag t)))
+(use-package dired+
+   :if (not my:osx)
+   :load-path "~/.emacs.d/elisp"
+   :config
+   (setq diredp-hide-details-propagate-flag t))
 
 ;;Haskell
-(unless (eq system-type 'windows-nt)
-  (use-package haskell-mode
-    :mode "\\.hs$"
-    :config
-    (autoload 'ghc-init "ghc" nil t)
-    (autoload 'ghc-debug "ghc" nil t)
-    (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-    (add-hook 'haskell-mode-hook 'ghc-init)))
+(use-package haskell-mode
+   :if (not (eq system-type 'windows-nt))
+   :mode "\\.hs$"
+   :config
+   (autoload 'ghc-init "ghc" nil t)
+   (autoload 'ghc-debug "ghc" nil t)
+   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+   (add-hook 'haskell-mode-hook 'ghc-init))
 
 ;;Haml
 (use-package haml-mode
@@ -114,7 +127,8 @@
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
 
 ;; Don't enable by default
-(use-package magit-delta)
+(use-package magit-delta
+  :after magit)
 
 (use-package forge
   :after magit
@@ -236,6 +250,7 @@
   (setq plantuml-jar-path "~/lib/plantuml.jar")
   (setq plantuml-default-exec-mode 'jar)
   (add-to-list 'org-babel-load-languages '(plantuml . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
   (setq org-plantuml-jar-path (expand-file-name "~/lib/plantuml.jar")))
 
 (defun my:line-numbers-off ()
@@ -317,7 +332,7 @@
   :config
   (add-hook 'treemacs-mode-hook #'my:line-numbers-off))
 
-(use-package powershell
+(use-package powershell-mode
   :mode "\\.ps1")
 
 (unless (eq system-type 'windows-nt)
@@ -339,19 +354,11 @@
 
 (use-package nix-mode)
 
-(use-package atomic-chrome
-  :config
-  (setq atomic-chrome-url-major-mode-alist
-        '(("github\\.com" . gfm-mode)))
-  (atomic-chrome-start-server))
-
-(when (executable-find "pg_format")
-  (use-package sqlformat
-    :after sql
-    :bind (:map sql-mode-map
-                ("C-c C-f" . 'sqlformat))
-    :config
-    (setq sqlformat-command 'pgformatter)))
+(use-package sqlformat
+  ;; :after sql
+  :bind (:map sql-mode-map
+              ("C-c C-f" . 'sqlformat))
+  :custom (sqlformat-command 'pgformatter))
 
 (use-package rustic
   :mode "\\.rs$"
@@ -366,3 +373,6 @@
     (when buffer-file-name
       (setq-local buffer-save-without-query t))
     (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
+
+(use-package cue-mode
+  :mode "\\.cue$")

@@ -9,6 +9,16 @@
 (when (fboundp #'mac-auto-operator-composition-mode)
   (mac-auto-operator-composition-mode))
 
+(use-package ultra-scroll-mac
+  :if (eq window-system 'mac)
+  :straight (:type git :host github :repo "jdtsmith/ultra-scroll-mac")
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0)
+  :config
+  (pixel-scroll-precision-mode -1)
+  (ultra-scroll-mac-mode 1))
+
 
 (defun my:frame-fullscreen-p ()
   "Is the current frame fullscreen?.  See toggle-frame-fullscreen in frames.el"
