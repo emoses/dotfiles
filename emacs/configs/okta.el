@@ -180,7 +180,7 @@ at KEY."
             (unwind-protect
                 (progn
                   (apply #'call-process-region
-                         (format "username=%s\nprotocol=https\nhost=github.com\norg=%s\n" user auth-source-git-credential-helper-org)
+                         (format "username=%s\nprotocol=https\nhost=github.com\npath=%s\n" user auth-source-git-credential-helper-org)
                          nil (car helper-and-args) nil out-buf nil (cdr helper-and-args))
                   (with-current-buffer out-buf
                     (let ((processed (auth-source-git-credential-helper--process-output)))
@@ -212,4 +212,36 @@ at KEY."
                                        :args nil
                                        :env '(("SFT_DB_AUTOCLEAN" . "true")
                                               ("SFT_DB_INTEGRATION_TESTS" . "true")))))
+
+  (with-eval-after-load 'sql-mode
+    (add-to-list sql-product-alist
+		 (tilt
+		  :name "Postgres-tilt"
+		  :free-software t
+		  :font-lock sql-mode-postgres-font-lock-keywords
+		  :sqli-program "kubectl"
+		  :sqli-options sql-postgres-options
+		  :sqli-login sql-postgres-login-params
+		  :sqli-comint-func sql-comint-postgres
+		  :list-all ("\\d+" . "\\dS+")
+		  :list-table ("\\d+ %s" . "\\dS+ %s")
+		  :completion-object sql-postgres-completion-object
+		  :prompt-regexp "^[-[:alnum:]_]*[-=][#>] "
+		  :prompt-length 5
+		  :prompt-cont-regexp "^[-[:alnum:]_]*[-'(][#>] "
+		  :statement sql-postgres-statement-starters
+		  :input-filter sql-remove-tabs-filter
+		  :terminator ("\\(^\\s-*\\\\g\\|;\\)" . "\\g")))
+    (defun tilt-db ()
+      (interactive)
+      (let* ((pod-name (string-trim (shell-command-to-string
+                                     "kubectl get pod -n data -l \"app.kubernetes.io/instance=asa-postgresql\" -o name")))
+             (sql-postgres-options (list "exec" "-n" "data" "-it" pod-name "-c" "asa-postgresql" "--" "psql" "user=postgres sslmode=disable host=127.0.0.1 password=postgres dbname=scaleft"))
+             (sql-postgres-program "kubectl")
+             (sql-postgres-login-params '())
+             (sql-server "")
+             (sql-user "")
+             (sql-database "")
+             (sql-port 0))
+	(call-interactively #'sql-postgres))))
     )
