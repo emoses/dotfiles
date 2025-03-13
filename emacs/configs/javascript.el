@@ -144,7 +144,8 @@
 (defvar my:prettify nil
   "Turn prettier formatting on for all javascript and typescript
 modes.  Expected to be set in .dir-locals.el for a project")
-(use-package prettier-js
+
+(use-package prettier
   :hook (hack-local-variables . my:prettier-local-hook)
   :init
   (defun my:prettier-local-hook ()
@@ -154,7 +155,7 @@ modes.  Expected to be set in .dir-locals.el for a project")
                               (string-match-p "\\.scss$" name)
                               (string-match-p "\\.[tj]sx?$" name)
                               (string-match-p "\\.json$" name)))
-        (prettier-js-mode 1)))))
+        (prettier-mode 1)))))
 
 (use-package mocha
   :bind (:map js2-mode-map

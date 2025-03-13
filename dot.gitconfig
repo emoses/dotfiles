@@ -81,3 +81,5 @@
     path = ~/.gitconfig.personal
 [includeIf "gitdir:~/dotfiles/"]
     path = ~/.gitconfig.personal
+[http]
+	postBuffer = 523288000
