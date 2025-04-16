@@ -31,6 +31,7 @@
                                 (cider-docview-mode . emacs)
                                 (git-rebase-mode . emacs)
                                 (image-mode . emacs)
+                                (copilot-chat-list-mode . emacs)
                                  ;; Start in insert mode
                                 (cider-repl-mode . insert)
                                 (inf-clojure-mode . insert)
@@ -59,7 +60,8 @@
   ;;evil-repeat should ignore flycheck jumps
   (mapc #'evil-declare-ignore-repeat
         '(flycheck-next-error
-          flycheck-previous-error))
+          flycheck-previous-error
+          ultra-scroll-mac))
   )
 
 (use-package evil-org

@@ -117,11 +117,21 @@
         (magit-git-rebase (concat remote "/master") args)
       (user-error "Remote `%s' doesn't exist" args)))
 
+  (transient-define-prefix my:magit-reflog ()
+    "Display the reflog"
+    [["Reflog"
+      ("h" "Head" magit-reflog-head)
+      ("o" "Other" magit-reflog-other)
+      ("c" "Current" magit-reflog-current)]])
+  (define-key magit-mode-map "#" #'my:magit-reflog)
+
   (transient-insert-suffix 'magit-rebase #'magit-rebase-branch
     '("o"
       (lambda ()
         (--when-let (magit-get-some-remote) (concat it "/master\n")))
       my:magit-rebase-onto-origin-master))
+  (transient-insert-suffix 'magit-dispatch #'magit-run
+    '("#" "Reflog" my:magit-reflog))
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
