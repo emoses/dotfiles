@@ -19,6 +19,7 @@
          ("C-}" . my:lsp-find-implementation)
          ("C-=" . lsp-extend-selection))
   :hook ((python-mode . lsp)
+         (python-ts-mode . lsp)
          (typescript-mode . lsp)
          (rjsx-mode . lsp)
          (elixir-mode . lsp)

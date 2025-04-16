@@ -355,7 +355,7 @@
 (use-package nix-mode)
 
 (use-package sqlformat
-  ;; :after sql
+  :after sql
   :bind (:map sql-mode-map
               ("C-c C-f" . 'sqlformat))
   :custom (sqlformat-command 'pgformatter))
@@ -376,3 +376,6 @@
 
 (use-package cue-mode
   :mode "\\.cue$")
+
+(use-package gcode-mode
+  :mode "\\.gcode")
