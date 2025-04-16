@@ -444,8 +444,6 @@
          (format "gnutls-cli%s --x509cafile %s -p %%p %%h"
                  (if (eq window-system 'w32) ".exe" "") trustfile))))
 
-(setq okta t)
-
 (my:load-config-file '("package-bootstrap.el"
 		       (lambda () (if my:osx "osx.el" nil))
                        "secrets.el"
@@ -463,8 +461,14 @@
                        "lsp.el"
                        "python.el"
                        "present-minor-mode.el"
-                       "go.el"
-                       "okta.el"))
+                       "go.el"))
+
+(defconst my:LOCAL_CONFIG_PATH (file-name-concat (getenv "HOME") ".local" "emacs"))
+(when (file-exists-p my:LOCAL_CONFIG_PATH)
+    (let ((local-el-files (directory-files my:LOCAL_CONFIG_PATH t "\.elc?$")))
+      (dolist (local-el local-el-files)
+        (load local-el)
+        (message "Loaded local config file: %s" local-el))))
 
 ;;Random options
 (put 'narrow-to-region 'disabled nil)
