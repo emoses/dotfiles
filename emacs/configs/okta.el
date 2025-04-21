@@ -2,6 +2,9 @@
 (when (boundp 'okta)
   (require 'gotest)
 
+  ;; This is set in the zshrc at work but won't be picked up in the env, it's needed for prisma intermediate certs
+  (setenv "NODE_EXTRA_CA_CERTS" (file-name-concat (getenv "HOME") ".local/prisma_certificates.pem"))
+
   (defvar -okta-integration-test-history nil)
   (defun okta-integration-test (command)
     (interactive

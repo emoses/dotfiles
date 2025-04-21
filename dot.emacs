@@ -16,113 +16,92 @@
  '(company-dabbrev-downcase nil)
  '(company-dabbrev-ignore-case nil)
  '(connection-local-criteria-alist
-   '(((:application tramp :machine "FK00M29L63")
-      tramp-connection-local-darwin-ps-profile)
-     ((:application eshell)
-      eshell-connection-default-profile)
-     ((:application tramp :machine "localhost")
-      tramp-connection-local-darwin-ps-profile)
-     ((:application tramp :machine "C02DR5M6MD6T")
-      tramp-connection-local-darwin-ps-profile)
-     ((:application tramp)
-      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
+   '(((:application tramp :protocol "kubernetes") tramp-kubernetes-connection-local-default-profile)
+     ((:application tramp :machine "FK00M29L63") tramp-connection-local-darwin-ps-profile)
+     ((:application eshell) eshell-connection-default-profile)
+     ((:application tramp :machine "localhost") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "C02DR5M6MD6T") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp) tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
  '(connection-local-profile-alist
-   '((eshell-connection-default-profile
-      (eshell-path-env-list))
+   '((tramp-kubernetes-connection-local-default-profile (tramp-config-check . tramp-kubernetes--current-context-data)
+                                                        (tramp-extra-expand-args 97
+                                                                                 (tramp-kubernetes--container
+                                                                                  (car tramp-current-connection))
+                                                                                 104
+                                                                                 (tramp-kubernetes--pod
+                                                                                  (car tramp-current-connection))
+                                                                                 120
+                                                                                 (tramp-kubernetes--context-namespace
+                                                                                  (car tramp-current-connection))))
+     (eshell-connection-default-profile (eshell-path-env-list))
      (tramp-connection-local-darwin-ps-profile
-      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
-      (tramp-process-attributes-ps-format
-       (pid . number)
-       (euid . number)
-       (user . string)
-       (egid . number)
-       (comm . 52)
-       (state . 5)
-       (ppid . number)
-       (pgrp . number)
-       (sess . number)
-       (ttname . string)
-       (tpgid . number)
-       (minflt . number)
-       (majflt . number)
-       (time . tramp-ps-time)
-       (pri . number)
-       (nice . number)
-       (vsize . number)
-       (rss . number)
-       (etime . tramp-ps-time)
-       (pcpu . number)
-       (pmem . number)
-       (args)))
+      (tramp-process-attributes-ps-args "-acxww" "-o"
+                                        "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                        "-o" "state=abcde" "-o"
+                                        "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format (pid . number) (euid . number) (user . string) (egid . number) (comm . 52)
+                                          (state . 5) (ppid . number) (pgrp . number) (sess . number) (ttname . string)
+                                          (tpgid . number) (minflt . number) (majflt . number) (time . tramp-ps-time)
+                                          (pri . number) (nice . number) (vsize . number) (rss . number)
+                                          (etime . tramp-ps-time) (pcpu . number) (pmem . number) (args)))
      (tramp-connection-local-busybox-ps-profile
-      (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
-      (tramp-process-attributes-ps-format
-       (pid . number)
-       (user . string)
-       (group . string)
-       (comm . 52)
-       (state . 5)
-       (ppid . number)
-       (pgrp . number)
-       (ttname . string)
-       (time . tramp-ps-time)
-       (nice . number)
-       (etime . tramp-ps-time)
-       (args)))
+      (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                        "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
+      (tramp-process-attributes-ps-format (pid . number) (user . string) (group . string) (comm . 52) (state . 5)
+                                          (ppid . number) (pgrp . number) (ttname . string) (time . tramp-ps-time)
+                                          (nice . number) (etime . tramp-ps-time) (args)))
      (tramp-connection-local-bsd-ps-profile
-      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
-      (tramp-process-attributes-ps-format
-       (pid . number)
-       (euid . number)
-       (user . string)
-       (egid . number)
-       (group . string)
-       (comm . 52)
-       (state . string)
-       (ppid . number)
-       (pgrp . number)
-       (sess . number)
-       (ttname . string)
-       (tpgid . number)
-       (minflt . number)
-       (majflt . number)
-       (time . tramp-ps-time)
-       (pri . number)
-       (nice . number)
-       (vsize . number)
-       (rss . number)
-       (etime . number)
-       (pcpu . number)
-       (pmem . number)
-       (args)))
-     (tramp-connection-local-default-shell-profile
-      (shell-file-name . "/bin/sh")
-      (shell-command-switch . "-c"))
-     (tramp-connection-local-default-system-profile
-      (path-separator . ":")
-      (null-device . "/dev/null"))))
+      (tramp-process-attributes-ps-args "-acxww" "-o"
+                                        "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                        "-o"
+                                        "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format (pid . number) (euid . number) (user . string) (egid . number)
+                                          (group . string) (comm . 52) (state . string) (ppid . number) (pgrp . number)
+                                          (sess . number) (ttname . string) (tpgid . number) (minflt . number)
+                                          (majflt . number) (time . tramp-ps-time) (pri . number) (nice . number)
+                                          (vsize . number) (rss . number) (etime . number) (pcpu . number)
+                                          (pmem . number) (args)))
+     (tramp-connection-local-default-shell-profile (shell-file-name . "/bin/sh") (shell-command-switch . "-c"))
+     (tramp-connection-local-default-system-profile (path-separator . ":") (null-device . "/dev/null"))))
+ '(copilot-chat-model "gpt-4o")
  '(custom-safe-themes
-   '("0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de" "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22" "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5" "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f" "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
+   '("0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
+     "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762"
+     "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a"
+     "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d"
+     "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279"
+     "3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299"
+     "4cdea318a3efab7ff7c832daea05f6b2d5d0a18b9bfa79763b674e860ecbc6da"
+     "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa"
+     "75c0b1d2528f1bce72f53344939da57e290aa34bea79f3a1ee19d6808cb55149"
+     "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e"
+     "8022cea21aa4daca569aee5c1b875fbb3f3248a5debc6fc8cf5833f2936fbb22"
+     "a0fdc9976885513b03b000b57ddde04621d94c3a08f3042d1f6e2dbc336d25c7"
+     "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26"
+     "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0"
+     "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552"
+     "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5"
+     "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f"
+     "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
  '(evil-overriding-maps
-   '((Buffer-menu-mode-map)
-     (color-theme-mode-map)
-     (comint-mode-map)
-     (compilation-mode-map)
-     (grep-mode-map)
-     (dictionary-mode-map)
-     (ert-results-mode-map . motion)
-     (Info-mode-map . motion)
-     (speedbar-key-map)
-     (speedbar-file-key-map)
-     (speedbar-buffers-key-map)
-     (cider-popup-buffer-mode-map)
-     (cider-stacktrace-mode-map)))
+   '((Buffer-menu-mode-map) (color-theme-mode-map) (comint-mode-map) (compilation-mode-map) (grep-mode-map)
+     (dictionary-mode-map) (ert-results-mode-map . motion) (Info-mode-map . motion) (speedbar-key-map)
+     (speedbar-file-key-map) (speedbar-buffers-key-map) (cider-popup-buffer-mode-map) (cider-stacktrace-mode-map)))
  '(fill-column 120)
  '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-global-modes '(not elisp-mode))
  '(flycheck-temp-prefix "__flycheck")
  '(global-treesit-auto-modes
-   '(typescript-mode typescript-ts-mode tsx-ts-mode toml-mode conf-toml-mode toml-ts-mode rust-mode rust-ts-mode ruby-mode ruby-ts-mode ess-mode r-ts-mode python-mode python-ts-mode protobuf-mode protobuf-ts-mode markdown-mode poly-markdown-mode markdown-ts-mode makefile-mode makefile-ts-mode lua-mode lua-ts-mode latex-mode latex-ts-mode kotlin-mode kotlin-ts-mode julia-mode julia-ts-mode js-json-mode json-ts-mode js2-mode javascript-mode js-mode js-ts-mode java-mode java-ts-mode sgml-mode mhtml-mode html-ts-mode heex-mode heex-ts-mode go-mod-mode go-mod-ts-mode go-mode go-ts-mode elixir-mode elixir-ts-mode dockerfile-mode dockerfile-ts-mode css-mode css-ts-mode c++-mode c++-ts-mode common-lisp-mode commonlisp-ts-mode cmake-mode cmake-ts-mode clojure-mode clojure-ts-mode csharp-mode csharp-ts-mode c-mode c-ts-mode bibtex-mode bibtex-ts-mode sh-mode bash-ts-mode))
+   '(typescript-mode typescript-ts-mode tsx-ts-mode toml-mode conf-toml-mode toml-ts-mode rust-mode rust-ts-mode ruby-mode
+                     ruby-ts-mode ess-mode r-ts-mode python-mode python-ts-mode protobuf-mode protobuf-ts-mode
+                     markdown-mode poly-markdown-mode markdown-ts-mode makefile-mode makefile-ts-mode lua-mode
+                     lua-ts-mode latex-mode latex-ts-mode kotlin-mode kotlin-ts-mode julia-mode julia-ts-mode
+                     js-json-mode json-ts-mode js2-mode javascript-mode js-mode js-ts-mode java-mode java-ts-mode
+                     sgml-mode mhtml-mode html-ts-mode heex-mode heex-ts-mode go-mod-mode go-mod-ts-mode go-mode
+                     go-ts-mode elixir-mode elixir-ts-mode dockerfile-mode dockerfile-ts-mode css-mode css-ts-mode
+                     c++-mode c++-ts-mode common-lisp-mode commonlisp-ts-mode cmake-mode cmake-ts-mode clojure-mode
+                     clojure-ts-mode csharp-mode csharp-ts-mode c-mode c-ts-mode bibtex-mode bibtex-ts-mode sh-mode
+                     bash-ts-mode))
  '(js2-bounce-indent-flag nil)
  '(js2-global-externs '("require" "module"))
  '(js2-strict-inconsistent-return-warning nil)
@@ -142,230 +121,138 @@
    '(org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse))
  '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(package-selected-packages
-   '(forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode lua-mode less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig dired-details+ cider base16-theme auto-complete ag ack-and-a-half))
+   '(forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens
+           scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window
+           evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode
+           dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch
+           web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode lua-mode
+           less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido
+           find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig
+           dired-details+ cider base16-theme auto-complete ag ack-and-a-half))
  '(projectile-project-root-files
-   '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
+   '("rebar.config" "project.clj" "build.boot" "deps.edn" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle"
+     ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml"
+     "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((backup-directory-alist
-      ("." . "~/.emacs.d/backup-files/"))
-     (eval turn-on-auto-fill)
-     (web-mode-engines-alist
-      ("go" . "\\.tpl\\.html"))
-     (lsp-enabled-clients deno-ls)
-     (org-html-metadata-timestamp-format . "%Y-%m-%d")
-     (my:prettify . t)
-     (lsp-eslint-package-manager . "yarn")
-     (lsp-eslint-working-directories .
-                                     ["frontend/"])
-     (lsp-eslint-package-manager . yarn)
-     (jest-executable . "yarn utest --")
-     (projectile-indexing-method quote hybrid)
-     (projectile-project-test-suffix . "_spec.js")
-     (projectile-project-test-suffix . "_spec")
+   '((backup-directory-alist ("." . "~/.emacs.d/backup-files/")) (eval turn-on-auto-fill)
+     (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
+     (org-html-metadata-timestamp-format . "%Y-%m-%d") (my:prettify . t) (lsp-eslint-package-manager . "yarn")
+     (lsp-eslint-working-directories . ["frontend/"]) (lsp-eslint-package-manager . yarn)
+     (jest-executable . "yarn utest --") (projectile-indexing-method quote hybrid)
+     (projectile-project-test-suffix . "_spec.js") (projectile-project-test-suffix . "_spec")
      (mocha-command . "node_modules/.bin/mocha")
      (mocha-options . "-u bdd --no-timeouts server/lib/testing/bootstrap_js_tests.js")
-     (mocha-opts-file . "config/mocha/local.opts")
-     (mocha-reporter)
-     (projectile-project-test-cmd . "$(npm bin)/mocha -u bdd --no-timeouts --opts config/mocha/local.opts server/lib/testing/bootstrap_js_tests.js")
-     (lsp-python-ms-python-executable-cmd . "python3")
-     (my:lsp-go-directory-filters .
-                                  ["-frontend"])
-     (my:lsp-go-directory-filters quote
-                                  ("-frontend"))
-     (lsp-nested-project-separator)
+     (mocha-opts-file . "config/mocha/local.opts") (mocha-reporter)
+     (projectile-project-test-cmd
+      . "$(npm bin)/mocha -u bdd --no-timeouts --opts config/mocha/local.opts server/lib/testing/bootstrap_js_tests.js")
+     (lsp-python-ms-python-executable-cmd . "python3") (my:lsp-go-directory-filters . ["-frontend"])
+     (my:lsp-go-directory-filters quote ("-frontend")) (lsp-nested-project-separator)
      (lsp--override-calculate-lisp-indent? . t)
-     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6061" "-logfile=/Users/evanmoses/dev/go/src/github.com/ScaleFT/device-tools/gopls.log")
-     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060" "-logfile=/Users/evanmoses/dev/go/src/go.sudo.wtf/gopls.log")
+     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6061"
+                               "-logfile=/Users/evanmoses/dev/go/src/github.com/ScaleFT/device-tools/gopls.log")
+     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060"
+                               "-logfile=/Users/evanmoses/dev/go/src/go.sudo.wtf/gopls.log")
      (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060")
-     (flycheck-disabled-checkers quote
-                                 (emacs-lisp-checkdoc))
-     (eval set
-           (make-local-variable '-dirlocal-project-path)
-           (when-let
-               ((d
-                 (dir-locals-find-file ".")))
-             (file-name-directory
-              (if
-                  (stringp d)
-                  d
-                (car d)))))
-     (eval setq flycheck-golangci-lint-config
-           (concat -dirlocal-project-path ".golangci.yml"))
-     (sql-product . postgres)
-     (auto-save-file-name-transforms
-      ("." "~/dev/.go.sudo.wtf~/frontend/" t))
-     (backup-directory-alist
-      ("." . "~/dev/.go.sudo.wtf~/frontend/"))
-     (projectile-indexing-method . hybrid)
-     (auto-save-file-name-transforms quote
-                                     (("." "~/dev/.go.sudo.wtf~/frontend" t)))
-     (backup-directory-alist quote
-                             (("." . "~/dev/.go.sudo.wtf~/frontend")))
-     (jest-executable . "yarn utest")
+     (flycheck-disabled-checkers quote (emacs-lisp-checkdoc))
+     (eval set (make-local-variable '-dirlocal-project-path)
+           (when-let ((d (dir-locals-find-file "."))) (file-name-directory (if (stringp d) d (car d)))))
+     (eval setq flycheck-golangci-lint-config (concat -dirlocal-project-path ".golangci.yml")) (sql-product . postgres)
+     (auto-save-file-name-transforms ("." "~/dev/.go.sudo.wtf~/frontend/" t))
+     (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/frontend/")) (projectile-indexing-method . hybrid)
+     (auto-save-file-name-transforms quote (("." "~/dev/.go.sudo.wtf~/frontend" t)))
+     (backup-directory-alist quote (("." . "~/dev/.go.sudo.wtf~/frontend"))) (jest-executable . "yarn utest")
      (checkdoc-package-keywords-flag)
      (eval font-lock-add-keywords nil
-           `((,(concat "("
-                       (regexp-opt
-                        '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
-                        t)
-                       "\\_>")
-              1 'font-lock-variable-name-face)))
+           `
+           ((,(concat "("
+                      (regexp-opt
+                       '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl") t)
+                      "\\_>")
+             1 'font-lock-variable-name-face)))
      (projectile-project-type quote go)
-     (eval set
-           (make-local-variable 'my-project-path)
-           (if-let
-               ((root
-                 (projectile-project-root)))
-               root
+     (eval set (make-local-variable 'my-project-path)
+           (if-let ((root (projectile-project-root))) root
              (if-let
                  ((dir-local-root
-                   (file-name-directory
-                    (let
-                        ((d
-                          (dir-locals-find-file ".")))
-                      (if
-                          (stringp d)
-                          d
-                        (car d))))))
+                   (file-name-directory (let ((d (dir-locals-find-file "."))) (if (stringp d) d (car d))))))
                  dir-local-root)
              nil))
      (eval setq lsp-clients-typescript-server-args
            (list "--stdio" "--log-level 3" "--tsserver-log-file /Users/evanmoses/tsserver-log.txt"
-                 (concat "--tsserver-path "
-                         (file-name-as-directory my-project-path)
-                         "node_modules/.bin/tsserver")))
+                 (concat "--tsserver-path " (file-name-as-directory my-project-path) "node_modules/.bin/tsserver")))
      (eval setq lsp-clients-typescript-server-args
            (list "--stdio"
-                 (concat "--tsserver-path "
-                         (file-name-as-directory my-project-path)
-                         "node_modules/.bin/tsserver")))
+                 (concat "--tsserver-path " (file-name-as-directory my-project-path) "node_modules/.bin/tsserver")))
+     (eval setq lsp-clients-typescript-server-args
+           (list "--stdio" (concat (file-name-as-directory my-project-path) "node_modules/.bin/tsserver")))
      (eval setq lsp-clients-typescript-server-args
            (list "--stdio"
-                 (concat
-                  (file-name-as-directory my-project-path)
-                  "node_modules/.bin/tsserver")))
-     (eval setq lsp-clients-typescript-server-args
-           (list "--stdio"
-                 (concat
-                  (file-name-as-directory my-project-path)
-                  "node_modules/.bin/tsserver" my-project-path)))
+                 (concat (file-name-as-directory my-project-path) "node_modules/.bin/tsserver" my-project-path)))
      (eval progn
-           (set
-            (make-local-variable my-project-path)
-            (file-name-directory
-             (let
-                 ((d
-                   (dir-locals-find-file ".")))
-               (if
-                   (stringp d)
-                   d
-                 (car d)))))
+           (set (make-local-variable my-project-path)
+                (file-name-directory (let ((d (dir-locals-find-file "."))) (if (stringp d) d (car d)))))
            (let
                ((tsserver-path
-                 (concat
-                  (file-name-as-directory my-project-path)
-                  "node_modules/.bin/tsserver" my-project-path)))
-             (setq lsp-clients-typescript-server-args
-                   (list "--stdio" tsserver-path))))
-     (eval setq
-           (make-local-variable my-project-path)
-           (file-name-directory
-            (let
-                ((d
-                  (dir-locals-find-file ".")))
-              (if
-                  (stringp d)
-                  d
-                (car d)))))
+                 (concat (file-name-as-directory my-project-path) "node_modules/.bin/tsserver" my-project-path)))
+             (setq lsp-clients-typescript-server-args (list "--stdio" tsserver-path))))
+     (eval setq (make-local-variable my-project-path)
+           (file-name-directory (let ((d (dir-locals-find-file "."))) (if (stringp d) d (car d)))))
      (eval let
            ((tsserver-path
-             (concat
-              (file-name-as-directory my-project-path)
-              "node_modules/.bin/tsserver" my-project-path)))
-           (setq lsp-clients-typescript-server-args
-                 (list "--stdio" tsserver-path)))
-     (eval set
-           (make-local-variable my-project-path)
-           (file-name-directory
-            (let
-                ((d
-                  (dir-locals-find-file ".")))
-              (if
-                  (stringp d)
-                  d
-                (car d)))))
-     (delete-old-versions . t)
-     (backup-by-copying . t)
-     (create-lockfiles)
-     (add-node-modules-path-command "yarn bin")))
+             (concat (file-name-as-directory my-project-path) "node_modules/.bin/tsserver" my-project-path)))
+           (setq lsp-clients-typescript-server-args (list "--stdio" tsserver-path)))
+     (eval set (make-local-variable my-project-path)
+           (file-name-directory (let ((d (dir-locals-find-file "."))) (if (stringp d) d (car d)))))
+     (delete-old-versions . t) (backup-by-copying . t) (create-lockfiles) (add-node-modules-path-command "yarn bin")))
  '(sml/mode-width (if (eq (powerline-current-separator) 'arrow) 'right 'full))
  '(sml/name-width 44)
  '(sml/pos-id-separator
-   '(""
-     (:propertize " " face powerline-active1)
+   '("" (:propertize " " face powerline-active1)
      (:eval
       (propertize " " 'display
                   (funcall
                    (intern
-                    (format "powerline-%s-%s"
-                            (powerline-current-separator)
-                            (car powerline-default-separator-dir)))
+                    (format "powerline-%s-%s" (powerline-current-separator) (car powerline-default-separator-dir)))
                    'powerline-active1 'powerline-active2)))
      (:propertize " " face powerline-active2)))
  '(sml/pos-minor-modes-separator
-   '(""
-     (:propertize " " face powerline-active1)
+   '("" (:propertize " " face powerline-active1)
      (:eval
       (propertize " " 'display
                   (funcall
                    (intern
-                    (format "powerline-%s-%s"
-                            (powerline-current-separator)
-                            (cdr powerline-default-separator-dir)))
+                    (format "powerline-%s-%s" (powerline-current-separator) (cdr powerline-default-separator-dir)))
                    'powerline-active1 'sml/global)))
      (:propertize " " face sml/global)))
  '(sml/pre-id-separator
-   '(""
-     (:propertize " " face sml/global)
+   '("" (:propertize " " face sml/global)
      (:eval
       (propertize " " 'display
                   (funcall
                    (intern
-                    (format "powerline-%s-%s"
-                            (powerline-current-separator)
-                            (car powerline-default-separator-dir)))
+                    (format "powerline-%s-%s" (powerline-current-separator) (car powerline-default-separator-dir)))
                    'sml/global 'powerline-active1)))
      (:propertize " " face powerline-active1)))
  '(sml/pre-minor-modes-separator
-   '(""
-     (:propertize " " face powerline-active2)
+   '("" (:propertize " " face powerline-active2)
      (:eval
       (propertize " " 'display
                   (funcall
                    (intern
-                    (format "powerline-%s-%s"
-                            (powerline-current-separator)
-                            (cdr powerline-default-separator-dir)))
+                    (format "powerline-%s-%s" (powerline-current-separator) (cdr powerline-default-separator-dir)))
                    'powerline-active2 'powerline-active1)))
      (:propertize " " face powerline-active1)))
  '(sml/pre-modes-separator (propertize " " 'face 'sml/modes))
  '(sml/replacer-regexp-list
-   '(("^~/ownCloud/org" ":Org:")
-     ("^~/\\.emacs\\.d/elpa/" ":ELPA:")
-     ("^~/\\.emacs\\.d/" ":ED:")
-     ("^/sudo:.*:" ":SU:")
-     ("^~/Documents/" ":Doc:")
-     ("^~/Dropbox/" ":DB:")
-     ("^:\\([^:]*\\):Documento?s/" ":\\1/Doc:")
-     ("^~/[Gg]it/" ":Git:")
-     ("^~/[Gg]it[Hh]ub/" ":Git:")
-     ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:")
-     ("^.*/patreon_py/" ":P_PY:")
+   '(("^~/ownCloud/org" ":Org:") ("^~/\\.emacs\\.d/elpa/" ":ELPA:") ("^~/\\.emacs\\.d/" ":ED:") ("^/sudo:.*:" ":SU:")
+     ("^~/Documents/" ":Doc:") ("^~/Dropbox/" ":DB:") ("^:\\([^:]*\\):Documento?s/" ":\\1/Doc:") ("^~/[Gg]it/" ":Git:")
+     ("^~/[Gg]it[Hh]ub/" ":Git:") ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:") ("^.*/patreon_py/" ":P_PY:")
      ("~/dev/patreon/" ":WORK:")))
  '(sml/shorten-directory nil)
  '(tls-checktrust t)
  '(undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree-history")))
  '(warning-suppress-types '((copilot copilot-exceeds-max-char)))
+ '(world-clock-time-format "%A %d %B %Y %R %Z")
  '(xref-prompt-for-identifier
    '(not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references)))
 (custom-set-faces
@@ -748,8 +635,7 @@ _k_: previous error    _l_: last error
   :after (smart-mode-line-powerline-theme powerline)
   :config
   (sml/apply-theme 'smart-mode-line-light-powerline)
-  (sml/setup)
-  (set-face-attribute 'mode-line-inactive nil :box '(:width -1)))
+  (sml/setup))
 (use-package flycheck-color-mode-line
   :hook (flycheck-mode . flycheck-color-mode-line-mode)
   :config

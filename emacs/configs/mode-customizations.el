@@ -386,3 +386,6 @@
 
 (use-package cue-mode
   :mode "\\.cue$")
+
+(use-package bazel
+  :mode ("Tiltfile" . bazel-starlark-mode))
