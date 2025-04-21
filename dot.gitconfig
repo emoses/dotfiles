@@ -1,5 +1,8 @@
 [include]
     path = ~/dotfiles/delta/themes.gitconfig
+[include]
+    # Add local overrides here.  If this doesn't exist git will ignore
+    path = ~/.local/git.config
 [alias]
         co = checkout
 	logf = log -1 --stat
