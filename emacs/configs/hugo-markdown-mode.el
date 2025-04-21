@@ -43,9 +43,38 @@ Don't break here ^    ^-- but here is OK"
     (skip-chars-backward " /")
     (re-search-backward "{{[<%]" (- (point) 3) t)))
 
+(defvar hugo-markdown-fill-paragraph-column 90)
+
+(defun hugo-markdown--guess-code-block-comment-fill-prefix ()
+  "If we're in a code block, guess that lines starting with '//',
+'#', or ';' are comments for the purposes of filling"
+  (let* ((line-string (buffer-substring-no-properties
+                       (line-beginning-position) (line-end-position)))
+         (line-comment-start
+          (when
+              (string-match "^\\([[:space:]]*\\(?:;+\\|#\\|//\\)[[:space:]]*\\)" line-string)
+            (match-string 1 line-string))))
+    (or line-comment-start fill-prefix)))
+
+(defun hugo-markdown-fill-paragraph (&optional justify)
+  "Markdown mode supresses filling in code blocks, but I want it to
+fill so it lays out nicely in a fixed-width chroma block.  So set
+this up instead."
+  (interactive "P")
+  (if (markdown-code-block-at-point-p)
+      (let ((fill-column hugo-markdown-fill-paragraph-column)
+            (fill-paragraph-function nil)
+            (fill-paragraph-handle-comment t)
+            (fill-forward-paragraph-function #'forward-line)
+            (fill-prefix (hugo-markdown--guess-code-block-comment-fill-prefix)))
+        (fill-paragraph justify))
+    (markdown-fill-paragraph justify)))
+
+
 (define-derived-mode hugo-markdown-mode markdown-mode "Hugo Markdown"
   "Major mode for editing Hugo markdown."
-  (add-hook 'fill-nobreak-predicate #'hugo-shortcode-nobreak-p nil t))
+  (add-hook 'fill-nobreak-predicate #'hugo-shortcode-nobreak-p nil t)
+  (setq-local fill-paragraph-function #'hugo-markdown-fill-paragraph))
 
 (provide 'hugo-markdown-mode)
 

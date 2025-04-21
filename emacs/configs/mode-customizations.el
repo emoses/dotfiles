@@ -389,3 +389,6 @@
 
 (use-package bazel
   :mode ("Tiltfile" . bazel-starlark-mode))
+
+(use-package gcode-mode
+  :mode "\\.gcode")

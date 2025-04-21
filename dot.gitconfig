@@ -11,13 +11,11 @@
     excludesfile = ~/gitignore
     autocrlf = input
     pager = delta
-	sshCommand = /Users/evan.moses/.git-helpers/git-ssh-ca-aurm
 [interactive]
     diffFilter = delta --color-only
 [user]
 	name = Evan Moses
-	email = evan.moses@okta.com
-	signingkey = E16816E7EC37808B
+	email = evan@emoses.org
 [diff]
     colorMoved = default
     algorithm = histogram
@@ -38,7 +36,6 @@
 [difftool]
 	prompt = true
 [credential]
-	helper = /opt/homebrew/opt/bash/bin/bash /Users/evan.moses/.git-helpers/git-credential-okta-aurm --error --verbose -jq /opt/homebrew/bin/jq
 	useHttpPath = true
 [push]
 	default = simple
@@ -55,7 +52,7 @@
     newNormal = green bold
     newHighlight = green bold 22
 [github]
-	user = evanmoses-okta
+	user = emoses
 [sendemail]
         smptEncryption = tls
         smptServer = smtp.gmail.com
@@ -70,13 +67,8 @@
 	defaultBranch = main
 [rerere]
 	enabled = true
-#Okta stuff
-[url "git@github.com:ScaleFT"]
-     insteadOf = https://github.com/ScaleFT
 [pull]
 	rebase = false
-[commit]
-	gpgsign = true
 [includeIf "gitdir:~/dev/github.com/emoses/"]
     path = ~/.gitconfig.personal
 [includeIf "gitdir:~/dotfiles/"]
