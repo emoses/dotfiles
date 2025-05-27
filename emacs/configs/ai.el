@@ -9,7 +9,7 @@ Do not use any markers around the commit message.
 
 Here is the result of `git diff --cached`:
 ")
-  (copilot-chat-model)
+  (copilot-chat-model claude-3.7-sonnet)
   :bind (("C-c C-i C-i" . copilot-chat-switch-to-buffer)
          ("C-c C-i RET" . copilot-chat-transient)
          ("A-i" . copilot-chat-transient)
@@ -31,7 +31,7 @@ Here is the result of `git diff --cached`:
   :bind (("μ" . aider-transient-menu)
          )
   :config
-  (setq aider-args '("--model" "github_copilot/gpt-4o") )
+  (setq aider-args '("--model" "bedrock/us.anthropic.claude-3-7-sonnet-20250219-v1:0") )
   ;; Or use your personal config file
   ;; (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
   ;; ;;

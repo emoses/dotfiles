@@ -1,5 +1,6 @@
   (defun my:go-mode-hooks ()
     (ivy-mode t)
+    (indent-tabs-mode t)
     (add-hook 'before-save-hook #'maybe-lsp-format-buffer t t)
     (add-hook 'before-save-hook #'maybe-lsp-organize-imports t t)
     ;;this can improperly remove trailing whitespace from multiline strings

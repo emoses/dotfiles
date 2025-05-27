@@ -63,7 +63,7 @@
                                           (pmem . number) (args)))
      (tramp-connection-local-default-shell-profile (shell-file-name . "/bin/sh") (shell-command-switch . "-c"))
      (tramp-connection-local-default-system-profile (path-separator . ":") (null-device . "/dev/null"))))
- '(copilot-chat-model "gpt-4o")
+ '(copilot-chat-model "gpt-4o" nil nil "Customized with use-package copilot-chat")
  '(custom-safe-themes
    '("0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
      "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762"
@@ -83,6 +83,7 @@
      "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5"
      "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f"
      "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
+ '(dired-dwim-target 'dired-dwim-target-next)
  '(evil-overriding-maps
    '((Buffer-menu-mode-map) (color-theme-mode-map) (comint-mode-map) (compilation-mode-map) (grep-mode-map)
      (dictionary-mode-map) (ert-results-mode-map . motion) (Info-mode-map . motion) (speedbar-key-map)
@@ -668,6 +669,7 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
 
 (define-key isearch-mode-map (kbd "A-s") 'my:isearch-menu)
 
+(use-package vundo)
 
 (use-package ivy-hydra
   :after (ivy hydra))

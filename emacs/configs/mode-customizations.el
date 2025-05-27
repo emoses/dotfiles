@@ -111,11 +111,20 @@
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-process-finish-apply-ansi-colors t)
 
-  (defun my:magit-rebase-onto-origin-master (args)
+
+  (defun my:magit-rebase-onto-remote-default (args)
+    "Rebase the current branch onto the default branch of the selected remote.
+The remote is determined by `magit-get-some-remote`.
+ARGS are the arguments passed to `git rebase`."
     (interactive (list (magit-rebase-arguments)))
     (if-let ((remote (magit-get-some-remote)))
-        (magit-git-rebase (concat remote "/master") args)
-      (user-error "Remote `%s' doesn't exist" args)))
+        ;; magit--get-default-branch is an internal function to magit but does exactly what we want
+        (if-let ((default-branch (magit--get-default-branch)))
+            ;; default-branch will look like ("origin" . "main"), so join it with a "/"
+            (let ((rebase-target (mapconcat #'identity default-branch "/")))
+              (magit-git-rebase rebase-target args))
+          (user-error "Unable to find default remote branch for remote %s" remote))
+      (user-error "No remote found to rebase onto.")))
 
   (transient-define-prefix my:magit-reflog ()
     "Display the reflog"
@@ -129,7 +138,7 @@
     '("o"
       (lambda ()
         (--when-let (magit-get-some-remote) (concat it "/master\n")))
-      my:magit-rebase-onto-origin-master))
+      my:magit-rebase-onto-remote-default))
   (transient-insert-suffix 'magit-dispatch #'magit-run
     '("#" "Reflog" my:magit-reflog))
 

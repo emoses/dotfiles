@@ -1,7 +1,3 @@
-(use-package undo-tree
-  :init
-  (global-undo-tree-mode))
-
 (use-package git-link)
 
 (use-package evil
@@ -11,7 +7,7 @@
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   :custom
-  (evil-undo-system 'undo-tree)
+  (evil-undo-system 'undo-redo)
   :config
   (use-package evil-leader
     :config
