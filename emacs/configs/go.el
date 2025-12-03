@@ -1,8 +1,8 @@
   (defun my:go-mode-hooks ()
     (ivy-mode t)
     (indent-tabs-mode t)
-    (add-hook 'before-save-hook #'maybe-lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'maybe-lsp-organize-imports t t)
+    (add-hook 'before-save-hook #'maybe-lsp-format-buffer nil t)
+    (add-hook 'before-save-hook #'maybe-lsp-organize-imports nil t)
     ;;this can improperly remove trailing whitespace from multiline strings
     (remove-hook 'before-save-hook #'delete-trailing-whitespace t)
     (set (make-local-variable 'compile-command) "go build")

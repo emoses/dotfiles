@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: migration up header
+# key: migrate
+# --
+-- +migrate Up notransaction

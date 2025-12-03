@@ -7,7 +7,7 @@
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   :custom
-  (evil-undo-system 'undo-redo)
+  (evil-undo-system 'undo-tree)
   :config
   (use-package evil-leader
     :config
@@ -28,6 +28,7 @@
                                 (git-rebase-mode . emacs)
                                 (image-mode . emacs)
                                 (copilot-chat-list-mode . emacs)
+                                (rustic-popup-mode . emacs)
                                  ;; Start in insert mode
                                 (cider-repl-mode . insert)
                                 (inf-clojure-mode . insert)

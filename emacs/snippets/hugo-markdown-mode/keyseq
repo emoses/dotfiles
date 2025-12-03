@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: keyseq
+# key: key
+# --
+{{< keyseq >}}$0{{< /keyseq >}}

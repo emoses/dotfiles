@@ -36,3 +36,10 @@ Here is the result of `git diff --cached`:
   ;; (setq aider-args `("--config" ,(expand-file-name "~/.aider.conf.yml")))
   ;; ;;
 )
+
+(use-package claude-code-ide
+  :straight (:type git :host github :repo "manzaltu/claude-code-ide.el")
+  :bind ( ("A-c" . claude-code-ide-menu)
+          ("¢" . claude-code-ide-menu)) ; Set your favorite keybinding
+  :config
+  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools

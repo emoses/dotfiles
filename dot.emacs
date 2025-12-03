@@ -63,9 +63,9 @@
                                           (pmem . number) (args)))
      (tramp-connection-local-default-shell-profile (shell-file-name . "/bin/sh") (shell-command-switch . "-c"))
      (tramp-connection-local-default-system-profile (path-separator . ":") (null-device . "/dev/null"))))
- '(copilot-chat-model "gpt-4o" nil nil "Customized with use-package copilot-chat")
  '(custom-safe-themes
-   '("0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
+   '("6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
+     "0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
      "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762"
      "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a"
      "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d"
@@ -84,6 +84,8 @@
      "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f"
      "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
  '(dired-dwim-target 'dired-dwim-target-next)
+ '(doom-modeline-battery nil)
+ '(doom-modeline-lsp t)
  '(evil-overriding-maps
    '((Buffer-menu-mode-map) (color-theme-mode-map) (comint-mode-map) (compilation-mode-map) (grep-mode-map)
      (dictionary-mode-map) (ert-results-mode-map . motion) (Info-mode-map . motion) (speedbar-key-map)
@@ -135,7 +137,8 @@
      ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml"
      "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((backup-directory-alist ("." . "~/.emacs.d/backup-files/")) (eval turn-on-auto-fill)
+   '((lsp-rust-features . ["tpe" "partial-eval"]) (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/"))
+     (backup-directory-alist ("." . "~/.emacs.d/backup-files/")) (eval turn-on-auto-fill)
      (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
      (org-html-metadata-timestamp-format . "%Y-%m-%d") (my:prettify . t) (lsp-eslint-package-manager . "yarn")
      (lsp-eslint-working-directories . ["frontend/"]) (lsp-eslint-package-manager . yarn)
@@ -262,6 +265,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))
+ '(doom-modeline-evil-normal-state ((t (:inherit doom-modeline-info :foreground "#2ca6e8"))))
  '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
  '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
  '(flycheck-color-mode-line-info-face ((t (:foreground "dim gray"))))
@@ -272,8 +276,9 @@
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(lsp-ui-sideline-global ((t (:background "medium blue"))))
- '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
- '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
+ '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))) t)
+ '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))) t)
+ '(org-block ((t (:extend t :background "#32a2324a37a7"))))
  '(sml/global ((t (:background "grey85" :foreground "grey20" :inverse-video nil :weight semi-light :height 1.05 :family "Avenir")))))
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
@@ -349,7 +354,10 @@
                        "lsp.el"
                        "python.el"
                        "present-minor-mode.el"
-                       "go.el"))
+                       "go.el"
+                       "rust.el"
+		       "cedar-mode.el"
+                       "cedar-schema-ts-mode.el"))
 
 (defconst my:LOCAL_CONFIG_PATH (file-name-concat (getenv "HOME") ".local" "emacs"))
 (when (file-exists-p my:LOCAL_CONFIG_PATH)
@@ -510,7 +518,8 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
+;; This causes more problems than it solves.  
+;; (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 (use-package flycheck
   :bind (:map flycheck-mode-map
@@ -669,7 +678,9 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
 
 (define-key isearch-mode-map (kbd "A-s") 'my:isearch-menu)
 
-(use-package vundo)
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode))
 
 (use-package ivy-hydra
   :after (ivy hydra))
@@ -714,20 +725,11 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
         (invert-face 'mode-line)
         (run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
-(use-package powerline
-  :config
-  (powerline-default-theme))
-(use-package smart-mode-line-powerline-theme)
-;;Smart mode line
-(use-package smart-mode-line
-  :after (smart-mode-line-powerline-theme powerline)
-  :config
-  (sml/apply-theme 'smart-mode-line-light-powerline)
-  (sml/setup))
-(use-package flycheck-color-mode-line
-  :hook (flycheck-mode . flycheck-color-mode-line-mode)
-  :config
-  (setq flycheck-color-mode-line-face-to-color 'sml/filename))
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "FiraCode Nerd Font"))
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
 
 (use-package ace-jump-mode)
 

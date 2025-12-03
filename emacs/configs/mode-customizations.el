@@ -6,6 +6,14 @@
    (delete 'yaml treesit-auto-langs)
    (global-treesit-auto-mode))
 
+(add-to-list 'treesit-language-source-alist
+             '(cedar . ("https://github.com/chrnorm/tree-sitter-cedar")))
+
+
+;; TODO: this is temporary
+(add-to-list 'treesit-language-source-alist
+             '(cedarschema . ("~/dev/cedar-schema-treesitter")))
+
 ;; ;;Load auctex
 (use-package tex
   :straight auctex
@@ -291,6 +299,7 @@ ARGS are the arguments passed to `git rebase`."
   (add-hook 'eshell-mode-hook #'my:line-numbers-off))
 
 (use-package compile
+  :bind (("C-c C-q" . kill-compilation)) ;; Also bound to C-c C-k, but why not both?
   :config
   (add-hook 'compilation-mode-hook #'my:line-numbers-off))
 
@@ -380,18 +389,12 @@ ARGS are the arguments passed to `git rebase`."
   :custom (sqlformat-command 'pgformatter))
 
 (use-package rustic
-  :mode "\\.rs$"
+  :mode ("\\.rs$" . rustic-mode)
   :config
-  (setq rustic-format-on-save t)
-  (add-hook 'rustic-mode-hook 'my:rustic-mode/hook)
-  (defun my:rustic-mode-hook ()
-    ;; so that run C-c C-c C-r works without having to confirm, but don't try to
-    ;; save rust buffers that are not file visiting. Once
-    ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
-    ;; no longer be necessary.
-    (when buffer-file-name
-      (setq-local buffer-save-without-query t))
-    (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
+  (setq rustic-format-on-save nil)
+  :custom
+  (rustic-cargo-use-last-stored-arguments nil)
+  )
 
 (use-package cue-mode
   :mode "\\.cue$")
