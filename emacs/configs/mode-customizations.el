@@ -134,6 +134,24 @@ ARGS are the arguments passed to `git rebase`."
           (user-error "Unable to find default remote branch for remote %s" remote))
       (user-error "No remote found to rebase onto.")))
 
+  (defun my:magit-ff-master-from-origin ()
+    "Fetch origin, fast-forward local master to origin/master, and checkout master."
+    (interactive)
+    (let* ((remote (magit-get-upstream-remote "master"))
+          (remote-branch (concat remote "/master"))
+          (local-branch "master"))
+      (message "Fetching from %s..." remote)
+      (magit-git-fetch remote nil)
+      
+      ;; This command attempts to update the local master ref to the origin/master ref.
+      ;; The ":" prefix in the refspec implies it must be a fast-forward.
+      (condition-case nil
+          (progn
+            (magit-call-git "switch" "-C" local-branch remote-branch)
+            (message "Master fast-forwarded and checked out."))
+        (error (message "Could not fast-forward master (is it ahead of origin?)")))))
+
+;; Bind it to a key in Magit
   (transient-define-prefix my:magit-reflog ()
     "Display the reflog"
     [["Reflog"
@@ -149,6 +167,8 @@ ARGS are the arguments passed to `git rebase`."
       my:magit-rebase-onto-remote-default))
   (transient-insert-suffix 'magit-dispatch #'magit-run
     '("#" "Reflog" my:magit-reflog))
+  (transient-append-suffix 'magit-pull #'magit-pull-branch
+    '("M" "Pull master and checkout" my:magit-ff-master-from-origin))
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
@@ -346,6 +366,10 @@ ARGS are the arguments passed to `git rebase`."
     (restclient-mode)))
 
 (use-package restclient-jq)
+
+(use-package grpclient
+  :mode ( "\\.grpclient$" . grpclient-mode)
+  :straight (:type git :host github :repo "Prikaz98/grpclient.el"))
 
 (use-package cram-test-mode
   :mode "\\.t$"

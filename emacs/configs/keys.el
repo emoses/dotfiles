@@ -27,6 +27,8 @@
 (global-set-key (kbd "A-v") 'yank) ;;for non-evil yanking
 (global-set-key (kbd "A-t") 'imenu)
 (global-set-key (kbd "A-w") 'other-window-prefix)
+(global-set-key (kbd "A-!") 'shell-command-from-region)
+(global-set-key (kbd "¡") 'shell-command-from-region)
 
 
 (global-set-key (kbd "<f2>") 'gud-next)

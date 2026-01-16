@@ -326,3 +326,38 @@ buffer if the region is not active"
             (delete-char -1)
             (insert (format "$%d" n))
             (setq n (+ n 1))))))))
+
+(defun shell-command-from-region (beg end)
+  (interactive "r")
+  (unless (use-region-p)
+    (setq beg (point-min) end (point-max)))
+  (let* ((cmd (buffer-substring-no-properties beg end))
+         (cmd (replace-regexp-in-string "\n" " " cmd))
+        (buffer-file (get-current-buffer-filename))
+        ;; rebind default-directory to the buffer's directory if it has one
+        (default-directory (if buffer-file (file-name-directory buffer-file) default-directory))
+        (output-buf (get-buffer-create "*Shell output*")))
+    (display-buffer output-buf)
+    (shell-command cmd output-buf)))
+
+(defun json-serialize-region-or-line (beg end)
+  "Replace the region or current line with its JSON-serialized string equivalent."
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (line-beginning-position) (line-end-position))))
+  (unless (fboundp 'json-serialize)
+    (error "This Emacs build does not support native json-serialize"))
+  (let* ((original-text (buffer-substring-no-properties beg end))
+         ;; json-serialize expects a Lisp object; we give it the string
+         (serialized-text (json-serialize original-text)))
+    (delete-region beg end)
+    (insert serialized-text)))
+
+(defun json-deserialize-region (beg end)
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-max))))
+  (let* ((original-text (buffer-substring-no-properties beg end))
+         (deserialized (json-parse-string original-text)))
+    (delete-region beg-end)
+    ))
