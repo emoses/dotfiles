@@ -136,7 +136,10 @@
 
 (use-package go-dlv
   :config
-  (defalias 'dlv-this-func #'dlv-current-func))
+  (defalias 'dlv-this-func #'dlv-current-func)
+  (defun my:output-dlv-advice (arg)
+    (message "Dlv command: %s" arg))
+  (advice-add #'dlv :before #'my:output-dlv-advice))
 
 (use-package gotest
   :bind (:map go-mode-map

@@ -137,11 +137,11 @@ ARGS are the arguments passed to `git rebase`."
   (defun my:magit-ff-master-from-origin ()
     "Fetch origin, fast-forward local master to origin/master, and checkout master."
     (interactive)
-    (let* ((remote (magit-get-upstream-remote "master"))
-          (remote-branch (concat remote "/master"))
-          (local-branch "master"))
-      (message "Fetching from %s..." remote)
-      (magit-git-fetch remote nil)
+    (let* ((remote (magit--get-default-branch))
+          (remote-branch (format "%s/%s" (car remote) (cadr remote)))
+          (local-branch (cadr remote)))
+      (message "Fetching from %s..." remote-branch)
+      (magit-git-fetch (car remote) nil)
       
       ;; This command attempts to update the local master ref to the origin/master ref.
       ;; The ":" prefix in the refspec implies it must be a fast-forward.
