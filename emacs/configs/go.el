@@ -155,6 +155,15 @@
         (error "The %s process is not running" (downcase mode-name))))
     )
 
+  ;; Speed up dealing with long lines in test output
+  (defun my:go-test-mode-hook ()
+    (setq-local bidi-display-reordering nil)
+    (setq-local compilation-max-output-line-length nil)
+    (setq-local truncate-lines t)
+    (buffer-disable-undo))
+
+  (add-hook 'go-test-mode-hook #'my:go-test-mode-hook)
+
   (with-eval-after-load 'go-ts-mode
     (define-key go-mode-map (kbd "C-c \\") #'quit-compilation)))
 

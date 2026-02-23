@@ -361,3 +361,61 @@ buffer if the region is not active"
          (deserialized (json-parse-string original-text)))
     (delete-region beg-end)
     ))
+
+
+;;; Helpers for transients
+(require 'transient)
+
+(defun my:transient-label-with-key (label cmd)
+  "Add the keybinding of CMD to LABEL if it exists"
+  (let ((key (where-is-internal cmd nil t)))
+    (if key
+        (format "%s (%s)" label (key-description key))
+      label)))
+
+(defclass my:with-key-suffix (transient-suffix) ()
+  "Custom suffix that appends the keybinding to the description")
+
+(cl-defmethod transient-format-description ((obj my:with-key-suffix))
+  "Format the description for my:with-key-suffix, appending the keybinding
+description"
+  (let* ((desc (cl-call-next-method))
+         (command (oref obj command))
+         (key (where-is-internal command nil t)))
+    (if (and key (not (eq command 'transient-quit-one)))
+        (concat desc
+                " "
+                (propertize (format "(%s)" (key-description key))
+                            'face 'shadow))
+      desc)))
+
+(defun my:with-key-suffix-all-children (children)
+  "Recursively apply my:with-key-suffix class to all suffixes in CHILDREN.
+
+With assist by by Gemini
+
+Example
+(transient-define-prefix my-transient ()
+  [ :class transient-columns
+    :setup-children my:with-key-suffix-all-children
+    [
+      :description \"foo\"
+      (\"a\" \"Do Something\" a-command)
+    ]
+  ])"
+  (mapcar
+   (lambda (child)
+     (cond
+      ;; If it's a vector, it's a GROUP (e.g., transient-column)
+      ((vectorp child)
+       ;; We desctructure the vector, add the setup-children hook to the group, and convert back
+       (pcase-let* ((`[,class ,args ,children] child))
+         (apply #'vector 
+                (list class (plist-put args :setup-children #'my:with-key-suffix-all-children) children))))
+      
+      ;; If it's a transient-suffix, replace the class symbol with my:with-key-suffix 
+      ((listp child)
+       (cons 'my:with-key-suffix (cdr child)))
+      
+      (t child)))
+   children))
