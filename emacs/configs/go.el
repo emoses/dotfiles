@@ -157,22 +157,19 @@
 
   ;; Speed up dealing with long lines in test output
   (defun my:go-test-mode-hook ()
+    (so-long-minor-mode 1)
+    (setq-local bidi-paragraph-direction 'left-to-right)
     (setq-local bidi-display-reordering nil)
     (setq-local compilation-max-output-line-length nil)
-    (setq-local truncate-lines t)
-    (buffer-disable-undo))
+    (setq truncate-lines t)
+    (buffer-disable-undo)
+    (setq-local jit-lock-defer-time 0.05)
+    (setq-local jit-lock-stealth-time 0.5))
 
   (add-hook 'go-test-mode-hook #'my:go-test-mode-hook)
 
   (with-eval-after-load 'go-ts-mode
     (define-key go-mode-map (kbd "C-c \\") #'quit-compilation)))
-
-;;Relies on `impl` and `godoc`
-;;
-;; go get -u github.com/josharian/impl
-;; go get -u golang.org/x/tools/cmd/godoc
-(use-package go-impl
-  :after exec-path-from-shell)
 
 (when (treesit-available-p)
   (defun go-beginning-of-defun ()
