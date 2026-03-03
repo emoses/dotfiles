@@ -23,6 +23,7 @@
          (typescript-mode . lsp)
          (rjsx-mode . lsp)
          (elixir-mode . lsp)
+         (elixir-ts-mode . lsp)
          (c-mode . lsp)
          (java-mode . lsp)
          (js2-mode . lsp)
@@ -32,9 +33,10 @@
   ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
   :init
-  (add-to-list 'exec-path "D:/elixir-ls-1.11")
+  (when my:windows
+      (add-to-list 'exec-path "D:/elixir-ls-1.11"))
   :config
-
+  (add-to-list 'exec-path (concat (getenv "HOME") "/elixir-ls/release"))
   (wrap-other-window-impl my:lsp-find-definition #'lsp-find-definition)
   (wrap-other-window-impl my:lsp-find-implemenation #'lsp-find-implemenation)
 
@@ -46,7 +48,6 @@
           nil)
       (funcall filter-fn sym)))
   (advice-add 'lsp--symbol-filter :around #'my:lsp--filter-variables)
-  (add-to-list 'exec-path (concat (getenv "HOME") "/dev/elixir-ls"))
 
   ;;Requires modified lsp-mode
   (setq lsp-show-message-request-filter (lambda (message actions)

@@ -16,7 +16,9 @@
  '(company-dabbrev-downcase nil)
  '(company-dabbrev-ignore-case nil)
  '(connection-local-criteria-alist
-   '(((:application tramp :machine "FK00M29L63")
+   '(((:application tramp :machine "Computery.local")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "FK00M29L63")
       tramp-connection-local-darwin-ps-profile)
      ((:application eshell)
       eshell-connection-default-profile)
@@ -123,6 +125,7 @@
  '(flycheck-temp-prefix "__flycheck")
  '(global-treesit-auto-modes
    '(typescript-mode typescript-ts-mode tsx-ts-mode toml-mode conf-toml-mode toml-ts-mode rust-mode rust-ts-mode ruby-mode ruby-ts-mode ess-mode r-ts-mode python-mode python-ts-mode protobuf-mode protobuf-ts-mode markdown-mode poly-markdown-mode markdown-ts-mode makefile-mode makefile-ts-mode lua-mode lua-ts-mode latex-mode latex-ts-mode kotlin-mode kotlin-ts-mode julia-mode julia-ts-mode js-json-mode json-ts-mode js2-mode javascript-mode js-mode js-ts-mode java-mode java-ts-mode sgml-mode mhtml-mode html-ts-mode heex-mode heex-ts-mode go-mod-mode go-mod-ts-mode go-mode go-ts-mode elixir-mode elixir-ts-mode dockerfile-mode dockerfile-ts-mode css-mode css-ts-mode c++-mode c++-ts-mode common-lisp-mode commonlisp-ts-mode cmake-mode cmake-ts-mode clojure-mode clojure-ts-mode csharp-mode csharp-ts-mode c-mode c-ts-mode bibtex-mode bibtex-ts-mode sh-mode bash-ts-mode))
+ '(isearch-allow-motion t)
  '(js2-bounce-indent-flag nil)
  '(js2-global-externs '("require" "module"))
  '(js2-strict-inconsistent-return-warning nil)
@@ -174,7 +177,7 @@
                                   ("-frontend"))
      (lsp-nested-project-separator)
      (lsp--override-calculate-lisp-indent? . t)
-     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6061" "-logfile=/Users/evanmoses/dev/go/src/github.com/ScaleFT/device-tools/gopls.log")
+     (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6061" "-logfile=/Users/evanmoses/sev/go/src/github.com/ScaleFT/device-tools/gopls.log")
      (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060" "-logfile=/Users/evanmoses/dev/go/src/go.sudo.wtf/gopls.log")
      (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060")
      (flycheck-disabled-checkers quote
@@ -835,7 +838,8 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
   :config
   (sml/apply-theme 'smart-mode-line-light-powerline)
   (sml/setup)
-  (set-face-attribute 'mode-line-inactive nil :box '(:width -1)))
+  ;(set-face-attribute 'mode-line-inactive nil :box '(:width -1))
+  )
 (use-package flycheck-color-mode-line
   :hook (flycheck-mode . flycheck-color-mode-line-mode)
   :config

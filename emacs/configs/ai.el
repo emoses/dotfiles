@@ -24,3 +24,9 @@ Here is the result of `git diff --cached`:
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
   :custom (copilot-indent-offset-warning-disable t)
   :ensure t)
+
+(use-package claude-code-ide
+  :straight (:type git :host github :repo "manzaltu/claude-code-ide.el")
+  :bind ("¢" . claude-code-ide-menu) ; Set your favorite keybinding
+  :config
+  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools

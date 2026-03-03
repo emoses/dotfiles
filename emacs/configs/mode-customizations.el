@@ -354,6 +354,10 @@
 
 (use-package elixir-mode)
 
+(use-package mix
+  :after elixir-mode
+  :hook (elixir-mode . mix-minor-mode))
+
 (use-package kubernetes-evil)
 
 (use-package rego-mode
