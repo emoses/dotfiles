@@ -20,3 +20,4 @@ __flycheck*
 .ccls-cache
 # asdf.
 .direnv
+.aider*

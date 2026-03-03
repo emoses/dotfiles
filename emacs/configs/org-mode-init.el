@@ -56,6 +56,7 @@ if there is no schedule (so these are sorted to the bottom)"
             (lambda ()
               (org-defkey org-mode-map (kbd "RET") 'org-return-indent)
               (org-defkey org-mode-map "\C-j" 'org-return)
+              (add-to-list 'org-babel-load-languages '(shell . t))
               (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
               (display-line-numbers-mode -1)
               (auto-composition-mode -1)))

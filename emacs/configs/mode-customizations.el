@@ -6,6 +6,14 @@
    (delete 'yaml treesit-auto-langs)
    (global-treesit-auto-mode))
 
+(add-to-list 'treesit-language-source-alist
+             '(cedar . ("https://github.com/chrnorm/tree-sitter-cedar")))
+
+
+;; TODO: this is temporary
+(add-to-list 'treesit-language-source-alist
+             '(cedarschema . ("~/dev/cedar-schema-treesitter")))
+
 ;; ;;Load auctex
 (use-package tex
   :straight auctex
@@ -111,12 +119,39 @@
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-process-finish-apply-ansi-colors t)
 
-  (defun my:magit-rebase-onto-origin-master (args)
+
+  (defun my:magit-rebase-onto-remote-default (args)
+    "Rebase the current branch onto the default branch of the selected remote.
+The remote is determined by `magit-get-some-remote`.
+ARGS are the arguments passed to `git rebase`."
     (interactive (list (magit-rebase-arguments)))
     (if-let ((remote (magit-get-some-remote)))
-        (magit-git-rebase (concat remote "/master") args)
-      (user-error "Remote `%s' doesn't exist" args)))
+        ;; magit--get-default-branch is an internal function to magit but does exactly what we want
+        (if-let ((default-branch (magit--get-default-branch)))
+            ;; default-branch will look like ("origin" . "main"), so join it with a "/"
+            (let ((rebase-target (mapconcat #'identity default-branch "/")))
+              (magit-git-rebase rebase-target args))
+          (user-error "Unable to find default remote branch for remote %s" remote))
+      (user-error "No remote found to rebase onto.")))
 
+  (defun my:magit-ff-master-from-origin ()
+    "Fetch origin, fast-forward local master to origin/master, and checkout master."
+    (interactive)
+    (let* ((remote (magit--get-default-branch))
+          (remote-branch (format "%s/%s" (car remote) (cadr remote)))
+          (local-branch (cadr remote)))
+      (message "Fetching from %s..." remote-branch)
+      (magit-git-fetch (car remote) nil)
+      
+      ;; This command attempts to update the local master ref to the origin/master ref.
+      ;; The ":" prefix in the refspec implies it must be a fast-forward.
+      (condition-case nil
+          (progn
+            (magit-call-git "switch" "-C" local-branch remote-branch)
+            (message "Master fast-forwarded and checked out."))
+        (error (message "Could not fast-forward master (is it ahead of origin?)")))))
+
+;; Bind it to a key in Magit
   (transient-define-prefix my:magit-reflog ()
     "Display the reflog"
     [["Reflog"
@@ -129,9 +164,11 @@
     '("o"
       (lambda ()
         (--when-let (magit-get-some-remote) (concat it "/master\n")))
-      my:magit-rebase-onto-origin-master))
+      my:magit-rebase-onto-remote-default))
   (transient-insert-suffix 'magit-dispatch #'magit-run
     '("#" "Reflog" my:magit-reflog))
+  (transient-append-suffix 'magit-pull #'magit-pull-branch
+    '("M" "Pull master and checkout" my:magit-ff-master-from-origin))
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
@@ -282,6 +319,7 @@
   (add-hook 'eshell-mode-hook #'my:line-numbers-off))
 
 (use-package compile
+  :bind (("C-c C-q" . kill-compilation)) ;; Also bound to C-c C-k, but why not both?
   :config
   (add-hook 'compilation-mode-hook #'my:line-numbers-off))
 
@@ -329,6 +367,10 @@
 
 (use-package restclient-jq)
 
+(use-package grpclient
+  :mode ( "\\.grpclient$" . grpclient-mode)
+  :straight (:type git :host github :repo "Prikaz98/grpclient.el"))
+
 (use-package cram-test-mode
   :mode "\\.t$"
   :straight  (:type git :host github :repo "macmodrov/cram-test-mode"))
@@ -375,21 +417,18 @@
   :custom (sqlformat-command 'pgformatter))
 
 (use-package rustic
-  :mode "\\.rs$"
+  :mode ("\\.rs$" . rustic-mode)
   :config
-  (setq rustic-format-on-save t)
-  (add-hook 'rustic-mode-hook 'my:rustic-mode/hook)
-  (defun my:rustic-mode-hook ()
-    ;; so that run C-c C-c C-r works without having to confirm, but don't try to
-    ;; save rust buffers that are not file visiting. Once
-    ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
-    ;; no longer be necessary.
-    (when buffer-file-name
-      (setq-local buffer-save-without-query t))
-    (add-hook 'before-save-hook 'lsp-format-buffer nil t)))
+  (setq rustic-format-on-save nil)
+  :custom
+  (rustic-cargo-use-last-stored-arguments nil)
+  )
 
 (use-package cue-mode
   :mode "\\.cue$")
+
+(use-package bazel
+  :mode ("Tiltfile" . bazel-starlark-mode))
 
 (use-package gcode-mode
   :mode "\\.gcode")

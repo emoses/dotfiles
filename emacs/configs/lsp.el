@@ -29,7 +29,10 @@
          (js2-mode . lsp)
          (js-ts-mode . lsp)
          (tsx-ts-mode . lsp)
-         (typescript-ts-mode . lsp))
+         (typescript-ts-mode . lsp)
+         (go-mode . lsp)
+         (go-ts-mode . lsp)
+         (rust-mode . lsp))
   ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
   :init
@@ -58,6 +61,7 @@
   (lsp-define-conditional-key lsp-command-map "To" lsp-treemacs-symbols "Treemacs symbols" (fboundp 'lsp-treemacs-symbols))
   (lsp-define-conditional-key lsp-command-map "Gt" lsp-ui-peek-find-type-definition "Go to type definition" (and (lsp-feature? "textDocument/typeDefinition")
                                                                                                                  (fboundp 'lsp-ui-peek-find-custom)))
+  (lsp-define-conditional-key lsp-command-map "hm" lsp-rust-analyzer-expand-macro "Expand Macro (rust)" (string= (lsp-buffer-language) "rust"))
   (lsp-define-conditional-key lsp-command-map "sr" lsp-workspace-restart "Restart server" (lsp-workspaces))
   (lsp-define-conditional-key lsp-command-map "ss" lsp "Start server" t)
 
@@ -77,6 +81,7 @@
     :custom
     (lsp-ui-sideline-show-code-actions t)
     (lsp-ui-sideline-show-symbol nil)
+    (lsp-ui-doc-position 'at-point)
     :commands lsp-ui-mode
     :config
     (setq lsp-ui-sideline-ignore-duplicate t)

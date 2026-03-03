@@ -1,7 +1,8 @@
   (defun my:go-mode-hooks ()
     (ivy-mode t)
-    (add-hook 'before-save-hook #'maybe-lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'maybe-lsp-organize-imports t t)
+    (indent-tabs-mode t)
+    (add-hook 'before-save-hook #'maybe-lsp-format-buffer nil t)
+    (add-hook 'before-save-hook #'maybe-lsp-organize-imports nil t)
     ;;this can improperly remove trailing whitespace from multiline strings
     (remove-hook 'before-save-hook #'delete-trailing-whitespace t)
     (set (make-local-variable 'compile-command) "go build")
@@ -135,7 +136,10 @@
 
 (use-package go-dlv
   :config
-  (defalias 'dlv-this-func #'dlv-current-func))
+  (defalias 'dlv-this-func #'dlv-current-func)
+  (defun my:output-dlv-advice (arg)
+    (message "Dlv command: %s" arg))
+  (advice-add #'dlv :before #'my:output-dlv-advice))
 
 (use-package gotest
   :bind (:map go-mode-map
@@ -151,15 +155,21 @@
         (error "The %s process is not running" (downcase mode-name))))
     )
 
+  ;; Speed up dealing with long lines in test output
+  (defun my:go-test-mode-hook ()
+    (so-long-minor-mode 1)
+    (setq-local bidi-paragraph-direction 'left-to-right)
+    (setq-local bidi-display-reordering nil)
+    (setq-local compilation-max-output-line-length nil)
+    (setq truncate-lines t)
+    (buffer-disable-undo)
+    (setq-local jit-lock-defer-time 0.05)
+    (setq-local jit-lock-stealth-time 0.5))
+
+  (add-hook 'go-test-mode-hook #'my:go-test-mode-hook)
+
   (with-eval-after-load 'go-ts-mode
     (define-key go-mode-map (kbd "C-c \\") #'quit-compilation)))
-
-;;Relies on `impl` and `godoc`
-;;
-;; go get -u github.com/josharian/impl
-;; go get -u golang.org/x/tools/cmd/godoc
-(use-package go-impl
-  :after exec-path-from-shell)
 
 (when (treesit-available-p)
   (defun go-beginning-of-defun ()

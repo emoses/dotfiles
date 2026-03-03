@@ -1,7 +1,3 @@
-(use-package undo-tree
-  :init
-  (global-undo-tree-mode))
-
 (use-package git-link)
 
 (use-package evil
@@ -32,6 +28,7 @@
                                 (git-rebase-mode . emacs)
                                 (image-mode . emacs)
                                 (copilot-chat-list-mode . emacs)
+                                (rustic-popup-mode . emacs)
                                  ;; Start in insert mode
                                 (cider-repl-mode . insert)
                                 (inf-clojure-mode . insert)

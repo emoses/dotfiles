@@ -69,6 +69,9 @@
 	enabled = true
 [pull]
 	rebase = false
+[include]
+    # Add local overrides here.  If this doesn't exist git will ignore
+    path = ~/.local/git.config
 [includeIf "gitdir:~/dev/github.com/emoses/"]
     path = ~/.gitconfig.personal
 [includeIf "gitdir:~/dotfiles/"]

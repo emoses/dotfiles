@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: sft-gatewayd code reference
+# key: gref
+# --
+// sft-gatewayd.txt-$1
