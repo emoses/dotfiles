@@ -90,28 +90,15 @@
       (insert "//go:generate mockgen -package mocks -source ../" current-file
               " -destination " (downcase mock-interface) ".go " mock-interface)))
 
-  (defun go-lineify-arguments ()
-    "TODO: make idempotent, handle more errors"
-    (interactive)
-    (when (python-syntax-comment-or-string-p)
-      (error "Cannot use this function inside a string or comment"))
-    (save-excursion
-      ( while)
-      (sp-up-sexp)
-      (while (not (equal (char-after) ?\)))
-        (forward-char)
-        (if (not (eolp))
-            (newline-and-indent)
-          (forward-line))
-        (condition-case nil
-            (while (not (equal (char-after) ?,))
-              (python-nav-forward-sexp))
-          (error
-           (search-forward ")" nil nil)
-           (backward-char))))
-      (when (not (equal (char-before) ?,))
-        (insert ?,)
-        (newline-and-indent))))
+  (defvar go-stacktrace-regexp
+    (rx
+     (* space) ;; Leading space
+     (group "/" (not "/") (* any) ".go") ;; Filename
+     ":" ;; Separator
+     (group (+ digit)) ;; Lineno
+     ))
+
+  (add-to-list 'compilation-error-regexp-alist-alist (list 'go-stacktrace go-stacktrace-regexp 1 2))
 
   (with-eval-after-load 'lsp-mode
     (defvar my:lsp-go-directory-filters '())
@@ -119,20 +106,20 @@
      '(("gopls.directoryFilters" my:lsp-go-directory-filters)
        ("gopls.buildFlags" ["-tags=dev"])
        ("golangci-lint.command"
-         ["golangci-lint" "run" "--modules-download-mode=vendor" "--enable-all" "--disable" "lll" "--out-format" "json" "--issues-exit-code=1"])))
+        ["golangci-lint" "run" "--modules-download-mode=vendor" "--enable-all" "--disable" "lll" "--out-format" "json" "--issues-exit-code=1"])))
 
-     (lsp-register-client
-      (make-lsp-client :new-connection (lsp-stdio-connection
-                                        '("golangci-lint-langserver"))
-                       :activation-fn (lsp-activate-on "go")
-                       :language-id "go"
-                       :priority 0
-                       :server-id 'golangci-lint
-                       :add-on? t
-                       :library-folders-fn #'lsp-go--library-default-directories
-                       :initialization-options (lambda ()
-                                                 (gethash "golangci-lint"
-                                                          (lsp-configuration-section "golangci-lint")))))))
+    (lsp-register-client
+     (make-lsp-client :new-connection (lsp-stdio-connection
+                                       '("golangci-lint-langserver"))
+                      :activation-fn (lsp-activate-on "go")
+                      :language-id "go"
+                      :priority 0
+                      :server-id 'golangci-lint
+                      :add-on? t
+                      :library-folders-fn #'lsp-go--library-default-directories
+                      :initialization-options (lambda ()
+                                                (gethash "golangci-lint"
+                                                         (lsp-configuration-section "golangci-lint")))))))
 
 (use-package go-dlv
   :config

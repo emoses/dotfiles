@@ -422,6 +422,9 @@
 
 (use-package projectile
   :bind (("C-c C-s" . my:projectile-ag-symbol))
+  :init
+  (defvar projectile-go-compile-test-extra-env-vars-alist nil
+    "a plist of Extra environment variables to set when running Go tests")
   :config
   (setq projectile-completion-system 'ivy)
   (setq projectile-switch-project-action #'projectile-find-file-dwim)
@@ -436,12 +439,15 @@
              (test-dir-name (or  (projectile-project-type-attribute (projectile-project-type) 'test-dir) ".")))
         (expand-file-name test-dir-name project-root)))
 
-  (defun projectile-go-compile-tests ()
+    (defun projectile-go-compile-tests ()
     (interactive)
     (if (not (eq (projectile-project-type) 'go))
         (message "Not a go project")
       (let ((compilation-read-command nil)
-            (compile-command "go test -run=none ./..."))
+            (compile-command "go test -run=none ./...")
+            (process-environment (copy-sequence process-environment)))
+        (dolist (e projectile-go-compile-test-extra-env-vars-alist)
+          (setenv (car e) (cdr e)))
         (projectile--run-project-cmd compile-command nil
                                      :save-buffers t))))
 

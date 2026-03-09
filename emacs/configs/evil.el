@@ -18,6 +18,13 @@
   (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-mode)
   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-char-mode)
   (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
+
+  ;; Swap g[j|k] with [j|k] for visual/logical lines
+  (define-key evil-motion-state-map (kbd "j") 'evil-next-visual-line)
+  (define-key evil-motion-state-map (kbd "k") 'evil-previous-visual-line)
+  (define-key evil-motion-state-map (kbd "gj") 'evil-next-line)
+  (define-key evil-motion-state-map (kbd "gk") 'evil-previous-line) 
+  
   ;;TODO: fix get-github-file-and-line-link
   (evil-ex-define-cmd "gh" #'git-link)
   (evil-ex-define-cmd "break" #'gud-break)
@@ -42,7 +49,8 @@
                                  (evil-emacs-state))))
 
   (defun my:evil-write (&rest args)
-    "I constantly hit :w2<ret> and save a file named 2.  Verify that I want to do that"
+    "I constantly hit :w2<ret> and save a file named 2.  Verify that I want
+to do that"
     (if (equal "2" (nth 3 args))
         (y-or-n-p "Did you really mean to save a file named 2?")
       t))
@@ -74,7 +82,6 @@
 
 (use-package evil-collection
   :after evil
-  :init
   :config
   (setq evil-collection-mode-list
         '(ag
