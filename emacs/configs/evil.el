@@ -27,6 +27,7 @@
   
   ;;TODO: fix get-github-file-and-line-link
   (evil-ex-define-cmd "gh" #'git-link)
+  (evil-ex-define-cmd "ln" #'my:filepath-with-line)
   (evil-ex-define-cmd "break" #'gud-break)
 
   (cl-loop for (mode . state) in '( ;; Start in emacs mode

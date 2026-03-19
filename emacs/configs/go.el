@@ -104,7 +104,6 @@
     (defvar my:lsp-go-directory-filters '())
     (lsp-register-custom-settings
      '(("gopls.directoryFilters" my:lsp-go-directory-filters)
-       ("gopls.buildFlags" ["-tags=dev"])
        ("golangci-lint.command"
         ["golangci-lint" "run" "--modules-download-mode=vendor" "--enable-all" "--disable" "lll" "--out-format" "json" "--issues-exit-code=1"])))
 
@@ -164,3 +163,4 @@
 
 (defalias 'jsontag
    (kmacro "^ y i W A SPC j s o n <tab> <escape> p v i \" M-x s n a k e c a <return> "))
+
