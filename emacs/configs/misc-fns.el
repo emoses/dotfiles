@@ -131,6 +131,15 @@ find-file-other-frame and display-buffer"
   (interactive)
   (caseify-word-at-point #'kebab-case))
 
+(require 'transient)
+
+(transient-define-prefix caseify ()
+  "Case-transforming commands"
+  [("_" "snake_case" snake-case-region-or-word)
+   ("-" "kebab-case" kebab-case-region-or-word)
+   ("c" "lowerCamelCase" lower-camel-case-region-or-word)
+   ("C" "UpperCamelCase" camel-case-region-or-word)])
+
 (defun get-github-file-and-line-link (filename lineno)
   (interactive (list (buffer-file-name) (line-number-at-pos)))
   (if-let ((repo (magit-gh-pulls-guess-repo)))
