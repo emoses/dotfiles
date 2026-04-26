@@ -101,7 +101,7 @@
 
 ;;Magit
 (use-package magit
-  :after (ivy evil)
+  :after (evil)
   :bind (("C-x M-g" . magit-file-dispatch)
          ("C-x M-S-g" . magit-dispatch-popup)
          :map magit-blame-mode-map
@@ -115,7 +115,6 @@
     (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))
   (setq magit-branch-read-upstream-first nil)
   (advice-add 'magit-push-popup :around #'magit-push-arguments-maybe-upstream)
-  (setq magit-completing-read-function #'ivy-completing-read)
   (setq magit-bury-buffer-function #'magit-mode-quit-window)
   (setq magit-process-finish-apply-ansi-colors t)
 
@@ -142,7 +141,7 @@ ARGS are the arguments passed to `git rebase`."
           (local-branch (cadr remote)))
       (message "Fetching from %s..." remote-branch)
       (magit-git-fetch (car remote) nil)
-      
+
       ;; This command attempts to update the local master ref to the origin/master ref.
       ;; The ":" prefix in the refspec implies it must be a fast-forward.
       (condition-case nil

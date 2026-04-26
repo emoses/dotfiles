@@ -89,7 +89,6 @@
           flycheck
           imenu-list
           info
-          ivy
           js2-mode
           lsp-ui-imenu
           lua-mode

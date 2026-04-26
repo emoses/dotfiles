@@ -94,10 +94,8 @@
       (interactive)
       (lsp-ui-peek-find-custom "textDocument/typeDefinition" extra)))
 
-(use-package  lsp-ivy
-  :straight (lsp-ivy :type git :host github :repo "emacs-lsp/lsp-ivy")
-  :bind (("A-f" . lsp-ivy-workspace-symbol))
-  :commands lsp-ivy-workspace-symbol)
+(use-package consult-lsp
+  :bind (("A-f" . consult-lsp-symbols)))
 
 (use-package lsp-treemacs
   :commands lsp-treemacs-errors-list
