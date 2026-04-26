@@ -139,7 +139,10 @@
      ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml"
      "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((backup-directory-alist ("." . "~/.emacs.d/backup-files/")) (eval turn-on-auto-fill)
+   '((lsp-golangci-lint-build-tags quote ("testonly")) (lsp-go-build-flags . ["-tags=testonly"])
+     (checkdoc-allow-quoting-nil-and-t . t)
+     (lsp-rust-features . ["tpe" "partial-eval"]) (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/"))
+     (backup-directory-alist ("." . "~/.emacs.d/backup-files/")) (eval turn-on-auto-fill)
      (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
      (org-html-metadata-timestamp-format . "%Y-%m-%d") (my:prettify . t) (lsp-eslint-package-manager . "yarn")
      (lsp-eslint-working-directories . ["frontend/"]) (lsp-eslint-package-manager . yarn)
@@ -418,6 +421,9 @@
 
 (use-package projectile
   :bind (("C-c C-s" . my:projectile-ag-symbol))
+  :init
+  (defvar projectile-go-compile-test-extra-env-vars-alist nil
+    "a plist of Extra environment variables to set when running Go tests")
   :config
   (setq projectile-switch-project-action #'projectile-find-file-dwim)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
@@ -431,12 +437,15 @@
              (test-dir-name (or  (projectile-project-type-attribute (projectile-project-type) 'test-dir) ".")))
         (expand-file-name test-dir-name project-root)))
 
-  (defun projectile-go-compile-tests ()
+    (defun projectile-go-compile-tests ()
     (interactive)
     (if (not (eq (projectile-project-type) 'go))
         (message "Not a go project")
       (let ((compilation-read-command nil)
-            (compile-command "go test -run=none ./..."))
+            (compile-command "go test -run=none ./...")
+            (process-environment (copy-sequence process-environment)))
+        (dolist (e projectile-go-compile-test-extra-env-vars-alist)
+          (setenv (car e) (cdr e)))
         (projectile--run-project-cmd compile-command nil
                                      :save-buffers t))))
 

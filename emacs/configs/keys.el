@@ -13,10 +13,7 @@
 (global-set-key (kbd "TAB") 'indent-for-tab-command)
 (global-set-key (kbd "C-`") 'other-frame) ;;mac-like frame switching
 (global-set-key (kbd "C-h C-f") 'find-function)
-(global-set-key (kbd "C-c c _") 'snake-case-region-or-word)
-(global-set-key (kbd "C-c c -") 'kebab-case-region-or-word)
-(global-set-key (kbd "C-c c c") 'lower-camel-case-region-or-word)
-(global-set-key (kbd "C-c c C") 'camel-case-region-or-word)
+(global-set-key (kbd "C-c c") 'caseify)
 (global-set-key (kbd "C-c C-o") 'browse-url)
 (global-set-key (kbd "<f5>") 'next-error)
 (global-set-key (kbd "S-<f5>") 'previous-error)

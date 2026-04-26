@@ -131,6 +131,15 @@ find-file-other-frame and display-buffer"
   (interactive)
   (caseify-word-at-point #'kebab-case))
 
+(require 'transient)
+
+(transient-define-prefix caseify ()
+  "Case-transforming commands"
+  [("_" "snake_case" snake-case-region-or-word)
+   ("-" "kebab-case" kebab-case-region-or-word)
+   ("c" "lowerCamelCase" lower-camel-case-region-or-word)
+   ("C" "UpperCamelCase" camel-case-region-or-word)])
+
 (defun get-github-file-and-line-link (filename lineno)
   (interactive (list (buffer-file-name) (line-number-at-pos)))
   (if-let ((repo (magit-gh-pulls-guess-repo)))
@@ -419,3 +428,30 @@ Example
       
       (t child)))
    children))
+
+(defun my:filepath-with-line ()
+  "Copy the current file path relative to the project root and line number
+to the kill ring.  If a region is active, it copies a line range (e.g.,
+path/to/file#L10-15).  Otherwise, it copies the single current
+line (e.g., path/to/file#L10)."
+  (interactive)
+  (let ((project-root (projectile-project-root))
+         (file-path (buffer-file-name)))
+    (unless file-path
+      (user-error "Buffer not visiting a file"))
+    (let*
+        ((rel-path (if (and project-root file-path)
+                       (file-relative-name file-path project-root)
+                     file-path))
+         (line-info (if (use-region-p)
+                        (let ((beg (line-number-at-pos (region-beginning)))
+                              ;; 1- ensures that if the region ends at the start of a new line,
+                              ;; we don't include that empty line in the count.
+                              (end (line-number-at-pos (1- (region-end)))))
+                          (if (= beg end)
+                              (format "L%d" beg)
+                            (format "L%d-%d" beg end)))
+                      (format "L%d" (line-number-at-pos))))
+         (result (concat rel-path "#" line-info)))
+      (kill-new result)
+      (message "%s" result))))
