@@ -1,5 +1,4 @@
   (defun my:go-mode-hooks ()
-    (ivy-mode t)
     (indent-tabs-mode t)
     (add-hook 'before-save-hook #'maybe-lsp-format-buffer nil t)
     (add-hook 'before-save-hook #'maybe-lsp-organize-imports nil t)

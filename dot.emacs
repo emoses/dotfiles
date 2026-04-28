@@ -16,14 +16,18 @@
  '(company-dabbrev-downcase nil)
  '(company-dabbrev-ignore-case nil)
  '(connection-local-criteria-alist
-   '(((:application tramp :protocol "kubernetes") tramp-kubernetes-connection-local-default-profile)
+   '(((:machine "newerheart") newerheart-vars)
+     ((:application tramp :protocol "kubernetes") tramp-kubernetes-connection-local-default-profile)
+     ((:application tramp :machine "Mac.fortytwo.local") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "Computery.local") tramp-connection-local-darwin-ps-profile)
      ((:application tramp :machine "FK00M29L63") tramp-connection-local-darwin-ps-profile)
      ((:application eshell) eshell-connection-default-profile)
      ((:application tramp :machine "localhost") tramp-connection-local-darwin-ps-profile)
      ((:application tramp :machine "C02DR5M6MD6T") tramp-connection-local-darwin-ps-profile)
      ((:application tramp) tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
  '(connection-local-profile-alist
-   '((tramp-kubernetes-connection-local-default-profile (tramp-config-check . tramp-kubernetes--current-context-data)
+   '((newerheart-vars (company-gtags--executable-connection))
+     (tramp-kubernetes-connection-local-default-profile (tramp-config-check . tramp-kubernetes--current-context-data)
                                                         (tramp-extra-expand-args 97
                                                                                  (tramp-kubernetes--container
                                                                                   (car tramp-current-connection))
@@ -64,8 +68,7 @@
      (tramp-connection-local-default-shell-profile (shell-file-name . "/bin/sh") (shell-command-switch . "-c"))
      (tramp-connection-local-default-system-profile (path-separator . ":") (null-device . "/dev/null"))))
  '(custom-safe-themes
-   '("6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
-     "0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
+   '("0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
      "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762"
      "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a"
      "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d"
@@ -83,14 +86,11 @@
      "cdc7555f0b34ed32eb510be295b6b967526dd8060e5d04ff0dce719af789f8e5"
      "6a37be365d1d95fad2f4d185e51928c789ef7a4ccf17e7ca13ad63a8bf5b922f"
      "756597b162f1be60a12dbd52bab71d40d6a2845a3e3c2584c6573ee9c332a66e" default))
- '(dired-dwim-target 'dired-dwim-target-next)
- '(doom-modeline-battery nil)
- '(doom-modeline-buffer-file-name-style 'relative-from-project)
- '(doom-modeline-lsp t)
  '(evil-overriding-maps
    '((Buffer-menu-mode-map) (color-theme-mode-map) (comint-mode-map) (compilation-mode-map) (grep-mode-map)
      (dictionary-mode-map) (ert-results-mode-map . motion) (Info-mode-map . motion) (speedbar-key-map)
      (speedbar-file-key-map) (speedbar-buffers-key-map) (cider-popup-buffer-mode-map) (cider-stacktrace-mode-map)))
+ '(evil-undo-system 'undo-redo)
  '(fill-column 120)
  '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-global-modes '(not elisp-mode))
@@ -106,6 +106,7 @@
                      c++-mode c++-ts-mode common-lisp-mode commonlisp-ts-mode cmake-mode cmake-ts-mode clojure-mode
                      clojure-ts-mode csharp-mode csharp-ts-mode c-mode c-ts-mode bibtex-mode bibtex-ts-mode sh-mode
                      bash-ts-mode))
+ '(isearch-allow-motion t)
  '(js2-bounce-indent-flag nil)
  '(js2-global-externs '("require" "module"))
  '(js2-strict-inconsistent-return-warning nil)
@@ -156,7 +157,7 @@
      (my:lsp-go-directory-filters quote ("-frontend")) (lsp-nested-project-separator)
      (lsp--override-calculate-lisp-indent? . t)
      (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6061"
-                               "-logfile=/Users/evanmoses/dev/go/src/github.com/ScaleFT/device-tools/gopls.log")
+                               "-logfile=/Users/evanmoses/sev/go/src/github.com/ScaleFT/device-tools/gopls.log")
      (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060"
                                "-logfile=/Users/evanmoses/dev/go/src/go.sudo.wtf/gopls.log")
      (lsp-go-gopls-server-args "-rpc.trace" "--debug=localhost:6060")
@@ -259,7 +260,6 @@
  '(tls-checktrust t)
  '(undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo-tree-history")))
  '(warning-suppress-types '((copilot copilot-exceeds-max-char)))
- '(world-clock-time-format "%A %d %B %Y %R %Z")
  '(xref-prompt-for-identifier
    '(not xref-find-definitions xref-find-definitions-other-window xref-find-definitions-other-frame xref-find-references)))
 (custom-set-faces
@@ -268,9 +268,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))
- '(doom-modeline-evil-normal-state ((t (:inherit doom-modeline-info :foreground "#2ca6e8"))))
  '(ediff-even-diff-C ((t (:background "light grey" :foreground "black"))))
  '(ediff-odd-diff-C ((t (:background "Grey" :foreground "black"))))
+ '(flycheck-color-mode-line-info-face ((t (:foreground "dim gray"))))
+ '(flycheck-color-mode-line-success-face ((t (:foreground "dark green"))))
  '(fringe ((t (:background "#373b41" :foreground "#586e75"))))
  '(highlight ((t (:background "#41444a" :inverse-video nil))))
  '(js2-error-face ((((class color) (background dark)) (:foreground "pale turquoise" :weight bold))))
@@ -279,7 +280,6 @@
  '(lsp-ui-sideline-global ((t (:background "medium blue"))))
  '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
  '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
- '(org-block ((t (:extend t :background "#32a2324a37a7"))))
  '(sml/global ((t (:background "grey85" :foreground "grey20" :inverse-video nil :weight semi-light :height 1.05 :family "Avenir")))))
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
@@ -355,10 +355,7 @@
                        "lsp.el"
                        "python.el"
                        "present-minor-mode.el"
-                       "go.el"
-                       "rust.el"
-		       "cedar-mode.el"
-                       "cedar-schema-ts-mode.el"))
+                       "go.el"))
 
 (defconst my:LOCAL_CONFIG_PATH (file-name-concat (getenv "HOME") ".local" "emacs"))
 (when (file-exists-p my:LOCAL_CONFIG_PATH)
@@ -430,7 +427,6 @@
   (defvar projectile-go-compile-test-flags nil
     "test flags to pass to go build when compiling tests")
   :config
-  (setq projectile-completion-system 'ivy)
   (setq projectile-switch-project-action #'projectile-find-file-dwim)
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
@@ -527,8 +523,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
-;; This causes more problems than it solves.  
-;; (add-hook 'before-save-hook #'delete-trailing-whitespace)
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 (use-package flycheck
   :bind (:map flycheck-mode-map
@@ -554,37 +549,56 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 ;; (use-package ido-completing-read+)
 
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-         ("C-x C-f" . counsel-find-file)
-         ("C-x b" . ivy-switch-buffer)
-         ("C-h f" . counsel-describe-function)
-         ("C-h v" . counsel-describe-variable)
-         :map ivy-minibuffer-map
-         ([remap previous-line] . my:previous-line-or-history)
-         ("C-c RET" . ivy-immediate-done)
-         :map counsel-find-file-map
-         ("C-x C-f" . find-file))
-
+;; Fuzzy matching - replaces ivy--regex-fuzzy
+(use-package orderless
   :init
-  (add-hook 'after-init-hook
-            (lambda ()
-              (setq ivy-re-builders-alist
-                    '((counsel-M-x . ivy--regex-fuzzy)
-                      (t . ivy--regex-fuzzy)))))
-  :config
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) ")
-                                        ; I don't know why, but this doesn't seem to work if I just do it in this :config
-  (add-to-list 'ivy-initial-inputs-alist '(counsel-M-x . ""))
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
 
-                                        ; Backspace at beginning in minibuffer quits by default.  Don't do that.
-  (setq ivy-on-del-error-function #'ignore)
-  (defun my:previous-line-or-history (arg)
-    (interactive "p")
-    (when (zerop ivy--index)
-      (ivy-previous-history-element 1))
-    (ivy-previous-line arg)))
+;; Rich annotations in the minibuffer (replaces ivy-rich)
+;; (use-package marginalia
+;;   :init
+;;   (marginalia-mode))
+
+;; Replaces counsel-* commands
+(use-package consult
+  :bind (("M-x"     . consult-M-x)
+         ("C-x C-f" . find-file)
+         ("C-x b"   . consult-buffer)
+         ("C-h f"   . describe-function)
+         ("C-h v"   . describe-variable)))
+
+;; Persist history across Emacs restarts (replaces ivy-use-virtual-buffers for recent files)
+(use-package savehist
+  :init
+  (savehist-mode))
+
+;; Vertico-specific settings to match your ivy config
+(use-package vertico
+  :init
+  (vertico-mode)
+  :config
+  ;; Replaces ivy-count-format - vertico shows count by default in the prompt
+  (setq vertico-count 20                ; number of candidates shown
+        vertico-cycle t)
+
+  ;; Replaces ivy-on-del-error-function - don't quit on backspace at start
+  ;; (setq minibuffer-electric-default-mode nil)
+
+  ;; Replaces my:previous-line-or-history
+  :bind (:map vertico-map
+              ([remap previous-line] . vertico-previous)
+              ("C-s" . vertico-next)
+              ("C-r" . vertico-previous)))
+
+;; For the previous-line-or-history behavior (wrap around to history)
+;; vertico has this built in with vertico-cycle
+
+;; Replaces ivy-immediate-done (C-c RET) - submit exactly what's typed
+(define-key minibuffer-local-completion-map
+  (kbd "C-c RET") #'minibuffer-complete-and-exit)
+
 
 (use-package hydra
   :config
@@ -687,12 +701,6 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
 
 (define-key isearch-mode-map (kbd "A-s") 'my:isearch-menu)
 
-(use-package undo-tree
-  :config
-  (global-undo-tree-mode))
-
-(use-package ivy-hydra
-  :after (ivy hydra))
 
 (use-package ag
   :bind (("A-s" . 'ag)
@@ -734,11 +742,22 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
         (invert-face 'mode-line)
         (run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
-(use-package nerd-icons
-  :custom
-  (nerd-icons-font-family "FiraCode Nerd Font"))
-(use-package doom-modeline
-  :init (doom-modeline-mode 1))
+(use-package powerline
+  :config
+  (powerline-default-theme))
+(use-package smart-mode-line-powerline-theme)
+;;Smart mode line
+(use-package smart-mode-line
+  :after (smart-mode-line-powerline-theme powerline)
+  :config
+  (sml/apply-theme 'smart-mode-line-light-powerline)
+  (sml/setup)
+  ;(set-face-attribute 'mode-line-inactive nil :box '(:width -1))
+  )
+(use-package flycheck-color-mode-line
+  :hook (flycheck-mode . flycheck-color-mode-line-mode)
+  :config
+  (setq flycheck-color-mode-line-face-to-color 'sml/filename))
 
 (use-package ace-jump-mode)
 
