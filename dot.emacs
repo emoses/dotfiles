@@ -138,11 +138,11 @@
      ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml"
      "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((lsp-golangci-lint-build-tags quote ("testonly")) (lsp-go-build-flags . ["-tags=testonly"])
-     (checkdoc-allow-quoting-nil-and-t . t)
-     (lsp-rust-features . ["tpe" "partial-eval"]) (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/"))
-     (backup-directory-alist ("." . "~/.emacs.d/backup-files/")) (eval turn-on-auto-fill)
-     (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
+   '((rustic-default-test-arguments . "--all-targets") (projectile-go-compile-test-flags . "-tags=testonly")
+     (lsp-golangci-lint-build-tags quote ("testonly")) (lsp-go-build-flags . ["-tags=testonly"])
+     (checkdoc-allow-quoting-nil-and-t . t) (lsp-rust-features . ["tpe" "partial-eval"])
+     (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/")) (backup-directory-alist ("." . "~/.emacs.d/backup-files/"))
+     (eval turn-on-auto-fill) (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
      (org-html-metadata-timestamp-format . "%Y-%m-%d") (my:prettify . t) (lsp-eslint-package-manager . "yarn")
      (lsp-eslint-working-directories . ["frontend/"]) (lsp-eslint-package-manager . yarn)
      (jest-executable . "yarn utest --") (projectile-indexing-method quote hybrid)
@@ -427,6 +427,8 @@
   :init
   (defvar projectile-go-compile-test-extra-env-vars-alist nil
     "a plist of Extra environment variables to set when running Go tests")
+  (defvar projectile-go-compile-test-flags nil
+    "test flags to pass to go build when compiling tests")
   :config
   (setq projectile-completion-system 'ivy)
   (setq projectile-switch-project-action #'projectile-find-file-dwim)
@@ -441,12 +443,12 @@
              (test-dir-name (or  (projectile-project-type-attribute (projectile-project-type) 'test-dir) ".")))
         (expand-file-name test-dir-name project-root)))
 
-    (defun projectile-go-compile-tests ()
+  (defun projectile-go-compile-tests ()
     (interactive)
     (if (not (eq (projectile-project-type) 'go))
         (message "Not a go project")
       (let ((compilation-read-command nil)
-            (compile-command "go test -run=none ./...")
+            (compile-command (format "go test -run=none %s ./..." (or projectile-go-compile-test-flags "")))
             (process-environment (copy-sequence process-environment)))
         (dolist (e projectile-go-compile-test-extra-env-vars-alist)
           (setenv (car e) (cdr e)))

@@ -108,10 +108,15 @@ find-file-other-frame and display-buffer"
 (defun caseify-word-at-point (caseifyer)
   (save-excursion
     (let* ((case-fold-search nil)
-           (beg (if (use-region-p) (region-beginning) (and (skip-chars-backward "[:alnum:]:_-") (point))))
-           (end (if (use-region-p) (region-end) (and (skip-chars-forward  "[:alnum:]:_-") (point))))
+           (beg (if (use-region-p) (region-beginning) (and (skip-chars-backward "[:alnum:]:_\\-.") (point))))
+           (end (if (use-region-p) (region-end) (and (skip-chars-forward  "[:alnum:]:_\\-.") (point))))
            (txt (buffer-substring-no-properties beg end))
-           (cml (funcall caseifyer txt)))
+           ;; Split into dot-separated words
+           (words (split-string txt "\\."))
+           (cml (mapconcat (lambda (word)
+                              (funcall caseifyer word))
+                  words
+                  ".")))
       (if cml (progn (delete-region beg end) (insert cml))))))
 
 

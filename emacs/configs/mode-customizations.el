@@ -72,7 +72,7 @@
          (buffer-string)))
      (current-buffer)))
   :custom
-  (markdown-command "pandoc" "Use pandoc for markdown"))
+  (markdown-command "pandoc --standalone --mathjax" "Use pandoc for markdown"))
 
 (setq nxml-child-indent 4)
 
@@ -169,6 +169,18 @@ ARGS are the arguments passed to `git rebase`."
     '("#" "Reflog" my:magit-reflog))
   (transient-append-suffix 'magit-pull #'magit-pull-branch
     '("M" "Pull master and checkout" my:magit-ff-master-from-origin))
+
+  (defun my:magit-kill-worktree-buffers-advice (path &rest _args)
+    "Kill all buffers visiting files within the deleted worktree PATH."
+    (let ((expanded-path (expand-file-name path)))
+      (dolist (buf (buffer-list))
+        (let ((buf-file (buffer-file-name buf)))
+          (when (and buf-file (string-prefix-p expanded-path (expand-file-name buf-file)))
+            (kill-buffer buf))))))
+
+  
+  (advice-add 'magit-worktree-delete :after #'my:magit-kill-worktree-buffers-advice)
+  
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
@@ -428,3 +440,6 @@ ARGS are the arguments passed to `git rebase`."
 
 (use-package gcode-mode
   :mode "\\.gcode")
+
+(use-package comment-dwim-2
+  :bind ("M-;" . comment-dwim-2))
