@@ -13,9 +13,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(company-dabbrev-downcase nil)
- '(company-dabbrev-ignore-case nil)
- '(connection-local-criteria-alist
+'(connection-local-criteria-alist
    '(((:machine "newerheart") newerheart-vars)
      ((:application tramp :protocol "kubernetes") tramp-kubernetes-connection-local-default-profile)
      ((:application tramp :machine "Mac.fortytwo.local") tramp-connection-local-darwin-ps-profile)
@@ -68,7 +66,8 @@
      (tramp-connection-local-default-shell-profile (shell-file-name . "/bin/sh") (shell-command-switch . "-c"))
      (tramp-connection-local-default-system-profile (path-separator . ":") (null-device . "/dev/null"))))
  '(custom-safe-themes
-   '("0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
+   '("6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
+     "0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
      "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762"
      "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a"
      "b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d"
@@ -90,7 +89,6 @@
    '((Buffer-menu-mode-map) (color-theme-mode-map) (comint-mode-map) (compilation-mode-map) (grep-mode-map)
      (dictionary-mode-map) (ert-results-mode-map . motion) (Info-mode-map . motion) (speedbar-key-map)
      (speedbar-file-key-map) (speedbar-buffers-key-map) (cider-popup-buffer-mode-map) (cider-stacktrace-mode-map)))
- '(evil-undo-system 'undo-redo)
  '(fill-column 120)
  '(flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint))
  '(flycheck-global-modes '(not elisp-mode))
@@ -126,8 +124,8 @@
    '(org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse))
  '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(package-selected-packages
-   '(forge origami lsp-python-ms el-patch company-lsp lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens
-           scad-mode neotree eldoc-overlay company-flx quelpa-use-package quelpa add-node-modules-path ace-window
+   '(forge origami lsp-python-ms el-patch lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens
+           scad-mode neotree eldoc-overlay quelpa-use-package quelpa add-node-modules-path ace-window
            evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode
            dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch
            web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode lua-mode
@@ -278,8 +276,8 @@
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(lsp-ui-sideline-global ((t (:background "medium blue"))))
- '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
- '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
+ '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))) t)
+ '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))) t)
  '(sml/global ((t (:background "grey85" :foreground "grey20" :inverse-video nil :weight semi-light :height 1.05 :family "Avenir")))))
 
 (defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
@@ -556,15 +554,8 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
-;; Rich annotations in the minibuffer (replaces ivy-rich)
-;; (use-package marginalia
-;;   :init
-;;   (marginalia-mode))
-
-;; Replaces counsel-* commands
 (use-package consult
-  :bind (("M-x"     . consult-M-x)
-         ("C-x C-f" . find-file)
+  :bind (("C-x C-f" . find-file)
          ("C-x b"   . consult-buffer)
          ("C-h f"   . describe-function)
          ("C-h v"   . describe-variable)))
@@ -599,6 +590,19 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 (define-key minibuffer-local-completion-map
   (kbd "C-c RET") #'minibuffer-complete-and-exit)
 
+(use-package corfu
+  :bind (:map corfu-map
+               ("S-SPC" . corfu-insert-separator))
+  :custom (tab-always-indent 'complete)
+  :init
+  (global-corfu-mode))
+
+(use-package cape
+  :init
+  ;; Add `completion-at-point-functions', used by `completion-at-point'.
+  (setq-default completion-at-point-functions
+                (append (default-value 'completion-at-point-functions)
+                        (list #'cape-dabbrev #'cape-file #'cape-abbrev))))
 
 (use-package hydra
   :config

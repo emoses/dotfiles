@@ -177,9 +177,9 @@ ARGS are the arguments passed to `git rebase`."
           (when (and buf-file (string-prefix-p expanded-path (expand-file-name buf-file)))
             (kill-buffer buf))))))
 
-  
+
   (advice-add 'magit-worktree-delete :after #'my:magit-kill-worktree-buffers-advice)
-  
+
 
   (evil-ex-define-cmd "bl[ame]" #'magit-blame-addition)
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
@@ -196,16 +196,6 @@ ARGS are the arguments passed to `git rebase`."
         (browse-url (cdr url))))
   (add-hook 'forge-post-submit-callback-hook #'my:forge-browse-after-create-pr))
 
-
-(use-package company
-  :init
-  (add-hook 'after-init-hook 'global-company-mode))
-
-;; (use-package company-flx
-;;   :ensure t
-;;   :after company
-;;   :config
-;;   (company-flx-mode +1))
 
 (use-package eldoc-overlay)
 

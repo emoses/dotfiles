@@ -7,7 +7,7 @@
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
   :custom
-  (evil-undo-system 'undo-tree)
+  (evil-undo-system 'undo-redo)
   :config
   (use-package evil-leader
     :config
@@ -17,14 +17,13 @@
 
   (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-mode)
   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-char-mode)
-  (define-key evil-insert-state-map (kbd "C-+") 'company-complete)
 
   ;; Swap g[j|k] with [j|k] for visual/logical lines
   (define-key evil-motion-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-motion-state-map (kbd "k") 'evil-previous-visual-line)
   (define-key evil-motion-state-map (kbd "gj") 'evil-next-line)
-  (define-key evil-motion-state-map (kbd "gk") 'evil-previous-line) 
-  
+  (define-key evil-motion-state-map (kbd "gk") 'evil-previous-line)
+
   ;;TODO: fix get-github-file-and-line-link
   (evil-ex-define-cmd "gh" #'git-link)
   (evil-ex-define-cmd "ln" #'my:filepath-with-line)
