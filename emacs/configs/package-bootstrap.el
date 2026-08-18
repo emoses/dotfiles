@@ -15,6 +15,9 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+;(use-package use-package-ensure-system-package
+					;  :ensure t)
+
 ;; (require 'package)
 ;; (setq package-archives `(("melpa-stable" . "https://stable.melpa.org/packages/")
 ;;                          ("melpa" . "https://melpa.org/packages/")

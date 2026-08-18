@@ -85,9 +85,9 @@ to do that"
   :config
   (setq evil-collection-mode-list
         '(ag
+          agent-shell
                                         ;calc
           cider
-          company
           compile
           diff-mode
           ;; dired

@@ -21,3 +21,4 @@ __flycheck*
 # asdf.
 .direnv
 .aider*
+.agent-shell/

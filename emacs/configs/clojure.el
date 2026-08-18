@@ -5,7 +5,10 @@
   (evil-cleverparens-mode))
 
 
-(use-package evil-paredit)
+(use-package enhanced-evil-paredit
+  :straight (:host github :repo "jamescherti/enhanced-evil-paredit.el")
+  :commands enhanced-evil-paredit-mode
+  :hook (paredit-mode . enhanced-evil-paredit-mode))
 
 (use-package rainbow-delimiters)
 
@@ -14,10 +17,7 @@
               ([C-right] . forward-word)
               ([C-left] . backward-word)
               ([M-right] . paredit-forward-slurp-sexp)
-              ([M-left] . paredit-forward-barf-sexp))
-  :config
-  (evil-paredit-mode t)
-  )
+              ([M-left] . paredit-forward-barf-sexp)))
 
 (use-package clojure-mode
   :mode (("\\.bb$" . clojure-mode)

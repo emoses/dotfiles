@@ -13,7 +13,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-'(connection-local-criteria-alist
+ '(connection-local-criteria-alist
    '(((:machine "newerheart") newerheart-vars)
      ((:application tramp :protocol "kubernetes") tramp-kubernetes-connection-local-default-profile)
      ((:application tramp :machine "Mac.fortytwo.local") tramp-connection-local-darwin-ps-profile)
@@ -66,7 +66,8 @@
      (tramp-connection-local-default-shell-profile (shell-file-name . "/bin/sh") (shell-command-switch . "-c"))
      (tramp-connection-local-default-system-profile (path-separator . ":") (null-device . "/dev/null"))))
  '(custom-safe-themes
-   '("6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
+   '("e184d8607cc9933f2ba8e180699365bdf8b6f311834a9e15c71947b38be0caa3"
+     "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
      "0b98215401d426a6514f0842193272844002ca70e56b3519ea8fcd0a17f0d0de"
      "8b9d07b01f2a9566969c2049faf982cab6a4b483dd43de7fd6a016bb861f7762"
      "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a"
@@ -122,13 +123,12 @@
  '(org-log-done 'time)
  '(org-modules
    '(org-bbdb org-bibtex org-gnus org-info org-jsinfo org-irc org-mew org-mhe org-rmail org-vm org-wl org-w3m org-mouse))
- '(org-refile-targets '((org-agenda-files :maxlevel . 3)))
  '(package-selected-packages
-   '(forge origami lsp-python-ms el-patch lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens
-           scad-mode neotree eldoc-overlay quelpa-use-package quelpa add-node-modules-path ace-window
-           evil-collection php-mode dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode
-           dired+ plantuml-mode graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch
-           web-mode typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode lua-mode
+   '(forge origami lsp-python-ms el-patch lsp-ui lsp-mode htmlize emacs-htmlize racket-mode evil-cleverparens scad-mode
+           neotree eldoc-overlay quelpa-use-package quelpa add-node-modules-path ace-window evil-collection php-mode
+           dockerfile-mode xterm-color pyenv-mode elpy ace-jump-mode evil-org evil-org-mode dired+ plantuml-mode
+           graphql-mode org nlinum evil-leader inf-clojure esup groovy-mode yaml-mode win-switch web-mode
+           typescript-mode smartparens smart-mode-line rainbow-delimiters projectile p4 markdown-mode lua-mode
            less-css-mode json-mode js2-mode jade-mode ido-completing-read+ haskell-mode haml-mode google-c-style flx-ido
            find-file-in-repository exec-path-from-shell evil-paredit evil-lispy emacs-eclim elm-mode editorconfig
            dired-details+ cider base16-theme auto-complete ag ack-and-a-half))
@@ -137,11 +137,12 @@
      ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml"
      "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((rustic-default-test-arguments . "--all-targets") (projectile-go-compile-test-flags . "-tags=testonly")
-     (lsp-golangci-lint-build-tags quote ("testonly")) (lsp-go-build-flags . ["-tags=testonly"])
-     (checkdoc-allow-quoting-nil-and-t . t) (lsp-rust-features . ["tpe" "partial-eval"])
-     (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/")) (backup-directory-alist ("." . "~/.emacs.d/backup-files/"))
-     (eval turn-on-auto-fill) (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
+   '((lsp-rust-features . "all") (rustic-default-test-arguments . "--all-targets")
+     (projectile-go-compile-test-flags . "-tags=testonly") (lsp-golangci-lint-build-tags quote ("testonly"))
+     (lsp-go-build-flags . ["-tags=testonly"]) (checkdoc-allow-quoting-nil-and-t . t)
+     (lsp-rust-features . ["tpe" "partial-eval"]) (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/"))
+     (backup-directory-alist ("." . "~/.emacs.d/backup-files/")) (eval turn-on-auto-fill)
+     (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
      (org-html-metadata-timestamp-format . "%Y-%m-%d") (my:prettify . t) (lsp-eslint-package-manager . "yarn")
      (lsp-eslint-working-directories . ["frontend/"]) (lsp-eslint-package-manager . yarn)
      (jest-executable . "yarn utest --") (projectile-indexing-method quote hybrid)
@@ -276,11 +277,12 @@
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(lsp-ui-sideline-global ((t (:background "medium blue"))))
- '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))) t)
- '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))) t)
+ '(magit-diff-added-highlight ((t (:extend t :background "#2f6b46" :foreground "#b5bd68"))))
+ '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
+ '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
  '(sml/global ((t (:background "grey85" :foreground "grey20" :inverse-video nil :weight semi-light :height 1.05 :family "Avenir")))))
 
-(defconst my:emacs-base "~/dotfiles/emacs/" "Libraries, and the base for configs")
+(defconst my:emacs-base (file-name-concat (getenv "HOME") "dotfiles/emacs/") "Libraries, and the base for configs")
 (defconst my:emacs-config-dir (concat my:emacs-base "configs/") "Place that my:load-config-file will look for configs")
 
 ;WTF why does the debugger randomly get turned on?
@@ -343,6 +345,7 @@
 		       "org-mode-init.el"
 		       "evil.el"
 		       "faces.el"
+                       "magit.el"
 		       "mode-customizations.el"
                        "hugo-markdown-mode.el"
                        "javascript.el"
@@ -353,7 +356,18 @@
                        "lsp.el"
                        "python.el"
                        "present-minor-mode.el"
-                       "go.el"))
+                       "go.el"
+                       "rust.el"))
+
+(use-package cedar-mode
+  :straight nil
+  :load-path (lambda () (file-name-concat my:emacs-base "configs" "cedar-mode.el"))
+  :mode "\\.cedar\\'")
+
+(use-package cedar-schema-ts-mode
+  :straight nil
+  :load-path (lambda () (file-name-concat my:emacs-base "configs" "cedar-schema-ts-mode.el"))
+  :mode "\\.cedarschema\\'")
 
 (defconst my:LOCAL_CONFIG_PATH (file-name-concat (getenv "HOME") ".local" "emacs"))
 (when (file-exists-p my:LOCAL_CONFIG_PATH)
@@ -520,7 +534,9 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 
 
 (require 'uniquify)
-(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-buffer-name-style 'reverse
+      uniquify-separator " · ")
+
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 (use-package flycheck
@@ -550,7 +566,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 ;; Fuzzy matching - replaces ivy--regex-fuzzy
 (use-package orderless
   :init
-  (setq completion-styles '(orderless basic)
+  (setq completion-styles '(orderless basic flex)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
@@ -558,7 +574,11 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   :bind (("C-x C-f" . find-file)
          ("C-x b"   . consult-buffer)
          ("C-h f"   . describe-function)
-         ("C-h v"   . describe-variable)))
+         ("C-h v"   . describe-variable)
+         ("A-t"     . consult-imenu))
+  :config
+  (consult-customize consult-lsp-symbols :preview-key '(:debounce 0.1 "M-."))
+  (setq consult-narrow-key "<"))
 
 ;; Persist history across Emacs restarts (replaces ivy-use-virtual-buffers for recent files)
 (use-package savehist
@@ -593,7 +613,12 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
 (use-package corfu
   :bind (:map corfu-map
                ("S-SPC" . corfu-insert-separator))
-  :custom (tab-always-indent 'complete)
+  :custom
+  (tab-always-indent 'complete)
+  (corfu-auto t)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-trigger ".")
+  (corfu-quit-no-match 'separator)
   :init
   (global-corfu-mode))
 
@@ -603,6 +628,10 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
   (setq-default completion-at-point-functions
                 (append (default-value 'completion-at-point-functions)
                         (list #'cape-dabbrev #'cape-file #'cape-abbrev))))
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
 
 (use-package hydra
   :config
@@ -746,6 +775,8 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
         (invert-face 'mode-line)
         (run-with-timer 0.1 nil #'invert-face 'mode-line)))
 
+(use-package vundo)
+
 (use-package powerline
   :config
   (powerline-default-theme))
@@ -797,6 +828,7 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
   (defun my:accept-completion ()
     (interactive)
     (or
+     (and (bound-and-true-p corfu-mode) corfu--candidates (call-interactively #'corfu-complete))
      (and (fboundp 'copilot-accept-completion) (copilot-accept-completion))
      (yas-expand)))
   (yas-global-mode t))
@@ -816,14 +848,14 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
 
 (projectile-mode +1)
 
-(use-package edit-server
-  :bind (:map edit-server-edit-mode-map
-              ("C-c C-q" . edit-server-abort))
-  :commands edit-server-start
-  :init (if after-init-time
-            (edit-server-start)
-          (add-hook 'after-init-hook #'edit-server-start))
-  :custom (edit-server-url-major-mode-alist . ('(("^github.com" . markdown-mode)))))
+;; (use-package edit-server
+;;   :bind (:map edit-server-edit-mode-map
+;;               ("C-c C-q" . edit-server-abort))
+;;   :commands edit-server-start
+;;   :init (if after-init-time
+;;             (edit-server-start)
+;;           (add-hook 'after-init-hook #'edit-server-start))
+;;   :custom (edit-server-url-major-mode-alist . ('(("^github.com" . markdown-mode)))))
 
 (use-package keychain-environment
    :if my:linux

@@ -43,28 +43,31 @@ end
 
 --Name -> {screenIndex, {grid spec}}
 local work_h = 9
-local work_browser = {x = 0, y = 0, w = 7, h = work_h}
+local max_width = 9
+local work_browser = {x = 0, y = 0, w = max_width, h = work_h}
 local work_display_table = {
-   Emacs = {2, {x = 0, y = 0, w = 7, h = work_h}},
-   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = work_h}},
+   DIM = { 9, 9 },
+   Emacs = {2, {x = 0, y = 0, w = max_width, h = work_h}},
+   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = max_width, h = work_h}},
    ["Google Chrome"] = {1, work_browser},
    Firefox = {1, work_browser},
-   Slack = {3, {x = 0, y = 4, w = 7, h = 5}},
-   Terminal = {3, {x = 0, y = 0, w = 7, h = 4}},
-   iTerm2 = {3, {x = 0, y = 0, w = 7, h = 4}},
-   ["Microsoft Outlook"] = {1, work_browser}
+   Slack = {3, {x = 0, y = 4, w = max_width, h = 5}},
+   Terminal = {3, {x = 0, y = 0, w = max_width, h = 4}},
+   iTerm2 = {3, {x = 0, y = 0, w = max_width, h = 4}},
 }
 
 local ultrawide_display_table = {
-   Emacs = {2, {x = 0, y = 0, w = 4, h = work_h}},
-   Firefox = {2, {x = 4, y = 0, w = 3, h = work_h}},
-   ["Google Chrome"] = {2, {x = 4, y = 0, w = 3, h = work_h}},
-   Slack = {1, {x = 0, y = 0, w = 7, h = work_h}},
+   DIM = {9, 9},
+   Emacs = {2, {x = 0, y = 0, w = 6, h = work_h}},
+   Firefox = {1, {x = 0, y = 0, w = max_width, h = work_h}},
+   ["Google Chrome"] = {1, {x = 0, y = 0, w = max_width, h = work_h}},
+   Slack = {2, {x = 6, y = 0, w = 3, h = work_h}},
 }
 
 local home_display_table = {
-   Emacs = {2, {x = 0, y = 0, w = 7, h = 9}},
-   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 7, h = 9}},
+   DIM = {7, 9},
+   Emacs = {2, {x = 0, y = 0, w = 9, h = 9}},
+   ["IntelliJ IDEA"] = {2, {x = 0, y = 0, w = 9, h = 9}},
    ["Google Chrome"] = {1, {x = 0, y = 0, w = 7, h = 9}},
    Firefox = {1, {x = 0, y = 0, w = 7, h = 9}},
    Slack = {1, {x = 1, y = 0, w = 6, h = 9}},
@@ -81,7 +84,7 @@ local filterWindows = function(window)
    end
 end
 
-hs.grid.GRIDWIDTH = 7
+hs.grid.GRIDWIDTH = 9
 hs.grid.GRIDHEIGHT = work_h
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
@@ -96,6 +99,10 @@ local screens_sorted = function()
 end
 
 local apply_layout = function(layout)
+   if (layout.DIM) then
+      hs.grid.GRIDWIDTH = layout.DIM[1]
+      hs.grid.GRIDHEIGHT = layout.DIM[2]
+   end
    local scrs = screens_sorted()
    for appName, place in pairs(layout) do
       local app = hs.appfinder.appFromName(appName)

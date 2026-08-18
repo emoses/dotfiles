@@ -20,7 +20,6 @@
   (require 'dap-cpptools)
   (dap-cpptools-setup)
   (add-hook 'rust-mode-hook #'my:rust-mode-hooks)
+  (add-hook 'rustic-mode-hook #'my:rust-mode-hooks)
   :custom
   (rustic-cargo-use-last-stored-arguments nil))
-
-

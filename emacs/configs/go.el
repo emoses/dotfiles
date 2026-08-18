@@ -122,9 +122,13 @@
 (use-package go-dlv
   :config
   (defalias 'dlv-this-func #'dlv-current-func)
-  (defun my:output-dlv-advice (arg)
-    (message "Dlv command: %s" arg))
-  (advice-add #'dlv :before #'my:output-dlv-advice))
+  (defun my:output-dlv-advice (orig &rest args)
+    (let ((process-environment (copy-sequence process-environment)))
+      (when (bound-and-true-p lsp-go-build-flags)
+        (setenv "GOFLAGS" (mapconcat 'identity lsp-go-build-flags " ")))
+      (message "Dlv command: %S" args)
+      (apply orig args)))
+  (advice-add #'dlv :around #'my:output-dlv-advice))
 
 (use-package gotest
   :bind (:map go-mode-map
@@ -162,4 +166,3 @@
 
 (defalias 'jsontag
    (kmacro "^ y i W A SPC j s o n <tab> <escape> p v i \" M-x s n a k e c a <return> "))
-

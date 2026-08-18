@@ -32,12 +32,19 @@
          (typescript-ts-mode . lsp)
          (go-mode . lsp)
          (go-ts-mode . lsp)
-         (rust-mode . lsp))
+         (rust-mode . lsp)
+         (lsp-completion-mode . my:lsp-mode-setup-completion))
   ;;:straight (:files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred)
+  :custom
+  (lsp-completion-provider :none)
   :init
   (when my:windows
       (add-to-list 'exec-path "D:/elixir-ls-1.11"))
+  (defun my:lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults)) '(orderless))
+    ; (setq-local completion-at-point-functions (list (cape-capf-buster #'lsp-completion-at-point)))
+    )
   :config
   (add-to-list 'exec-path (concat (getenv "HOME") "/elixir-ls/release"))
   (wrap-other-window-impl my:lsp-find-definition #'lsp-find-definition)
