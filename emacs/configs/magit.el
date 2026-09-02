@@ -1,4 +1,4 @@
-;;Magit
+;:;Magit
 (use-package magit
   :after (evil)
   :bind (("C-x M-g" . magit-file-dispatch)
@@ -9,6 +9,8 @@
   :custom-face
   (magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
   (magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
+  (magit-diff-added-highlight ((t (:background "#002800"))))
+  (magit-diff-removed-highlight ((t (:background "#3f0001"))))
   :config
   (when (and my:osx (not with-editor-emacsclient-executable))
     (setq with-editor-emacsclient-executable (expand-file-name "~/bin/emacsclient")))

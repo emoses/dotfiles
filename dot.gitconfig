@@ -24,8 +24,27 @@
 [delta]
     navigate = true
     light = false
-    features = chameleon
     side-by-side = true
+    features = chameleon default magit-delta tomorrow-night-diff
+[delta "default"]
+    line-numbers = true
+[delta "magit-delta"]
+    line-numbers = false
+[delta "tomorrow-night-diff"]
+    # Diff colors tuned for sanityinc-tomorrow-night (bg #1d1f21)
+    # removed lines: dark muted red background, keep syntax-colored code
+    minus-style              = syntax "#3f2025"
+    minus-emph-style         = normal "#7a2f39"
+    minus-non-emph-style     = minus-style
+    # added lines: dark muted green background, keep syntax-colored code
+    plus-style = syntax "#21d966"
+    #plus-style               = syntax "#1d3a28"
+    plus-emph-style          = normal "#2f6b46"
+    plus-non-emph-style      = plus-style
+    # line-number gutter to match
+    line-numbers-minus-style = "#cc6666"
+    line-numbers-plus-style  = "#b5bd68"
+    zero-style               = syntax
 
 [color]
         status = auto
@@ -69,6 +88,10 @@
 	enabled = true
 [pull]
 	rebase = false
+[http]
+	postBuffer = 523288000
+[branch]
+	autosetupmerge = always
 [include]
     # Add local overrides here.  If this doesn't exist git will ignore
     path = ~/.local/git.config
@@ -76,5 +99,3 @@
     path = ~/.gitconfig.personal
 [includeIf "gitdir:~/dotfiles/"]
     path = ~/.gitconfig.personal
-[http]
-	postBuffer = 523288000

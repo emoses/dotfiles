@@ -1,0 +1,6 @@
+# key: multiline
+# name: multiline
+# --
+$1 := <<
+$2
+#

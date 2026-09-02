@@ -1,4 +1,4 @@
-;;; -*- mode: emacs-lisp -*-
+;;; -*- mode: emacs-lisp; lexical-binding: t; -*-
 ;;; Evan Moses .emacs
 ;;; Feel free to copy
 
@@ -14,7 +14,16 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(connection-local-criteria-alist
-   '(((:machine "newerheart") newerheart-vars)
+   '(((:application vc-git) vc-git-connection-default-profile)
+     ((:application tramp :machine "ipv6-loopback") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "ipv6-localhost") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "ip6-loopback") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "ip6-localhost") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "localhost6") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "localhost4") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "::1") tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "127.0.0.1") tramp-connection-local-darwin-ps-profile)
+     ((:machine "newerheart") newerheart-vars)
      ((:application tramp :protocol "kubernetes") tramp-kubernetes-connection-local-default-profile)
      ((:application tramp :machine "Mac.fortytwo.local") tramp-connection-local-darwin-ps-profile)
      ((:application tramp :machine "Computery.local") tramp-connection-local-darwin-ps-profile)
@@ -24,7 +33,7 @@
      ((:application tramp :machine "C02DR5M6MD6T") tramp-connection-local-darwin-ps-profile)
      ((:application tramp) tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
  '(connection-local-profile-alist
-   '((newerheart-vars (company-gtags--executable-connection))
+   '((vc-git-connection-default-profile (vc-git--program-version)) (newerheart-vars (company-gtags--executable-connection))
      (tramp-kubernetes-connection-local-default-profile (tramp-config-check . tramp-kubernetes--current-context-data)
                                                         (tramp-extra-expand-args 97
                                                                                  (tramp-kubernetes--container
@@ -64,7 +73,8 @@
                                           (vsize . number) (rss . number) (etime . number) (pcpu . number)
                                           (pmem . number) (args)))
      (tramp-connection-local-default-shell-profile (shell-file-name . "/bin/sh") (shell-command-switch . "-c"))
-     (tramp-connection-local-default-system-profile (path-separator . ":") (null-device . "/dev/null"))))
+     (tramp-connection-local-default-system-profile (path-separator . ":") (null-device . "/dev/null")
+                                                    (exec-suffixes ""))))
  '(custom-safe-themes
    '("e184d8607cc9933f2ba8e180699365bdf8b6f311834a9e15c71947b38be0caa3"
      "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1"
@@ -137,12 +147,12 @@
      ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml"
      "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" "configure.in" "configure.ac" "cscope.out" "package.json"))
  '(safe-local-variable-values
-   '((lsp-rust-features . "all") (rustic-default-test-arguments . "--all-targets")
-     (projectile-go-compile-test-flags . "-tags=testonly") (lsp-golangci-lint-build-tags quote ("testonly"))
-     (lsp-go-build-flags . ["-tags=testonly"]) (checkdoc-allow-quoting-nil-and-t . t)
-     (lsp-rust-features . ["tpe" "partial-eval"]) (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/"))
-     (backup-directory-alist ("." . "~/.emacs.d/backup-files/")) (eval turn-on-auto-fill)
-     (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
+   '((go-ts-mode-build-flags . ["-tags=testonly"]) (lsp-rust-features . "all")
+     (rustic-default-test-arguments . "--all-targets") (projectile-go-compile-test-flags . "-tags=testonly")
+     (lsp-golangci-lint-build-tags quote ("testonly")) (lsp-go-build-flags . ["-tags=testonly"])
+     (checkdoc-allow-quoting-nil-and-t . t) (lsp-rust-features . ["tpe" "partial-eval"])
+     (backup-directory-alist ("." . "~/dev/.go.sudo.wtf~/")) (backup-directory-alist ("." . "~/.emacs.d/backup-files/"))
+     (eval turn-on-auto-fill) (web-mode-engines-alist ("go" . "\\.tpl\\.html")) (lsp-enabled-clients deno-ls)
      (org-html-metadata-timestamp-format . "%Y-%m-%d") (my:prettify . t) (lsp-eslint-package-manager . "yarn")
      (lsp-eslint-working-directories . ["frontend/"]) (lsp-eslint-package-manager . yarn)
      (jest-executable . "yarn utest --") (projectile-indexing-method quote hybrid)
@@ -277,9 +287,9 @@
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(lsp-ui-sideline-global ((t (:background "medium blue"))))
- '(magit-diff-added-highlight ((t (:extend t :background "#2f6b46" :foreground "#b5bd68"))))
- '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
- '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
+ '(magit-diff-added-highlight ((t (:extend t :background "#2f6b46" :foreground "#b5bd68"))) t)
+ '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))) t)
+ '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))) t)
  '(sml/global ((t (:background "grey85" :foreground "grey20" :inverse-video nil :weight semi-light :height 1.05 :family "Avenir")))))
 
 (defconst my:emacs-base (file-name-concat (getenv "HOME") "dotfiles/emacs/") "Libraries, and the base for configs")
@@ -326,17 +336,6 @@
   (add-to-list 'auth-sources 'macos-keychain-generic)
   (add-to-list 'auth-sources 'macos-keychain-internet))
 
-;;Deal with TLS certs.  See https://glyph.twistedmatrix.com/2015/11/editor-malware.html
-(let ((trustfile
-       (replace-regexp-in-string
-        "\\\\" "/"
-        (replace-regexp-in-string
-         "\n" ""
-         (shell-command-to-string "python -m certifi")))))
-  (setq tls-program
-        (list
-         (format "gnutls-cli%s --x509cafile %s -p %%p %%h"
-                 (if (eq window-system 'w32) ".exe" "") trustfile))))
 
 (my:load-config-file '("package-bootstrap.el"
 		       (lambda () (if my:osx "osx.el" nil))
@@ -390,6 +389,13 @@
 (setq fill-column 120)
 (setq split-width-threshold 200)
 (setq help-window-select t)
+
+
+;; New in emacs 31
+(when (>= emacs-major-version 31)
+  (setopt treesit-enabled-modes t)
+  (setopt treesit-auto-install-grammar 'ask))
+
 ;;New in Emacs 28
 (when (>= emacs-major-version 28)
   (setq next-error-message-highlight t)

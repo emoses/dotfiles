@@ -84,6 +84,7 @@
 (use-package lsp-ui
     :bind (:map lsp-ui-mode-map
            ("S-<f12>" . lsp-ui-imenu)
+           ("A-d" . lsp-ui-doc-glance)
            )
     :custom
     (lsp-ui-sideline-show-code-actions t)
