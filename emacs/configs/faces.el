@@ -13,6 +13,25 @@
 (use-package color-theme-sanityinc-tomorrow
   :init
   (load-theme 'sanityinc-tomorrow-night))
+;; (use-package catppuccin-theme
+;;   :init
+;;   (setq catppuccin-flavor 'frappe)
+;;   :config
+;;   (add-hook 'after-init-hook (lambda ()  (load-theme 'catppuccin t))))
+;; (use-package doom-themes
+;;   :custom
+;;   ;; Global settings (defaults)
+;;   (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+;;   (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+;;   ;; for treemacs users
+;;   (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+;;   :config
+;;   (load-theme 'doom-tomorrow-night t)
+
+;;   ;; or for treemacs users
+;;   (doom-themes-treemacs-config)
+;;   ;; Corrects (and improves) org-mode's native fontification.
+;;   (doom-themes-org-config))
 
 ;; Make Fira Code ligatures work
 (defun my:frame-font-setup (frame)

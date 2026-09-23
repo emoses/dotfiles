@@ -360,12 +360,12 @@
 
 (use-package cedar-mode
   :straight nil
-  :load-path (lambda () (file-name-concat my:emacs-base "configs" "cedar-mode.el"))
+  :load-path (lambda () (file-name-concat my:emacs-base "configs"))
   :mode "\\.cedar\\'")
 
 (use-package cedar-schema-ts-mode
   :straight nil
-  :load-path (lambda () (file-name-concat my:emacs-base "configs" "cedar-schema-ts-mode.el"))
+  :load-path (lambda () (file-name-concat my:emacs-base "configs"))
   :mode "\\.cedarschema\\'")
 
 (defconst my:LOCAL_CONFIG_PATH (file-name-concat (getenv "HOME") ".local" "emacs"))
