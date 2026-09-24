@@ -346,7 +346,6 @@
 		       "faces.el"
                        "magit.el"
 		       "mode-customizations.el"
-                       "hugo-markdown-mode.el"
                        "javascript.el"
 		       "keys.el"
 		       "misc-fns.el"
@@ -354,19 +353,22 @@
 		       "clojure.el"
                        "lsp.el"
                        "python.el"
-                       "present-minor-mode.el"
                        "go.el"
                        "rust.el"))
 
 (use-package cedar-mode
   :straight nil
-  :load-path (lambda () (file-name-concat my:emacs-base "configs"))
+  :load-path (lambda () (file-name-concat my:emacs-base "user-packages"))
   :mode "\\.cedar\\'")
 
 (use-package cedar-schema-ts-mode
   :straight nil
-  :load-path (lambda () (file-name-concat my:emacs-base "configs"))
+  :load-path (lambda () (file-name-concat my:emacs-base "user-packages"))
   :mode "\\.cedarschema\\'")
+
+(use-package hugo-markdown-mode
+  :straight nil
+  :load-path (lambda () (file-name-concat my:emacs-base "user-packages")))
 
 (defconst my:LOCAL_CONFIG_PATH (file-name-concat (getenv "HOME") ".local" "emacs"))
 (when (file-exists-p my:LOCAL_CONFIG_PATH)
@@ -438,7 +440,7 @@
   (editorconfig-mode 1))
 
 (use-package projectile
-  :bind (("C-c C-s" . my:projectile-ag-symbol))
+  :bind (("C-c C-s" . my:projectile-rg-symbol))
   :init
   (defvar projectile-go-compile-test-extra-env-vars-alist nil
     "a plist of Extra environment variables to set when running Go tests")
@@ -449,7 +451,9 @@
   (add-to-list 'projectile-globally-ignored-directories "node_modules")
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "A-p") 'projectile-command-map)
-  (define-key projectile-command-map (kbd "s t") #'my:projectile-ag-test)
+  (define-key projectile-command-map (kbd "s t") #'my:projectile-ripgrep-test)
+  (define-key projectile-command-map (kbd "s a") #'projectile-ag)
+  (define-key projectile-command-map (kbd "s s") #'projectile-ripgrep)
   (define-key projectile-command-map (kbd "C") #'projectile-go-compile-tests)
 
   (defun my:projectile-test-root ()
@@ -469,7 +473,7 @@
         (projectile--run-project-cmd compile-command nil
                                      :save-buffers t))))
 
-  (defun my:projectile-ag-test (search-term &optional arg)
+  (defun my:projectile-rg-test (search-term &optional arg)
     "Run an ag search starting at the test root
 
 Largely a copy-paste of projectile-ag, need to refactor"
@@ -520,7 +524,7 @@ regular expression."
                             (cons "--fixed-strings" args))))
       (error "Package `ripgrep' is not available")))
 
-  (defun my:projectile-ag-symbol (search-term &optional arg)
+  (defun my:projectile-rg-symbol (search-term &optional arg)
     "Run an ag search for symbol at point, or region if active.
 
 With optional prefix ARG, SEARCH-TERM is treated as a regexp"
@@ -536,7 +540,7 @@ With optional prefix ARG, SEARCH-TERM is treated as a regexp"
           (projectile--read-search-string-with-default
            (format "Search in project for %s: " (if current-prefix-arg "regexp" "string")))))
       current-prefix-arg))
-    (projectile-ag search-term arg)))
+    (projectile-rg search-term arg)))
 
 
 (require 'uniquify)
@@ -742,10 +746,6 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
 
 
 (use-package ag
-  :bind (("A-s" . 'ag)
-          ("A-S" . 'ag-regexp)
-          ;;On Macos A-S-s will send §
-          ("§" . 'ag-regexp))
   :config
   (defun eshell/ag (string)
     (ag/search string (eshell/pwd)))
@@ -758,8 +758,6 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
                 (kill-buffer buff))))
           (buffer-list))))
 
-(use-package ripgrep)
-
 (use-package find-file-in-repository)
 
 (use-package exec-path-from-shell
@@ -768,6 +766,10 @@ http://yummymelon.com/devnull/improving-emacs-isearch-usability-with-transient.h
                                         ;(add-to-list 'exec-path-from-shell-arguments "--norc")
     (exec-path-from-shell-initialize)))
 
+(use-package rg
+  :bind (("A-s" . 'rg))
+  :config
+  (rg-enable-menu))
 
 ;;Tramp defaults
 (setq tramp-default-method "ssh")

@@ -1,4 +1,4 @@
-;:;Magit
+;;Magit  -*- lexical-binding: t; -*-
 (use-package magit
   :after (evil)
   :bind (("C-x M-g" . magit-file-dispatch)

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq lsp-keymap-prefix "A-l")
 
 (use-package ccls

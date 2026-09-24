@@ -104,6 +104,7 @@ to do that"
           (package-menu package)
           python
           restclient
+          rg
           ruby-mode
           (term term ansi-term multi-term)
           which-key
@@ -112,6 +113,7 @@ to do that"
           ))
 
   (evil-collection-init))
+
 
 (use-package evil-cleverparens
   :after evil)
