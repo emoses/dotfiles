@@ -96,10 +96,8 @@ ARGS are the arguments passed to `git rebase`."
   (evil-ex-define-cmd "history" #'magit-log-buffer-file))
 
 ;; Don't enable by default
-(use-package magit-delta
-  :after magit
-  :config
-  (setq magit-delta-delta-args (append magit-delta-delta-args '("--features" "magit-delta"))))
+(use-package magit-delt
+  :after magit)
 
 (use-package forge
   :after magit

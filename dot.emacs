@@ -13,6 +13,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(agent-shell-github-acp-command '("copilot" "--acp" "--context" "long_context"))
  '(connection-local-criteria-alist
    '(((:application vc-git) vc-git-connection-default-profile)
      ((:application tramp :machine "ipv6-loopback") tramp-connection-local-darwin-ps-profile)
@@ -126,6 +127,8 @@
  '(lsp-ui-imenu-window-width 60)
  '(mac-auto-operator-composition-characters "!\"#$%&'()+,-./:;<=>?@[]^_`{|}~")
  '(magit-blame-heading-format "%-20a %C %.10H %s")
+ '(magit-delta-delta-args
+   '("--max-line-distance" "0.6" "--true-color" "always" "--color-only" "--features" "magit-delta"))
  '(mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
  '(native-comp-async-report-warnings-errors 'silent)
  '(org-agenda-files nil)
@@ -287,9 +290,9 @@
  '(line-number-current-line ((t (:background "#969896" :foreground "#3b3e44"))))
  '(linum ((t (:background "#282a2e" :foreground "#e0e0e0"))))
  '(lsp-ui-sideline-global ((t (:background "medium blue"))))
- '(magit-diff-added-highlight ((t (:extend t :background "#2f6b46" :foreground "#b5bd68"))) t)
- '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))) t)
- '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))) t)
+ '(magit-diff-added-highlight ((t (:extend t :background "#2f6b46" :foreground "#b5bd68"))))
+ '(magit-diff-file-heading ((t (:background "selectedTextBackgroundColor" :foreground "selectedTextColor"))))
+ '(magit-diff-file-heading-highlight ((t (:background "selectedContentBackgroundColor" :foreground "selectedTextColor" :weight bold))))
  '(sml/global ((t (:background "grey85" :foreground "grey20" :inverse-video nil :weight semi-light :height 1.05 :family "Avenir")))))
 
 (defconst my:emacs-base (file-name-concat (getenv "HOME") "dotfiles/emacs/") "Libraries, and the base for configs")
